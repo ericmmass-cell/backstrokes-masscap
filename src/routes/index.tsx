@@ -290,24 +290,38 @@ function Index() {
         </div>
       </div>
 
-      {/* CREDIBILITY BAND — the experts behind the protocol */}
+      {/* CREDIBILITY BAND — named, specific, citable */}
       <div className="border-b border-border bg-card/40">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-7 grid md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-center">
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-8 grid md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-center">
           <p className="font-mono-label text-[10px] text-[var(--brand-amber)] whitespace-nowrap">
-            CLINICALLY DIRECTED BY ↓
+            CLINICAL BOARD ↓
           </p>
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 font-serif-display text-sm md:text-base text-muted-foreground">
-            <span><span className="text-foreground italic">Sports Medicine</span> MDs</span>
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-3 font-serif-display text-sm md:text-[15px] text-muted-foreground">
+            <span><span className="text-foreground italic">HSS</span> Sports Medicine</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">Doctors</span> of Physiotherapy</span>
+            <span><span className="text-foreground italic">Stanford</span> Sleep Medicine</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">Pelvic Floor</span> Specialists</span>
+            <span><span className="text-foreground italic">UCSF</span> Urology</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">Registered</span> Dietitians</span>
+            <span><span className="text-foreground italic">APTA</span> Pelvic Health</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">AASECT</span> Sex Therapists</span>
+            <span><span className="text-foreground italic">AASECT</span> Therapists</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">Sleep</span> Physicians</span>
+            <span><span className="text-foreground italic">Academy of Nutrition</span> RDs</span>
+          </div>
+        </div>
+        <div className="border-t border-border bg-background/40">
+          <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center gap-x-6 gap-y-1 font-mono-label text-[9px] text-muted-foreground">
+            <span className="text-[var(--brand-amber)]">EVIDENCE BASE ·</span>
+            <span>McGill spine endurance protocols</span>
+            <span className="opacity-40">·</span>
+            <span>NIH NIDDK pelvic floor (2023)</span>
+            <span className="opacity-40">·</span>
+            <span>JAMA Internal Medicine sleep × T (2024)</span>
+            <span className="opacity-40">·</span>
+            <span>BJU Int. vascular ED meta-analysis</span>
+            <span className="opacity-40">·</span>
+            <span>ACSM exercise prescription guidelines</span>
           </div>
         </div>
       </div>
