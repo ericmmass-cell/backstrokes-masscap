@@ -157,17 +157,17 @@ function Index() {
             </div>
 
             {/* Neon stamp */}
-            <div className="absolute -right-2 lg:-right-8 top-[28%] w-[130px] h-[130px] rounded-full flex items-center justify-center text-center rotate-[8deg]"
+            <div className="absolute -right-2 lg:-right-8 top-[28%] w-[136px] h-[136px] rounded-full flex items-center justify-center text-center rotate-[6deg]"
                  style={{
-                   border:"2px solid var(--brand-pink)",
+                   border:"1px solid var(--brand-pink)",
                    boxShadow:"var(--glow-pink)",
-                   background:"oklch(0.16 0.008 60 / 0.55)",
-                   backdropFilter:"blur(4px)"
+                   background:"oklch(0.14 0.008 60 / 0.65)",
+                   backdropFilter:"blur(6px)"
                  }}>
-              <p className="font-display-bold text-[13px] leading-tight" style={{color:"var(--brand-pink)"}}>
-                Move better.<br/>
-                <span className="font-script normal-case text-2xl block leading-none my-0.5">F*ck better.</span>
-                Live better.
+              <p className="font-display-bold text-[12px] leading-[1.15] tracking-[0.04em]" style={{color:"var(--brand-pink)"}}>
+                MOVE BETTER<span className="opacity-60"> · </span>
+                <span className="font-script normal-case text-[26px] tracking-normal block leading-none my-1">f*ck better</span>
+                LIVE BETTER
               </p>
             </div>
           </div>
