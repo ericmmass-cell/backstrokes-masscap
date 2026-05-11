@@ -360,19 +360,19 @@ function Index() {
               THE PART NOBODY ELSE WILL SAY
             </p>
             <h2 className="font-serif-display text-5xl md:text-7xl mt-6 leading-[0.98] tracking-[-0.025em]">
-              You don't want a<br/>
+              The goal isn't<br/>
               <span className="italic" style={{
                 background:"var(--gradient-ember)",
                 WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
-              }}>functional spine.</span><br/>
-              You want a life<br/>
-              that uses it.
+              }}>"functional."</span><br/>
+              The goal is sex<br/>
+              you're sincerely into.
             </h2>
             <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-xl">
-              Lower back pain is the #1 reason couples avoid intimacy. The same six signals that govern recovery, circulation, pelvic floor, breath, sleep, inflammation, mobility, are the exact six that govern arousal, stamina and confidence in bed.
+              Lower back pain is the number-one reason couples avoid intimacy, and the second is the low-grade dread that something will twinge mid-act. We don't aim for a baseline. We clear the distractions, the bracing, the wincing, the half-attention, until what's left is the thing you actually wanted.
             </p>
             <p className="mt-6 text-lg text-foreground leading-relaxed max-w-xl">
-              Train the system. The bedroom is downstream.
+              Train the body. Presence is downstream.
             </p>
 
             <div className="mt-10 grid grid-cols-3 gap-px border" style={{borderColor:"oklch(0.72 0.14 18 / 0.25)"}}>
