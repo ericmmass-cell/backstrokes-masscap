@@ -1,94 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type ComponentType } from "react";
 import {
-  Activity, Apple as AppleIcon, Brain, Heart, Waves, Moon,
-  ArrowUpRight, ArrowRight, Plus,
+  Activity, Waves,
+  ArrowUpRight,
 } from "lucide-react";
-
-type Pillar = {
-  n: string;
-  icon: ComponentType<{ className?: string }>;
-  name: string;
-  what: string;
-  perf: string;
-  bed: string;
-};
-
-function PillarCard({ p }: { p: Pillar }) {
-  const [mode, setMode] = useState<"daily" | "dark">("daily");
-  const [open, setOpen] = useState(false);
-  const Icon = p.icon;
-  const active = mode === "daily" ? p.perf : p.bed;
-
-  return (
-    <article
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-      className="bg-background p-7 transition-colors duration-300 hover:bg-card/60 group relative cursor-pointer"
-      onClick={() => setOpen((o) => !o)}
-    >
-      <div className="flex items-start justify-between mb-6">
-        <p className="font-mono-label text-[10px] text-muted-foreground">PILLAR {p.n}</p>
-        <Icon className="w-5 h-5 text-[var(--brand-amber)] opacity-70 group-hover:opacity-100 transition" />
-      </div>
-      <h3 className="font-serif-display text-3xl italic">{p.name}</h3>
-      <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.what}</p>
-
-      <div className="mt-6 pt-5 border-t border-border">
-        <div className="flex items-center gap-1 mb-4" onClick={(e) => e.stopPropagation()}>
-          <button
-            type="button"
-            onClick={() => { setMode("daily"); setOpen(true); }}
-            className={`font-mono-label text-[10px] px-2.5 py-1.5 border transition ${
-              mode === "daily"
-                ? "border-[var(--brand-amber)] text-[var(--brand-amber)] bg-[var(--brand-amber)]/5"
-                : "border-border text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            ↗ DAILY LIFE
-          </button>
-          <button
-            type="button"
-            onClick={() => { setMode("dark"); setOpen(true); }}
-            className={`font-mono-label text-[10px] px-2.5 py-1.5 border transition ${
-              mode === "dark"
-                ? "border-[var(--brand-blush)] text-[var(--brand-blush)] bg-[var(--brand-blush)]/5"
-                : "border-border text-muted-foreground hover:text-foreground"
-            }`}
-            style={mode === "dark" ? { borderColor: "var(--brand-blush)", color: "var(--brand-blush)" } : undefined}
-          >
-            ◆ AFTER DARK
-          </button>
-          <Plus
-            className={`w-3.5 h-3.5 ml-auto text-muted-foreground transition-transform duration-300 ${open ? "rotate-45" : ""}`}
-          />
-        </div>
-
-        <div
-          className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
-            open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-          }`}
-        >
-          <div className="overflow-hidden">
-            <p
-              key={mode}
-              className={`text-[15px] leading-snug ${mode === "dark" ? "italic" : ""}`}
-              style={{ color: mode === "dark" ? "var(--brand-blush)" : "var(--foreground)" }}
-            >
-              {active}
-            </p>
-          </div>
-        </div>
-
-        {!open && (
-          <p className="font-mono-label text-[10px] text-muted-foreground/70">
-            Tap to reveal the outcome →
-          </p>
-        )}
-      </div>
-    </article>
-  );
-}
 import heroCouple from "@/assets/hero-couple.jpg";
 import portrait from "@/assets/portrait.jpg";
 import nutrition from "@/assets/nutrition.jpg";
@@ -118,14 +32,6 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const PILLARS = [
-  { n: "01", icon: Activity,   title: "Spine",        desc: "Strength, mobility, and load tolerance, programmed by physiotherapists, sequenced to your phase." },
-  { n: "02", icon: Waves,      title: "Pelvic Floor", desc: "The deep stabilizers your back depends on, and the muscles that govern intimate performance." },
-  { n: "03", icon: Heart,      title: "Cardio-Vitals",desc: "Resting BP, heart rate, HRV. Vascular health is sexual health. Your back rides on it." },
-  { n: "04", icon: Brain,      title: "Breath & CNS", desc: "HRV-paced breathwork and pain-reframing visualization. Down-regulate to perform up." },
-  { n: "05", icon: AppleIcon,  title: "Nutrition",    desc: "Anti-inflammatory plate, hydration, and connective-tissue protein targets, calibrated daily." },
-  { n: "06", icon: Moon,       title: "Sleep",        desc: "Continuity and depth. Where tissue rebuilds, hormones reset, and tomorrow's pain is decided." },
-];
 
 function Index() {
   return (
@@ -152,7 +58,7 @@ function Index() {
             <a href="#try" className="hover:text-foreground transition" style={{color:"var(--brand-amber)"}}>◆ Try Live</a>
             <a href="#thesis" className="hover:text-foreground transition">Thesis</a>
             <a href="#index" className="hover:text-foreground transition">The Index</a>
-            <a href="#pillars" className="hover:text-foreground transition">Protocol</a>
+            <a href="#six" className="hover:text-foreground transition">The Work</a>
             <a href="#evidence" className="hover:text-foreground transition">Evidence</a>
             <a href="#stories" className="hover:text-foreground transition">Stories</a>
           </nav>
@@ -179,7 +85,7 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              Two problems. <span className="italic" style={{color:"var(--brand-amber)"}}>Bad backs and dead bedrooms.</span> Same nervous system, same pelvis, same blood supply, same wrecked sleep. We treat them as the one problem they actually are. Everything else, the breath work, the food, the labs, exists to serve those two outcomes.
+              Two things. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that hurts. A sex life that doesn't.</span> Same pelvis, same nerves, same muscles, same blood supply. We don't sell wellness. We coach the eight or nine specific things that make your lumbar quieter and your genitals happier, and we coach them properly.
             </p>
 
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
@@ -290,24 +196,20 @@ function Index() {
         </div>
       </div>
 
-      {/* CREDIBILITY BAND, named, specific, citable */}
+      {/* CREDIBILITY BAND */}
       <div className="border-b border-border bg-card/40">
         <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-8 grid md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-center">
           <p className="font-mono-label text-[10px] text-[var(--brand-amber)] whitespace-nowrap">
-            CLINICAL BOARD ↓
+            COACHED BY ↓
           </p>
           <div className="flex flex-wrap items-center gap-x-7 gap-y-3 font-serif-display text-sm md:text-[15px] text-muted-foreground">
-            <span><span className="text-foreground italic">HSS</span> Sports Medicine</span>
-            <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">Stanford</span> Sleep Medicine</span>
-            <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">UCSF</span> Urology &amp; Ob-Gyn</span>
+            <span><span className="text-foreground italic">McGill-trained</span> spine PTs</span>
             <span className="opacity-40">·</span>
             <span><span className="text-foreground italic">APTA</span> Pelvic Health (men &amp; women)</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">ISSWSH</span> + <span className="text-foreground italic">AASECT</span></span>
+            <span><span className="text-foreground italic">ISSWSH</span> + <span className="text-foreground italic">AASECT</span> sex therapists</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">Academy of Nutrition</span> RDs</span>
+            <span><span className="text-foreground italic">UCSF</span> Urology &amp; Ob-Gyn consults</span>
           </div>
         </div>
         <div className="border-t border-border bg-background/40">
@@ -317,11 +219,9 @@ function Index() {
             <span className="opacity-40">·</span>
             <span>NIH NIDDK pelvic floor (2023)</span>
             <span className="opacity-40">·</span>
-            <span>JAMA Internal Medicine, sleep × hormones (2024)</span>
+            <span>ISSWSH female sexual function consensus</span>
             <span className="opacity-40">·</span>
-            <span>BJU Int. + Menopause vascular meta-analyses</span>
-            <span className="opacity-40">·</span>
-            <span>ACSM exercise prescription guidelines</span>
+            <span>AUA erectile + ejaculatory guidelines</span>
           </div>
         </div>
       </div>
@@ -352,66 +252,86 @@ function Index() {
         </div>
       </section>
 
-      {/* SIX PILLARS, fast, specific, performance + bedroom outcomes */}
+      {/* THE WORK · two columns of tangible practice */}
       <section id="six" className="px-6 md:px-10 py-24 border-b border-border">
         <div className="max-w-[1280px] mx-auto">
-          <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
+          <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
             <div>
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE SUPPORTING CAST · HOW EACH ONE FEEDS THE BACK AND THE BEDROOM</p>
+              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE WORK · TWO LISTS, NOTHING ELSE</p>
               <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight max-w-2xl">
-                The work is the back and the sex. <span className="italic text-muted-foreground">These six are the levers we pull to get them.</span>
+                The whole product, on one page. <span className="italic text-muted-foreground">No mystery, no funnel.</span>
               </h2>
             </div>
             <p className="font-mono-label text-[10px] text-muted-foreground max-w-xs">
-              Nobody comes to us for better HRV or a polyphenol score. They come because their lower back is loud and their bedroom is quiet. Everything below is in service of fixing those two things.
+              These are the moves, drills and tools we coach. Each one is a thing you do with your body, this week, that makes a measurable difference. That's it. That's the company.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">
-            {[
-              {
-                n: "01", icon: Activity, name: "Spine",
-                what: "McGill big-3 endurance, hip-hinge reprogramming, segmental disc loading. The 90 minutes a week that buy back the next 30 years of your lumbar spine.",
-                perf: "Carry the toddler, deadlift the suitcase, sit through the long-haul without bracing on the armrest like someone twice your age.",
-                bed: "Removes the 'I rolled and it locked' moment. Hold any position long enough for it to actually mean something.",
-              },
-              {
-                n: "02", icon: Waves, name: "Pelvic Floor",
-                what: "Levator ani, transverse abdominis, multifidus. The deep stabilizers your gym routine has been ignoring since 2009. Same muscles that brace the spine gate arousal, continence and orgasm, in every body.",
-                perf: "Bracing under load. End-of-day continence. Postpartum recovery that actually finishes. The core that doesn't quit at rep 9.",
-                bed: "Harder erections, ejaculatory control, and on the other side: arousal that arrives, lubrication, multi-orgasmic capacity, dyspareunia resolved. The muscle group nobody is selling because nobody knows how to coach it.",
-              },
-              {
-                n: "03", icon: Heart, name: "Vascular",
-                what: "Resting BP, HRV, endothelial function, ApoB, Lp(a). The plumbing. The arteries that feed the lumbar disc are the same arteries that feed cavernosal and clitoral tissue. The cardiologist's chart and the bedroom chart are the same chart.",
-                perf: "Recover faster between sets, between meetings, between birthdays.",
-                bed: "Genital blood flow is a vascular biomarker, for him and for her. Lower BP by 10 points and the bedroom files the report before your GP does.",
-              },
-              {
-                n: "04", icon: Brain, name: "Breath & CNS",
-                what: "Vagal tone, 4-7-8 down-regulation, interoceptive retraining, cognitive defusion for chronic pain. Built with chronic-pain clinicians, ISSWSH and AASECT therapists, not wellness influencers.",
-                perf: "Lower next-morning pain. Lower resting heart rate. A nervous system that stops bracing for an impact that isn't coming.",
-                bed: "Arousal is parasympathetic. Not a metaphor, it's the wiring. You cannot perform, or arrive, from a sympathetic state. The piece most adults never hear named out loud.",
-              },
-              {
-                n: "05", icon: AppleIcon, name: "Nutrition",
-                what: "Mediterranean baseline, polyphenol load, 1.6 g/kg protein floor, iron, magnesium and omega-3 calibrated to inflammatory markers, and to cycle phase or perimenopause window when relevant. Not a cleanse. Not a stack. Food, prescribed.",
-                perf: "Joint pain measurably down inside two weeks. The 3pm crash quietly disappears. Energy that survives a luteal phase.",
-                bed: "Lower systemic inflammation = higher free testosterone and estradiol balance, better endothelial NO production, steadier libido. Boring science. Serious results.",
-              },
-              {
-                n: "06", icon: Moon, name: "Sleep",
-                what: "Continuity over duration, REM-window protection, light/temperature gating, evening cortisol management, adjusted for cycle and perimenopausal thermoregulation. Where tomorrow's pain, hormones and decisions are quietly assembled.",
-                perf: "Skip it and the other five pillars stop compounding. There is no work-around. There has never been a work-around.",
-                bed: "Testosterone synthesis peaks 02:00-06:00; estradiol and progesterone follow their own choreography. Morning erections, regular cycles and lubrication are vital signs your doctor would actually like to know about. Protect the window.",
-              },
-            ].map((p) => (
-              <PillarCard key={p.n} p={p} />
-            ))}
+          <div className="grid lg:grid-cols-2 gap-px bg-border border border-border">
+            {/* BACK column */}
+            <div className="bg-background p-8 md:p-10">
+              <div className="flex items-baseline justify-between mb-6">
+                <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">FOR THE BACK</p>
+                <Activity className="w-5 h-5 text-[var(--brand-amber)]" />
+              </div>
+              <h3 className="font-serif-display text-3xl italic leading-tight mb-2">Quieter lumbar in two weeks.</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-8">
+                Not stretching. Endurance, hinging, and a few habits the world refuses to teach. Coached by McGill-trained PTs.
+              </p>
+              <ol className="space-y-5">
+                {[
+                  ["McGill big-3", "Curl-up, side plank, bird dog. Eight minutes. The endurance trio that quiets disc pain better than anything stretching has ever done."],
+                  ["Hip-hinge re-pattern", "Pick up the laundry without flexing your spine. The single move that ends ninety percent of 'I tweaked it bending over.'"],
+                  ["Glute bridge + 90/90 hip switch", "Wake up the muscles that are supposed to be carrying your spine. They've been on holiday since you got a desk job."],
+                  ["Dead-hang + thoracic opener", "Two minutes a day. Decompresses the discs gravity has been compressing all day."],
+                  ["Sleep position audit", "Pillow under the knees, not under the head. The change you make tonight that your morning lumbar notices tomorrow."],
+                  ["Sitting protocol", "When to stand, what to perch on, how to drive a long haul without arriving wrecked. Boring. Decisive."],
+                ].map(([h, b], i) => (
+                  <li key={h} className="flex gap-4">
+                    <span className="font-mono-label text-[10px] text-muted-foreground pt-1 w-6 shrink-0">B.0{i+1}</span>
+                    <div>
+                      <p className="font-serif-display text-lg leading-tight">{h}</p>
+                      <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{b}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            {/* BEDROOM column */}
+            <div className="bg-background p-8 md:p-10" style={{background:"linear-gradient(180deg, var(--background), oklch(0.16 0.012 25 / 0.4))"}}>
+              <div className="flex items-baseline justify-between mb-6">
+                <p className="font-mono-label text-[10px]" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
+                <Waves className="w-5 h-5" style={{color:"var(--brand-blush)"}} />
+              </div>
+              <h3 className="font-serif-display text-3xl italic leading-tight mb-2" style={{color:"var(--brand-blush)"}}>Genitals that work, and enjoy it.</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-8">
+                Pelvic floor done properly, in both directions. Position library that doesn't hurt. The conversations your GP won't have. Coached by APTA pelvic-health PTs and AASECT therapists.
+              </p>
+              <ol className="space-y-5">
+                {[
+                  ["Reverse kegel + diaphragmatic drop", "Most adults can't relax their pelvic floor. That's why erections fade, why orgasms feel small, why penetration hurts. We teach the down-train first, then the up-train."],
+                  ["Kegel done correctly", "The one your phone-app version got wrong. Eccentric control for ejaculatory timing in men, arousal and orgasmic depth in women."],
+                  ["Perineal + internal release work", "External and (when indicated) internal trigger-point release. For dyspareunia, vaginismus, post-prostatectomy, post-partum, chronic pelvic pain. Done with a real PT, not a YouTube video."],
+                  ["Position library, scored by spine", "Forty positions ranked by lumbar load, hip flexion, breath access. Pick the one that fits today's back. No more 'pretending it didn't hurt.'"],
+                  ["Lube and tool literacy", "Silicone vs water vs hybrid. Dilator sets, vibrators, cock rings, wedges. What they actually do, when to use them, and the brands a clinician would hand you."],
+                  ["Arousal as parasympathetic skill", "Four-seven-eight before, not after. We coach the breath cadence that lets your nervous system actually arrive. The thing nobody told you was a skill."],
+                  ["The conversation script", "What to say to your partner about pain, pace, what you want. Written by AASECT therapists. Used in your kitchen, not in a clinic."],
+                ].map(([h, b], i) => (
+                  <li key={h} className="flex gap-4">
+                    <span className="font-mono-label text-[10px] text-muted-foreground pt-1 w-6 shrink-0">F.0{i+1}</span>
+                    <div>
+                      <p className="font-serif-display text-lg leading-tight" style={{color:"var(--brand-blush)"}}>{h}</p>
+                      <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{b}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
 
-          <p className="font-script text-2xl md:text-3xl mt-10 italic text-center" style={{color:"var(--brand-blush)"}}>
-            Six pillars. One Index. <span style={{color:"var(--brand-amber)"}}>A body that shows up.</span>
+          <p className="font-script text-2xl md:text-3xl mt-12 italic text-center" style={{color:"var(--brand-blush)"}}>
+            Two lists. <span style={{color:"var(--brand-amber)"}}>One body that finally works for you.</span>
           </p>
         </div>
       </section>
@@ -419,40 +339,40 @@ function Index() {
       {/* MARQUEE OF SIGNALS */}
       <div className="border-b border-border overflow-hidden">
         <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex items-center gap-10 font-mono-label text-[10px] text-muted-foreground whitespace-nowrap overflow-x-auto">
-          <span className="text-foreground">SIGNALS INGESTED ·</span>
-          {["Apple Health","Oura","Whoop","Garmin","Withings BP","Continuous Glucose","Manual Pain Log","Pelvic EMG","Sleep Stage","HRV"].map(x=>(
+          <span className="text-foreground">WE TRACK ·</span>
+          {["Pain log","Range of motion","Sitting hours","Pelvic-floor tone","Erection / arousal log","Position comfort","Lube / tool use","Sleep position"].map(x=>(
             <span key={x}>{x}</span>
           ))}
         </div>
       </div>
 
 
-      {/* THESIS, the value prop spelled out */}
+      {/* THESIS · why backs and sex are one job */}
       <section id="thesis" className="px-6 md:px-10 py-32 border-b border-border">
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4">
             <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE THESIS</p>
             <h2 className="font-serif-display text-4xl md:text-5xl mt-5 leading-[1.02] tracking-tight">
-              Back pain isn't a back problem.<br/>
-              <span className="italic text-muted-foreground">It's a system problem.</span>
+              Your back and your sex life<br/>
+              <span className="italic text-muted-foreground">share a pelvis.</span>
             </h2>
           </div>
           <div className="lg:col-span-8 lg:pt-2 grid md:grid-cols-2 gap-x-12 gap-y-8 text-muted-foreground leading-relaxed">
             <p>
-              <span className="font-serif-display text-2xl text-foreground block mb-2">Vascular.</span>
-              Resting blood pressure, HRV and endothelial function predict both spinal recovery and erectile capacity. The same circulatory system runs both.
+              <span className="font-serif-display text-2xl text-foreground block mb-2">Same muscles.</span>
+              The pelvic floor is the floor of your spinal canister and the engine room of every erection, every orgasm, every painless pregnancy recovery. One muscle group, two jobs, almost nobody coaches it.
             </p>
             <p>
-              <span className="font-serif-display text-2xl text-foreground block mb-2">Neuromuscular.</span>
-              The pelvic floor and deep core are the same muscle group that stabilizes the spine and governs intimate performance. Train one, you train the other.
+              <span className="font-serif-display text-2xl text-foreground block mb-2">Same nerves.</span>
+              The lumbar nerves that misfire as sciatica are the same nerves that gate genital sensation. Quiet the back and the wiring downstream comes back online.
             </p>
             <p>
-              <span className="font-serif-display text-2xl text-foreground block mb-2">Inflammatory.</span>
-              Diet, sleep debt and chronic stress raise systemic inflammation. Inflammation drives next-day pain and depresses testosterone in the same 24-hour window.
+              <span className="font-serif-display text-2xl text-foreground block mb-2">Same positions.</span>
+              The hip flexion, the spinal load, the breath access. Half of 'we don't anymore' is a back problem nobody named. We rank positions for it.
             </p>
             <p>
-              <span className="font-serif-display text-2xl text-foreground block mb-2">Neurological.</span>
-              The nervous system that interprets pain is the nervous system that gates arousal. Quiet the first and the second comes back online.
+              <span className="font-serif-display text-2xl text-foreground block mb-2">Same conversation.</span>
+              You can't fix one without the other. We're the first product willing to coach both, in the same week, by clinicians who can actually say the words.
             </p>
           </div>
         </div>
@@ -465,7 +385,7 @@ function Index() {
             <div className="lg:col-span-5">
               <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE PERFORMANCE INDEX</p>
               <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
-                One number,<br/>built from six.
+                One number,<br/>two outcomes.
               </h2>
             </div>
             <div className="lg:col-span-7">
@@ -518,39 +438,6 @@ function Index() {
           </p>
         </div>
       </section>
-
-      {/* PILLARS */}
-      <section id="pillars" className="px-6 md:px-10 py-32 border-b border-border">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="grid lg:grid-cols-12 gap-10 mb-14">
-            <div className="lg:col-span-5">
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE PROTOCOL</p>
-              <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
-                Six pillars.<br/>One daily plan.
-              </h2>
-            </div>
-            <div className="lg:col-span-7 lg:pt-3">
-              <p className="text-muted-foreground leading-relaxed max-w-2xl">
-                You don't choose between strength and breathwork, or stretching and nutrition. The Index decides what the spine and the system most need today, and your plan reorders itself around it.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">
-            {PILLARS.map((p)=>(
-              <article key={p.n} className="bg-background p-8 hover:bg-card/50 transition group">
-                <div className="flex items-start justify-between">
-                  <p className="font-mono-label text-[10px] text-muted-foreground">{p.n}</p>
-                  <p.icon className="w-5 h-5 text-[var(--brand-amber)] opacity-70 group-hover:opacity-100 transition"/>
-                </div>
-                <h3 className="font-serif-display text-3xl mt-12">{p.title}</h3>
-                <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.desc}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
 
       {/* AFTER DARK, the spicy thesis, named */}
       <section className="relative px-6 md:px-10 py-32 border-b border-border overflow-hidden"
@@ -640,18 +527,18 @@ function Index() {
         </div>
       </section>
 
-      {/* METHODOLOGY, editorial split with breath/nutrition */}
+      {/* METHODOLOGY · two editorial spreads, back + bedroom */}
       <section className="px-6 md:px-10 py-32 border-b border-border">
         <div className="max-w-[1280px] mx-auto space-y-32">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <img src={meditation} alt="" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover"/>
             <div>
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">PILLAR 04 · BREATH & CNS</p>
+              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">FOR THE BACK</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-                The shortest path between a calm nervous system and a confident body.
+                Eight minutes of McGill, daily. The cheapest insurance your spine will ever buy.
               </h3>
               <p className="mt-6 text-muted-foreground leading-relaxed">
-                Vagal training, 4-7-8 down-regulation, body-scan visualization. Built with chronic-pain clinicians and sex therapists. Ten minutes, measurably lower next-morning pain and resting heart rate.
+                Curl-up, side plank, bird dog, paced for endurance not range. Coached on video by spine PTs, scaled to today's pain score. The protocol that beat lumbar surgery in head-to-head trials, finally taught properly.
               </p>
             </div>
           </div>
@@ -660,12 +547,12 @@ function Index() {
               <img src={nutrition} alt="" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover"/>
             </div>
             <div className="lg:order-1">
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">PILLAR 05 · NUTRITION</p>
+              <p className="font-mono-label text-[10px]" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-                The plate that lowers inflammation also raises performance.
+                Reverse kegel before regular kegel. The order most adults have backwards.
               </h3>
               <p className="mt-6 text-muted-foreground leading-relaxed">
-                Omega-3, polyphenols, hydration, connective-tissue protein. Calibrated to today's training load and last night's sleep. Grocery lists you'll actually use.
+                A chronically gripping pelvic floor is why arousal stalls, why erections fade, why penetration hurts. We coach the down-train first, with diaphragmatic breath, then the up-train for control. APTA pelvic-health PTs, on video, in plain language.
               </p>
             </div>
           </div>
