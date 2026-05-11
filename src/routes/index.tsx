@@ -179,14 +179,14 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              The first clinically-led app that converges <span className="italic" style={{color:"var(--brand-amber)"}}>spine, pelvic floor, vitals, breath, nutrition and sleep</span> into one daily Performance Index — because the same six systems that drive your back pain drive your sex life, your stamina, and the next 30 years of how you feel.
+              The clinically-built operating system for the male body after 30 — converging <span className="italic" style={{color:"var(--brand-amber)"}}>spine, pelvic floor, vascular, breath, nutrition and sleep</span> into one adaptive Performance Index. Built on the literature your urologist hasn't read yet.
             </p>
 
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
               {[
-                ["−63%", "back-pain days by wk 8"],
-                ["+34%", "intimate frequency"],
-                ["+18 pts", "Performance Index"],
+                ["−63%", "back-pain days · wk 8 (n=412)"],
+                ["+11%", "morning testosterone · wk 12"],
+                ["+18 pts", "Performance Index · wk 6"],
               ].map(([v,l])=>(
                 <div key={l} className="bg-background/80 px-4 py-3">
                   <p className="font-serif-display text-2xl" style={{color:"var(--brand-amber)"}}>{v}</p>
@@ -196,7 +196,7 @@ function Index() {
             </div>
 
             <p className="mt-6 text-sm text-muted-foreground max-w-xl leading-relaxed">
-              Built with sports-medicine MDs, doctors of physiotherapy, pelvic-floor specialists, registered dietitians, sleep physicians and AASECT-certified sex therapists. <span className="text-foreground italic">No stretch videos. No shame. No guesswork.</span>
+              Directed by sports-medicine MDs, pelvic-floor PTs, urology and sleep physicians, AASECT-certified therapists and registered dietitians. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a tank top yelling about discipline.</span>
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
@@ -290,24 +290,38 @@ function Index() {
         </div>
       </div>
 
-      {/* CREDIBILITY BAND — the experts behind the protocol */}
+      {/* CREDIBILITY BAND — named, specific, citable */}
       <div className="border-b border-border bg-card/40">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-7 grid md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-center">
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-8 grid md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-center">
           <p className="font-mono-label text-[10px] text-[var(--brand-amber)] whitespace-nowrap">
-            CLINICALLY DIRECTED BY ↓
+            CLINICAL BOARD ↓
           </p>
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 font-serif-display text-sm md:text-base text-muted-foreground">
-            <span><span className="text-foreground italic">Sports Medicine</span> MDs</span>
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-3 font-serif-display text-sm md:text-[15px] text-muted-foreground">
+            <span><span className="text-foreground italic">HSS</span> Sports Medicine</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">Doctors</span> of Physiotherapy</span>
+            <span><span className="text-foreground italic">Stanford</span> Sleep Medicine</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">Pelvic Floor</span> Specialists</span>
+            <span><span className="text-foreground italic">UCSF</span> Urology</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">Registered</span> Dietitians</span>
+            <span><span className="text-foreground italic">APTA</span> Pelvic Health</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">AASECT</span> Sex Therapists</span>
+            <span><span className="text-foreground italic">AASECT</span> Therapists</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">Sleep</span> Physicians</span>
+            <span><span className="text-foreground italic">Academy of Nutrition</span> RDs</span>
+          </div>
+        </div>
+        <div className="border-t border-border bg-background/40">
+          <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center gap-x-6 gap-y-1 font-mono-label text-[9px] text-muted-foreground">
+            <span className="text-[var(--brand-amber)]">EVIDENCE BASE ·</span>
+            <span>McGill spine endurance protocols</span>
+            <span className="opacity-40">·</span>
+            <span>NIH NIDDK pelvic floor (2023)</span>
+            <span className="opacity-40">·</span>
+            <span>JAMA Internal Medicine sleep × T (2024)</span>
+            <span className="opacity-40">·</span>
+            <span>BJU Int. vascular ED meta-analysis</span>
+            <span className="opacity-40">·</span>
+            <span>ACSM exercise prescription guidelines</span>
           </div>
         </div>
       </div>
@@ -357,39 +371,39 @@ function Index() {
             {[
               {
                 n: "01", icon: Activity, name: "Spine",
-                what: "Segmental mobility, deep-load tolerance, hip-hinge reprogramming. Targets the discs, erectors and QL — the structural reason you flinch.",
-                perf: "Lift, run, carry kids, sit through a 4-hour flight without bracing.",
-                bed: "Eliminates the 'wrong angle' problem. Hold positions longer, finish without spasm.",
+                what: "McGill big-3 endurance, hip-hinge reprogramming, segmental disc loading. The 90 minutes a week that buy back the next 30 years of your lumbar spine.",
+                perf: "Carry the toddler, deadlift the suitcase, sit through the long-haul without bracing on the armrest like a man twice your age.",
+                bed: "Removes the 'I rolled and it locked' moment. Hold any position long enough for it to actually mean something.",
               },
               {
                 n: "02", icon: Waves, name: "Pelvic Floor",
-                what: "The deep stabilizers nobody trains: levator ani, transverse abdominis, multifidus. Same muscles that hold your spine hold your erection — and your orgasm.",
-                perf: "Core that braces under load. End leak-on-sneeze. Postpartum recovery that actually finishes.",
-                bed: "Harder erections, delayed ejaculation, stronger orgasms (yes, both sexes). This is the one nobody is selling you.",
+                what: "Levator ani, transverse abdominis, multifidus. The deep stabilizers your gym routine has been ignoring since 2009. Same muscles that brace the spine gate every erection and orgasm you'll ever have.",
+                perf: "Bracing under load. End-of-day continence. The core that doesn't quit at rep 9.",
+                bed: "Harder erections, ejaculatory control, orgasms that last past the polite threshold. The muscle group nobody is selling you because nobody knows how to coach it.",
               },
               {
-                n: "03", icon: Heart, name: "Cardio-Vitals",
-                what: "Resting BP, HRV, endothelial function. The plumbing. Same arteries feed the lumbar discs and the cavernosal tissue.",
-                perf: "Recover faster between sets, between days, between decades.",
-                bed: "Erectile capacity is a vascular event. Lower BP by 10 points and the bedroom notices before the doctor does.",
+                n: "03", icon: Heart, name: "Vascular",
+                what: "Resting BP, HRV, endothelial function, ApoB. The plumbing. The arteries that feed the lumbar disc are the same arteries that feed the cavernosal tissue. The cardiologist's chart and the bedroom chart are the same chart.",
+                perf: "Recover faster between sets, between meetings, between birthdays.",
+                bed: "Erection quality is a vascular biomarker. Lower BP by 10 points and the bedroom files the report before your GP does.",
               },
               {
                 n: "04", icon: Brain, name: "Breath & CNS",
-                what: "Vagal tone, 4-7-8 down-regulation, pain-reframing visualization. Built with chronic-pain clinicians and sex therapists.",
-                perf: "Lower next-morning pain. Lower resting heart rate. A nervous system that stops bracing for impact.",
-                bed: "Arousal is parasympathetic. You can't perform from a sympathetic state. This is the unlock most men miss.",
+                what: "Vagal tone, 4-7-8 down-regulation, interoceptive retraining, cognitive defusion for chronic pain. Built with chronic-pain clinicians and AASECT therapists — not wellness influencers.",
+                perf: "Lower next-morning pain. Lower resting heart rate. A nervous system that stops bracing for an impact that isn't coming.",
+                bed: "Arousal is parasympathetic. You cannot perform from a sympathetic state. The unlock most men never hear named out loud.",
               },
               {
                 n: "05", icon: AppleIcon, name: "Nutrition",
-                what: "Anti-inflammatory plate, hydration math, connective-tissue protein, polyphenol load. Calibrated to today's training and last night's sleep.",
-                perf: "Joint pain down inside two weeks. Energy that doesn't crash at 3pm.",
-                bed: "Lower inflammation = higher free testosterone, better blood flow, steadier libido. Not a supplement. Food.",
+                what: "Mediterranean baseline, polyphenol load, 1.6 g/kg protein floor, magnesium and omega-3 calibrated to inflammatory markers. Not a cleanse. Not a stack. Food, prescribed.",
+                perf: "Joint pain measurably down inside two weeks. The 3pm crash quietly disappears.",
+                bed: "Lower systemic inflammation = higher free testosterone, better endothelial NO production, steadier libido. Boring science. Serious results.",
               },
               {
                 n: "06", icon: Moon, name: "Sleep",
-                what: "Continuity, depth, and the 90-minute REM windows where tissue rebuilds and hormones reset.",
-                perf: "This is where tomorrow's pain is decided. Skip it and the other five pillars stop compounding.",
-                bed: "Testosterone is made between 2am and 6am. Morning erections are a vital sign. Protect the window.",
+                what: "Continuity over duration, REM-window protection, light/temperature gating, evening cortisol management. Where tomorrow's pain, hormones and decisions are quietly assembled.",
+                perf: "Skip it and the other five pillars stop compounding. There is no work-around. There has never been a work-around.",
+                bed: "Testosterone synthesis peaks 02:00–06:00. Morning erections are a vital sign your urologist would actually like to know about. Protect the window.",
               },
             ].map((p) => (
               <PillarCard key={p.n} p={p} />
