@@ -405,10 +405,10 @@ function Index() {
           <div className="lg:col-span-7">
             <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-clay)"}}>WHY NOW</p>
             <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
-              Back pain hits 619M people. The market's answer is a stretch video.
+              Back pain hits 619M people. The market's answer is a stretch video and a magnesium gummy.
             </h2>
             <p className="mt-8 text-lg leading-relaxed" style={{color:"oklch(0.35 0.01 60)"}}>
-              The category is fragmented across PT clinics, telehealth, supplements, and content apps. None of them touch sex, even though the muscles, nerves and breathwork are the same. We're the first protocol that treats the back and the bedroom as one job — because anatomically, they are.
+              The category is fragmented across PT clinics, telehealth, supplements, and content apps that all stop talking the moment your pants come off. None of them touch sex, even though the muscles, nerves and breathwork are the same ones they were charging you for an hour ago. We're the first protocol that treats the back and the bedroom as one job — because anatomically, they always were. The taboo was a marketing decision.
             </p>
             <div className="mt-10 grid grid-cols-3 gap-6">
               {[
