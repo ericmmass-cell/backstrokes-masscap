@@ -172,16 +172,38 @@ function Index() {
              style={{backgroundImage:"linear-gradient(to right, white 1px, transparent 1px)", backgroundSize:"calc(100%/12) 100%"}}/>
       </section>
 
-      {/* TAGLINE STRIP */}
-      <div className="border-b border-border" style={{background:"var(--gradient-neon)"}}>
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-3.5 flex items-center justify-center gap-5 md:gap-10 font-display-bold text-sm md:text-lg text-[var(--brand-ink)] tracking-wide">
-          <span>♡</span>
-          <span>Stronger back.</span>
-          <span className="opacity-50">·</span>
-          <span>Hotter life.</span>
-          <span className="opacity-50">·</span>
-          <span>Better dates.</span>
-          <span>🔥</span>
+      {/* TAGLINE STRIP — gold foil on velvet */}
+      <div className="border-y border-border" style={{background:"linear-gradient(180deg, oklch(0.16 0.02 26), oklch(0.13 0.012 28))"}}>
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex items-center justify-center gap-6 md:gap-12 font-serif-display italic text-base md:text-2xl tracking-tight" style={{color:"var(--brand-amber)"}}>
+          <span className="opacity-50">◆</span>
+          <span>Fit.</span>
+          <span className="opacity-40 not-italic font-mono-label text-xs">·</span>
+          <span>Flex.</span>
+          <span className="opacity-40 not-italic font-mono-label text-xs">·</span>
+          <span style={{color:"var(--brand-blush)"}}>F*ck.</span>
+          <span className="opacity-50">◆</span>
+        </div>
+      </div>
+
+      {/* CREDIBILITY BAND — the experts behind the protocol */}
+      <div className="border-b border-border bg-card/40">
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-7 grid md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-center">
+          <p className="font-mono-label text-[10px] text-[var(--brand-amber)] whitespace-nowrap">
+            CLINICALLY DIRECTED BY ↓
+          </p>
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 font-serif-display text-sm md:text-base text-muted-foreground">
+            <span><span className="text-foreground italic">Sports Medicine</span> MDs</span>
+            <span className="opacity-40">·</span>
+            <span><span className="text-foreground italic">Doctors</span> of Physiotherapy</span>
+            <span className="opacity-40">·</span>
+            <span><span className="text-foreground italic">Pelvic Floor</span> Specialists</span>
+            <span className="opacity-40">·</span>
+            <span><span className="text-foreground italic">Registered</span> Dietitians</span>
+            <span className="opacity-40">·</span>
+            <span><span className="text-foreground italic">AASECT</span> Sex Therapists</span>
+            <span className="opacity-40">·</span>
+            <span><span className="text-foreground italic">Sleep</span> Physicians</span>
+          </div>
         </div>
       </div>
 
