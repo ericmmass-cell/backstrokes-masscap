@@ -52,14 +52,14 @@ function Index() {
               <circle cx="11" cy="11" r="3" fill="currentColor"/>
             </svg>
             <div className="flex flex-col leading-none">
-              <span className="font-serif-display text-xl tracking-tight">
-                Back<span className="text-[var(--brand-teal)]">Better</span>
+              <span className="font-serif-display text-xl tracking-tight italic">
+                Back<span style={{color:"var(--brand-amber)"}}>Stroke</span>
               </span>
-              <span className="font-script text-[13px] text-muted-foreground -mt-0.5">
-                Strong back. <span className="italic" style={{color:"var(--brand-pink)"}}>Hotter life.</span>
+              <span className="font-script text-[12px] text-muted-foreground -mt-0.5 tracking-wide">
+                a members' protocol for <span className="italic" style={{color:"var(--brand-blush)"}}>the well-lived body</span>
               </span>
             </div>
-            <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">™</sup>
+            <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">℠</sup>
           </div>
           <nav className="hidden md:flex items-center gap-9 font-mono-label text-[10px] text-muted-foreground">
             <a href="#thesis" className="hover:text-foreground transition">Thesis</a>
@@ -78,25 +78,27 @@ function Index() {
       <section className="relative px-6 md:px-10 pt-16 md:pt-20 pb-28 border-b border-border overflow-hidden">
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-10 items-center relative">
           <div className="lg:col-span-7 relative z-10">
-            <p className="font-mono-label text-[10px] text-muted-foreground mb-6">
-              FIG. 00 · INTEGRATED HEALTH FOR BACKS THAT REFUSE TO SIT IT OUT
+            <p className="font-mono-label text-[10px] text-[var(--brand-amber)] mb-6">
+              ◆ MEMBERS' PROTOCOL · EST. MMXXVI · BY INVITATION
             </p>
-            <h1 className="font-display-bold text-[56px] md:text-[88px] lg:text-[108px] leading-[0.88] tracking-[-0.015em]">
-              Good in bed.<br/>
-              Great in life.<br/>
-              <span className="text-[var(--brand-teal)]" style={{textShadow:"var(--glow-teal)"}}>Unstoppable</span><br/>
-              <span className="text-[var(--brand-teal)]" style={{textShadow:"var(--glow-teal)"}}>in both.</span>
-              <span className="font-script text-5xl md:text-6xl ml-3 align-top" style={{color:"var(--brand-pink)"}}>♡</span>
+            <h1 className="font-serif-display text-[56px] md:text-[84px] lg:text-[104px] leading-[0.92] tracking-[-0.025em]">
+              The quietly<br/>
+              <span className="italic" style={{color:"var(--brand-amber)", textShadow:"var(--glow-teal)"}}>devastating</span><br/>
+              art of being<br/>
+              <span className="italic" style={{
+                background:"var(--gradient-text)",
+                WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
+              }}>well-built.</span>
             </h1>
             <p className="mt-10 text-lg text-muted-foreground max-w-md leading-relaxed">
-              The integrated health & fitness app for people with bad backs who <span className="underline underline-offset-4 decoration-[var(--brand-pink)] decoration-2 text-foreground">don't just</span> sit at home.
+              A clinically-led, six-pillar protocol for backs, bodies and bedrooms that <span className="italic text-foreground">refuse to retire early</span>. Built with physiotherapists, sports medicine MDs, pelvic-floor specialists, registered dietitians and certified sex therapists.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
-              <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-teal)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
-                Start the 7-min Index <ArrowUpRight className="w-4 h-4"/>
+              <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
+                Request the Index <ArrowUpRight className="w-4 h-4"/>
               </a>
-              <span className="font-script text-2xl leading-tight max-w-[260px]" style={{color:"var(--brand-teal)"}}>
-                Healthy back. <span style={{color:"var(--brand-pink)"}}>High confidence.</span> More yes.
+              <span className="font-script text-2xl leading-tight max-w-[260px] italic" style={{color:"var(--brand-blush)"}}>
+                Fit. Flex. <span style={{color:"var(--brand-amber)"}}>F*ck.</span> — in that order, darling.
               </span>
             </div>
           </div>
@@ -170,16 +172,38 @@ function Index() {
              style={{backgroundImage:"linear-gradient(to right, white 1px, transparent 1px)", backgroundSize:"calc(100%/12) 100%"}}/>
       </section>
 
-      {/* TAGLINE STRIP */}
-      <div className="border-b border-border" style={{background:"var(--gradient-neon)"}}>
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-3.5 flex items-center justify-center gap-5 md:gap-10 font-display-bold text-sm md:text-lg text-[var(--brand-ink)] tracking-wide">
-          <span>♡</span>
-          <span>Stronger back.</span>
-          <span className="opacity-50">·</span>
-          <span>Hotter life.</span>
-          <span className="opacity-50">·</span>
-          <span>Better dates.</span>
-          <span>🔥</span>
+      {/* TAGLINE STRIP — gold foil on velvet */}
+      <div className="border-y border-border" style={{background:"linear-gradient(180deg, oklch(0.16 0.02 26), oklch(0.13 0.012 28))"}}>
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex items-center justify-center gap-6 md:gap-12 font-serif-display italic text-base md:text-2xl tracking-tight" style={{color:"var(--brand-amber)"}}>
+          <span className="opacity-50">◆</span>
+          <span>Fit.</span>
+          <span className="opacity-40 not-italic font-mono-label text-xs">·</span>
+          <span>Flex.</span>
+          <span className="opacity-40 not-italic font-mono-label text-xs">·</span>
+          <span style={{color:"var(--brand-blush)"}}>F*ck.</span>
+          <span className="opacity-50">◆</span>
+        </div>
+      </div>
+
+      {/* CREDIBILITY BAND — the experts behind the protocol */}
+      <div className="border-b border-border bg-card/40">
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-7 grid md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-center">
+          <p className="font-mono-label text-[10px] text-[var(--brand-amber)] whitespace-nowrap">
+            CLINICALLY DIRECTED BY ↓
+          </p>
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 font-serif-display text-sm md:text-base text-muted-foreground">
+            <span><span className="text-foreground italic">Sports Medicine</span> MDs</span>
+            <span className="opacity-40">·</span>
+            <span><span className="text-foreground italic">Doctors</span> of Physiotherapy</span>
+            <span className="opacity-40">·</span>
+            <span><span className="text-foreground italic">Pelvic Floor</span> Specialists</span>
+            <span className="opacity-40">·</span>
+            <span><span className="text-foreground italic">Registered</span> Dietitians</span>
+            <span className="opacity-40">·</span>
+            <span><span className="text-foreground italic">AASECT</span> Sex Therapists</span>
+            <span className="opacity-40">·</span>
+            <span><span className="text-foreground italic">Sleep</span> Physicians</span>
+          </div>
         </div>
       </div>
 
@@ -475,13 +499,13 @@ function Index() {
         <div className="absolute inset-0 opacity-30 pointer-events-none"
              style={{background:"radial-gradient(ellipse at 50% 50%, oklch(0.78 0.14 195 / 0.25), transparent 60%)"}}/>
         <div className="max-w-[1100px] mx-auto text-center relative">
-          <p className="font-script text-3xl md:text-4xl mb-4" style={{color:"var(--brand-pink)"}}>
-            Fix it. Flex it. Enjoy it. ♡
+          <p className="font-script text-3xl md:text-4xl mb-4 italic" style={{color:"var(--brand-blush)"}}>
+            Fit. Flex. <span style={{color:"var(--brand-amber)"}}>F*ck.</span> ◆
           </p>
-          <h2 className="font-display-bold text-5xl md:text-7xl lg:text-8xl mt-2 leading-[0.92] tracking-tight">
+          <h2 className="font-serif-display text-5xl md:text-7xl lg:text-8xl mt-2 leading-[0.95] tracking-[-0.025em]">
             Don't let your back<br/>
             be the reason<br/>
-            <span className="text-[var(--brand-teal)]" style={{textShadow:"var(--glow-teal)"}}>you miss out.</span>
+            <span className="italic" style={{color:"var(--brand-amber)", textShadow:"var(--glow-teal)"}}>you stay home.</span>
           </h2>
           <p className="mt-10 text-muted-foreground max-w-lg mx-auto leading-relaxed">
             7-minute baseline. Your protocol assembles the same day. Two weeks free, then $24/month — less than one PT visit.

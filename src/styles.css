@@ -63,36 +63,39 @@
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(0.16 0.008 60);
-  --foreground: oklch(0.96 0.01 80);
-  --card: oklch(0.21 0.01 60);
-  --card-foreground: oklch(0.96 0.01 80);
-  --popover: oklch(0.21 0.01 60);
-  --popover-foreground: oklch(0.96 0.01 80);
-  --primary: oklch(0.78 0.11 75);
-  --primary-foreground: oklch(0.16 0.008 60);
-  --secondary: oklch(0.26 0.012 60);
-  --secondary-foreground: oklch(0.96 0.01 80);
-  --muted: oklch(0.24 0.01 60);
-  --muted-foreground: oklch(0.68 0.015 70);
-  --accent: oklch(0.55 0.08 160);
-  --accent-foreground: oklch(0.96 0.01 80);
+  --background: oklch(0.13 0.012 28);
+  --foreground: oklch(0.95 0.012 80);
+  --card: oklch(0.18 0.018 26);
+  --card-foreground: oklch(0.95 0.012 80);
+  --popover: oklch(0.18 0.018 26);
+  --popover-foreground: oklch(0.95 0.012 80);
+  --primary: oklch(0.8 0.13 80);
+  --primary-foreground: oklch(0.13 0.012 28);
+  --secondary: oklch(0.24 0.02 26);
+  --secondary-foreground: oklch(0.95 0.012 80);
+  --muted: oklch(0.22 0.018 28);
+  --muted-foreground: oklch(0.7 0.018 70);
+  --accent: oklch(0.42 0.14 22);
+  --accent-foreground: oklch(0.95 0.012 80);
 
-  --brand-amber: oklch(0.82 0.11 80);
-  --brand-clay: oklch(0.62 0.12 35);
-  --brand-sage: oklch(0.7 0.06 155);
-  --brand-ink: oklch(0.14 0.008 60);
-  --brand-paper: oklch(0.96 0.012 80);
-  --brand-paper-ink: oklch(0.18 0.01 60);
-  --brand-ember: oklch(0.55 0.18 25);
-  --brand-blush: oklch(0.72 0.14 18);
-  --brand-teal: oklch(0.78 0.14 195);
-  --brand-pink: oklch(0.72 0.22 0);
-  --gradient-text: linear-gradient(92deg, oklch(0.88 0.09 85), oklch(0.7 0.1 50));
-  --gradient-ember: linear-gradient(135deg, oklch(0.55 0.18 25), oklch(0.72 0.11 50));
-  --gradient-neon: linear-gradient(135deg, var(--brand-teal), var(--brand-pink));
-  --glow-teal: 0 0 24px oklch(0.78 0.14 195 / 0.55), 0 0 60px oklch(0.78 0.14 195 / 0.25);
-  --glow-pink: 0 0 24px oklch(0.72 0.22 0 / 0.55), 0 0 60px oklch(0.72 0.22 0 / 0.25);
+  /* Speakeasy palette: oxblood velvet, candlelight gold, ivory, smoke */
+  --brand-amber: oklch(0.78 0.13 78);          /* candle gold */
+  --brand-gold: oklch(0.82 0.14 82);           /* foil */
+  --brand-clay: oklch(0.5 0.13 28);            /* terracotta */
+  --brand-sage: oklch(0.6 0.05 150);
+  --brand-ink: oklch(0.12 0.012 30);           /* deep velvet black */
+  --brand-paper: oklch(0.94 0.018 78);         /* ivory */
+  --brand-paper-ink: oklch(0.18 0.01 40);
+  --brand-oxblood: oklch(0.32 0.11 22);        /* deep wine */
+  --brand-ember: oklch(0.42 0.14 22);
+  --brand-blush: oklch(0.7 0.11 18);           /* dusty rose */
+  --brand-teal: oklch(0.78 0.13 78);           /* legacy alias → gold */
+  --brand-pink: oklch(0.6 0.14 22);            /* legacy alias → oxblood-rose */
+  --gradient-text: linear-gradient(92deg, oklch(0.88 0.1 82), oklch(0.66 0.12 50));
+  --gradient-ember: linear-gradient(135deg, var(--brand-oxblood), var(--brand-ember));
+  --gradient-neon: linear-gradient(135deg, var(--brand-oxblood), var(--brand-amber));
+  --glow-teal: 0 0 18px oklch(0.78 0.13 78 / 0.35), 0 0 50px oklch(0.78 0.13 78 / 0.18);
+  --glow-pink: 0 0 18px oklch(0.5 0.14 22 / 0.45), 0 0 50px oklch(0.42 0.14 22 / 0.22);
   --shadow-soft: 0 1px 0 oklch(1 0 0 / 0.04) inset, 0 20px 60px -20px oklch(0 0 0 / 0.55);
   --shadow-lift: 0 30px 80px -30px oklch(0 0 0 / 0.6);
   --shadow-ember: 0 30px 80px -20px oklch(0.55 0.18 25 / 0.35);
