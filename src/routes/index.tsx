@@ -51,7 +51,14 @@ function Index() {
               <circle cx="11" cy="11" r="10" stroke="currentColor" strokeWidth="1" fill="none"/>
               <circle cx="11" cy="11" r="3" fill="currentColor"/>
             </svg>
-            <span className="font-serif-display text-xl tracking-tight">BackBetter</span>
+            <div className="flex flex-col leading-none">
+              <span className="font-serif-display text-xl tracking-tight">
+                Back<span className="text-[var(--brand-teal)]">Better</span>
+              </span>
+              <span className="font-script text-[13px] text-muted-foreground -mt-0.5">
+                Strong back. <span className="italic" style={{color:"var(--brand-pink)"}}>Hotter life.</span>
+              </span>
+            </div>
             <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">™</sup>
           </div>
           <nav className="hidden md:flex items-center gap-9 font-mono-label text-[10px] text-muted-foreground">
