@@ -278,24 +278,7 @@ function Index() {
                 bed: "Testosterone is made between 2am and 6am. Morning erections are a vital sign. Protect the window.",
               },
             ].map((p) => (
-              <article key={p.n} className="bg-background p-7 hover:bg-card/60 transition group">
-                <div className="flex items-start justify-between mb-6">
-                  <p className="font-mono-label text-[10px] text-muted-foreground">PILLAR {p.n}</p>
-                  <p.icon className="w-5 h-5 text-[var(--brand-amber)] opacity-70 group-hover:opacity-100 transition"/>
-                </div>
-                <h3 className="font-serif-display text-3xl italic">{p.name}</h3>
-                <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.what}</p>
-                <div className="mt-6 pt-5 border-t border-border space-y-3">
-                  <div>
-                    <p className="font-mono-label text-[9px] text-[var(--brand-amber)] mb-1">↗ DAILY LIFE</p>
-                    <p className="text-[13px] text-foreground leading-snug">{p.perf}</p>
-                  </div>
-                  <div>
-                    <p className="font-mono-label text-[9px] mb-1" style={{color:"var(--brand-blush)"}}>◆ AFTER DARK</p>
-                    <p className="text-[13px] text-foreground leading-snug italic">{p.bed}</p>
-                  </div>
-                </div>
-              </article>
+              <PillarCard key={p.n} p={p} />
             ))}
           </div>
 
