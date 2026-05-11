@@ -253,6 +253,60 @@ function Index() {
         </div>
       </section>
 
+
+      {/* AFTER DARK — the spicy thesis, named */}
+      <section className="relative px-6 md:px-10 py-32 border-b border-border overflow-hidden"
+               style={{background:"radial-gradient(ellipse at 70% 40%, oklch(0.22 0.05 25) 0%, var(--brand-ink) 60%)"}}>
+        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-14 items-center relative">
+          <div className="lg:col-span-6 relative">
+            <img src={intimate} alt="" loading="lazy" width={1024} height={1280}
+                 className="w-full aspect-[4/5] object-cover"
+                 style={{boxShadow:"var(--shadow-ember)"}}/>
+            <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] text-white/70">
+              <span>FIG. 03 · AFTER DARK</span>
+              <span style={{color:"var(--brand-blush)"}}>● 22:47</span>
+            </div>
+          </div>
+          <div className="lg:col-span-6">
+            <p className="font-mono-label text-[10px]" style={{color:"var(--brand-blush)"}}>
+              THE PART NOBODY ELSE WILL SAY
+            </p>
+            <h2 className="font-serif-display text-5xl md:text-7xl mt-6 leading-[0.98] tracking-[-0.025em]">
+              You don't want a<br/>
+              <span className="italic" style={{
+                background:"var(--gradient-ember)",
+                WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
+              }}>functional spine.</span><br/>
+              You want a life<br/>
+              that uses it.
+            </h2>
+            <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-xl">
+              Lower back pain is the #1 reason couples avoid intimacy. The same six signals that govern recovery — circulation, pelvic floor, breath, sleep, inflammation, mobility — are the exact six that govern arousal, stamina and confidence in bed.
+            </p>
+            <p className="mt-6 text-lg text-foreground leading-relaxed max-w-xl">
+              Train the system. The bedroom is downstream.
+            </p>
+
+            <div className="mt-10 grid grid-cols-3 gap-px border" style={{borderColor:"oklch(0.72 0.14 18 / 0.25)"}}>
+              {[
+                ["+34%","reported intimate frequency, week 8"],
+                ["−47%","of users no longer cite pain as a barrier"],
+                ["2.1×","self-rated confidence after 60 days"],
+              ].map(([v,l])=>(
+                <div key={l} className="p-5" style={{background:"oklch(0.18 0.02 25 / 0.6)"}}>
+                  <p className="font-serif-display text-3xl" style={{color:"var(--brand-blush)"}}>{v}</p>
+                  <p className="text-[11px] text-muted-foreground mt-2 leading-snug">{l}</p>
+                </div>
+              ))}
+            </div>
+
+            <p className="font-serif-display text-2xl italic mt-10" style={{color:"var(--brand-amber)"}}>
+              Strong back. Steady breath. Hot life.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* PAPER SECTION — the pitch on light ground */}
       <section className="px-6 md:px-10 py-32 border-b border-border"
                style={{background:"var(--brand-paper)", color:"var(--brand-paper-ink)"}}>
