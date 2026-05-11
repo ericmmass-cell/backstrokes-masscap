@@ -52,14 +52,14 @@ function Index() {
               <circle cx="11" cy="11" r="3" fill="currentColor"/>
             </svg>
             <div className="flex flex-col leading-none">
-              <span className="font-serif-display text-xl tracking-tight">
-                Back<span className="text-[var(--brand-teal)]">Better</span>
+              <span className="font-serif-display text-xl tracking-tight italic">
+                Back<span style={{color:"var(--brand-amber)"}}>Stroke</span>
               </span>
-              <span className="font-script text-[13px] text-muted-foreground -mt-0.5">
-                Strong back. <span className="italic" style={{color:"var(--brand-pink)"}}>Hotter life.</span>
+              <span className="font-script text-[12px] text-muted-foreground -mt-0.5 tracking-wide">
+                a members' protocol for <span className="italic" style={{color:"var(--brand-blush)"}}>the well-lived body</span>
               </span>
             </div>
-            <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">™</sup>
+            <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">℠</sup>
           </div>
           <nav className="hidden md:flex items-center gap-9 font-mono-label text-[10px] text-muted-foreground">
             <a href="#thesis" className="hover:text-foreground transition">Thesis</a>
