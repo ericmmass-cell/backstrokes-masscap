@@ -193,29 +193,29 @@ function Index() {
 
       {/* CREDIBILITY BAND */}
       <div className="border-b border-border bg-card/40">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-8 grid md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-center">
-          <p className="font-mono-label text-[10px] text-[var(--brand-amber)] whitespace-nowrap">
-            COACHED BY ↓
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-9 grid md:grid-cols-[auto_1fr] gap-6 md:gap-12 items-center">
+          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)] whitespace-nowrap">
+            Coached by ↓
           </p>
-          <div className="flex flex-wrap items-center gap-x-7 gap-y-3 font-serif-display text-sm md:text-[15px] text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 font-serif-display text-sm md:text-[15px] text-muted-foreground">
             <span><span className="text-foreground italic">McGill-trained</span> spine PTs</span>
-            <span className="opacity-40">·</span>
+            <span className="opacity-30">·</span>
             <span><span className="text-foreground italic">APTA</span> Pelvic Health (men &amp; women)</span>
-            <span className="opacity-40">·</span>
+            <span className="opacity-30">·</span>
             <span><span className="text-foreground italic">ISSWSH</span> + <span className="text-foreground italic">AASECT</span> sex therapists</span>
-            <span className="opacity-40">·</span>
+            <span className="opacity-30">·</span>
             <span><span className="text-foreground italic">UCSF</span> Urology &amp; Ob-Gyn consults</span>
           </div>
         </div>
-        <div className="border-t border-border bg-background/40">
-          <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center gap-x-6 gap-y-1 font-mono-label text-[9px] text-muted-foreground">
-            <span className="text-[var(--brand-amber)]">EVIDENCE BASE ·</span>
+        <div className="border-t border-border/60 bg-background/40">
+          <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center gap-x-6 gap-y-1 font-mono-label text-[9px] tracking-[0.16em] uppercase text-muted-foreground">
+            <span className="text-[var(--brand-amber)]">Evidence base ·</span>
             <span>McGill spine endurance protocols</span>
-            <span className="opacity-40">·</span>
+            <span className="opacity-30">·</span>
             <span>NIH NIDDK pelvic floor (2023)</span>
-            <span className="opacity-40">·</span>
+            <span className="opacity-30">·</span>
             <span>ISSWSH female sexual function consensus</span>
-            <span className="opacity-40">·</span>
+            <span className="opacity-30">·</span>
             <span>AUA erectile + ejaculatory guidelines</span>
           </div>
         </div>
