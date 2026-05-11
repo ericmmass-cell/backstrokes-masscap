@@ -179,7 +179,7 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              Two problems. <span className="italic" style={{color:"var(--brand-amber)"}}>Bad backs and dead bedrooms.</span> Same nervous system, same pelvis, same blood supply, same wrecked sleep. We treat them as the one problem they actually are. Everything else, the breath work, the food, the labs, exists to serve those two outcomes.
+              Two things. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that hurts. A sex life that doesn't.</span> Same pelvis, same nerves, same muscles, same blood supply. We don't sell wellness. We coach the eight or nine specific things that make your lumbar quieter and your genitals happier, and we coach them properly.
             </p>
 
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
