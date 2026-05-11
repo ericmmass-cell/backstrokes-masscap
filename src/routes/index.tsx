@@ -74,49 +74,93 @@ function Index() {
         </div>
       </header>
 
-      {/* HERO — sharp thesis */}
-      <section className="relative px-6 md:px-10 pt-24 pb-32 border-b border-border overflow-hidden">
-        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12 items-end">
-          <div className="lg:col-span-7">
-            <div className="flex items-center gap-3 font-mono-label text-[10px] text-muted-foreground mb-10">
-              <span className="w-6 h-px bg-[var(--brand-amber)]" />
-              <span>FIG. 00 · A NEW CATEGORY OF SPINE CARE</span>
-            </div>
-            <h1 className="font-serif-display text-[44px] md:text-[68px] lg:text-[84px] leading-[0.98] tracking-[-0.025em]">
-              Your back<br/>
-              isn't a problem<br/>
-              to manage.<br/>
-              <span className="text-[var(--brand-amber)] italic">It's the system that runs your life.</span>
-            </h1>
-            <p className="mt-10 text-lg text-muted-foreground max-w-xl leading-relaxed">
-              BackBetter is the first integrated protocol that converges six health signals — spine, pelvic floor, vitals, breath, nutrition, sleep — into a single, adaptive <em className="not-italic text-foreground">Performance Index</em>. The result: less pain, more capacity, and the part nobody else will say out loud — measurably better sex.
+      {/* HERO — bold, sexy, ad-style */}
+      <section className="relative px-6 md:px-10 pt-16 md:pt-20 pb-28 border-b border-border overflow-hidden">
+        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-10 items-center relative">
+          <div className="lg:col-span-7 relative z-10">
+            <p className="font-mono-label text-[10px] text-muted-foreground mb-6">
+              FIG. 00 · INTEGRATED HEALTH FOR BACKS THAT REFUSE TO SIT IT OUT
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-5">
-              <a href="#cta" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[var(--brand-amber)] text-primary-foreground text-sm font-medium hover:opacity-90 transition">
-                Calculate your Index <ArrowUpRight className="w-4 h-4"/>
+            <h1 className="font-display-bold text-[56px] md:text-[88px] lg:text-[108px] leading-[0.88] tracking-[-0.015em]">
+              Good in bed.<br/>
+              Great in life.<br/>
+              <span className="text-[var(--brand-teal)]" style={{textShadow:"var(--glow-teal)"}}>Unstoppable</span><br/>
+              <span className="text-[var(--brand-teal)]" style={{textShadow:"var(--glow-teal)"}}>in both.</span>
+              <span className="font-script text-5xl md:text-6xl ml-3 align-top" style={{color:"var(--brand-pink)"}}>♡</span>
+            </h1>
+            <p className="mt-10 text-lg text-muted-foreground max-w-md leading-relaxed">
+              The integrated health & fitness app for people with bad backs who <span className="underline underline-offset-4 decoration-[var(--brand-pink)] decoration-2 text-foreground">don't just</span> sit at home.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-6">
+              <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-teal)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
+                Start the 7-min Index <ArrowUpRight className="w-4 h-4"/>
               </a>
-              <a href="#thesis" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition">
-                Read the thesis <ArrowRight className="w-4 h-4"/>
-              </a>
+              <span className="font-script text-2xl leading-tight max-w-[260px]" style={{color:"var(--brand-teal)"}}>
+                Healthy back. <span style={{color:"var(--brand-pink)"}}>High confidence.</span> More yes.
+              </span>
             </div>
           </div>
 
+          {/* Right: hero image + phone mockup + neon stamp */}
           <div className="lg:col-span-5 relative">
             <div className="relative">
               <img src={heroCouple} alt="" width={1024} height={1280}
-                   className="w-full aspect-[4/5] object-cover" style={{boxShadow:"var(--shadow-lift)"}}/>
+                   className="w-full aspect-[4/5] object-cover rounded-sm" style={{boxShadow:"var(--shadow-lift)"}}/>
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] text-white/80">
                 <span>SUBJECT 04 · DAY 42</span>
-                <span>● LIVE</span>
+                <span style={{color:"var(--brand-pink)"}}>● LIVE</span>
               </div>
-              <div className="absolute bottom-4 left-4 right-4 grid grid-cols-3 gap-2 text-white">
-                {[["INDEX","87"],["PAIN","2.1"],["BP","118/76"]].map(([k,v])=>(
-                  <div key={k} className="backdrop-blur-md bg-black/30 px-3 py-2 rounded-sm">
-                    <p className="font-mono-label text-[8px] opacity-70">{k}</p>
-                    <p className="font-serif-display text-lg leading-none mt-1">{v}</p>
+              <span className="absolute -top-4 left-4 font-script text-2xl rotate-[-4deg] drop-shadow-lg" style={{color:"var(--brand-pink)"}}>
+                Your best come-from-behind story yet.
+              </span>
+            </div>
+
+            {/* Phone mockup */}
+            <div className="hidden md:block absolute -left-20 lg:-left-36 bottom-[-30px] w-[220px] rotate-[-6deg]"
+                 style={{filter:"drop-shadow(0 30px 40px rgba(0,0,0,0.7))"}}>
+              <div className="rounded-[28px] border-[8px] border-[oklch(0.08_0_0)] bg-[var(--brand-ink)] overflow-hidden">
+                <div className="px-4 pt-2 pb-1 flex items-center justify-between text-[8px] text-white/80 font-mono-label">
+                  <span>9:41</span><span>● ● ●</span>
+                </div>
+                <div className="px-3 pb-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-serif-display text-sm">Back<span className="text-[var(--brand-teal)]">Better</span></span>
+                    <span className="text-[9px]" style={{color:"var(--brand-pink)"}}>🔥 12</span>
                   </div>
-                ))}
+                  <p className="font-mono-label text-[7px] text-muted-foreground">TODAY'S PLAN</p>
+                  <h4 className="font-serif-display text-base mt-0.5 leading-tight">Perform with<br/>Confidence 😉</h4>
+                  <p className="text-[9px] text-muted-foreground mt-0.5">20 min · Core & Lower Back</p>
+                  <button className="mt-2 w-full py-1.5 rounded-md text-[10px] font-semibold bg-[var(--brand-teal)] text-[var(--brand-ink)]">Start Workout</button>
+                  <div className="grid grid-cols-2 gap-1.5 mt-2">
+                    <div className="bg-card/80 rounded-md p-1.5">
+                      <p className="text-[7px] text-muted-foreground">Pain</p>
+                      <p className="font-serif-display text-base leading-none mt-0.5">2<span className="text-[8px] text-muted-foreground">/10</span></p>
+                    </div>
+                    <div className="bg-card/80 rounded-md p-1.5">
+                      <p className="text-[7px] text-muted-foreground">Mobility</p>
+                      <svg viewBox="0 0 60 24" className="mt-0.5 w-full h-5">
+                        <polyline points="0,18 10,15 20,17 30,12 40,9 50,7 60,4"
+                                  fill="none" stroke="var(--brand-teal)" strokeWidth="1.5"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            {/* Neon stamp */}
+            <div className="absolute -right-2 lg:-right-8 top-[28%] w-[130px] h-[130px] rounded-full flex items-center justify-center text-center rotate-[8deg]"
+                 style={{
+                   border:"2px solid var(--brand-pink)",
+                   boxShadow:"var(--glow-pink)",
+                   background:"oklch(0.16 0.008 60 / 0.55)",
+                   backdropFilter:"blur(4px)"
+                 }}>
+              <p className="font-display-bold text-[13px] leading-tight" style={{color:"var(--brand-pink)"}}>
+                Move better.<br/>
+                <span className="font-script normal-case text-2xl block leading-none my-0.5">F*ck better.</span>
+                Live better.
+              </p>
             </div>
           </div>
         </div>
@@ -125,6 +169,19 @@ function Index() {
         <div className="absolute inset-x-0 top-0 h-full pointer-events-none opacity-[0.04]"
              style={{backgroundImage:"linear-gradient(to right, white 1px, transparent 1px)", backgroundSize:"calc(100%/12) 100%"}}/>
       </section>
+
+      {/* TAGLINE STRIP */}
+      <div className="border-b border-border" style={{background:"var(--gradient-neon)"}}>
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-3.5 flex items-center justify-center gap-5 md:gap-10 font-display-bold text-sm md:text-lg text-[var(--brand-ink)] tracking-wide">
+          <span>♡</span>
+          <span>Stronger back.</span>
+          <span className="opacity-50">·</span>
+          <span>Hotter life.</span>
+          <span className="opacity-50">·</span>
+          <span>Better dates.</span>
+          <span>🔥</span>
+        </div>
+      </div>
 
       {/* MARQUEE OF SIGNALS */}
       <div className="border-b border-border overflow-hidden">
@@ -135,6 +192,7 @@ function Index() {
           ))}
         </div>
       </div>
+
 
       {/* THESIS — the value prop spelled out */}
       <section id="thesis" className="px-6 md:px-10 py-32 border-b border-border">
