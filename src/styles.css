@@ -63,20 +63,20 @@
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(0.16 0.008 60);
-  --foreground: oklch(0.96 0.01 80);
-  --card: oklch(0.21 0.01 60);
-  --card-foreground: oklch(0.96 0.01 80);
-  --popover: oklch(0.21 0.01 60);
-  --popover-foreground: oklch(0.96 0.01 80);
-  --primary: oklch(0.78 0.11 75);
-  --primary-foreground: oklch(0.16 0.008 60);
-  --secondary: oklch(0.26 0.012 60);
-  --secondary-foreground: oklch(0.96 0.01 80);
-  --muted: oklch(0.24 0.01 60);
-  --muted-foreground: oklch(0.68 0.015 70);
-  --accent: oklch(0.55 0.08 160);
-  --accent-foreground: oklch(0.96 0.01 80);
+  --background: oklch(0.13 0.012 28);
+  --foreground: oklch(0.95 0.012 80);
+  --card: oklch(0.18 0.018 26);
+  --card-foreground: oklch(0.95 0.012 80);
+  --popover: oklch(0.18 0.018 26);
+  --popover-foreground: oklch(0.95 0.012 80);
+  --primary: oklch(0.8 0.13 80);
+  --primary-foreground: oklch(0.13 0.012 28);
+  --secondary: oklch(0.24 0.02 26);
+  --secondary-foreground: oklch(0.95 0.012 80);
+  --muted: oklch(0.22 0.018 28);
+  --muted-foreground: oklch(0.7 0.018 70);
+  --accent: oklch(0.42 0.14 22);
+  --accent-foreground: oklch(0.95 0.012 80);
 
   /* Speakeasy palette: oxblood velvet, candlelight gold, ivory, smoke */
   --brand-amber: oklch(0.78 0.13 78);          /* candle gold */
