@@ -317,7 +317,7 @@ function Index() {
             <span className="opacity-40">·</span>
             <span>NIH NIDDK pelvic floor (2023)</span>
             <span className="opacity-40">·</span>
-            <span>JAMA Int. Med, sleep × hormones (2024)</span>
+            <span>JAMA Internal Medicine, sleep × hormones (2024)</span>
             <span className="opacity-40">·</span>
             <span>BJU Int. + Menopause vascular meta-analyses</span>
             <span className="opacity-40">·</span>
