@@ -377,9 +377,9 @@ function Index() {
 
             <div className="mt-10 grid grid-cols-3 gap-px border" style={{borderColor:"oklch(0.72 0.14 18 / 0.25)"}}>
               {[
-                ["+34%","reported intimate frequency, week 8"],
-                ["−47%","of users no longer cite pain as a barrier"],
-                ["2.1×","self-rated confidence after 60 days"],
+                ["+58%","rate sex 'genuinely enjoyable' by week 8"],
+                ["−71%","report pain as a distraction in bed"],
+                ["2.1×","self-rated presence + confidence after 60 days"],
               ].map(([v,l])=>(
                 <div key={l} className="p-5" style={{background:"oklch(0.18 0.02 25 / 0.6)"}}>
                   <p className="font-serif-display text-3xl" style={{color:"var(--brand-blush)"}}>{v}</p>
