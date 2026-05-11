@@ -18,9 +18,9 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "BackBetter — The Performance Index for spines that have a life" },
-      { name: "description", content: "BackBetter converges spine, vitals, pelvic floor, breath, nutrition and sleep into a single Performance Index — the first integrated protocol linking back health to sexual performance and longevity." },
-      { property: "og:title", content: "BackBetter — Performance Index for the modern spine" },
+      { title: "BackStroke — The Performance Index for spines that have a life" },
+      { name: "description", content: "BackStroke converges spine, vitals, pelvic floor, breath, nutrition and sleep into a single Performance Index — the first integrated protocol linking back health to sexual performance and longevity." },
+      { property: "og:title", content: "BackStroke — Performance Index for the modern spine" },
       { property: "og:description", content: "Six data streams. One adaptive protocol. Measurable gains in pain, capacity, confidence and performance." },
     ],
     links: [
@@ -382,7 +382,7 @@ function Index() {
               Back pain affects 619M people. The market's answer is a stretch video.
             </h2>
             <p className="mt-8 text-lg leading-relaxed" style={{color:"oklch(0.35 0.01 60)"}}>
-              The chronic-pain category is fragmented across PT clinics, telehealth, supplements, and content apps. None of them touch sexual function — even though the data is identical to the data that predicts it. BackBetter is the first product to integrate the stack and own the most underserved outcome in adult health.
+              The chronic-pain category is fragmented across PT clinics, telehealth, supplements, and content apps. None of them touch sexual function — even though the data is identical to the data that predicts it. BackStroke is the first product to integrate the stack and own the most underserved outcome in adult health.
             </p>
             <div className="mt-10 grid grid-cols-3 gap-6">
               {[
@@ -516,11 +516,11 @@ function Index() {
                 <circle cx="11" cy="11" r="10" stroke="currentColor" strokeWidth="1" fill="none"/>
                 <circle cx="11" cy="11" r="3" fill="currentColor"/>
               </svg>
-              <span className="font-serif-display text-base">BackBetter</span>
+              <span className="font-serif-display text-base">BackStroke</span>
             </div>
             <p>The Performance Index for the modern spine.</p>
           </div>
-          <div className="md:text-center">© BackBetter Labs · MMXXVI</div>
+          <div className="md:text-center">© BackStroke Labs · MMXXVI</div>
           <div className="md:text-right">Built for backs that have things to do.</div>
         </div>
       </footer>
