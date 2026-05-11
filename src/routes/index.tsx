@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type ComponentType } from "react";
 import {
-  Activity, Apple as AppleIcon, Brain, Heart, Waves, Moon,
+  Activity, Waves,
   ArrowUpRight, ArrowRight, Plus,
 } from "lucide-react";
 
