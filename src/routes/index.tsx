@@ -274,16 +274,16 @@ function Index() {
               </div>
               <h3 className="font-serif-display text-3xl italic leading-tight mb-2">Quieter lumbar in two weeks.</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                Not stretching. Endurance, hinging, and a few habits the world refuses to teach. Coached by McGill-trained PTs.
+                Not stretching. Endurance, hinging, and a few habits the wellness aisle refuses to teach because none of them photograph well. Coached by McGill-trained PTs.
               </p>
               <ol className="space-y-5">
                 {[
-                  ["McGill big-3", "Curl-up, side plank, bird dog. Eight minutes. The endurance trio that quiets disc pain better than anything stretching has ever done."],
-                  ["Hip-hinge re-pattern", "Pick up the laundry without flexing your spine. The single move that ends ninety percent of 'I tweaked it bending over.'"],
-                  ["Glute bridge + 90/90 hip switch", "Wake up the muscles that are supposed to be carrying your spine. They've been on holiday since you got a desk job."],
-                  ["Dead-hang + thoracic opener", "Two minutes a day. Decompresses the discs gravity has been compressing all day."],
-                  ["Sleep position audit", "Pillow under the knees, not under the head. The change you make tonight that your morning lumbar notices tomorrow."],
-                  ["Sitting protocol", "When to stand, what to perch on, how to drive a long haul without arriving wrecked. Boring. Decisive."],
+                  ["McGill big-3", "Curl-up, side plank, bird dog. Eight minutes. The endurance trio that out-quiets disc pain better than every stretch your yoga teacher recommended in good faith."],
+                  ["Hip-hinge re-pattern", "How to pick up the laundry without flexing your spine into a question mark. The single move that ends ninety percent of 'I tweaked it bending over.'"],
+                  ["Glute bridge + 90/90 hip switch", "Wake up the muscles that are supposed to be carrying your spine. They have been on paid leave since you accepted the desk job."],
+                  ["Dead-hang + thoracic opener", "Two minutes a day. Decompresses the discs gravity has spent the day politely compressing."],
+                  ["Sleep position audit", "Pillow under the knees, not the head. The boring change you make tonight that your morning lumbar writes you a thank-you note for."],
+                  ["Sitting protocol", "When to stand, what to perch on, how to drive a long haul without arriving as a folded napkin. Boring. Decisive."],
                 ].map(([h, b], i) => (
                   <li key={h} className="flex gap-4">
                     <span className="font-mono-label text-[10px] text-muted-foreground pt-1 w-6 shrink-0">B.0{i+1}</span>
