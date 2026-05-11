@@ -78,25 +78,27 @@ function Index() {
       <section className="relative px-6 md:px-10 pt-16 md:pt-20 pb-28 border-b border-border overflow-hidden">
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-10 items-center relative">
           <div className="lg:col-span-7 relative z-10">
-            <p className="font-mono-label text-[10px] text-muted-foreground mb-6">
-              FIG. 00 · INTEGRATED HEALTH FOR BACKS THAT REFUSE TO SIT IT OUT
+            <p className="font-mono-label text-[10px] text-[var(--brand-amber)] mb-6">
+              ◆ MEMBERS' PROTOCOL · EST. MMXXVI · BY INVITATION
             </p>
-            <h1 className="font-display-bold text-[56px] md:text-[88px] lg:text-[108px] leading-[0.88] tracking-[-0.015em]">
-              Good in bed.<br/>
-              Great in life.<br/>
-              <span className="text-[var(--brand-teal)]" style={{textShadow:"var(--glow-teal)"}}>Unstoppable</span><br/>
-              <span className="text-[var(--brand-teal)]" style={{textShadow:"var(--glow-teal)"}}>in both.</span>
-              <span className="font-script text-5xl md:text-6xl ml-3 align-top" style={{color:"var(--brand-pink)"}}>♡</span>
+            <h1 className="font-serif-display text-[56px] md:text-[84px] lg:text-[104px] leading-[0.92] tracking-[-0.025em]">
+              The quietly<br/>
+              <span className="italic" style={{color:"var(--brand-amber)", textShadow:"var(--glow-teal)"}}>devastating</span><br/>
+              art of being<br/>
+              <span className="italic" style={{
+                background:"var(--gradient-text)",
+                WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
+              }}>well-built.</span>
             </h1>
             <p className="mt-10 text-lg text-muted-foreground max-w-md leading-relaxed">
-              The integrated health & fitness app for people with bad backs who <span className="underline underline-offset-4 decoration-[var(--brand-pink)] decoration-2 text-foreground">don't just</span> sit at home.
+              A clinically-led, six-pillar protocol for backs, bodies and bedrooms that <span className="italic text-foreground">refuse to retire early</span>. Built with physiotherapists, sports medicine MDs, pelvic-floor specialists, registered dietitians and certified sex therapists.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
-              <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-teal)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
-                Start the 7-min Index <ArrowUpRight className="w-4 h-4"/>
+              <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
+                Request the Index <ArrowUpRight className="w-4 h-4"/>
               </a>
-              <span className="font-script text-2xl leading-tight max-w-[260px]" style={{color:"var(--brand-teal)"}}>
-                Healthy back. <span style={{color:"var(--brand-pink)"}}>High confidence.</span> More yes.
+              <span className="font-script text-2xl leading-tight max-w-[260px] italic" style={{color:"var(--brand-blush)"}}>
+                Fit. Flex. <span style={{color:"var(--brand-amber)"}}>F*ck.</span> — in that order, darling.
               </span>
             </div>
           </div>
