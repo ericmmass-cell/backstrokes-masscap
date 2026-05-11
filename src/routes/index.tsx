@@ -444,7 +444,7 @@ function Index() {
                 Eight minutes of McGill, daily. The rent your spine pays to keep doing things you like.
               </h3>
               <p className="mt-6 text-muted-foreground leading-relaxed">
-                Curl-up, side plank, bird dog. Paced for endurance, not range. Coached on video by spine PTs, scaled to today's pain. The protocol that beat lumbar surgery in head-to-head trials — finally taught properly, instead of buried in a YouTube comment thread.
+                Curl-up, side plank, bird dog. Paced for endurance, not range. Coached on video by spine PTs, scaled to today's pain. The protocol that beat lumbar surgery in head-to-head trials — finally taught properly, instead of buried under a comment thread arguing about whether sit-ups count.
               </p>
             </div>
           </div>
@@ -455,10 +455,10 @@ function Index() {
             <div className="lg:order-1">
               <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-                Reverse kegel before kegel. The order your phone app got wrong.
+                Reverse kegel before kegel. The order your phone app got backwards.
               </h3>
               <p className="mt-6 text-muted-foreground leading-relaxed">
-                A chronically gripping pelvic floor is why arousal stalls, why erections fade, why penetration hurts. We coach the down-train first, with diaphragmatic breath, then the up-train for control. APTA pelvic-health PTs, on video, in plain language. Postpartum and post-prostatectomy protocols built in — same voice, softer register, no shortcuts.
+                A chronically gripping pelvic floor is why arousal stalls, why erections fade, why penetration hurts. We coach the down-train first, with diaphragmatic breath, then the up-train for control. APTA pelvic-health PTs, on video, in plain language. Postpartum and post-prostatectomy protocols built in — same voice, softer register, no shortcuts and no jokes about the part that isn't funny.
               </p>
             </div>
           </div>
