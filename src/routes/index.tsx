@@ -357,13 +357,13 @@ function Index() {
         <div className="max-w-[1280px] mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
             <div>
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE SIX · WHAT EACH ONE ACTUALLY DOES</p>
+              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE SUPPORTING CAST · HOW EACH ONE FEEDS THE BACK AND THE BEDROOM</p>
               <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight max-w-2xl">
-                Six systems. <span className="italic text-muted-foreground">One body that performs, in the gym, on the floor, and in bed.</span>
+                The work is the back and the sex. <span className="italic text-muted-foreground">These six are the levers we pull to get them.</span>
               </h2>
             </div>
             <p className="font-mono-label text-[10px] text-muted-foreground max-w-xs">
-              Train them in isolation and you get six mediocre wins. Train them as one stack and the body recomposes around capability.
+              Nobody comes to us for better HRV or a polyphenol score. They come because their lower back is loud and their bedroom is quiet. Everything below is in service of fixing those two things.
             </p>
           </div>
 
