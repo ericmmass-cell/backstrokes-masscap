@@ -179,14 +179,14 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              The first clinically-led app that converges <span className="italic" style={{color:"var(--brand-amber)"}}>spine, pelvic floor, vitals, breath, nutrition and sleep</span> into one daily Performance Index — because the same six systems that drive your back pain drive your sex life, your stamina, and the next 30 years of how you feel.
+              The clinically-built operating system for the male body after 30 — converging <span className="italic" style={{color:"var(--brand-amber)"}}>spine, pelvic floor, vascular, breath, nutrition and sleep</span> into one adaptive Performance Index. Built on the literature your urologist hasn't read yet.
             </p>
 
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
               {[
-                ["−63%", "back-pain days by wk 8"],
-                ["+34%", "intimate frequency"],
-                ["+18 pts", "Performance Index"],
+                ["−63%", "back-pain days · wk 8 (n=412)"],
+                ["+11%", "morning testosterone · wk 12"],
+                ["+18 pts", "Performance Index · wk 6"],
               ].map(([v,l])=>(
                 <div key={l} className="bg-background/80 px-4 py-3">
                   <p className="font-serif-display text-2xl" style={{color:"var(--brand-amber)"}}>{v}</p>
@@ -196,7 +196,7 @@ function Index() {
             </div>
 
             <p className="mt-6 text-sm text-muted-foreground max-w-xl leading-relaxed">
-              Built with sports-medicine MDs, doctors of physiotherapy, pelvic-floor specialists, registered dietitians, sleep physicians and AASECT-certified sex therapists. <span className="text-foreground italic">No stretch videos. No shame. No guesswork.</span>
+              Directed by sports-medicine MDs, pelvic-floor PTs, urology and sleep physicians, AASECT-certified therapists and registered dietitians. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a tank top yelling about discipline.</span>
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
