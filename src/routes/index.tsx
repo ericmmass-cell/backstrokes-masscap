@@ -144,7 +144,7 @@ function Index() {
             <a href="#try" className="hover:text-foreground transition" style={{color:"var(--brand-amber)"}}>◆ Try Live</a>
             <a href="#thesis" className="hover:text-foreground transition">Thesis</a>
             <a href="#index" className="hover:text-foreground transition">The Index</a>
-            <a href="#pillars" className="hover:text-foreground transition">Protocol</a>
+            <a href="#six" className="hover:text-foreground transition">The Work</a>
             <a href="#evidence" className="hover:text-foreground transition">Evidence</a>
             <a href="#stories" className="hover:text-foreground transition">Stories</a>
           </nav>
