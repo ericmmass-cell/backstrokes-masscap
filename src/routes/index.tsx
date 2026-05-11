@@ -99,6 +99,7 @@ import t3 from "@/assets/testimonial-3.jpg";
 import intimate from "@/assets/intimate.jpg";
 import { ConvergenceDiagram } from "@/components/ConvergenceDiagram";
 import { CorrelationGrid } from "@/components/CorrelationGrid";
+import { LiveProtocol } from "@/components/LiveProtocol";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -148,14 +149,15 @@ function Index() {
             <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">℠</sup>
           </div>
           <nav className="hidden md:flex items-center gap-9 font-mono-label text-[10px] text-muted-foreground">
+            <a href="#try" className="hover:text-foreground transition" style={{color:"var(--brand-amber)"}}>◆ Try Live</a>
             <a href="#thesis" className="hover:text-foreground transition">Thesis</a>
             <a href="#index" className="hover:text-foreground transition">The Index</a>
             <a href="#pillars" className="hover:text-foreground transition">Protocol</a>
             <a href="#evidence" className="hover:text-foreground transition">Evidence</a>
             <a href="#stories" className="hover:text-foreground transition">Stories</a>
           </nav>
-          <a href="#cta" className="text-sm px-4 py-2 rounded-full bg-foreground text-background font-medium hover:opacity-90 transition">
-            Get the Index
+          <a href="#try" className="text-sm px-4 py-2 rounded-full bg-foreground text-background font-medium hover:opacity-90 transition">
+            Try the Protocol
           </a>
         </div>
       </header>
@@ -309,6 +311,32 @@ function Index() {
           </div>
         </div>
       </div>
+
+      {/* LIVE PROTOCOL — actually fix, flex, f*ck */}
+      <section id="try" className="px-6 md:px-10 py-24 border-b border-border relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
+             style={{ backgroundImage: "radial-gradient(var(--brand-amber) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
+        <div className="max-w-[1280px] mx-auto relative">
+          <div className="grid lg:grid-cols-12 gap-10 items-end mb-10">
+            <div className="lg:col-span-7">
+              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">◆ TRY THE PROTOCOL · NO SIGNUP</p>
+              <h2 className="font-serif-display text-4xl md:text-6xl mt-4 leading-[0.98] tracking-tight">
+                Stop reading the pitch.<br/>
+                <span className="italic" style={{ color: "var(--brand-blush)", textShadow: "var(--glow-pink)" }}>
+                  Run a session.
+                </span>
+              </h2>
+            </div>
+            <p className="lg:col-span-5 text-muted-foreground leading-relaxed max-w-md">
+              Tap a zone, log today's pain, run a real flex set with breath pacing — then flip the switch and watch the after-dark protocol assemble itself around your spine.
+            </p>
+          </div>
+          <LiveProtocol />
+          <p className="font-mono-label text-[9px] text-muted-foreground mt-4 text-center">
+            FIG. 04 · INTERACTIVE PREVIEW · YOUR INDEX SCORE UPDATES IN REAL TIME ABOVE
+          </p>
+        </div>
+      </section>
 
       {/* SIX PILLARS — fast, specific, performance + bedroom outcomes */}
       <section id="six" className="px-6 md:px-10 py-24 border-b border-border">
