@@ -96,7 +96,7 @@ export function LiveProtocol() {
   const [afterDark, setAfterDark] = useState(false);
   const matched = POSITIONS.filter((p) => p.safeFor.includes(zone));
 
-  // Index calc. reactive to user input
+  // Index calc, reactive to user input
   const baseIndex = 62;
   const painPenalty = pain * 2.5;
   const flexBonus = (doneReps / totalReps) * 14;
@@ -358,7 +358,7 @@ export function LiveProtocol() {
                 ))}
                 {matched.length === 0 && (
                   <p className="bg-background p-8 col-span-2 text-sm text-muted-foreground italic">
-                    Today's flare is too acute. Recovery protocol queued instead. sleep + breath only.
+                    Today's flare is too acute. Recovery protocol queued instead, sleep + breath only.
                   </p>
                 )}
               </div>

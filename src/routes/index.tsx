@@ -106,7 +106,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "BackStroke. The Performance Index for spines that have a life" },
-      { name: "description", content: "BackStroke converges spine, vitals, pelvic floor, breath, nutrition and sleep into a single Performance Index. the first integrated protocol linking back health to sexual performance and longevity." },
+      { name: "description", content: "BackStroke converges spine, vitals, pelvic floor, breath, nutrition and sleep into a single Performance Index, the first integrated protocol linking back health to sexual performance and longevity." },
       { property: "og:title", content: "BackStroke. Performance Index for the modern spine" },
       { property: "og:description", content: "Six data streams. One adaptive protocol. Measurable gains in pain, capacity, confidence and performance." },
     ],
@@ -119,11 +119,11 @@ export const Route = createFileRoute("/")({
 });
 
 const PILLARS = [
-  { n: "01", icon: Activity,   title: "Spine",        desc: "Strength, mobility, and load tolerance. programmed by physiotherapists, sequenced to your phase." },
-  { n: "02", icon: Waves,      title: "Pelvic Floor", desc: "The deep stabilizers your back depends on. and the muscles that govern intimate performance." },
+  { n: "01", icon: Activity,   title: "Spine",        desc: "Strength, mobility, and load tolerance, programmed by physiotherapists, sequenced to your phase." },
+  { n: "02", icon: Waves,      title: "Pelvic Floor", desc: "The deep stabilizers your back depends on, and the muscles that govern intimate performance." },
   { n: "03", icon: Heart,      title: "Cardio-Vitals",desc: "Resting BP, heart rate, HRV. Vascular health is sexual health. Your back rides on it." },
   { n: "04", icon: Brain,      title: "Breath & CNS", desc: "HRV-paced breathwork and pain-reframing visualization. Down-regulate to perform up." },
-  { n: "05", icon: AppleIcon,  title: "Nutrition",    desc: "Anti-inflammatory plate, hydration, and connective-tissue protein targets. calibrated daily." },
+  { n: "05", icon: AppleIcon,  title: "Nutrition",    desc: "Anti-inflammatory plate, hydration, and connective-tissue protein targets, calibrated daily." },
   { n: "06", icon: Moon,       title: "Sleep",        desc: "Continuity and depth. Where tissue rebuilds, hormones reset, and tomorrow's pain is decided." },
 ];
 
@@ -162,7 +162,7 @@ function Index() {
         </div>
       </header>
 
-      {/* HERO. bold, sexy, ad-style */}
+      {/* HERO, bold, sexy, ad-style */}
       <section className="relative px-6 md:px-10 pt-16 md:pt-20 pb-28 border-b border-border overflow-hidden">
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-10 items-center relative">
           <div className="lg:col-span-7 relative z-10">
@@ -179,7 +179,7 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              The clinically-built operating system for the adult body after 30. converging <span className="italic" style={{color:"var(--brand-amber)"}}>spine, pelvic floor, vascular, breath, nutrition and sleep</span> into one adaptive Performance Index. Calibrated for him, for her, and for the cycle, perimenopause and recovery windows nobody else is modeling.
+              The clinically-built operating system for the adult body after 30, converging <span className="italic" style={{color:"var(--brand-amber)"}}>spine, pelvic floor, vascular, breath, nutrition and sleep</span> into one adaptive Performance Index. Calibrated for him, for her, and for the cycle, perimenopause and recovery windows nobody else is modeling.
             </p>
 
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
@@ -203,7 +203,7 @@ function Index() {
                 Request the Index <ArrowUpRight className="w-4 h-4"/>
               </a>
               <span className="font-script text-2xl leading-tight max-w-[260px] italic" style={{color:"var(--brand-blush)"}}>
-                Fit. Flex. <span style={{color:"var(--brand-amber)"}}>F*ck.</span>. in that order, darling.
+                Fit. Flex. <span style={{color:"var(--brand-amber)"}}>F*ck.</span>, in that order, darling.
               </span>
             </div>
           </div>
@@ -277,7 +277,7 @@ function Index() {
              style={{backgroundImage:"linear-gradient(to right, white 1px, transparent 1px)", backgroundSize:"calc(100%/12) 100%"}}/>
       </section>
 
-      {/* TAGLINE STRIP. gold foil on velvet */}
+      {/* TAGLINE STRIP, gold foil on velvet */}
       <div className="border-y border-border" style={{background:"linear-gradient(180deg, oklch(0.16 0.02 26), oklch(0.13 0.012 28))"}}>
         <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex items-center justify-center gap-6 md:gap-12 font-serif-display italic text-base md:text-2xl tracking-tight" style={{color:"var(--brand-amber)"}}>
           <span className="opacity-50">◆</span>
@@ -290,7 +290,7 @@ function Index() {
         </div>
       </div>
 
-      {/* CREDIBILITY BAND. named, specific, citable */}
+      {/* CREDIBILITY BAND, named, specific, citable */}
       <div className="border-b border-border bg-card/40">
         <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-8 grid md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-center">
           <p className="font-mono-label text-[10px] text-[var(--brand-amber)] whitespace-nowrap">
@@ -317,7 +317,7 @@ function Index() {
             <span className="opacity-40">·</span>
             <span>NIH NIDDK pelvic floor (2023)</span>
             <span className="opacity-40">·</span>
-            <span>JAMA Int. Med. sleep × hormones (2024)</span>
+            <span>JAMA Int. Med, sleep × hormones (2024)</span>
             <span className="opacity-40">·</span>
             <span>BJU Int. + Menopause vascular meta-analyses</span>
             <span className="opacity-40">·</span>
@@ -326,7 +326,7 @@ function Index() {
         </div>
       </div>
 
-      {/* LIVE PROTOCOL. actually fix, flex, f*ck */}
+      {/* LIVE PROTOCOL, actually fix, flex, f*ck */}
       <section id="try" className="px-6 md:px-10 py-24 border-b border-border relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
              style={{ backgroundImage: "radial-gradient(var(--brand-amber) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
@@ -342,7 +342,7 @@ function Index() {
               </h2>
             </div>
             <p className="lg:col-span-5 text-muted-foreground leading-relaxed max-w-md">
-              Tap a zone, log today's pain, run a real flex set with breath pacing. then flip the switch and watch the after-dark protocol assemble itself around your spine.
+              Tap a zone, log today's pain, run a real flex set with breath pacing, then flip the switch and watch the after-dark protocol assemble itself around your spine.
             </p>
           </div>
           <LiveProtocol />
@@ -352,14 +352,14 @@ function Index() {
         </div>
       </section>
 
-      {/* SIX PILLARS. fast, specific, performance + bedroom outcomes */}
+      {/* SIX PILLARS, fast, specific, performance + bedroom outcomes */}
       <section id="six" className="px-6 md:px-10 py-24 border-b border-border">
         <div className="max-w-[1280px] mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
             <div>
               <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE SIX · WHAT EACH ONE ACTUALLY DOES</p>
               <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight max-w-2xl">
-                Six systems. <span className="italic text-muted-foreground">One body that performs. in the gym, on the floor, and in bed.</span>
+                Six systems. <span className="italic text-muted-foreground">One body that performs, in the gym, on the floor, and in bed.</span>
               </h2>
             </div>
             <p className="font-mono-label text-[10px] text-muted-foreground max-w-xs">
@@ -377,7 +377,7 @@ function Index() {
               },
               {
                 n: "02", icon: Waves, name: "Pelvic Floor",
-                what: "Levator ani, transverse abdominis, multifidus. The deep stabilizers your gym routine has been ignoring since 2009. Same muscles that brace the spine gate arousal, continence and orgasm. in every body.",
+                what: "Levator ani, transverse abdominis, multifidus. The deep stabilizers your gym routine has been ignoring since 2009. Same muscles that brace the spine gate arousal, continence and orgasm, in every body.",
                 perf: "Bracing under load. End-of-day continence. Postpartum recovery that actually finishes. The core that doesn't quit at rep 9.",
                 bed: "Harder erections, ejaculatory control, and on the other side: arousal that arrives, lubrication, multi-orgasmic capacity, dyspareunia resolved. The muscle group nobody is selling because nobody knows how to coach it.",
               },
@@ -385,23 +385,23 @@ function Index() {
                 n: "03", icon: Heart, name: "Vascular",
                 what: "Resting BP, HRV, endothelial function, ApoB, Lp(a). The plumbing. The arteries that feed the lumbar disc are the same arteries that feed cavernosal and clitoral tissue. The cardiologist's chart and the bedroom chart are the same chart.",
                 perf: "Recover faster between sets, between meetings, between birthdays.",
-                bed: "Genital blood flow is a vascular biomarker. for him and for her. Lower BP by 10 points and the bedroom files the report before your GP does.",
+                bed: "Genital blood flow is a vascular biomarker, for him and for her. Lower BP by 10 points and the bedroom files the report before your GP does.",
               },
               {
                 n: "04", icon: Brain, name: "Breath & CNS",
-                what: "Vagal tone, 4-7-8 down-regulation, interoceptive retraining, cognitive defusion for chronic pain. Built with chronic-pain clinicians, ISSWSH and AASECT therapists. not wellness influencers.",
+                what: "Vagal tone, 4-7-8 down-regulation, interoceptive retraining, cognitive defusion for chronic pain. Built with chronic-pain clinicians, ISSWSH and AASECT therapists, not wellness influencers.",
                 perf: "Lower next-morning pain. Lower resting heart rate. A nervous system that stops bracing for an impact that isn't coming.",
-                bed: "Arousal is parasympathetic. that's not a metaphor, it's the wiring. You cannot perform, or arrive, from a sympathetic state. The unlock most adults never hear named out loud.",
+                bed: "Arousal is parasympathetic, that's not a metaphor, it's the wiring. You cannot perform, or arrive, from a sympathetic state. The unlock most adults never hear named out loud.",
               },
               {
                 n: "05", icon: AppleIcon, name: "Nutrition",
-                what: "Mediterranean baseline, polyphenol load, 1.6 g/kg protein floor, iron, magnesium and omega-3 calibrated to inflammatory markers. and to cycle phase or perimenopause window when relevant. Not a cleanse. Not a stack. Food, prescribed.",
+                what: "Mediterranean baseline, polyphenol load, 1.6 g/kg protein floor, iron, magnesium and omega-3 calibrated to inflammatory markers, and to cycle phase or perimenopause window when relevant. Not a cleanse. Not a stack. Food, prescribed.",
                 perf: "Joint pain measurably down inside two weeks. The 3pm crash quietly disappears. Energy that survives a luteal phase.",
                 bed: "Lower systemic inflammation = higher free testosterone and estradiol balance, better endothelial NO production, steadier libido. Boring science. Serious results.",
               },
               {
                 n: "06", icon: Moon, name: "Sleep",
-                what: "Continuity over duration, REM-window protection, light/temperature gating, evening cortisol management. adjusted for cycle and perimenopausal thermoregulation. Where tomorrow's pain, hormones and decisions are quietly assembled.",
+                what: "Continuity over duration, REM-window protection, light/temperature gating, evening cortisol management, adjusted for cycle and perimenopausal thermoregulation. Where tomorrow's pain, hormones and decisions are quietly assembled.",
                 perf: "Skip it and the other five pillars stop compounding. There is no work-around. There has never been a work-around.",
                 bed: "Testosterone synthesis peaks 02:00–06:00; estradiol and progesterone follow their own choreography. Morning erections, regular cycles and lubrication are vital signs your doctor would actually like to know about. Protect the window.",
               },
@@ -427,7 +427,7 @@ function Index() {
       </div>
 
 
-      {/* THESIS. the value prop spelled out */}
+      {/* THESIS, the value prop spelled out */}
       <section id="thesis" className="px-6 md:px-10 py-32 border-b border-border">
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4">
@@ -458,7 +458,7 @@ function Index() {
         </div>
       </section>
 
-      {/* THE INDEX. signature graphic */}
+      {/* THE INDEX, signature graphic */}
       <section id="index" className="px-6 md:px-10 py-32 border-b border-border">
         <div className="max-w-[1280px] mx-auto">
           <div className="grid lg:grid-cols-12 gap-10 items-end mb-14">
@@ -470,7 +470,7 @@ function Index() {
             </div>
             <div className="lg:col-span-7">
               <p className="text-muted-foreground leading-relaxed max-w-2xl">
-                Every signal you sync. wearable, manual, or sensor. feeds a proprietary model that surfaces a single, daily Index score. The Index is what your protocol optimizes against. It's how you know whether yesterday's choices made today's body more, or less, capable.
+                Every signal you sync, wearable, manual, or sensor, feeds a proprietary model that surfaces a single, daily Index score. The Index is what your protocol optimizes against. It's how you know whether yesterday's choices made today's body more, or less, capable.
               </p>
             </div>
           </div>
@@ -552,7 +552,7 @@ function Index() {
       </section>
 
 
-      {/* AFTER DARK. the spicy thesis, named */}
+      {/* AFTER DARK, the spicy thesis, named */}
       <section className="relative px-6 md:px-10 py-32 border-b border-border overflow-hidden"
                style={{background:"radial-gradient(ellipse at 70% 40%, oklch(0.22 0.05 25) 0%, var(--brand-ink) 60%)"}}>
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-14 items-center relative">
@@ -579,7 +579,7 @@ function Index() {
               that uses it.
             </h2>
             <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-xl">
-              Lower back pain is the #1 reason couples avoid intimacy. The same six signals that govern recovery. circulation, pelvic floor, breath, sleep, inflammation, mobility. are the exact six that govern arousal, stamina and confidence in bed.
+              Lower back pain is the #1 reason couples avoid intimacy. The same six signals that govern recovery, circulation, pelvic floor, breath, sleep, inflammation, mobility, are the exact six that govern arousal, stamina and confidence in bed.
             </p>
             <p className="mt-6 text-lg text-foreground leading-relaxed max-w-xl">
               Train the system. The bedroom is downstream.
@@ -605,7 +605,7 @@ function Index() {
         </div>
       </section>
 
-      {/* PAPER SECTION. the pitch on light ground */}
+      {/* PAPER SECTION, the pitch on light ground */}
       <section className="px-6 md:px-10 py-32 border-b border-border"
                style={{background:"var(--brand-paper)", color:"var(--brand-paper-ink)"}}>
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12 items-center">
@@ -615,7 +615,7 @@ function Index() {
               Back pain affects 619M people. The market's answer is a stretch video.
             </h2>
             <p className="mt-8 text-lg leading-relaxed" style={{color:"oklch(0.35 0.01 60)"}}>
-              The chronic-pain category is fragmented across PT clinics, telehealth, supplements, and content apps. None of them touch sexual function. even though the data is identical to the data that predicts it. BackStroke is the first product to integrate the stack and own the most underserved outcome in adult health.
+              The chronic-pain category is fragmented across PT clinics, telehealth, supplements, and content apps. None of them touch sexual function, even though the data is identical to the data that predicts it. BackStroke is the first product to integrate the stack and own the most underserved outcome in adult health.
             </p>
             <div className="mt-10 grid grid-cols-3 gap-6">
               {[
@@ -640,7 +640,7 @@ function Index() {
         </div>
       </section>
 
-      {/* METHODOLOGY. editorial split with breath/nutrition */}
+      {/* METHODOLOGY, editorial split with breath/nutrition */}
       <section className="px-6 md:px-10 py-32 border-b border-border">
         <div className="max-w-[1280px] mx-auto space-y-32">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
@@ -717,7 +717,7 @@ function Index() {
             <span className="italic" style={{color:"var(--brand-amber)", textShadow:"var(--glow-teal)"}}>you stay home.</span>
           </h2>
           <p className="mt-10 text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            7-minute baseline. Your protocol assembles the same day. Two weeks free, then $24/month. less than one PT visit.
+            7-minute baseline. Your protocol assembles the same day. Two weeks free, then $24/month, less than one PT visit.
           </p>
           <div className="mt-12 flex flex-wrap gap-4 justify-center items-center">
             <a href="#" className="flex items-center gap-3 pl-5 pr-7 py-3 rounded-xl bg-foreground text-background hover:opacity-90 transition">
