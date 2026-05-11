@@ -149,14 +149,15 @@ function Index() {
             <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">℠</sup>
           </div>
           <nav className="hidden md:flex items-center gap-9 font-mono-label text-[10px] text-muted-foreground">
+            <a href="#try" className="hover:text-foreground transition" style={{color:"var(--brand-amber)"}}>◆ Try Live</a>
             <a href="#thesis" className="hover:text-foreground transition">Thesis</a>
             <a href="#index" className="hover:text-foreground transition">The Index</a>
             <a href="#pillars" className="hover:text-foreground transition">Protocol</a>
             <a href="#evidence" className="hover:text-foreground transition">Evidence</a>
             <a href="#stories" className="hover:text-foreground transition">Stories</a>
           </nav>
-          <a href="#cta" className="text-sm px-4 py-2 rounded-full bg-foreground text-background font-medium hover:opacity-90 transition">
-            Get the Index
+          <a href="#try" className="text-sm px-4 py-2 rounded-full bg-foreground text-background font-medium hover:opacity-90 transition">
+            Try the Protocol
           </a>
         </div>
       </header>
