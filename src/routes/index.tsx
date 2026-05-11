@@ -372,10 +372,10 @@ function Index() {
               you're sincerely into.
             </h2>
             <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-xl">
-              Lower back pain is the number-one reason couples stop having sex. The number-two reason is the low-grade dread that something will twinge mid-act. Most adults can't fully relax their pelvic floor — that's why erections fade, why orgasms feel small, why penetration hurts. None of this is a mystery. It's a protocol.
+              Lower back pain is the number-one reason couples stop having sex. The number-two reason is the low-grade dread that something will twinge mid-act and somebody will have to be a good sport about it. Most adults can't fully relax their pelvic floor — that's why erections fade, why orgasms feel small, why penetration hurts. None of this is a mystery. It's a protocol. The mystery is why nobody handed it to you.
             </p>
             <p className="mt-6 text-lg text-foreground leading-relaxed max-w-xl">
-              Train the body. Presence is downstream.
+              Train the body. Presence is downstream. Candles optional.
             </p>
 
             <div className="mt-10 grid grid-cols-3 gap-px border" style={{borderColor:"oklch(0.72 0.14 18 / 0.25)"}}>
