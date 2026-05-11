@@ -452,7 +452,7 @@ function Index() {
             </p>
             <p>
               <span className="font-serif-display text-2xl text-foreground block mb-2">Neurological.</span>
-              The nervous system that interprets pain is the nervous system that gates arousal. Down-regulate the first, you unlock the second.
+              The nervous system that interprets pain is the nervous system that gates arousal. Quiet the first and the second comes back online.
             </p>
           </div>
         </div>
