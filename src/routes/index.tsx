@@ -479,7 +479,7 @@ function Index() {
             <div className="lg:col-span-5">
               <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE PERFORMANCE INDEX</p>
               <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
-                One number,<br/>built from six.
+                One number,<br/>two outcomes.
               </h2>
             </div>
             <div className="lg:col-span-7">
