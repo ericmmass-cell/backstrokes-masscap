@@ -26,7 +26,7 @@ export const Route = createFileRoute("/")({
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" },
     ],
   }),
 });
@@ -51,7 +51,14 @@ function Index() {
               <circle cx="11" cy="11" r="10" stroke="currentColor" strokeWidth="1" fill="none"/>
               <circle cx="11" cy="11" r="3" fill="currentColor"/>
             </svg>
-            <span className="font-serif-display text-xl tracking-tight">BackBetter</span>
+            <div className="flex flex-col leading-none">
+              <span className="font-serif-display text-xl tracking-tight">
+                Back<span className="text-[var(--brand-teal)]">Better</span>
+              </span>
+              <span className="font-script text-[13px] text-muted-foreground -mt-0.5">
+                Strong back. <span className="italic" style={{color:"var(--brand-pink)"}}>Hotter life.</span>
+              </span>
+            </div>
             <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">™</sup>
           </div>
           <nav className="hidden md:flex items-center gap-9 font-mono-label text-[10px] text-muted-foreground">
@@ -67,49 +74,93 @@ function Index() {
         </div>
       </header>
 
-      {/* HERO — sharp thesis */}
-      <section className="relative px-6 md:px-10 pt-24 pb-32 border-b border-border overflow-hidden">
-        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12 items-end">
-          <div className="lg:col-span-7">
-            <div className="flex items-center gap-3 font-mono-label text-[10px] text-muted-foreground mb-10">
-              <span className="w-6 h-px bg-[var(--brand-amber)]" />
-              <span>FIG. 00 · A NEW CATEGORY OF SPINE CARE</span>
-            </div>
-            <h1 className="font-serif-display text-[44px] md:text-[68px] lg:text-[84px] leading-[0.98] tracking-[-0.025em]">
-              Your back<br/>
-              isn't a problem<br/>
-              to manage.<br/>
-              <span className="text-[var(--brand-amber)] italic">It's the system that runs your life.</span>
-            </h1>
-            <p className="mt-10 text-lg text-muted-foreground max-w-xl leading-relaxed">
-              BackBetter is the first integrated protocol that converges six health signals — spine, pelvic floor, vitals, breath, nutrition, sleep — into a single, adaptive <em className="not-italic text-foreground">Performance Index</em>. The result: less pain, more capacity, and the part nobody else will say out loud — measurably better sex.
+      {/* HERO — bold, sexy, ad-style */}
+      <section className="relative px-6 md:px-10 pt-16 md:pt-20 pb-28 border-b border-border overflow-hidden">
+        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-10 items-center relative">
+          <div className="lg:col-span-7 relative z-10">
+            <p className="font-mono-label text-[10px] text-muted-foreground mb-6">
+              FIG. 00 · INTEGRATED HEALTH FOR BACKS THAT REFUSE TO SIT IT OUT
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-5">
-              <a href="#cta" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[var(--brand-amber)] text-primary-foreground text-sm font-medium hover:opacity-90 transition">
-                Calculate your Index <ArrowUpRight className="w-4 h-4"/>
+            <h1 className="font-display-bold text-[56px] md:text-[88px] lg:text-[108px] leading-[0.88] tracking-[-0.015em]">
+              Good in bed.<br/>
+              Great in life.<br/>
+              <span className="text-[var(--brand-teal)]" style={{textShadow:"var(--glow-teal)"}}>Unstoppable</span><br/>
+              <span className="text-[var(--brand-teal)]" style={{textShadow:"var(--glow-teal)"}}>in both.</span>
+              <span className="font-script text-5xl md:text-6xl ml-3 align-top" style={{color:"var(--brand-pink)"}}>♡</span>
+            </h1>
+            <p className="mt-10 text-lg text-muted-foreground max-w-md leading-relaxed">
+              The integrated health & fitness app for people with bad backs who <span className="underline underline-offset-4 decoration-[var(--brand-pink)] decoration-2 text-foreground">don't just</span> sit at home.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-6">
+              <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-teal)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
+                Start the 7-min Index <ArrowUpRight className="w-4 h-4"/>
               </a>
-              <a href="#thesis" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition">
-                Read the thesis <ArrowRight className="w-4 h-4"/>
-              </a>
+              <span className="font-script text-2xl leading-tight max-w-[260px]" style={{color:"var(--brand-teal)"}}>
+                Healthy back. <span style={{color:"var(--brand-pink)"}}>High confidence.</span> More yes.
+              </span>
             </div>
           </div>
 
+          {/* Right: hero image + phone mockup + neon stamp */}
           <div className="lg:col-span-5 relative">
             <div className="relative">
               <img src={heroCouple} alt="" width={1024} height={1280}
-                   className="w-full aspect-[4/5] object-cover" style={{boxShadow:"var(--shadow-lift)"}}/>
+                   className="w-full aspect-[4/5] object-cover rounded-sm" style={{boxShadow:"var(--shadow-lift)"}}/>
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] text-white/80">
                 <span>SUBJECT 04 · DAY 42</span>
-                <span>● LIVE</span>
+                <span style={{color:"var(--brand-pink)"}}>● LIVE</span>
               </div>
-              <div className="absolute bottom-4 left-4 right-4 grid grid-cols-3 gap-2 text-white">
-                {[["INDEX","87"],["PAIN","2.1"],["BP","118/76"]].map(([k,v])=>(
-                  <div key={k} className="backdrop-blur-md bg-black/30 px-3 py-2 rounded-sm">
-                    <p className="font-mono-label text-[8px] opacity-70">{k}</p>
-                    <p className="font-serif-display text-lg leading-none mt-1">{v}</p>
+              <span className="absolute -top-4 left-4 font-script text-2xl rotate-[-4deg] drop-shadow-lg" style={{color:"var(--brand-pink)"}}>
+                Your best come-from-behind story yet.
+              </span>
+            </div>
+
+            {/* Phone mockup */}
+            <div className="hidden md:block absolute -left-20 lg:-left-36 bottom-[-30px] w-[220px] rotate-[-6deg]"
+                 style={{filter:"drop-shadow(0 30px 40px rgba(0,0,0,0.7))"}}>
+              <div className="rounded-[28px] border-[8px] border-[oklch(0.08_0_0)] bg-[var(--brand-ink)] overflow-hidden">
+                <div className="px-4 pt-2 pb-1 flex items-center justify-between text-[8px] text-white/80 font-mono-label">
+                  <span>9:41</span><span>● ● ●</span>
+                </div>
+                <div className="px-3 pb-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-serif-display text-sm">Back<span className="text-[var(--brand-teal)]">Better</span></span>
+                    <span className="text-[9px]" style={{color:"var(--brand-pink)"}}>🔥 12</span>
                   </div>
-                ))}
+                  <p className="font-mono-label text-[7px] text-muted-foreground">TODAY'S PLAN</p>
+                  <h4 className="font-serif-display text-base mt-0.5 leading-tight">Perform with<br/>Confidence 😉</h4>
+                  <p className="text-[9px] text-muted-foreground mt-0.5">20 min · Core & Lower Back</p>
+                  <button className="mt-2 w-full py-1.5 rounded-md text-[10px] font-semibold bg-[var(--brand-teal)] text-[var(--brand-ink)]">Start Workout</button>
+                  <div className="grid grid-cols-2 gap-1.5 mt-2">
+                    <div className="bg-card/80 rounded-md p-1.5">
+                      <p className="text-[7px] text-muted-foreground">Pain</p>
+                      <p className="font-serif-display text-base leading-none mt-0.5">2<span className="text-[8px] text-muted-foreground">/10</span></p>
+                    </div>
+                    <div className="bg-card/80 rounded-md p-1.5">
+                      <p className="text-[7px] text-muted-foreground">Mobility</p>
+                      <svg viewBox="0 0 60 24" className="mt-0.5 w-full h-5">
+                        <polyline points="0,18 10,15 20,17 30,12 40,9 50,7 60,4"
+                                  fill="none" stroke="var(--brand-teal)" strokeWidth="1.5"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            {/* Neon stamp */}
+            <div className="absolute -right-2 lg:-right-8 top-[28%] w-[130px] h-[130px] rounded-full flex items-center justify-center text-center rotate-[8deg]"
+                 style={{
+                   border:"2px solid var(--brand-pink)",
+                   boxShadow:"var(--glow-pink)",
+                   background:"oklch(0.16 0.008 60 / 0.55)",
+                   backdropFilter:"blur(4px)"
+                 }}>
+              <p className="font-display-bold text-[13px] leading-tight" style={{color:"var(--brand-pink)"}}>
+                Move better.<br/>
+                <span className="font-script normal-case text-2xl block leading-none my-0.5">F*ck better.</span>
+                Live better.
+              </p>
             </div>
           </div>
         </div>
@@ -118,6 +169,19 @@ function Index() {
         <div className="absolute inset-x-0 top-0 h-full pointer-events-none opacity-[0.04]"
              style={{backgroundImage:"linear-gradient(to right, white 1px, transparent 1px)", backgroundSize:"calc(100%/12) 100%"}}/>
       </section>
+
+      {/* TAGLINE STRIP */}
+      <div className="border-b border-border" style={{background:"var(--gradient-neon)"}}>
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-3.5 flex items-center justify-center gap-5 md:gap-10 font-display-bold text-sm md:text-lg text-[var(--brand-ink)] tracking-wide">
+          <span>♡</span>
+          <span>Stronger back.</span>
+          <span className="opacity-50">·</span>
+          <span>Hotter life.</span>
+          <span className="opacity-50">·</span>
+          <span>Better dates.</span>
+          <span>🔥</span>
+        </div>
+      </div>
 
       {/* MARQUEE OF SIGNALS */}
       <div className="border-b border-border overflow-hidden">
@@ -128,6 +192,7 @@ function Index() {
           ))}
         </div>
       </div>
+
 
       {/* THESIS — the value prop spelled out */}
       <section id="thesis" className="px-6 md:px-10 py-32 border-b border-border">
@@ -406,19 +471,36 @@ function Index() {
       </section>
 
       {/* CTA */}
-      <section id="cta" className="px-6 md:px-10 py-40 border-b border-border">
-        <div className="max-w-[1100px] mx-auto text-center">
-          <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">BEGIN</p>
-          <h2 className="font-serif-display text-5xl md:text-8xl mt-6 leading-[0.98] tracking-[-0.025em]">
-            Find your<br/>
-            <span className="italic text-[var(--brand-amber)]">Performance Index.</span>
+      <section id="cta" className="relative px-6 md:px-10 py-32 border-b border-border overflow-hidden">
+        <div className="absolute inset-0 opacity-30 pointer-events-none"
+             style={{background:"radial-gradient(ellipse at 50% 50%, oklch(0.78 0.14 195 / 0.25), transparent 60%)"}}/>
+        <div className="max-w-[1100px] mx-auto text-center relative">
+          <p className="font-script text-3xl md:text-4xl mb-4" style={{color:"var(--brand-pink)"}}>
+            Fix it. Flex it. Enjoy it. ♡
+          </p>
+          <h2 className="font-display-bold text-5xl md:text-7xl lg:text-8xl mt-2 leading-[0.92] tracking-tight">
+            Don't let your back<br/>
+            be the reason<br/>
+            <span className="text-[var(--brand-teal)]" style={{textShadow:"var(--glow-teal)"}}>you miss out.</span>
           </h2>
           <p className="mt-10 text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            A 7-minute baseline. We assemble your protocol the same day. Two weeks free, then $24/month — less than one PT visit.
+            7-minute baseline. Your protocol assembles the same day. Two weeks free, then $24/month — less than one PT visit.
           </p>
-          <div className="mt-12 flex flex-wrap gap-3 justify-center">
-            <a href="#" className="px-7 py-3.5 rounded-full bg-foreground text-background font-medium text-sm hover:opacity-90 transition">Download for iOS</a>
-            <a href="#" className="px-7 py-3.5 rounded-full border border-border font-medium text-sm hover:bg-card transition">Download for Android</a>
+          <div className="mt-12 flex flex-wrap gap-4 justify-center items-center">
+            <a href="#" className="flex items-center gap-3 pl-5 pr-7 py-3 rounded-xl bg-foreground text-background hover:opacity-90 transition">
+              <svg viewBox="0 0 24 24" className="w-7 h-7" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+              <span className="text-left leading-tight">
+                <span className="block text-[9px] opacity-70 font-mono-label">DOWNLOAD ON THE</span>
+                <span className="block text-base font-semibold">App Store</span>
+              </span>
+            </a>
+            <a href="#" className="flex items-center gap-3 pl-5 pr-7 py-3 rounded-xl bg-foreground text-background hover:opacity-90 transition">
+              <svg viewBox="0 0 24 24" className="w-7 h-7"><path fill="var(--brand-teal)" d="M3 2.5v19l9-9.5z"/><path fill="var(--brand-pink)" d="M3 2.5l13 7-4 3z"/><path fill="oklch(0.82 0.11 80)" d="M3 21.5l13-7-4-3z"/><path fill="oklch(0.62 0.12 35)" d="M21 12L16 9.5l-4 3 4 3z"/></svg>
+              <span className="text-left leading-tight">
+                <span className="block text-[9px] opacity-70 font-mono-label">GET IT ON</span>
+                <span className="block text-base font-semibold">Google Play</span>
+              </span>
+            </a>
           </div>
           <p className="mt-12 font-mono-label text-[9px] text-muted-foreground">
             NOT A MEDICAL DEVICE · CONSULT YOUR PHYSICIAN OR PHYSICAL THERAPIST

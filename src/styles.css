@@ -86,8 +86,13 @@
   --brand-paper-ink: oklch(0.18 0.01 60);
   --brand-ember: oklch(0.55 0.18 25);
   --brand-blush: oklch(0.72 0.14 18);
+  --brand-teal: oklch(0.78 0.14 195);
+  --brand-pink: oklch(0.72 0.22 0);
   --gradient-text: linear-gradient(92deg, oklch(0.88 0.09 85), oklch(0.7 0.1 50));
   --gradient-ember: linear-gradient(135deg, oklch(0.55 0.18 25), oklch(0.72 0.11 50));
+  --gradient-neon: linear-gradient(135deg, var(--brand-teal), var(--brand-pink));
+  --glow-teal: 0 0 24px oklch(0.78 0.14 195 / 0.55), 0 0 60px oklch(0.78 0.14 195 / 0.25);
+  --glow-pink: 0 0 24px oklch(0.72 0.22 0 / 0.55), 0 0 60px oklch(0.72 0.22 0 / 0.25);
   --shadow-soft: 0 1px 0 oklch(1 0 0 / 0.04) inset, 0 20px 60px -20px oklch(0 0 0 / 0.55);
   --shadow-lift: 0 30px 80px -30px oklch(0 0 0 / 0.6);
   --shadow-ember: 0 30px 80px -20px oklch(0.55 0.18 25 / 0.35);
@@ -167,6 +172,19 @@
   .font-serif-display {
     font-family: 'Fraunces', Georgia, serif;
     font-variation-settings: "SOFT" 50, "WONK" 0;
+  }
+
+  .font-script {
+    font-family: 'Caveat', 'Bradley Hand', cursive;
+    font-weight: 500;
+    letter-spacing: 0.005em;
+  }
+
+  .font-display-bold {
+    font-family: 'Anton', 'Inter', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
   }
 
   .font-mono-label {
