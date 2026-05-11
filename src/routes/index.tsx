@@ -1,8 +1,94 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState, type ComponentType } from "react";
 import {
   Activity, Apple as AppleIcon, Brain, Heart, Waves, Moon,
-  ArrowUpRight, ArrowRight,
+  ArrowUpRight, ArrowRight, Plus,
 } from "lucide-react";
+
+type Pillar = {
+  n: string;
+  icon: ComponentType<{ className?: string }>;
+  name: string;
+  what: string;
+  perf: string;
+  bed: string;
+};
+
+function PillarCard({ p }: { p: Pillar }) {
+  const [mode, setMode] = useState<"daily" | "dark">("daily");
+  const [open, setOpen] = useState(false);
+  const Icon = p.icon;
+  const active = mode === "daily" ? p.perf : p.bed;
+
+  return (
+    <article
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      className="bg-background p-7 transition-colors duration-300 hover:bg-card/60 group relative cursor-pointer"
+      onClick={() => setOpen((o) => !o)}
+    >
+      <div className="flex items-start justify-between mb-6">
+        <p className="font-mono-label text-[10px] text-muted-foreground">PILLAR {p.n}</p>
+        <Icon className="w-5 h-5 text-[var(--brand-amber)] opacity-70 group-hover:opacity-100 transition" />
+      </div>
+      <h3 className="font-serif-display text-3xl italic">{p.name}</h3>
+      <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.what}</p>
+
+      <div className="mt-6 pt-5 border-t border-border">
+        <div className="flex items-center gap-1 mb-4" onClick={(e) => e.stopPropagation()}>
+          <button
+            type="button"
+            onClick={() => { setMode("daily"); setOpen(true); }}
+            className={`font-mono-label text-[10px] px-2.5 py-1.5 border transition ${
+              mode === "daily"
+                ? "border-[var(--brand-amber)] text-[var(--brand-amber)] bg-[var(--brand-amber)]/5"
+                : "border-border text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            ↗ DAILY LIFE
+          </button>
+          <button
+            type="button"
+            onClick={() => { setMode("dark"); setOpen(true); }}
+            className={`font-mono-label text-[10px] px-2.5 py-1.5 border transition ${
+              mode === "dark"
+                ? "border-[var(--brand-blush)] text-[var(--brand-blush)] bg-[var(--brand-blush)]/5"
+                : "border-border text-muted-foreground hover:text-foreground"
+            }`}
+            style={mode === "dark" ? { borderColor: "var(--brand-blush)", color: "var(--brand-blush)" } : undefined}
+          >
+            ◆ AFTER DARK
+          </button>
+          <Plus
+            className={`w-3.5 h-3.5 ml-auto text-muted-foreground transition-transform duration-300 ${open ? "rotate-45" : ""}`}
+          />
+        </div>
+
+        <div
+          className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+            open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+          }`}
+        >
+          <div className="overflow-hidden">
+            <p
+              key={mode}
+              className={`text-[15px] leading-snug ${mode === "dark" ? "italic" : ""}`}
+              style={{ color: mode === "dark" ? "var(--brand-blush)" : "var(--foreground)" }}
+            >
+              {active}
+            </p>
+          </div>
+        </div>
+
+        {!open && (
+          <p className="font-mono-label text-[10px] text-muted-foreground/70">
+            Tap to reveal the outcome →
+          </p>
+        )}
+      </div>
+    </article>
+  );
+}
 import heroCouple from "@/assets/hero-couple.jpg";
 import portrait from "@/assets/portrait.jpg";
 import nutrition from "@/assets/nutrition.jpg";
@@ -278,24 +364,7 @@ function Index() {
                 bed: "Testosterone is made between 2am and 6am. Morning erections are a vital sign. Protect the window.",
               },
             ].map((p) => (
-              <article key={p.n} className="bg-background p-7 hover:bg-card/60 transition group">
-                <div className="flex items-start justify-between mb-6">
-                  <p className="font-mono-label text-[10px] text-muted-foreground">PILLAR {p.n}</p>
-                  <p.icon className="w-5 h-5 text-[var(--brand-amber)] opacity-70 group-hover:opacity-100 transition"/>
-                </div>
-                <h3 className="font-serif-display text-3xl italic">{p.name}</h3>
-                <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.what}</p>
-                <div className="mt-6 pt-5 border-t border-border space-y-3">
-                  <div>
-                    <p className="font-mono-label text-[9px] text-[var(--brand-amber)] mb-1">↗ DAILY LIFE</p>
-                    <p className="text-[13px] text-foreground leading-snug">{p.perf}</p>
-                  </div>
-                  <div>
-                    <p className="font-mono-label text-[9px] mb-1" style={{color:"var(--brand-blush)"}}>◆ AFTER DARK</p>
-                    <p className="text-[13px] text-foreground leading-snug italic">{p.bed}</p>
-                  </div>
-                </div>
-              </article>
+              <PillarCard key={p.n} p={p} />
             ))}
           </div>
 
