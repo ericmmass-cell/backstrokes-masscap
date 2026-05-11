@@ -441,32 +441,32 @@ function Index() {
       </div>
 
 
-      {/* THESIS, the value prop spelled out */}
+      {/* THESIS · why backs and sex are one job */}
       <section id="thesis" className="px-6 md:px-10 py-32 border-b border-border">
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4">
             <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE THESIS</p>
             <h2 className="font-serif-display text-4xl md:text-5xl mt-5 leading-[1.02] tracking-tight">
-              Back pain isn't a back problem.<br/>
-              <span className="italic text-muted-foreground">It's a system problem.</span>
+              Your back and your sex life<br/>
+              <span className="italic text-muted-foreground">share a pelvis.</span>
             </h2>
           </div>
           <div className="lg:col-span-8 lg:pt-2 grid md:grid-cols-2 gap-x-12 gap-y-8 text-muted-foreground leading-relaxed">
             <p>
-              <span className="font-serif-display text-2xl text-foreground block mb-2">Vascular.</span>
-              Resting blood pressure, HRV and endothelial function predict both spinal recovery and erectile capacity. The same circulatory system runs both.
+              <span className="font-serif-display text-2xl text-foreground block mb-2">Same muscles.</span>
+              The pelvic floor is the floor of your spinal canister and the engine room of every erection, every orgasm, every painless pregnancy recovery. One muscle group, two jobs, almost nobody coaches it.
             </p>
             <p>
-              <span className="font-serif-display text-2xl text-foreground block mb-2">Neuromuscular.</span>
-              The pelvic floor and deep core are the same muscle group that stabilizes the spine and governs intimate performance. Train one, you train the other.
+              <span className="font-serif-display text-2xl text-foreground block mb-2">Same nerves.</span>
+              The lumbar nerves that misfire as sciatica are the same nerves that gate genital sensation. Quiet the back and the wiring downstream comes back online.
             </p>
             <p>
-              <span className="font-serif-display text-2xl text-foreground block mb-2">Inflammatory.</span>
-              Diet, sleep debt and chronic stress raise systemic inflammation. Inflammation drives next-day pain and depresses testosterone in the same 24-hour window.
+              <span className="font-serif-display text-2xl text-foreground block mb-2">Same positions.</span>
+              The hip flexion, the spinal load, the breath access. Half of 'we don't anymore' is a back problem nobody named. We rank positions for it.
             </p>
             <p>
-              <span className="font-serif-display text-2xl text-foreground block mb-2">Neurological.</span>
-              The nervous system that interprets pain is the nervous system that gates arousal. Quiet the first and the second comes back online.
+              <span className="font-serif-display text-2xl text-foreground block mb-2">Same conversation.</span>
+              You can't fix one without the other. We're the first product willing to coach both, in the same week, by clinicians who can actually say the words.
             </p>
           </div>
         </div>
