@@ -17,10 +17,10 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "BackStroke. The Performance Index for spines that have a life" },
-      { name: "description", content: "BackStroke brings spine, vascular, pelvic floor, breath, nutrition and sleep into one daily Performance Index. The first protocol that treats back health and sexual function as the same problem." },
-      { property: "og:title", content: "BackStroke. Performance Index for the modern spine" },
-      { property: "og:description", content: "Six data streams. One adaptive protocol. Measurable gains in pain, capacity, confidence and performance." },
+      { title: "BackStroke — the protocol the wellness industry forgot to write" },
+      { name: "description", content: "Eight minutes of McGill, a pelvic floor that actually relaxes, and a sex life that stops scheduling itself around your back. Coached by McGill-trained PTs and AASECT therapists. Not a stretch video." },
+      { property: "og:title", content: "BackStroke — for the back, and the bedroom. Same pelvis." },
+      { property: "og:description", content: "Eight minutes of McGill, a pelvic floor that actually relaxes, and sex you're sincerely into. The protocol the wellness industry forgot to write." },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -47,7 +47,7 @@ function Index() {
                 Back<span style={{color:"var(--brand-amber)"}}>Stroke</span>
               </span>
               <span className="font-script text-[12px] text-muted-foreground -mt-0.5 tracking-wide">
-                a members' protocol for <span className="italic" style={{color:"var(--brand-blush)"}}>the well-lived body</span>
+                a members' protocol for <span className="italic" style={{color:"var(--brand-blush)"}}>the body that wants its life back</span>
               </span>
             </div>
             <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">℠</sup>
@@ -58,7 +58,7 @@ function Index() {
             <a href="#stories" className="hover:text-foreground transition-colors">Stories</a>
           </nav>
           <a href="#try" className="text-[12px] tracking-[0.14em] uppercase font-mono-label px-4 py-2 rounded-full bg-foreground text-background hover:opacity-90 transition">
-            Try the Protocol
+            Run a session
           </a>
         </div>
       </header>
@@ -68,19 +68,19 @@ function Index() {
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-10 items-center relative">
           <div className="lg:col-span-7 relative z-10">
             <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)] mb-6">
-              ◆ THE PERFORMANCE INDEX FOR THE MODERN SPINE
+              ◆ THE INDEX FOR THE MODERN SPINE<span className="opacity-50">*</span>
             </p>
             <h1 className="font-serif-display text-[52px] md:text-[78px] lg:text-[96px] leading-[0.92] tracking-[-0.025em]">
               Fix the back.<br/>
               <span className="italic" style={{
                 background:"var(--gradient-text)",
                 WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
-              }}>Wake the body.</span><br/>
-              <span className="italic" style={{color:"var(--brand-blush)", textShadow:"var(--glow-pink)"}}>Reclaim the bedroom.</span>
+              }}>Quiet the lumbar.</span><br/>
+              <span className="italic" style={{color:"var(--brand-blush)", textShadow:"var(--glow-pink)"}}>Have the sex.</span>
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              Two things. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that stops talking. Sex that's actually good.</span> Same pelvis, same nerves, same muscles. We're not chasing a baseline or "blood flow." We coach the eight or nine specific things that let you get out of bed without wincing, and back into it for the right reasons, fully present, with nothing in the way.
+              Two things. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that stops talking. Sex you're sincerely into.</span> Same pelvis, same nerves, same muscles. We don't chase a baseline. We coach the eight or nine specific things that get you out of bed without wincing, and back into it fully present, with nothing in the room except the two of you.
             </p>
 
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
@@ -97,14 +97,17 @@ function Index() {
             </div>
 
             <p className="mt-6 text-sm text-muted-foreground max-w-xl leading-relaxed">
-              Directed by sports-medicine MDs, pelvic-floor PTs, urology and sleep physicians, AASECT-certified therapists and registered dietitians. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a tank top yelling about discipline.</span>
+              Directed by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, and AASECT-certified therapists. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a tank top yelling about discipline.</span>
+            </p>
+            <p className="mt-2 font-mono-label text-[9px] text-muted-foreground tracking-[0.16em] uppercase opacity-70">
+              <span className="opacity-60">*</span> yours, specifically. We're talking to you.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
-                Request the Index <ArrowUpRight className="w-4 h-4"/>
+                Get the protocol <ArrowUpRight className="w-4 h-4"/>
               </a>
               <span className="font-script text-2xl leading-tight max-w-[260px] italic" style={{color:"var(--brand-blush)"}}>
-                Fit. Flex. <span style={{color:"var(--brand-amber)"}}>F*ck.</span>, in that order, darling.
+                Fit. Flex. <span style={{color:"var(--brand-amber)"}}>Fuck.</span>, in that order, darling.
               </span>
             </div>
           </div>
@@ -119,7 +122,7 @@ function Index() {
                 <span style={{color:"var(--brand-pink)"}}>● LIVE</span>
               </div>
               <span className="absolute -top-4 left-4 font-script text-2xl rotate-[-4deg] drop-shadow-lg" style={{color:"var(--brand-pink)"}}>
-                Your best come-from-behind story yet.
+                Same pelvis, darling.
               </span>
             </div>
 
@@ -135,10 +138,10 @@ function Index() {
                     <span className="font-serif-display text-sm italic">Back<span style={{color:"var(--brand-amber)"}}>Stroke</span></span>
                     <span className="text-[9px]" style={{color:"var(--brand-pink)"}}>🔥 12</span>
                   </div>
-                  <p className="font-mono-label text-[7px] text-muted-foreground">TODAY'S PLAN</p>
-                  <h4 className="font-serif-display text-base mt-0.5 leading-tight">Perform with<br/>Confidence 😉</h4>
-                  <p className="text-[9px] text-muted-foreground mt-0.5">20 min · Core & Lower Back</p>
-                  <button className="mt-2 w-full py-1.5 rounded-md text-[10px] font-semibold bg-[var(--brand-teal)] text-[var(--brand-ink)]">Start Workout</button>
+                  <p className="font-mono-label text-[7px] text-muted-foreground">TODAY · 8 MIN</p>
+                  <h4 className="font-serif-display text-base mt-0.5 leading-tight">McGill big-3<br/><span className="italic">+ reverse kegel</span></h4>
+                  <p className="text-[9px] text-muted-foreground mt-0.5">Floor. Now. No equipment.</p>
+                  <button className="mt-2 w-full py-1.5 rounded-md text-[10px] font-semibold bg-[var(--brand-teal)] text-[var(--brand-ink)]">Run session</button>
                   <div className="grid grid-cols-2 gap-1.5 mt-2">
                     <div className="bg-card/80 rounded-md p-1.5">
                       <p className="text-[7px] text-muted-foreground">Pain</p>
@@ -186,7 +189,7 @@ function Index() {
           <span className="opacity-30 not-italic font-mono-label text-[10px]">·</span>
           <span>Flex.</span>
           <span className="opacity-30 not-italic font-mono-label text-[10px]">·</span>
-          <span style={{color:"var(--brand-blush)"}}>F*ck.</span>
+          <span style={{color:"var(--brand-blush)"}}>Fuck.</span>
           <span className="opacity-40 text-xs not-italic">◆</span>
         </div>
       </div>
@@ -237,12 +240,12 @@ function Index() {
               </h2>
             </div>
             <p className="lg:col-span-5 text-muted-foreground leading-relaxed max-w-md">
-              Tap a zone, log today's pain, run a real flex set with breath pacing, then flip the switch and watch the after-dark protocol assemble itself around your spine.
+              Tap a zone. Log today's pain. Run a real flex set with breath pacing. Flip the switch and watch the after-dark protocol assemble itself around your spine. <span className="italic text-foreground">You won't. Most people don't. The ones who do are walking up stairs without bracing six weeks from now.</span>
             </p>
           </div>
           <LiveProtocol />
           <p className="font-mono-label text-[9px] text-muted-foreground mt-4 text-center">
-            FIG. 04 · INTERACTIVE PREVIEW · YOUR INDEX SCORE UPDATES IN REAL TIME ABOVE
+            FIG. 04 · INTERACTIVE PREVIEW · THE INDEX UPDATES IN REAL TIME ABOVE
           </p>
         </div>
       </section>
@@ -254,10 +257,10 @@ function Index() {
             <div>
               <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">THE WORK · TWO LISTS, NOTHING ELSE</p>
               <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight max-w-2xl">
-                The whole product, on one page. <span className="italic text-muted-foreground">No mystery, no funnel.</span>
+                The whole product, on one page. <span className="italic text-muted-foreground">No mystery. No funnel.</span>
               </h2>
             </div>
-            <p className="font-mono-label text-[10px] text-muted-foreground max-w-xs">
+            <p className="font-mono-label text-[10px] text-muted-foreground max-w-xs leading-relaxed normal-case tracking-wide">
               These are the moves, drills and tools we coach. Each one is a thing you do with your body, this week, that makes a measurable difference. That's it. That's the company.
             </p>
           </div>
@@ -299,9 +302,9 @@ function Index() {
                 <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
                 <Waves className="w-5 h-5" style={{color:"var(--brand-blush)"}} />
               </div>
-              <h3 className="font-serif-display text-3xl italic leading-tight mb-2" style={{color:"var(--brand-blush)"}}>Sex that's actually good again.</h3>
+              <h3 className="font-serif-display text-3xl italic leading-tight mb-2" style={{color:"var(--brand-blush)"}}>Sex you're sincerely into. Again.</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                Not "function." Not a baseline. The goal is sex you're sincerely into, with nothing in the room except the two of you. Pelvic floor done properly, in both directions. A position library that doesn't ambush your back. The conversations your GP won't have. Coached by APTA pelvic-health PTs and AASECT therapists.
+                Not "function." Not a baseline. Not "blood flow." Pelvic floor done properly, in both directions. A position library that doesn't ambush your back. The conversations your GP won't have. Coached by APTA pelvic-health PTs and AASECT therapists.
               </p>
               <ol className="space-y-5">
                 {[
@@ -326,7 +329,7 @@ function Index() {
           </div>
 
           <p className="font-script text-2xl md:text-3xl mt-12 italic text-center" style={{color:"var(--brand-blush)"}}>
-            Two lists. <span style={{color:"var(--brand-amber)"}}>One body that finally works for you.</span>
+            Two lists. <span style={{color:"var(--brand-amber)"}}>One pelvis. The whole point.</span>
           </p>
         </div>
       </section>
@@ -369,7 +372,7 @@ function Index() {
               you're sincerely into.
             </h2>
             <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-xl">
-              Lower back pain is the number-one reason couples avoid intimacy, and the second is the low-grade dread that something will twinge mid-act. We don't aim for a baseline. We clear the distractions, the bracing, the wincing, the half-attention, until what's left is the thing you actually wanted.
+              Lower back pain is the number-one reason couples stop having sex. The number-two reason is the low-grade dread that something will twinge mid-act. Most adults can't fully relax their pelvic floor — that's why erections fade, why orgasms feel small, why penetration hurts. None of this is a mystery. It's a protocol.
             </p>
             <p className="mt-6 text-lg text-foreground leading-relaxed max-w-xl">
               Train the body. Presence is downstream.
@@ -402,10 +405,10 @@ function Index() {
           <div className="lg:col-span-7">
             <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-clay)"}}>WHY NOW</p>
             <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
-              Back pain affects 619M people. The market's answer is a stretch video.
+              Back pain hits 619M people. The market's answer is a stretch video.
             </h2>
             <p className="mt-8 text-lg leading-relaxed" style={{color:"oklch(0.35 0.01 60)"}}>
-              The chronic-pain category is fragmented across PT clinics, telehealth, supplements, and content apps. None of them touch sexual function, even though the data is identical to the data that predicts it. BackStroke is the first product to integrate the stack and own the most underserved outcome in adult health.
+              The category is fragmented across PT clinics, telehealth, supplements, and content apps. None of them touch sex, even though the muscles, nerves and breathwork are the same. We're the first protocol that treats the back and the bedroom as one job — because anatomically, they are.
             </p>
             <div className="mt-10 grid grid-cols-3 gap-6">
               {[
@@ -438,10 +441,10 @@ function Index() {
             <div>
               <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FOR THE BACK</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-                Eight minutes of McGill, daily. The cheapest insurance your spine will ever buy.
+                Eight minutes of McGill, daily. The rent your spine pays to keep doing things you like.
               </h3>
               <p className="mt-6 text-muted-foreground leading-relaxed">
-                Curl-up, side plank, bird dog, paced for endurance not range. Coached on video by spine PTs, scaled to today's pain score. The protocol that beat lumbar surgery in head-to-head trials, finally taught properly.
+                Curl-up, side plank, bird dog. Paced for endurance, not range. Coached on video by spine PTs, scaled to today's pain. The protocol that beat lumbar surgery in head-to-head trials — finally taught properly, instead of buried in a YouTube comment thread.
               </p>
             </div>
           </div>
@@ -452,10 +455,10 @@ function Index() {
             <div className="lg:order-1">
               <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-                Reverse kegel before regular kegel. The order most adults have backwards.
+                Reverse kegel before kegel. The order your phone app got wrong.
               </h3>
               <p className="mt-6 text-muted-foreground leading-relaxed">
-                A chronically gripping pelvic floor is why arousal stalls, why erections fade, why penetration hurts. We coach the down-train first, with diaphragmatic breath, then the up-train for control. APTA pelvic-health PTs, on video, in plain language.
+                A chronically gripping pelvic floor is why arousal stalls, why erections fade, why penetration hurts. We coach the down-train first, with diaphragmatic breath, then the up-train for control. APTA pelvic-health PTs, on video, in plain language. Postpartum and post-prostatectomy protocols built in — same voice, softer register, no shortcuts.
               </p>
             </div>
           </div>
@@ -471,9 +474,9 @@ function Index() {
           </h2>
           <div className="mt-16 grid md:grid-cols-3 gap-px bg-border border border-border">
             {[
-              { img: t1, name: "Jake, 32", role: "L4-L5 herniation · Index 71 → 89", quote: "Six weeks in, the morning stiffness is gone. I'm back on the bike, lifting, and I stopped scheduling life around my back." },
-              { img: t2, name: "Maya, 29", role: "Postpartum · Index 54 → 82",       quote: "The pelvic floor and breath work changed everything. I had no idea those numbers were connected to how I was feeling at night." },
-              { img: t3, name: "Chris, 35", role: "Sciatica · Index 62 → 84",        quote: "It's the only product that treats me like a whole system. The Index makes the trade-offs obvious." },
+              { img: t1, name: "Jake, 32", role: "L4-L5 herniation · Index 71 → 89", quote: "I am back on the bike. I am lifting. I am — and this is none of your business — having sex again. Six weeks." },
+              { img: t2, name: "Maya, 29", role: "Postpartum · Index 54 → 82",       quote: "Nobody told me the down-train. Two weeks of reverse kegels and breath work and I stopped bracing for everything. Including my husband." },
+              { img: t3, name: "Chris, 35", role: "Sciatica · Index 62 → 84",        quote: "I bought four supplements, three apps and a foam roller before this. The Index is the first thing that told me what to actually do today." },
             ].map((t)=>(
               <figure key={t.name} className="bg-background p-8">
                 <blockquote className="font-serif-display text-xl leading-snug">
@@ -499,7 +502,7 @@ function Index() {
              style={{background:"radial-gradient(ellipse at 50% 50%, oklch(0.78 0.14 195 / 0.25), transparent 60%)"}}/>
         <div className="max-w-[1100px] mx-auto text-center relative">
           <p className="font-script text-3xl md:text-4xl mb-4 italic" style={{color:"var(--brand-blush)"}}>
-            Fit. Flex. <span style={{color:"var(--brand-amber)"}}>F*ck.</span> ◆
+            Fit. Flex. <span style={{color:"var(--brand-amber)"}}>Fuck.</span> ◆
           </p>
           <h2 className="font-serif-display text-5xl md:text-7xl lg:text-8xl mt-2 leading-[0.95] tracking-[-0.025em]">
             Don't let your back<br/>
@@ -507,7 +510,7 @@ function Index() {
             <span className="italic" style={{color:"var(--brand-amber)", textShadow:"var(--glow-teal)"}}>you stay home.</span>
           </h2>
           <p className="mt-10 text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            7-minute baseline. Your protocol assembles the same day. Two weeks free, then $24/month, less than one PT visit.
+            Seven-minute baseline. Your protocol assembles the same day. Two weeks free, then $24 a month — less than one PT visit, less than the supplement stack you almost bought last week.
           </p>
           <div className="mt-12 flex flex-wrap gap-4 justify-center items-center">
             <a href="#" className="flex items-center gap-3 pl-5 pr-7 py-3 rounded-xl bg-foreground text-background hover:opacity-90 transition">
@@ -525,8 +528,8 @@ function Index() {
               </span>
             </a>
           </div>
-          <p className="mt-12 font-mono-label text-[9px] text-muted-foreground">
-            NOT A MEDICAL DEVICE · CONSULT YOUR PHYSICIAN OR PHYSICAL THERAPIST
+          <p className="mt-12 text-[11px] text-muted-foreground max-w-xl mx-auto leading-relaxed italic font-serif-display">
+            Not a medical device. If your back is screaming, see a PT. If your erection is gone for three months, see a urologist. We are coaches, not your doctor — though most of us know yours.
           </p>
         </div>
       </section>
@@ -541,9 +544,9 @@ function Index() {
               </svg>
               <span className="font-serif-display text-base">BackStroke</span>
             </div>
-            <p>The Performance Index for the modern spine.</p>
+            <p>Eight minutes a day. The rent your spine pays.</p>
           </div>
-          <div className="md:text-center">© BackStroke Labs · MMXXVI</div>
+          <div className="md:text-center">© BackStroke Labs · MMXXVI · a backstroke protocol</div>
           <div className="md:text-right">Built for backs that have things to do.</div>
         </div>
       </footer>
