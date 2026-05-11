@@ -403,7 +403,7 @@ function Index() {
                 n: "06", icon: Moon, name: "Sleep",
                 what: "Continuity over duration, REM-window protection, light/temperature gating, evening cortisol management, adjusted for cycle and perimenopausal thermoregulation. Where tomorrow's pain, hormones and decisions are quietly assembled.",
                 perf: "Skip it and the other five pillars stop compounding. There is no work-around. There has never been a work-around.",
-                bed: "Testosterone synthesis peaks 02:00–06:00; estradiol and progesterone follow their own choreography. Morning erections, regular cycles and lubrication are vital signs your doctor would actually like to know about. Protect the window.",
+                bed: "Testosterone synthesis peaks 02:00-06:00; estradiol and progesterone follow their own choreography. Morning erections, regular cycles and lubrication are vital signs your doctor would actually like to know about. Protect the window.",
               },
             ].map((p) => (
               <PillarCard key={p.n} p={p} />
@@ -484,7 +484,7 @@ function Index() {
               ["INPUTS",       "26 signals"],
               ["UPDATE RATE",  "Every 4 hrs"],
               ["MODEL",        "Adaptive · per-user baseline"],
-              ["OUTPUT",       "0–100 Index + 4 sub-scores"],
+              ["OUTPUT",       "0-100 Index + 4 sub-scores"],
             ].map(([k,v])=>(
               <div key={k} className="bg-background p-5">
                 <p className="font-mono-label text-[9px] text-muted-foreground">{k}</p>
@@ -681,7 +681,7 @@ function Index() {
           </h2>
           <div className="mt-16 grid md:grid-cols-3 gap-px bg-border border border-border">
             {[
-              { img: t1, name: "Jake, 32", role: "L4–L5 herniation · Index 71 → 89", quote: "Six weeks in, the morning stiffness is gone. I'm back on the bike, lifting, and I stopped scheduling life around my back." },
+              { img: t1, name: "Jake, 32", role: "L4-L5 herniation · Index 71 → 89", quote: "Six weeks in, the morning stiffness is gone. I'm back on the bike, lifting, and I stopped scheduling life around my back." },
               { img: t2, name: "Maya, 29", role: "Postpartum · Index 54 → 82",       quote: "The pelvic floor and breath work changed everything. I had no idea those numbers were connected to how I was feeling at night." },
               { img: t3, name: "Chris, 35", role: "Sciatica · Index 62 → 84",        quote: "It's the only product that treats me like a whole system. The Index makes the trade-offs obvious." },
             ].map((t)=>(
