@@ -11,8 +11,6 @@ import t1 from "@/assets/testimonial-1.jpg";
 import t2 from "@/assets/testimonial-2.jpg";
 import t3 from "@/assets/testimonial-3.jpg";
 import intimate from "@/assets/intimate.jpg";
-import { ConvergenceDiagram } from "@/components/ConvergenceDiagram";
-import { CorrelationGrid } from "@/components/CorrelationGrid";
 import { LiveProtocol } from "@/components/LiveProtocol";
 
 export const Route = createFileRoute("/")({
