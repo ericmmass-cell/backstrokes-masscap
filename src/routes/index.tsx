@@ -240,7 +240,7 @@ function Index() {
               </h2>
             </div>
             <p className="lg:col-span-5 text-muted-foreground leading-relaxed max-w-md">
-              Tap a zone. Log today's pain. Run a real flex set with breath pacing. Flip the switch and watch the after-dark protocol assemble itself around your spine. <span className="italic text-foreground">You won't. Most people don't. The ones who do are walking up stairs without bracing six weeks from now.</span>
+              Tap a zone. Log today's pain. Run a real flex set with breath pacing. Flip the switch and watch the after-dark protocol assemble itself around your spine. <span className="italic text-foreground">You won't. Most people won't. The ones who do are the ones tying their shoes standing up six weeks from now, instead of narrating it from a chair.</span>
             </p>
           </div>
           <LiveProtocol />
