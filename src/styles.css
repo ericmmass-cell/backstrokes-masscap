@@ -79,12 +79,15 @@
   --accent-foreground: oklch(0.96 0.01 80);
 
   --brand-amber: oklch(0.82 0.11 80);
-  --brand-clay: oklch(0.62 0.09 40);
+  --brand-clay: oklch(0.62 0.12 35);
   --brand-sage: oklch(0.7 0.06 155);
-  --brand-ink: oklch(0.16 0.008 60);
+  --brand-ink: oklch(0.14 0.008 60);
+  --brand-paper: oklch(0.96 0.012 80);
+  --brand-paper-ink: oklch(0.18 0.01 60);
   --gradient-text: linear-gradient(92deg, oklch(0.88 0.09 85), oklch(0.7 0.1 50));
-  --shadow-soft: 0 1px 0 oklch(1 0 0 / 0.04) inset, 0 20px 60px -20px oklch(0 0 0 / 0.5);
-  --hairline: oklch(1 0 0 / 0.08);
+  --shadow-soft: 0 1px 0 oklch(1 0 0 / 0.04) inset, 0 20px 60px -20px oklch(0 0 0 / 0.55);
+  --shadow-lift: 0 30px 80px -30px oklch(0 0 0 / 0.6);
+  --hairline: oklch(1 0 0 / 0.09);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: oklch(1 0 0 / 0.08);
