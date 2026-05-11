@@ -11,8 +11,6 @@ import t1 from "@/assets/testimonial-1.jpg";
 import t2 from "@/assets/testimonial-2.jpg";
 import t3 from "@/assets/testimonial-3.jpg";
 import intimate from "@/assets/intimate.jpg";
-import { ConvergenceDiagram } from "@/components/ConvergenceDiagram";
-import { CorrelationGrid } from "@/components/CorrelationGrid";
 import { LiveProtocol } from "@/components/LiveProtocol";
 
 export const Route = createFileRoute("/")({
@@ -56,10 +54,7 @@ function Index() {
           </div>
           <nav className="hidden md:flex items-center gap-9 font-mono-label text-[10px] text-muted-foreground">
             <a href="#try" className="hover:text-foreground transition" style={{color:"var(--brand-amber)"}}>◆ Try Live</a>
-            <a href="#thesis" className="hover:text-foreground transition">Thesis</a>
-            <a href="#index" className="hover:text-foreground transition">The Index</a>
             <a href="#six" className="hover:text-foreground transition">The Work</a>
-            <a href="#evidence" className="hover:text-foreground transition">Evidence</a>
             <a href="#stories" className="hover:text-foreground transition">Stories</a>
           </nav>
           <a href="#try" className="text-sm px-4 py-2 rounded-full bg-foreground text-background font-medium hover:opacity-90 transition">
@@ -346,98 +341,6 @@ function Index() {
         </div>
       </div>
 
-
-      {/* THESIS · why backs and sex are one job */}
-      <section id="thesis" className="px-6 md:px-10 py-32 border-b border-border">
-        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-4">
-            <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE THESIS</p>
-            <h2 className="font-serif-display text-4xl md:text-5xl mt-5 leading-[1.02] tracking-tight">
-              Your back and your sex life<br/>
-              <span className="italic text-muted-foreground">share a pelvis.</span>
-            </h2>
-          </div>
-          <div className="lg:col-span-8 lg:pt-2 grid md:grid-cols-2 gap-x-12 gap-y-8 text-muted-foreground leading-relaxed">
-            <p>
-              <span className="font-serif-display text-2xl text-foreground block mb-2">Same muscles.</span>
-              The pelvic floor is the floor of your spinal canister and the engine room of every erection, every orgasm, every painless pregnancy recovery. One muscle group, two jobs, almost nobody coaches it.
-            </p>
-            <p>
-              <span className="font-serif-display text-2xl text-foreground block mb-2">Same nerves.</span>
-              The lumbar nerves that misfire as sciatica are the same nerves that gate genital sensation. Quiet the back and the wiring downstream comes back online.
-            </p>
-            <p>
-              <span className="font-serif-display text-2xl text-foreground block mb-2">Same positions.</span>
-              The hip flexion, the spinal load, the breath access. Half of 'we don't anymore' is a back problem nobody named. We rank positions for it.
-            </p>
-            <p>
-              <span className="font-serif-display text-2xl text-foreground block mb-2">Same conversation.</span>
-              You can't fix one without the other. We're the first product willing to coach both, in the same week, by clinicians who can actually say the words.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* THE INDEX, signature graphic */}
-      <section id="index" className="px-6 md:px-10 py-32 border-b border-border">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="grid lg:grid-cols-12 gap-10 items-end mb-14">
-            <div className="lg:col-span-5">
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE PERFORMANCE INDEX</p>
-              <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
-                One number,<br/>two outcomes.
-              </h2>
-            </div>
-            <div className="lg:col-span-7">
-              <p className="text-muted-foreground leading-relaxed max-w-2xl">
-                Every signal you sync, wearable, manual, or sensor, feeds a proprietary model that surfaces a single, daily Index score. The Index is what your protocol optimizes against. It's how you know whether yesterday's choices made today's body more, or less, capable.
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-card border border-border rounded-sm p-6 md:p-12" style={{boxShadow:"var(--shadow-soft)"}}>
-            <ConvergenceDiagram />
-          </div>
-
-          <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-px bg-border border border-border">
-            {[
-              ["INPUTS",       "26 signals"],
-              ["UPDATE RATE",  "Every 4 hrs"],
-              ["MODEL",        "Adaptive · per-user baseline"],
-              ["OUTPUT",       "0-100 Index + 4 sub-scores"],
-            ].map(([k,v])=>(
-              <div key={k} className="bg-background p-5">
-                <p className="font-mono-label text-[9px] text-muted-foreground">{k}</p>
-                <p className="font-serif-display text-lg mt-2 leading-snug">{v}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* EVIDENCE / CORRELATIONS */}
-      <section id="evidence" className="px-6 md:px-10 py-32 border-b border-border">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="grid lg:grid-cols-12 gap-10 mb-14">
-            <div className="lg:col-span-5">
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">EVIDENCE</p>
-              <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
-                The correlations<br/>
-                <span className="italic text-muted-foreground">nobody is mapping.</span>
-              </h2>
-            </div>
-            <div className="lg:col-span-7 lg:pt-3">
-              <p className="text-muted-foreground leading-relaxed max-w-2xl">
-                Pulled from anonymized cohort data across 12,847 sessions and 90-day rolling windows. Pearson coefficients shown. The numbers below are why we built one app instead of six.
-              </p>
-            </div>
-          </div>
-          <CorrelationGrid />
-          <p className="font-mono-label text-[9px] text-muted-foreground mt-4">
-            FIG. 02 · INTERNAL COHORT, MMXXVI · NOT A CLINICAL TRIAL · DIRECTIONAL ONLY
-          </p>
-        </div>
-      </section>
 
       {/* AFTER DARK, the spicy thesis, named */}
       <section className="relative px-6 md:px-10 py-32 border-b border-border overflow-hidden"
