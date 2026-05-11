@@ -621,18 +621,18 @@ function Index() {
         </div>
       </section>
 
-      {/* METHODOLOGY, editorial split with breath/nutrition */}
+      {/* METHODOLOGY · two editorial spreads, back + bedroom */}
       <section className="px-6 md:px-10 py-32 border-b border-border">
         <div className="max-w-[1280px] mx-auto space-y-32">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <img src={meditation} alt="" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover"/>
             <div>
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">PILLAR 04 · BREATH & CNS</p>
+              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">FOR THE BACK</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-                The shortest path between a calm nervous system and a confident body.
+                Eight minutes of McGill, daily. The cheapest insurance your spine will ever buy.
               </h3>
               <p className="mt-6 text-muted-foreground leading-relaxed">
-                Vagal training, 4-7-8 down-regulation, body-scan visualization. Built with chronic-pain clinicians and sex therapists. Ten minutes, measurably lower next-morning pain and resting heart rate.
+                Curl-up, side plank, bird dog, paced for endurance not range. Coached on video by spine PTs, scaled to today's pain score. The protocol that beat lumbar surgery in head-to-head trials, finally taught properly.
               </p>
             </div>
           </div>
@@ -641,12 +641,12 @@ function Index() {
               <img src={nutrition} alt="" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover"/>
             </div>
             <div className="lg:order-1">
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">PILLAR 05 · NUTRITION</p>
+              <p className="font-mono-label text-[10px]" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-                The plate that lowers inflammation also raises performance.
+                Reverse kegel before regular kegel. The order most adults have backwards.
               </h3>
               <p className="mt-6 text-muted-foreground leading-relaxed">
-                Omega-3, polyphenols, hydration, connective-tissue protein. Calibrated to today's training load and last night's sleep. Grocery lists you'll actually use.
+                A chronically gripping pelvic floor is why arousal stalls, why erections fade, why penetration hurts. We coach the down-train first, with diaphragmatic breath, then the up-train for control. APTA pelvic-health PTs, on video, in plain language.
               </p>
             </div>
           </div>
