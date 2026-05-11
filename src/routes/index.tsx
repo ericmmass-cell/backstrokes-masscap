@@ -471,19 +471,36 @@ function Index() {
       </section>
 
       {/* CTA */}
-      <section id="cta" className="px-6 md:px-10 py-40 border-b border-border">
-        <div className="max-w-[1100px] mx-auto text-center">
-          <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">BEGIN</p>
-          <h2 className="font-serif-display text-5xl md:text-8xl mt-6 leading-[0.98] tracking-[-0.025em]">
-            Find your<br/>
-            <span className="italic text-[var(--brand-amber)]">Performance Index.</span>
+      <section id="cta" className="relative px-6 md:px-10 py-32 border-b border-border overflow-hidden">
+        <div className="absolute inset-0 opacity-30 pointer-events-none"
+             style={{background:"radial-gradient(ellipse at 50% 50%, oklch(0.78 0.14 195 / 0.25), transparent 60%)"}}/>
+        <div className="max-w-[1100px] mx-auto text-center relative">
+          <p className="font-script text-3xl md:text-4xl mb-4" style={{color:"var(--brand-pink)"}}>
+            Fix it. Flex it. Enjoy it. ♡
+          </p>
+          <h2 className="font-display-bold text-5xl md:text-7xl lg:text-8xl mt-2 leading-[0.92] tracking-tight">
+            Don't let your back<br/>
+            be the reason<br/>
+            <span className="text-[var(--brand-teal)]" style={{textShadow:"var(--glow-teal)"}}>you miss out.</span>
           </h2>
           <p className="mt-10 text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            A 7-minute baseline. We assemble your protocol the same day. Two weeks free, then $24/month — less than one PT visit.
+            7-minute baseline. Your protocol assembles the same day. Two weeks free, then $24/month — less than one PT visit.
           </p>
-          <div className="mt-12 flex flex-wrap gap-3 justify-center">
-            <a href="#" className="px-7 py-3.5 rounded-full bg-foreground text-background font-medium text-sm hover:opacity-90 transition">Download for iOS</a>
-            <a href="#" className="px-7 py-3.5 rounded-full border border-border font-medium text-sm hover:bg-card transition">Download for Android</a>
+          <div className="mt-12 flex flex-wrap gap-4 justify-center items-center">
+            <a href="#" className="flex items-center gap-3 pl-5 pr-7 py-3 rounded-xl bg-foreground text-background hover:opacity-90 transition">
+              <svg viewBox="0 0 24 24" className="w-7 h-7" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+              <span className="text-left leading-tight">
+                <span className="block text-[9px] opacity-70 font-mono-label">DOWNLOAD ON THE</span>
+                <span className="block text-base font-semibold">App Store</span>
+              </span>
+            </a>
+            <a href="#" className="flex items-center gap-3 pl-5 pr-7 py-3 rounded-xl bg-foreground text-background hover:opacity-90 transition">
+              <svg viewBox="0 0 24 24" className="w-7 h-7"><path fill="var(--brand-teal)" d="M3 2.5v19l9-9.5z"/><path fill="var(--brand-pink)" d="M3 2.5l13 7-4 3z"/><path fill="oklch(0.82 0.11 80)" d="M3 21.5l13-7-4-3z"/><path fill="oklch(0.62 0.12 35)" d="M21 12L16 9.5l-4 3 4 3z"/></svg>
+              <span className="text-left leading-tight">
+                <span className="block text-[9px] opacity-70 font-mono-label">GET IT ON</span>
+                <span className="block text-base font-semibold">Google Play</span>
+              </span>
+            </a>
           </div>
           <p className="mt-12 font-mono-label text-[9px] text-muted-foreground">
             NOT A MEDICAL DEVICE · CONSULT YOUR PHYSICIAN OR PHYSICAL THERAPIST
