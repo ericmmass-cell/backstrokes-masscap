@@ -1,154 +1,250 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Activity, Apple as AppleIcon, Brain, Heart, Waves, LineChart, Play, ArrowUpRight } from "lucide-react";
+import {
+  Activity, Apple as AppleIcon, Brain, Heart, Waves, Moon,
+  ArrowUpRight, ArrowRight,
+} from "lucide-react";
 import heroCouple from "@/assets/hero-couple.jpg";
+import portrait from "@/assets/portrait.jpg";
 import nutrition from "@/assets/nutrition.jpg";
 import meditation from "@/assets/meditation.jpg";
-import workout from "@/assets/workout.jpg";
 import t1 from "@/assets/testimonial-1.jpg";
 import t2 from "@/assets/testimonial-2.jpg";
 import t3 from "@/assets/testimonial-3.jpg";
+import { ConvergenceDiagram } from "@/components/ConvergenceDiagram";
+import { CorrelationGrid } from "@/components/CorrelationGrid";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "BackBetter — A whole-body protocol for people with bad backs" },
-      { name: "description", content: "Movement, nutrition, breathwork, pelvic floor, and vitals — one protocol designed around your back. Built for people who refuse to sit it out." },
+      { title: "BackBetter — The Performance Index for spines that have a life" },
+      { name: "description", content: "BackBetter converges spine, vitals, pelvic floor, breath, nutrition and sleep into a single Performance Index — the first integrated protocol linking back health to sexual performance and longevity." },
+      { property: "og:title", content: "BackBetter — Performance Index for the modern spine" },
+      { property: "og:description", content: "Six data streams. One adaptive protocol. Measurable gains in pain, capacity, confidence and performance." },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" },
     ],
   }),
 });
 
-const pillars = [
-  { n: "01", icon: Activity, title: "Movement", desc: "Spine-safe strength and mobility programs that progress with you. Built by physiotherapists, tuned by your data." },
-  { n: "02", icon: Waves, title: "Pelvic Floor", desc: "Guided kegel and core protocols that restore the deep stabilizers your back actually depends on." },
-  { n: "03", icon: AppleIcon, title: "Nutrition", desc: "Anti-inflammatory plates, hydration targets, and supplement guidance — calibrated for connective tissue recovery." },
-  { n: "04", icon: Brain, title: "Breath & Visualization", desc: "Down-regulate the nervous system. Pain-reframing meditations and HRV-paced breathwork before bed and before you train." },
-  { n: "05", icon: Heart, title: "Vitals", desc: "Blood pressure, resting heart rate, sleep, HRV. Sync your wearable and we'll surface the patterns that move your pain." },
-  { n: "06", icon: LineChart, title: "Progress", desc: "A weekly read-out of what's working — pain scores, range of motion, capacity. No vanity metrics." },
-];
-
-const testimonials = [
-  { img: t1, name: "Jake", role: "L4–L5 herniation", quote: "Six weeks in, the morning stiffness is gone. I'm back on the bike and lifting again — without bracing for the next flare." },
-  { img: t2, name: "Maya", role: "Postpartum, chronic low back", quote: "The pelvic floor work alone changed everything. The nutrition tracking was the part I didn't know I needed." },
-  { img: t3, name: "Chris", role: "Office worker, sciatica", quote: "Felt like a real protocol, not a content app. The breathwork before bed cut my night-time pain in half." },
+const PILLARS = [
+  { n: "01", icon: Activity,   title: "Spine",        desc: "Strength, mobility, and load tolerance — programmed by physiotherapists, sequenced to your phase." },
+  { n: "02", icon: Waves,      title: "Pelvic Floor", desc: "The deep stabilizers your back depends on — and the muscles that govern intimate performance." },
+  { n: "03", icon: Heart,      title: "Cardio-Vitals",desc: "Resting BP, heart rate, HRV. Vascular health is sexual health. Your back rides on it." },
+  { n: "04", icon: Brain,      title: "Breath & CNS", desc: "HRV-paced breathwork and pain-reframing visualization. Down-regulate to perform up." },
+  { n: "05", icon: AppleIcon,  title: "Nutrition",    desc: "Anti-inflammatory plate, hydration, and connective-tissue protein targets — calibrated daily." },
+  { n: "06", icon: Moon,       title: "Sleep",        desc: "Continuity and depth. Where tissue rebuilds, hormones reset, and tomorrow's pain is decided." },
 ];
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground antialiased">
       {/* Nav */}
-      <header className="sticky top-0 z-30 backdrop-blur-md bg-background/70 border-b border-border">
-        <div className="max-w-6xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+      <header className="sticky top-0 z-30 backdrop-blur-md bg-background/75 border-b border-border">
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-2 h-6 rounded-sm bg-[var(--brand-amber)]" />
+            <svg width="22" height="22" viewBox="0 0 22 22" className="text-[var(--brand-amber)]">
+              <circle cx="11" cy="11" r="10" stroke="currentColor" strokeWidth="1" fill="none"/>
+              <circle cx="11" cy="11" r="3" fill="currentColor"/>
+            </svg>
             <span className="font-serif-display text-xl tracking-tight">BackBetter</span>
+            <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">™</sup>
           </div>
-          <nav className="hidden md:flex items-center gap-9 font-mono-label text-[11px] text-muted-foreground">
-            <a href="#protocol" className="hover:text-foreground transition">Protocol</a>
-            <a href="#pillars" className="hover:text-foreground transition">Pillars</a>
-            <a href="#science" className="hover:text-foreground transition">Science</a>
+          <nav className="hidden md:flex items-center gap-9 font-mono-label text-[10px] text-muted-foreground">
+            <a href="#thesis" className="hover:text-foreground transition">Thesis</a>
+            <a href="#index" className="hover:text-foreground transition">The Index</a>
+            <a href="#pillars" className="hover:text-foreground transition">Protocol</a>
+            <a href="#evidence" className="hover:text-foreground transition">Evidence</a>
             <a href="#stories" className="hover:text-foreground transition">Stories</a>
           </nav>
-          <a href="#download" className="text-sm px-4 py-2 rounded-full bg-foreground text-background font-medium hover:opacity-90 transition">
-            Start
+          <a href="#cta" className="text-sm px-4 py-2 rounded-full bg-foreground text-background font-medium hover:opacity-90 transition">
+            Get the Index
           </a>
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="relative px-6 md:px-10 pt-20 pb-28 grain">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-12 gap-12 items-end">
+      {/* HERO — sharp thesis */}
+      <section className="relative px-6 md:px-10 pt-24 pb-32 border-b border-border overflow-hidden">
+        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12 items-end">
           <div className="lg:col-span-7">
-            <p className="font-mono-label text-[11px] text-[var(--brand-amber)] mb-8">A protocol for the unsedentary spine</p>
-            <h1 className="font-serif-display text-5xl md:text-7xl lg:text-[88px] leading-[1.02] tracking-tight">
-              A bad back<br />
-              shouldn't decide<br />
-              <em className="italic text-[var(--brand-amber)]">how you live.</em>
+            <div className="flex items-center gap-3 font-mono-label text-[10px] text-muted-foreground mb-10">
+              <span className="w-6 h-px bg-[var(--brand-amber)]" />
+              <span>FIG. 00 · A NEW CATEGORY OF SPINE CARE</span>
+            </div>
+            <h1 className="font-serif-display text-[44px] md:text-[68px] lg:text-[84px] leading-[0.98] tracking-[-0.025em]">
+              Your back<br/>
+              isn't a problem<br/>
+              to manage.<br/>
+              <span className="text-[var(--brand-amber)] italic">It's the system that runs your life.</span>
             </h1>
             <p className="mt-10 text-lg text-muted-foreground max-w-xl leading-relaxed">
-              BackBetter is one program built around six pillars — movement, pelvic floor, nutrition, breath, vitals, and progress. Designed for people whose back hurts but whose life shouldn't have to wait.
+              BackBetter is the first integrated protocol that converges six health signals — spine, pelvic floor, vitals, breath, nutrition, sleep — into a single, adaptive <em className="not-italic text-foreground">Performance Index</em>. The result: less pain, more capacity, and the part nobody else will say out loud — measurably better sex.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-5">
-              <a href="#download" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--brand-amber)] text-primary-foreground font-medium hover:opacity-90 transition">
-                Begin your assessment <ArrowUpRight className="w-4 h-4" />
+              <a href="#cta" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[var(--brand-amber)] text-primary-foreground text-sm font-medium hover:opacity-90 transition">
+                Calculate your Index <ArrowUpRight className="w-4 h-4"/>
               </a>
-              <a href="#protocol" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition">
-                <Play className="w-4 h-4" /> 90-second walkthrough
+              <a href="#thesis" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition">
+                Read the thesis <ArrowRight className="w-4 h-4"/>
               </a>
             </div>
           </div>
 
           <div className="lg:col-span-5 relative">
-            <img
-              src={heroCouple}
-              alt="A couple at ease at home"
-              width={1024}
-              height={1280}
-              className="w-full aspect-[4/5] object-cover rounded-sm"
-              style={{ boxShadow: "var(--shadow-soft)" }}
-            />
-            <div className="absolute -left-3 -bottom-3 hidden md:block bg-card border border-border rounded-sm p-4 max-w-[220px]">
-              <p className="font-mono-label text-[10px] text-muted-foreground">Today · pain</p>
-              <p className="font-serif-display text-3xl mt-1">2.1<span className="text-base text-muted-foreground">/10</span></p>
-              <p className="text-xs text-[var(--brand-sage)] mt-1">↓ 38% from week one</p>
+            <div className="relative">
+              <img src={heroCouple} alt="" width={1024} height={1280}
+                   className="w-full aspect-[4/5] object-cover" style={{boxShadow:"var(--shadow-lift)"}}/>
+              <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] text-white/80">
+                <span>SUBJECT 04 · DAY 42</span>
+                <span>● LIVE</span>
+              </div>
+              <div className="absolute bottom-4 left-4 right-4 grid grid-cols-3 gap-2 text-white">
+                {[["INDEX","87"],["PAIN","2.1"],["BP","118/76"]].map(([k,v])=>(
+                  <div key={k} className="backdrop-blur-md bg-black/30 px-3 py-2 rounded-sm">
+                    <p className="font-mono-label text-[8px] opacity-70">{k}</p>
+                    <p className="font-serif-display text-lg leading-none mt-1">{v}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Decorative grid lines */}
+        <div className="absolute inset-x-0 top-0 h-full pointer-events-none opacity-[0.04]"
+             style={{backgroundImage:"linear-gradient(to right, white 1px, transparent 1px)", backgroundSize:"calc(100%/12) 100%"}}/>
       </section>
 
-      {/* Stat band */}
-      <section className="border-y border-border">
-        <div className="max-w-6xl mx-auto px-6 md:px-10 py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
-          {[
-            ["72%", "report less daily pain by week 4"],
-            ["3.4×", "increase in spine-safe capacity"],
-            ["−11", "mmHg average resting BP shift"],
-            ["18 min", "median daily commitment"],
-          ].map(([v, l]) => (
-            <div key={l}>
-              <p className="font-serif-display text-3xl md:text-4xl">{v}</p>
-              <p className="text-xs text-muted-foreground mt-1 leading-snug">{l}</p>
-            </div>
+      {/* MARQUEE OF SIGNALS */}
+      <div className="border-b border-border overflow-hidden">
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex items-center gap-10 font-mono-label text-[10px] text-muted-foreground whitespace-nowrap overflow-x-auto">
+          <span className="text-foreground">SIGNALS INGESTED ·</span>
+          {["Apple Health","Oura","Whoop","Garmin","Withings BP","Continuous Glucose","Manual Pain Log","Pelvic EMG","Sleep Stage","HRV"].map(x=>(
+            <span key={x}>{x}</span>
           ))}
         </div>
-      </section>
+      </div>
 
-      {/* Protocol */}
-      <section id="protocol" className="px-6 md:px-10 py-28">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-5">
-            <p className="font-mono-label text-[11px] text-muted-foreground">The protocol</p>
-            <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-              A back program isn't a back program if it ignores the rest of you.
+      {/* THESIS — the value prop spelled out */}
+      <section id="thesis" className="px-6 md:px-10 py-32 border-b border-border">
+        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12">
+          <div className="lg:col-span-4">
+            <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE THESIS</p>
+            <h2 className="font-serif-display text-4xl md:text-5xl mt-5 leading-[1.02] tracking-tight">
+              Back pain isn't a back problem.<br/>
+              <span className="italic text-muted-foreground">It's a convergence problem.</span>
             </h2>
           </div>
-          <div className="lg:col-span-7 lg:pt-3 space-y-6 text-muted-foreground leading-relaxed">
+          <div className="lg:col-span-8 lg:pt-2 grid md:grid-cols-2 gap-x-12 gap-y-8 text-muted-foreground leading-relaxed">
             <p>
-              Most apps hand you a list of stretches. Pain returns. We treat the spine as a system: the muscles that move it, the floor that supports it, the food that rebuilds it, the nervous system that interprets it, and the vitals that quietly drive it.
+              <span className="font-serif-display text-2xl text-foreground block mb-2">Vascular.</span>
+              Resting blood pressure, HRV and endothelial function predict both spinal recovery and erectile capacity. The same circulatory system runs both.
             </p>
             <p>
-              You complete a 7-minute assessment. We assemble a six-pillar plan. It adapts weekly to your pain scores, mobility, sleep, and resting heart rate.
+              <span className="font-serif-display text-2xl text-foreground block mb-2">Neuromuscular.</span>
+              The pelvic floor and deep core are the same muscle group that stabilizes the spine and governs intimate performance. Train one, you train the other.
+            </p>
+            <p>
+              <span className="font-serif-display text-2xl text-foreground block mb-2">Inflammatory.</span>
+              Diet, sleep debt and chronic stress raise systemic inflammation. Inflammation drives next-day pain and depresses testosterone in the same 24-hour window.
+            </p>
+            <p>
+              <span className="font-serif-display text-2xl text-foreground block mb-2">Neurological.</span>
+              The nervous system that interprets pain is the nervous system that gates arousal. Down-regulate the first, you unlock the second.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Pillars */}
-      <section id="pillars" className="px-6 md:px-10 pb-28">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 border-t border-l border-border">
-            {pillars.map((p) => (
-              <article key={p.n} className="border-r border-b border-border p-8 hover:bg-card/40 transition group">
+      {/* THE INDEX — signature graphic */}
+      <section id="index" className="px-6 md:px-10 py-32 border-b border-border">
+        <div className="max-w-[1280px] mx-auto">
+          <div className="grid lg:grid-cols-12 gap-10 items-end mb-14">
+            <div className="lg:col-span-5">
+              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE PERFORMANCE INDEX</p>
+              <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
+                One number,<br/>built from six.
+              </h2>
+            </div>
+            <div className="lg:col-span-7">
+              <p className="text-muted-foreground leading-relaxed max-w-2xl">
+                Every signal you sync — wearable, manual, or sensor — feeds a proprietary model that surfaces a single, daily Index score. The Index is what your protocol optimizes against. It's how you know whether yesterday's choices made today's body more, or less, capable.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-card border border-border rounded-sm p-6 md:p-12" style={{boxShadow:"var(--shadow-soft)"}}>
+            <ConvergenceDiagram />
+          </div>
+
+          <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-px bg-border border border-border">
+            {[
+              ["INPUTS",       "26 signals"],
+              ["UPDATE RATE",  "Every 4 hrs"],
+              ["MODEL",        "Adaptive · per-user baseline"],
+              ["OUTPUT",       "0–100 Index + 4 sub-scores"],
+            ].map(([k,v])=>(
+              <div key={k} className="bg-background p-5">
+                <p className="font-mono-label text-[9px] text-muted-foreground">{k}</p>
+                <p className="font-serif-display text-lg mt-2 leading-snug">{v}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* EVIDENCE / CORRELATIONS */}
+      <section id="evidence" className="px-6 md:px-10 py-32 border-b border-border">
+        <div className="max-w-[1280px] mx-auto">
+          <div className="grid lg:grid-cols-12 gap-10 mb-14">
+            <div className="lg:col-span-5">
+              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">EVIDENCE</p>
+              <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
+                The correlations<br/>
+                <span className="italic text-muted-foreground">nobody is mapping.</span>
+              </h2>
+            </div>
+            <div className="lg:col-span-7 lg:pt-3">
+              <p className="text-muted-foreground leading-relaxed max-w-2xl">
+                Pulled from anonymized cohort data across 12,847 sessions and 90-day rolling windows. Pearson coefficients shown. The numbers below are why we built one app instead of six.
+              </p>
+            </div>
+          </div>
+          <CorrelationGrid />
+          <p className="font-mono-label text-[9px] text-muted-foreground mt-4">
+            FIG. 02 · INTERNAL COHORT, MMXXVI · NOT A CLINICAL TRIAL · DIRECTIONAL ONLY
+          </p>
+        </div>
+      </section>
+
+      {/* PILLARS */}
+      <section id="pillars" className="px-6 md:px-10 py-32 border-b border-border">
+        <div className="max-w-[1280px] mx-auto">
+          <div className="grid lg:grid-cols-12 gap-10 mb-14">
+            <div className="lg:col-span-5">
+              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE PROTOCOL</p>
+              <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
+                Six pillars.<br/>One daily plan.
+              </h2>
+            </div>
+            <div className="lg:col-span-7 lg:pt-3">
+              <p className="text-muted-foreground leading-relaxed max-w-2xl">
+                You don't choose between strength and breathwork, or stretching and nutrition. The Index decides what the spine and the system most need today, and your plan reorders itself around it.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">
+            {PILLARS.map((p)=>(
+              <article key={p.n} className="bg-background p-8 hover:bg-card/50 transition group">
                 <div className="flex items-start justify-between">
                   <p className="font-mono-label text-[10px] text-muted-foreground">{p.n}</p>
-                  <p.icon className="w-5 h-5 text-[var(--brand-amber)] opacity-80 group-hover:opacity-100 transition" />
+                  <p.icon className="w-5 h-5 text-[var(--brand-amber)] opacity-70 group-hover:opacity-100 transition"/>
                 </div>
-                <h3 className="font-serif-display text-2xl mt-10">{p.title}</h3>
+                <h3 className="font-serif-display text-3xl mt-12">{p.title}</h3>
                 <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.desc}</p>
               </article>
             ))}
@@ -156,161 +252,96 @@ function Index() {
         </div>
       </section>
 
-      {/* Editorial split — meditation */}
-      <section id="science" className="px-6 md:px-10 py-24 border-t border-border">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
-          <img src={meditation} alt="Breathwork session" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover rounded-sm" />
-          <div>
-            <p className="font-mono-label text-[11px] text-muted-foreground">Pillar 04 · Breath & Visualization</p>
-            <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-              Pain is a signal. We teach your nervous system to read it differently.
-            </h2>
-            <p className="mt-6 text-muted-foreground leading-relaxed">
-              HRV-paced breathwork, body-scan visualization, and short pre-sleep protocols designed with chronic-pain clinicians. The same techniques used in tier-one rehab programs, on your phone, ten minutes at a time.
-            </p>
-            <ul className="mt-8 space-y-3 text-sm">
-              {["4-7-8 down-regulation before bed", "Pain-reframing visualization sequences", "Vagal tone training paired with mobility"].map(x => (
-                <li key={x} className="flex gap-3 items-baseline">
-                  <span className="w-1 h-1 rounded-full bg-[var(--brand-amber)] mt-2" />
-                  <span className="text-muted-foreground">{x}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Editorial split — nutrition */}
-      <section className="px-6 md:px-10 py-24 border-t border-border">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
-          <div className="lg:order-2">
-            <img src={nutrition} alt="Anti-inflammatory plate" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover rounded-sm" />
-          </div>
-          <div className="lg:order-1">
-            <p className="font-mono-label text-[11px] text-muted-foreground">Pillar 03 · Nutrition</p>
-            <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-              The plate is part of the protocol.
-            </h2>
-            <p className="mt-6 text-muted-foreground leading-relaxed">
-              Inflammation, hydration, and protein for connective tissue repair. Not a diet — a daily framework calibrated to your training load and sleep debt, with grocery lists you'll actually use.
-            </p>
-            <div className="mt-8 grid grid-cols-3 gap-4 text-center">
-              {[["Omega-3","2.5g/d"],["Protein","1.6g/kg"],["Water","2.4L"]].map(([k,v])=>(
-                <div key={k} className="border border-border rounded-sm py-4">
-                  <p className="font-serif-display text-xl">{v}</p>
-                  <p className="font-mono-label text-[9px] text-muted-foreground mt-1">{k}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Vitals dashboard */}
-      <section className="px-6 md:px-10 py-24 border-t border-border">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-5">
-            <p className="font-mono-label text-[11px] text-muted-foreground">Pillar 05 · Vitals</p>
-            <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-              The signals your back has been trying to send you.
-            </h2>
-            <p className="mt-6 text-muted-foreground leading-relaxed">
-              Blood pressure trend, resting heart rate, HRV, sleep continuity. Synced from Apple Health, Oura, Whoop, or entered manually. We surface the correlations between your vitals and your pain — the ones you'd never spot on your own.
-            </p>
-          </div>
+      {/* PAPER SECTION — the pitch on light ground */}
+      <section className="px-6 md:px-10 py-32 border-b border-border"
+               style={{background:"var(--brand-paper)", color:"var(--brand-paper-ink)"}}>
+        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7">
-            <div className="bg-card border border-border rounded-md p-6 md:p-8" style={{boxShadow:"var(--shadow-soft)"}}>
-              <div className="flex items-center justify-between mb-6">
-                <p className="font-mono-label text-[10px] text-muted-foreground">Last 14 days</p>
-                <p className="font-mono-label text-[10px] text-[var(--brand-sage)]">All trending well</p>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-                {[
-                  {l:"Blood Pressure",v:"118/76",d:"−6 mmHg"},
-                  {l:"Resting HR",v:"58",d:"−4 bpm"},
-                  {l:"HRV",v:"62 ms",d:"+11"},
-                  {l:"Sleep",v:"7h 24m",d:"+38 min"},
-                ].map(x=>(
-                  <div key={x.l}>
-                    <p className="font-mono-label text-[9px] text-muted-foreground">{x.l}</p>
-                    <p className="font-serif-display text-2xl mt-2">{x.v}</p>
-                    <p className="text-[11px] text-[var(--brand-sage)] mt-1">{x.d}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8 h-32 relative">
-                <svg viewBox="0 0 400 120" className="w-full h-full">
-                  <defs>
-                    <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0%" stopColor="oklch(0.78 0.11 75)" stopOpacity="0.4"/>
-                      <stop offset="100%" stopColor="oklch(0.78 0.11 75)" stopOpacity="0"/>
-                    </linearGradient>
-                  </defs>
-                  <path d="M0,80 C40,75 60,60 100,55 C140,50 180,70 220,55 C260,40 300,30 340,25 C370,22 390,20 400,18 L400,120 L0,120 Z" fill="url(#g)"/>
-                  <path d="M0,80 C40,75 60,60 100,55 C140,50 180,70 220,55 C260,40 300,30 340,25 C370,22 390,20 400,18" fill="none" stroke="oklch(0.78 0.11 75)" strokeWidth="1.5"/>
-                </svg>
-                <p className="absolute bottom-0 left-0 font-mono-label text-[9px] text-muted-foreground">Pain score · weekly</p>
-              </div>
+            <p className="font-mono-label text-[10px]" style={{color:"var(--brand-clay)"}}>WHY NOW</p>
+            <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
+              Back pain affects 619M people. The market's answer is a stretch video.
+            </h2>
+            <p className="mt-8 text-lg leading-relaxed" style={{color:"oklch(0.35 0.01 60)"}}>
+              The chronic-pain category is fragmented across PT clinics, telehealth, supplements, and content apps. None of them touch sexual function — even though the data is identical to the data that predicts it. BackBetter is the first product to integrate the stack and own the most underserved outcome in adult health.
+            </p>
+            <div className="mt-10 grid grid-cols-3 gap-6">
+              {[
+                ["$140B", "Global back pain market"],
+                ["1 in 4", "Adults with chronic LBP report sexual avoidance"],
+                ["72%", "Of users report measurable Index gain by week 4"],
+              ].map(([v,l])=>(
+                <div key={l} className="border-t pt-4" style={{borderColor:"oklch(0.18 0.01 60 / 0.15)"}}>
+                  <p className="font-serif-display text-3xl">{v}</p>
+                  <p className="text-xs mt-2 leading-snug" style={{color:"oklch(0.4 0.01 60)"}}>{l}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Movement / phone */}
-      <section className="px-6 md:px-10 py-24 border-t border-border">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
-          <div>
-            <p className="font-mono-label text-[11px] text-muted-foreground">Pillar 01 · Movement</p>
-            <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-              Eighteen minutes. Most days. That's the ask.
-            </h2>
-            <p className="mt-6 text-muted-foreground leading-relaxed">
-              Spine-safe strength, mobility, and pelvic floor work — programmed by physiotherapists, sequenced for your phase, and adjusted by your daily pain check-in.
+          <div className="lg:col-span-5">
+            <img src={portrait} alt="" loading="lazy" width={1024} height={1024}
+                 className="w-full aspect-[4/5] object-cover"/>
+            <p className="font-mono-label text-[9px] mt-3" style={{color:"oklch(0.4 0.01 60)"}}>
+              SUBJECT 11 · WEEK 6 · INDEX +24
             </p>
           </div>
-          <div className="relative mx-auto max-w-xs">
-            <div className="bg-black rounded-[2.2rem] p-2.5 border border-border" style={{boxShadow:"var(--shadow-soft)"}}>
-              <div className="bg-card rounded-[1.8rem] overflow-hidden">
-                <div className="px-5 pt-5 pb-3 flex items-center justify-between text-[10px] text-muted-foreground font-mono-label">
-                  <span>9:41</span><span>● ● ●</span>
-                </div>
-                <div className="px-5 pb-5">
-                  <p className="font-mono-label text-[10px] text-muted-foreground">Today's session</p>
-                  <h4 className="font-serif-display text-2xl mt-1 leading-tight">Lower back<br/>capacity build</h4>
-                  <p className="text-[11px] text-muted-foreground mt-1">18 min · Phase 2 · Week 4</p>
-                  <img src={workout} alt="" loading="lazy" width={1024} height={768} className="rounded-md mt-4 w-full aspect-video object-cover"/>
-                  <button className="w-full mt-4 py-2.5 rounded-full bg-[var(--brand-amber)] text-primary-foreground text-sm font-medium">Begin</button>
-                  <div className="grid grid-cols-2 gap-2.5 mt-3">
-                    <div className="bg-secondary rounded-sm p-3">
-                      <p className="font-mono-label text-[8px] text-muted-foreground">Pain · AM</p>
-                      <p className="font-serif-display text-xl mt-1">2<span className="text-xs text-muted-foreground">/10</span></p>
-                    </div>
-                    <div className="bg-secondary rounded-sm p-3">
-                      <p className="font-mono-label text-[8px] text-muted-foreground">Mobility</p>
-                      <p className="font-serif-display text-xl mt-1">+14%</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        </div>
+      </section>
+
+      {/* METHODOLOGY — editorial split with breath/nutrition */}
+      <section className="px-6 md:px-10 py-32 border-b border-border">
+        <div className="max-w-[1280px] mx-auto space-y-32">
+          <div className="grid lg:grid-cols-2 gap-14 items-center">
+            <img src={meditation} alt="" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover"/>
+            <div>
+              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">PILLAR 04 · BREATH & CNS</p>
+              <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
+                The shortest path between a calm nervous system and a confident body.
+              </h3>
+              <p className="mt-6 text-muted-foreground leading-relaxed">
+                Vagal training, 4-7-8 down-regulation, body-scan visualization. Built with chronic-pain clinicians and sex therapists. Ten minutes, measurably lower next-morning pain and resting heart rate.
+              </p>
+            </div>
+          </div>
+          <div className="grid lg:grid-cols-2 gap-14 items-center">
+            <div className="lg:order-2">
+              <img src={nutrition} alt="" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover"/>
+            </div>
+            <div className="lg:order-1">
+              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">PILLAR 05 · NUTRITION</p>
+              <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
+                The plate that lowers inflammation also raises performance.
+              </h3>
+              <p className="mt-6 text-muted-foreground leading-relaxed">
+                Omega-3, polyphenols, hydration, connective-tissue protein. Calibrated to today's training load and last night's sleep. Grocery lists you'll actually use.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stories */}
-      <section id="stories" className="px-6 md:px-10 py-24 border-t border-border">
-        <div className="max-w-6xl mx-auto">
-          <p className="font-mono-label text-[11px] text-muted-foreground">Field notes</p>
-          <h2 className="font-serif-display text-4xl md:text-5xl mt-4 max-w-2xl leading-[1.05]">From people who stopped sitting it out.</h2>
-          <div className="mt-14 grid md:grid-cols-3 gap-10">
-            {testimonials.map((t)=>(
-              <figure key={t.name}>
-                <blockquote className="font-serif-display text-xl leading-snug">"{t.quote}"</blockquote>
-                <figcaption className="mt-6 flex items-center gap-3">
-                  <img src={t.img} alt="" loading="lazy" width={512} height={512} className="w-10 h-10 rounded-full object-cover grayscale"/>
+      {/* STORIES */}
+      <section id="stories" className="px-6 md:px-10 py-32 border-b border-border">
+        <div className="max-w-[1280px] mx-auto">
+          <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">FIELD NOTES</p>
+          <h2 className="font-serif-display text-4xl md:text-6xl mt-5 max-w-2xl leading-[1.02] tracking-tight">
+            From people who refuse to sit it out.
+          </h2>
+          <div className="mt-16 grid md:grid-cols-3 gap-px bg-border border border-border">
+            {[
+              { img: t1, name: "Jake, 32", role: "L4–L5 herniation · Index 71 → 89", quote: "Six weeks in, the morning stiffness is gone. I'm back on the bike, lifting, and I stopped scheduling life around my back." },
+              { img: t2, name: "Maya, 29", role: "Postpartum · Index 54 → 82",       quote: "The pelvic floor and breath work changed everything. I had no idea those numbers were connected to how I was feeling at night." },
+              { img: t3, name: "Chris, 35", role: "Sciatica · Index 62 → 84",        quote: "It's the only product that treats me like a whole system. The Index makes the trade-offs obvious." },
+            ].map((t)=>(
+              <figure key={t.name} className="bg-background p-8">
+                <blockquote className="font-serif-display text-xl leading-snug">
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <figcaption className="mt-8 flex items-center gap-3 pt-6 border-t border-border">
+                  <img src={t.img} alt="" loading="lazy" width={512} height={512}
+                       className="w-10 h-10 rounded-full object-cover grayscale"/>
                   <div>
                     <p className="text-sm">{t.name}</p>
-                    <p className="font-mono-label text-[10px] text-muted-foreground">{t.role}</p>
+                    <p className="font-mono-label text-[9px] text-muted-foreground mt-0.5">{t.role}</p>
                   </div>
                 </figcaption>
               </figure>
@@ -320,26 +351,40 @@ function Index() {
       </section>
 
       {/* CTA */}
-      <section id="download" className="px-6 md:px-10 py-32 border-t border-border">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-serif-display text-5xl md:text-7xl leading-[1.02]">
-            Begin with a <em className="italic text-[var(--brand-amber)]">7-minute assessment.</em>
+      <section id="cta" className="px-6 md:px-10 py-40 border-b border-border">
+        <div className="max-w-[1100px] mx-auto text-center">
+          <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">BEGIN</p>
+          <h2 className="font-serif-display text-5xl md:text-8xl mt-6 leading-[0.98] tracking-[-0.025em]">
+            Find your<br/>
+            <span className="italic text-[var(--brand-amber)]">Performance Index.</span>
           </h2>
-          <p className="mt-8 text-muted-foreground max-w-lg mx-auto">
-            Tell us where it hurts, how you move, and what you want back. We'll build the protocol. First two weeks free.
+          <p className="mt-10 text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            A 7-minute baseline. We assemble your protocol the same day. Two weeks free, then $24/month — less than one PT visit.
           </p>
-          <div className="mt-10 flex flex-wrap gap-3 justify-center">
-            <a href="#" className="px-6 py-3 rounded-full bg-foreground text-background font-medium text-sm">Download for iOS</a>
-            <a href="#" className="px-6 py-3 rounded-full border border-border font-medium text-sm hover:bg-card transition">Download for Android</a>
+          <div className="mt-12 flex flex-wrap gap-3 justify-center">
+            <a href="#" className="px-7 py-3.5 rounded-full bg-foreground text-background font-medium text-sm hover:opacity-90 transition">Download for iOS</a>
+            <a href="#" className="px-7 py-3.5 rounded-full border border-border font-medium text-sm hover:bg-card transition">Download for Android</a>
           </div>
-          <p className="mt-10 font-mono-label text-[10px] text-muted-foreground">Not a medical device. Consult your physician or physical therapist.</p>
+          <p className="mt-12 font-mono-label text-[9px] text-muted-foreground">
+            NOT A MEDICAL DEVICE · CONSULT YOUR PHYSICIAN OR PHYSICAL THERAPIST
+          </p>
         </div>
       </section>
 
-      <footer className="px-6 md:px-10 py-10 border-t border-border">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4 font-mono-label text-[10px] text-muted-foreground">
-          <span>© BackBetter Labs · MMXXVI</span>
-          <span>Made with care for backs that have things to do.</span>
+      <footer className="px-6 md:px-10 py-12">
+        <div className="max-w-[1280px] mx-auto grid md:grid-cols-3 gap-8 font-mono-label text-[10px] text-muted-foreground">
+          <div>
+            <div className="flex items-center gap-2 text-foreground mb-3">
+              <svg width="16" height="16" viewBox="0 0 22 22" className="text-[var(--brand-amber)]">
+                <circle cx="11" cy="11" r="10" stroke="currentColor" strokeWidth="1" fill="none"/>
+                <circle cx="11" cy="11" r="3" fill="currentColor"/>
+              </svg>
+              <span className="font-serif-display text-base">BackBetter</span>
+            </div>
+            <p>The Performance Index for the modern spine.</p>
+          </div>
+          <div className="md:text-center">© BackBetter Labs · MMXXVI</div>
+          <div className="md:text-right">Built for backs that have things to do.</div>
         </div>
       </footer>
     </div>
