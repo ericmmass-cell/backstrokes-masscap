@@ -148,5 +148,28 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Anton', 'Impact', sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  .font-script {
+    font-family: 'Caveat', cursive;
   }
 }
+
+@layer utilities {
+  .text-gradient {
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .glow-teal { box-shadow: var(--shadow-glow-teal); }
+  .glow-pink { box-shadow: var(--shadow-glow-pink); }
+  .ring-neon-pink { box-shadow: 0 0 0 2px var(--neon-pink), 0 0 30px var(--neon-pink); }
+}
+
