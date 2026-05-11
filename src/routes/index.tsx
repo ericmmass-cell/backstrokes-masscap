@@ -35,7 +35,7 @@ function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
       {/* Nav */}
-      <header className="sticky top-0 z-30 backdrop-blur-md bg-background/75 border-b border-border">
+      <header className="sticky top-0 z-30 backdrop-blur-xl bg-background/70 border-b border-border/60">
         <div className="max-w-[1280px] mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <svg width="22" height="22" viewBox="0 0 22 22" className="text-[var(--brand-amber)]">
@@ -52,12 +52,12 @@ function Index() {
             </div>
             <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">℠</sup>
           </div>
-          <nav className="hidden md:flex items-center gap-9 font-mono-label text-[10px] text-muted-foreground">
-            <a href="#try" className="hover:text-foreground transition" style={{color:"var(--brand-amber)"}}>◆ Try Live</a>
-            <a href="#six" className="hover:text-foreground transition">The Work</a>
-            <a href="#stories" className="hover:text-foreground transition">Stories</a>
+          <nav className="hidden md:flex items-center gap-8 font-mono-label text-[10px] tracking-[0.18em] text-muted-foreground uppercase">
+            <a href="#try" className="hover:text-foreground transition-colors" style={{color:"var(--brand-amber)"}}>◆ Try Live</a>
+            <a href="#six" className="hover:text-foreground transition-colors">The Work</a>
+            <a href="#stories" className="hover:text-foreground transition-colors">Stories</a>
           </nav>
-          <a href="#try" className="text-sm px-4 py-2 rounded-full bg-foreground text-background font-medium hover:opacity-90 transition">
+          <a href="#try" className="text-[12px] tracking-[0.14em] uppercase font-mono-label px-4 py-2 rounded-full bg-foreground text-background hover:opacity-90 transition">
             Try the Protocol
           </a>
         </div>
