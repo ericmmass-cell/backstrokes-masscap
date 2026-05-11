@@ -299,7 +299,7 @@ function Index() {
                 <p className="font-mono-label text-[10px]" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
                 <Waves className="w-5 h-5" style={{color:"var(--brand-blush)"}} />
               </div>
-              <h3 className="font-serif-display text-3xl italic leading-tight mb-2" style={{color:"var(--brand-blush)"}}>Genitals that work, and enjoy it.</h3>
+              <h3 className="font-serif-display text-3xl italic leading-tight mb-2" style={{color:"var(--brand-blush)"}}>Sex that actually works again.</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-8">
                 Pelvic floor done properly, in both directions. Position library that doesn't hurt. The conversations your GP won't have. Coached by APTA pelvic-health PTs and AASECT therapists.
               </p>
