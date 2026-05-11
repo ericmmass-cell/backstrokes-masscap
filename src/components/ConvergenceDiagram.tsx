@@ -25,7 +25,7 @@ export function ConvergenceDiagram() {
       viewBox="0 0 800 320"
       className="w-full h-auto"
       role="img"
-      aria-label="Six health data streams converging into the BackBetter Performance Index"
+      aria-label="Six health data streams converging into the BackStroke Performance Index"
     >
       <defs>
         <radialGradient id="core" cx="50%" cy="50%" r="50%">
