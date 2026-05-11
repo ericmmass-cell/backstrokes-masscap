@@ -179,7 +179,7 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              The clinically-built operating system for the male body after 30 — converging <span className="italic" style={{color:"var(--brand-amber)"}}>spine, pelvic floor, vascular, breath, nutrition and sleep</span> into one adaptive Performance Index. Built on the literature your urologist hasn't read yet.
+              The clinically-built operating system for the adult body after 30 — converging <span className="italic" style={{color:"var(--brand-amber)"}}>spine, pelvic floor, vascular, breath, nutrition and sleep</span> into one adaptive Performance Index. Calibrated for him, for her, and for the cycle, perimenopause and recovery windows nobody else is modeling.
             </p>
 
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
