@@ -434,7 +434,7 @@ function Index() {
             <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE THESIS</p>
             <h2 className="font-serif-display text-4xl md:text-5xl mt-5 leading-[1.02] tracking-tight">
               Back pain isn't a back problem.<br/>
-              <span className="italic text-muted-foreground">It's a convergence problem.</span>
+              <span className="italic text-muted-foreground">It's a system problem.</span>
             </h2>
           </div>
           <div className="lg:col-span-8 lg:pt-2 grid md:grid-cols-2 gap-x-12 gap-y-8 text-muted-foreground leading-relaxed">
