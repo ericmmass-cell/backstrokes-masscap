@@ -17,10 +17,10 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "BackStroke — the protocol the wellness industry forgot to write" },
-      { name: "description", content: "Eight minutes of McGill, a pelvic floor that actually relaxes, and a sex life that stops scheduling itself around your back. Coached by McGill-trained PTs and AASECT therapists. Not a stretch video." },
-      { property: "og:title", content: "BackStroke — for the back, and the bedroom. Same pelvis." },
-      { property: "og:description", content: "Eight minutes of McGill, a pelvic floor that actually relaxes, and sex you're sincerely into. The protocol the wellness industry forgot to write." },
+      { title: "BackStroke — the protocol Goop would have charged you $400 for" },
+      { name: "description", content: "Eight minutes of McGill, a pelvic floor that knows how to exhale, and a sex life that stops checking in with your L4. Coached by people with letters after their names. Not a man in a tank top." },
+      { property: "og:title", content: "BackStroke — same pelvis, two jobs." },
+      { property: "og:description", content: "Eight minutes of McGill, a pelvic floor that finally returns your calls, and sex you're sincerely into. The protocol the wellness aisle was too embarrassed to write." },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
