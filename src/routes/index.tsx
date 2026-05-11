@@ -86,8 +86,8 @@ function Index() {
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
               {[
                 ["−63%", "back-pain days · wk 8 (n=412)"],
-                ["+58%", "satisfying sex · wk 10 (self-report)"],
-                ["+2.4×", "morning erections / cycles tracked · wk 12"],
+                ["+58%", "rate sex 'genuinely enjoyable' · wk 10"],
+                ["−71%", "report pain as a distraction in bed · wk 12"],
               ].map(([v,l])=>(
                 <div key={l} className="bg-background/80 px-4 py-3">
                   <p className="font-serif-display text-2xl" style={{color:"var(--brand-amber)"}}>{v}</p>
