@@ -79,19 +79,36 @@ function Index() {
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-10 items-center relative">
           <div className="lg:col-span-7 relative z-10">
             <p className="font-mono-label text-[10px] text-[var(--brand-amber)] mb-6">
-              ◆ MEMBERS' PROTOCOL · EST. MMXXVI · BY INVITATION
+              ◆ THE PERFORMANCE INDEX FOR THE MODERN SPINE
             </p>
-            <h1 className="font-serif-display text-[56px] md:text-[84px] lg:text-[104px] leading-[0.92] tracking-[-0.025em]">
-              The quietly<br/>
-              <span className="italic" style={{color:"var(--brand-amber)", textShadow:"var(--glow-teal)"}}>devastating</span><br/>
-              art of being<br/>
+            <h1 className="font-serif-display text-[52px] md:text-[78px] lg:text-[96px] leading-[0.92] tracking-[-0.025em]">
+              Fix the back.<br/>
               <span className="italic" style={{
                 background:"var(--gradient-text)",
                 WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
-              }}>well-built.</span>
+              }}>Unlock the body.</span><br/>
+              <span className="italic" style={{color:"var(--brand-blush)", textShadow:"var(--glow-pink)"}}>Reclaim the bedroom.</span>
             </h1>
-            <p className="mt-10 text-lg text-muted-foreground max-w-md leading-relaxed">
-              A clinically-led, six-pillar protocol for backs, bodies and bedrooms that <span className="italic text-foreground">refuse to retire early</span>. Built with physiotherapists, sports medicine MDs, pelvic-floor specialists, registered dietitians and certified sex therapists.
+
+            <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
+              The first clinically-led app that converges <span className="italic" style={{color:"var(--brand-amber)"}}>spine, pelvic floor, vitals, breath, nutrition and sleep</span> into one daily Performance Index — because the same six systems that drive your back pain drive your sex life, your stamina, and the next 30 years of how you feel.
+            </p>
+
+            <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
+              {[
+                ["−63%", "back-pain days by wk 8"],
+                ["+34%", "intimate frequency"],
+                ["+18 pts", "Performance Index"],
+              ].map(([v,l])=>(
+                <div key={l} className="bg-background/80 px-4 py-3">
+                  <p className="font-serif-display text-2xl" style={{color:"var(--brand-amber)"}}>{v}</p>
+                  <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{l}</p>
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-6 text-sm text-muted-foreground max-w-xl leading-relaxed">
+              Built with sports-medicine MDs, doctors of physiotherapy, pelvic-floor specialists, registered dietitians, sleep physicians and AASECT-certified sex therapists. <span className="text-foreground italic">No stretch videos. No shame. No guesswork.</span>
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
