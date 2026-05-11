@@ -17,7 +17,7 @@ const FIX_PRESCRIPTION: Record<ZoneId, { move: string; sets: string; why: string
   cervical: { move: "Chin tuck + thoracic opener", sets: "3 × 8 · 4 min", why: "Decompress C5–C7. Resets desk-loaded cervical curve." },
   thoracic: { move: "Quadruped thread-the-needle", sets: "2 × 10/side · 5 min", why: "Restores rotation. The segment that fails when the lumbar overworks." },
   lumbar:   { move: "McGill big-3 + hip airplane", sets: "Circuit × 3 · 9 min", why: "Endurance over flexibility. The protocol that actually quiets discs." },
-  sacral:   { move: "90/90 hip switches + glute bridge", sets: "3 × 6 · 6 min", why: "Unlocks SI joint, fires the glutes that should be carrying the spine." },
+  sacral:   { move: "90/90 hip switches + glute bridge", sets: "3 × 6 · 6 min", why: "Frees the SI joint, fires the glutes that should be carrying the spine." },
   pelvic:   { move: "Reverse kegel + diaphragmatic breath", sets: "4 × 10 · 7 min", why: "Down-regulates over-tonic floor. Pre-requisite for everything below." },
 };
 
@@ -96,7 +96,7 @@ export function LiveProtocol() {
   const [afterDark, setAfterDark] = useState(false);
   const matched = POSITIONS.filter((p) => p.safeFor.includes(zone));
 
-  // Index calc — reactive to user input
+  // Index calc, reactive to user input
   const baseIndex = 62;
   const painPenalty = pain * 2.5;
   const flexBonus = (doneReps / totalReps) * 14;
@@ -358,7 +358,7 @@ export function LiveProtocol() {
                 ))}
                 {matched.length === 0 && (
                   <p className="bg-background p-8 col-span-2 text-sm text-muted-foreground italic">
-                    Today's flare is too acute. Recovery protocol queued instead — sleep + breath only.
+                    Today's flare is too acute. Recovery protocol queued instead, sleep + breath only.
                   </p>
                 )}
               </div>
