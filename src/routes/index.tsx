@@ -179,15 +179,15 @@ function Index() {
       </section>
 
       {/* TAGLINE STRIP, gold foil on velvet */}
-      <div className="border-y border-border" style={{background:"linear-gradient(180deg, oklch(0.16 0.02 26), oklch(0.13 0.012 28))"}}>
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex items-center justify-center gap-6 md:gap-12 font-serif-display italic text-base md:text-2xl tracking-tight" style={{color:"var(--brand-amber)"}}>
-          <span className="opacity-50">◆</span>
+      <div className="border-y border-border/70" style={{background:"linear-gradient(180deg, oklch(0.155 0.018 26), oklch(0.125 0.012 28))"}}>
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-6 flex items-center justify-center gap-8 md:gap-14 font-serif-display italic text-lg md:text-3xl tracking-[-0.01em]" style={{color:"var(--brand-amber)"}}>
+          <span className="opacity-40 text-xs not-italic">◆</span>
           <span>Fit.</span>
-          <span className="opacity-40 not-italic font-mono-label text-xs">·</span>
+          <span className="opacity-30 not-italic font-mono-label text-[10px]">·</span>
           <span>Flex.</span>
-          <span className="opacity-40 not-italic font-mono-label text-xs">·</span>
+          <span className="opacity-30 not-italic font-mono-label text-[10px]">·</span>
           <span style={{color:"var(--brand-blush)"}}>F*ck.</span>
-          <span className="opacity-50">◆</span>
+          <span className="opacity-40 text-xs not-italic">◆</span>
         </div>
       </div>
 
