@@ -301,11 +301,11 @@ function Index() {
             <span className="opacity-40">·</span>
             <span><span className="text-foreground italic">Stanford</span> Sleep Medicine</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">UCSF</span> Urology</span>
+            <span><span className="text-foreground italic">UCSF</span> Urology &amp; Ob-Gyn</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">APTA</span> Pelvic Health</span>
+            <span><span className="text-foreground italic">APTA</span> Pelvic Health (men &amp; women)</span>
             <span className="opacity-40">·</span>
-            <span><span className="text-foreground italic">AASECT</span> Therapists</span>
+            <span><span className="text-foreground italic">ISSWSH</span> + <span className="text-foreground italic">AASECT</span></span>
             <span className="opacity-40">·</span>
             <span><span className="text-foreground italic">Academy of Nutrition</span> RDs</span>
           </div>
