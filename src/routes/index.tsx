@@ -311,6 +311,32 @@ function Index() {
         </div>
       </div>
 
+      {/* LIVE PROTOCOL — actually fix, flex, f*ck */}
+      <section id="try" className="px-6 md:px-10 py-24 border-b border-border relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
+             style={{ backgroundImage: "radial-gradient(var(--brand-amber) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
+        <div className="max-w-[1280px] mx-auto relative">
+          <div className="grid lg:grid-cols-12 gap-10 items-end mb-10">
+            <div className="lg:col-span-7">
+              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">◆ TRY THE PROTOCOL · NO SIGNUP</p>
+              <h2 className="font-serif-display text-4xl md:text-6xl mt-4 leading-[0.98] tracking-tight">
+                Stop reading the pitch.<br/>
+                <span className="italic" style={{ color: "var(--brand-blush)", textShadow: "var(--glow-pink)" }}>
+                  Run a session.
+                </span>
+              </h2>
+            </div>
+            <p className="lg:col-span-5 text-muted-foreground leading-relaxed max-w-md">
+              Tap a zone, log today's pain, run a real flex set with breath pacing — then flip the switch and watch the after-dark protocol assemble itself around your spine.
+            </p>
+          </div>
+          <LiveProtocol />
+          <p className="font-mono-label text-[9px] text-muted-foreground mt-4 text-center">
+            FIG. 04 · INTERACTIVE PREVIEW · YOUR INDEX SCORE UPDATES IN REAL TIME ABOVE
+          </p>
+        </div>
+      </section>
+
       {/* SIX PILLARS — fast, specific, performance + bedroom outcomes */}
       <section id="six" className="px-6 md:px-10 py-24 border-b border-border">
         <div className="max-w-[1280px] mx-auto">
