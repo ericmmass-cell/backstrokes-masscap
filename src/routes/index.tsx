@@ -80,7 +80,7 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              Two things. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that stops talking. Sex you're sincerely into.</span> Same pelvis, same nerves, same muscles. We don't chase a baseline. We coach the eight or nine specific things that get you out of bed without wincing, and back into it fully present, with nothing in the room except the two of you.
+              Two things. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that stops talking. Sex you're sincerely into.</span> Same pelvis, same nerves, same muscles — your anatomy was never going to keep them in separate rooms. We coach the eight or nine specific things that get you out of bed without the audible noise, and back into it without one eye on the clock and the other on your lumbar.
             </p>
 
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
@@ -97,10 +97,10 @@ function Index() {
             </div>
 
             <p className="mt-6 text-sm text-muted-foreground max-w-xl leading-relaxed">
-              Directed by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, and AASECT-certified therapists. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a tank top yelling about discipline.</span>
+              Directed by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, and AASECT-certified therapists. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a tank top yelling about discipline. No one is going to call your spine a temple.</span>
             </p>
             <p className="mt-2 font-mono-label text-[9px] text-muted-foreground tracking-[0.16em] uppercase opacity-70">
-              <span className="opacity-60">*</span> yours, specifically. We're talking to you.
+              <span className="opacity-60">*</span> yours, specifically. Yes, you. The one rolling to the side to get out of bed.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
