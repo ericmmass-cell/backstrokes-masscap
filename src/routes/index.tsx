@@ -499,13 +499,13 @@ function Index() {
         <div className="absolute inset-0 opacity-30 pointer-events-none"
              style={{background:"radial-gradient(ellipse at 50% 50%, oklch(0.78 0.14 195 / 0.25), transparent 60%)"}}/>
         <div className="max-w-[1100px] mx-auto text-center relative">
-          <p className="font-script text-3xl md:text-4xl mb-4" style={{color:"var(--brand-pink)"}}>
-            Fix it. Flex it. Enjoy it. ♡
+          <p className="font-script text-3xl md:text-4xl mb-4 italic" style={{color:"var(--brand-blush)"}}>
+            Fit. Flex. <span style={{color:"var(--brand-amber)"}}>F*ck.</span> ◆
           </p>
-          <h2 className="font-display-bold text-5xl md:text-7xl lg:text-8xl mt-2 leading-[0.92] tracking-tight">
+          <h2 className="font-serif-display text-5xl md:text-7xl lg:text-8xl mt-2 leading-[0.95] tracking-[-0.025em]">
             Don't let your back<br/>
             be the reason<br/>
-            <span className="text-[var(--brand-teal)]" style={{textShadow:"var(--glow-teal)"}}>you miss out.</span>
+            <span className="italic" style={{color:"var(--brand-amber)", textShadow:"var(--glow-teal)"}}>you stay home.</span>
           </h2>
           <p className="mt-10 text-muted-foreground max-w-lg mx-auto leading-relaxed">
             7-minute baseline. Your protocol assembles the same day. Two weeks free, then $24/month — less than one PT visit.
