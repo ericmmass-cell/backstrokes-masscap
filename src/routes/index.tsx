@@ -67,7 +67,7 @@ function Index() {
       <section className="relative px-6 md:px-10 pt-16 md:pt-20 pb-28 border-b border-border overflow-hidden">
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-10 items-center relative">
           <div className="lg:col-span-7 relative z-10">
-            <p className="font-mono-label text-[10px] text-[var(--brand-amber)] mb-6">
+            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)] mb-6">
               ◆ THE PERFORMANCE INDEX FOR THE MODERN SPINE
             </p>
             <h1 className="font-serif-display text-[52px] md:text-[78px] lg:text-[96px] leading-[0.92] tracking-[-0.025em]">
@@ -228,7 +228,7 @@ function Index() {
         <div className="max-w-[1280px] mx-auto relative">
           <div className="grid lg:grid-cols-12 gap-10 items-end mb-10">
             <div className="lg:col-span-7">
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">◆ TRY THE PROTOCOL · NO SIGNUP</p>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">◆ TRY THE PROTOCOL · NO SIGNUP</p>
               <h2 className="font-serif-display text-4xl md:text-6xl mt-4 leading-[0.98] tracking-tight">
                 Stop reading the pitch.<br/>
                 <span className="italic" style={{ color: "var(--brand-blush)", textShadow: "var(--glow-pink)" }}>
@@ -252,7 +252,7 @@ function Index() {
         <div className="max-w-[1280px] mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
             <div>
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE WORK · TWO LISTS, NOTHING ELSE</p>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">THE WORK · TWO LISTS, NOTHING ELSE</p>
               <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight max-w-2xl">
                 The whole product, on one page. <span className="italic text-muted-foreground">No mystery, no funnel.</span>
               </h2>
@@ -266,7 +266,7 @@ function Index() {
             {/* BACK column */}
             <div className="bg-background p-8 md:p-10">
               <div className="flex items-baseline justify-between mb-6">
-                <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">FOR THE BACK</p>
+                <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FOR THE BACK</p>
                 <Activity className="w-5 h-5 text-[var(--brand-amber)]" />
               </div>
               <h3 className="font-serif-display text-3xl italic leading-tight mb-2">Quieter lumbar in two weeks.</h3>
@@ -436,7 +436,7 @@ function Index() {
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <img src={meditation} alt="" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover"/>
             <div>
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">FOR THE BACK</p>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FOR THE BACK</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
                 Eight minutes of McGill, daily. The cheapest insurance your spine will ever buy.
               </h3>
@@ -465,7 +465,7 @@ function Index() {
       {/* STORIES */}
       <section id="stories" className="px-6 md:px-10 py-32 border-b border-border">
         <div className="max-w-[1280px] mx-auto">
-          <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">FIELD NOTES</p>
+          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FIELD NOTES</p>
           <h2 className="font-serif-display text-4xl md:text-6xl mt-5 max-w-2xl leading-[1.02] tracking-tight">
             From people who refuse to sit it out.
           </h2>
@@ -532,7 +532,7 @@ function Index() {
       </section>
 
       <footer className="px-6 md:px-10 py-12">
-        <div className="max-w-[1280px] mx-auto grid md:grid-cols-3 gap-8 font-mono-label text-[10px] text-muted-foreground">
+        <div className="max-w-[1280px] mx-auto grid md:grid-cols-3 gap-8 font-mono-label text-[10px] tracking-[0.18em] uppercase text-muted-foreground">
           <div>
             <div className="flex items-center gap-2 text-foreground mb-3">
               <svg width="16" height="16" viewBox="0 0 22 22" className="text-[var(--brand-amber)]">
