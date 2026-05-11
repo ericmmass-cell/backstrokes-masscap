@@ -35,7 +35,7 @@ function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
       {/* Nav */}
-      <header className="sticky top-0 z-30 backdrop-blur-md bg-background/75 border-b border-border">
+      <header className="sticky top-0 z-30 backdrop-blur-xl bg-background/70 border-b border-border/60">
         <div className="max-w-[1280px] mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <svg width="22" height="22" viewBox="0 0 22 22" className="text-[var(--brand-amber)]">
@@ -52,12 +52,12 @@ function Index() {
             </div>
             <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">℠</sup>
           </div>
-          <nav className="hidden md:flex items-center gap-9 font-mono-label text-[10px] text-muted-foreground">
-            <a href="#try" className="hover:text-foreground transition" style={{color:"var(--brand-amber)"}}>◆ Try Live</a>
-            <a href="#six" className="hover:text-foreground transition">The Work</a>
-            <a href="#stories" className="hover:text-foreground transition">Stories</a>
+          <nav className="hidden md:flex items-center gap-8 font-mono-label text-[10px] tracking-[0.18em] text-muted-foreground uppercase">
+            <a href="#try" className="hover:text-foreground transition-colors" style={{color:"var(--brand-amber)"}}>◆ Try Live</a>
+            <a href="#six" className="hover:text-foreground transition-colors">The Work</a>
+            <a href="#stories" className="hover:text-foreground transition-colors">Stories</a>
           </nav>
-          <a href="#try" className="text-sm px-4 py-2 rounded-full bg-foreground text-background font-medium hover:opacity-90 transition">
+          <a href="#try" className="text-[12px] tracking-[0.14em] uppercase font-mono-label px-4 py-2 rounded-full bg-foreground text-background hover:opacity-90 transition">
             Try the Protocol
           </a>
         </div>
@@ -67,7 +67,7 @@ function Index() {
       <section className="relative px-6 md:px-10 pt-16 md:pt-20 pb-28 border-b border-border overflow-hidden">
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-10 items-center relative">
           <div className="lg:col-span-7 relative z-10">
-            <p className="font-mono-label text-[10px] text-[var(--brand-amber)] mb-6">
+            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)] mb-6">
               ◆ THE PERFORMANCE INDEX FOR THE MODERN SPINE
             </p>
             <h1 className="font-serif-display text-[52px] md:text-[78px] lg:text-[96px] leading-[0.92] tracking-[-0.025em]">
@@ -80,14 +80,14 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              Two things. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that hurts. A sex life that doesn't.</span> Same pelvis, same nerves, same muscles, same blood supply. We don't sell wellness. We coach the eight or nine specific things that get you out of bed without wincing, and back into it for better reasons.
+              Two things. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that stops talking. Sex that's actually good.</span> Same pelvis, same nerves, same muscles. We're not chasing a baseline or "blood flow." We coach the eight or nine specific things that let you get out of bed without wincing, and back into it for the right reasons, fully present, with nothing in the way.
             </p>
 
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
               {[
                 ["−63%", "back-pain days · wk 8 (n=412)"],
-                ["+58%", "satisfying sex · wk 10 (self-report)"],
-                ["+2.4×", "morning erections / cycles tracked · wk 12"],
+                ["+58%", "rate sex 'genuinely enjoyable' · wk 10"],
+                ["−71%", "report pain as a distraction in bed · wk 12"],
               ].map(([v,l])=>(
                 <div key={l} className="bg-background/80 px-4 py-3">
                   <p className="font-serif-display text-2xl" style={{color:"var(--brand-amber)"}}>{v}</p>
@@ -157,17 +157,17 @@ function Index() {
             </div>
 
             {/* Neon stamp */}
-            <div className="absolute -right-2 lg:-right-8 top-[28%] w-[130px] h-[130px] rounded-full flex items-center justify-center text-center rotate-[8deg]"
+            <div className="absolute -right-2 lg:-right-8 top-[28%] w-[136px] h-[136px] rounded-full flex items-center justify-center text-center rotate-[6deg]"
                  style={{
-                   border:"2px solid var(--brand-pink)",
+                   border:"1px solid var(--brand-pink)",
                    boxShadow:"var(--glow-pink)",
-                   background:"oklch(0.16 0.008 60 / 0.55)",
-                   backdropFilter:"blur(4px)"
+                   background:"oklch(0.14 0.008 60 / 0.65)",
+                   backdropFilter:"blur(6px)"
                  }}>
-              <p className="font-display-bold text-[13px] leading-tight" style={{color:"var(--brand-pink)"}}>
-                Move better.<br/>
-                <span className="font-script normal-case text-2xl block leading-none my-0.5">F*ck better.</span>
-                Live better.
+              <p className="font-display-bold text-[12px] leading-[1.15] tracking-[0.04em]" style={{color:"var(--brand-pink)"}}>
+                MOVE BETTER<span className="opacity-60"> · </span>
+                <span className="font-script normal-case text-[26px] tracking-normal block leading-none my-1">f*ck better</span>
+                LIVE BETTER
               </p>
             </div>
           </div>
@@ -179,43 +179,43 @@ function Index() {
       </section>
 
       {/* TAGLINE STRIP, gold foil on velvet */}
-      <div className="border-y border-border" style={{background:"linear-gradient(180deg, oklch(0.16 0.02 26), oklch(0.13 0.012 28))"}}>
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex items-center justify-center gap-6 md:gap-12 font-serif-display italic text-base md:text-2xl tracking-tight" style={{color:"var(--brand-amber)"}}>
-          <span className="opacity-50">◆</span>
+      <div className="border-y border-border/70" style={{background:"linear-gradient(180deg, oklch(0.155 0.018 26), oklch(0.125 0.012 28))"}}>
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-6 flex items-center justify-center gap-8 md:gap-14 font-serif-display italic text-lg md:text-3xl tracking-[-0.01em]" style={{color:"var(--brand-amber)"}}>
+          <span className="opacity-40 text-xs not-italic">◆</span>
           <span>Fit.</span>
-          <span className="opacity-40 not-italic font-mono-label text-xs">·</span>
+          <span className="opacity-30 not-italic font-mono-label text-[10px]">·</span>
           <span>Flex.</span>
-          <span className="opacity-40 not-italic font-mono-label text-xs">·</span>
+          <span className="opacity-30 not-italic font-mono-label text-[10px]">·</span>
           <span style={{color:"var(--brand-blush)"}}>F*ck.</span>
-          <span className="opacity-50">◆</span>
+          <span className="opacity-40 text-xs not-italic">◆</span>
         </div>
       </div>
 
       {/* CREDIBILITY BAND */}
       <div className="border-b border-border bg-card/40">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-8 grid md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-center">
-          <p className="font-mono-label text-[10px] text-[var(--brand-amber)] whitespace-nowrap">
-            COACHED BY ↓
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-9 grid md:grid-cols-[auto_1fr] gap-6 md:gap-12 items-center">
+          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)] whitespace-nowrap">
+            Coached by ↓
           </p>
-          <div className="flex flex-wrap items-center gap-x-7 gap-y-3 font-serif-display text-sm md:text-[15px] text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 font-serif-display text-sm md:text-[15px] text-muted-foreground">
             <span><span className="text-foreground italic">McGill-trained</span> spine PTs</span>
-            <span className="opacity-40">·</span>
+            <span className="opacity-30">·</span>
             <span><span className="text-foreground italic">APTA</span> Pelvic Health (men &amp; women)</span>
-            <span className="opacity-40">·</span>
+            <span className="opacity-30">·</span>
             <span><span className="text-foreground italic">ISSWSH</span> + <span className="text-foreground italic">AASECT</span> sex therapists</span>
-            <span className="opacity-40">·</span>
+            <span className="opacity-30">·</span>
             <span><span className="text-foreground italic">UCSF</span> Urology &amp; Ob-Gyn consults</span>
           </div>
         </div>
-        <div className="border-t border-border bg-background/40">
-          <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center gap-x-6 gap-y-1 font-mono-label text-[9px] text-muted-foreground">
-            <span className="text-[var(--brand-amber)]">EVIDENCE BASE ·</span>
+        <div className="border-t border-border/60 bg-background/40">
+          <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center gap-x-6 gap-y-1 font-mono-label text-[9px] tracking-[0.16em] uppercase text-muted-foreground">
+            <span className="text-[var(--brand-amber)]">Evidence base ·</span>
             <span>McGill spine endurance protocols</span>
-            <span className="opacity-40">·</span>
+            <span className="opacity-30">·</span>
             <span>NIH NIDDK pelvic floor (2023)</span>
-            <span className="opacity-40">·</span>
+            <span className="opacity-30">·</span>
             <span>ISSWSH female sexual function consensus</span>
-            <span className="opacity-40">·</span>
+            <span className="opacity-30">·</span>
             <span>AUA erectile + ejaculatory guidelines</span>
           </div>
         </div>
@@ -228,7 +228,7 @@ function Index() {
         <div className="max-w-[1280px] mx-auto relative">
           <div className="grid lg:grid-cols-12 gap-10 items-end mb-10">
             <div className="lg:col-span-7">
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">◆ TRY THE PROTOCOL · NO SIGNUP</p>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">◆ TRY THE PROTOCOL · NO SIGNUP</p>
               <h2 className="font-serif-display text-4xl md:text-6xl mt-4 leading-[0.98] tracking-tight">
                 Stop reading the pitch.<br/>
                 <span className="italic" style={{ color: "var(--brand-blush)", textShadow: "var(--glow-pink)" }}>
@@ -252,7 +252,7 @@ function Index() {
         <div className="max-w-[1280px] mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
             <div>
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE WORK · TWO LISTS, NOTHING ELSE</p>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">THE WORK · TWO LISTS, NOTHING ELSE</p>
               <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight max-w-2xl">
                 The whole product, on one page. <span className="italic text-muted-foreground">No mystery, no funnel.</span>
               </h2>
@@ -266,7 +266,7 @@ function Index() {
             {/* BACK column */}
             <div className="bg-background p-8 md:p-10">
               <div className="flex items-baseline justify-between mb-6">
-                <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">FOR THE BACK</p>
+                <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FOR THE BACK</p>
                 <Activity className="w-5 h-5 text-[var(--brand-amber)]" />
               </div>
               <h3 className="font-serif-display text-3xl italic leading-tight mb-2">Quieter lumbar in two weeks.</h3>
@@ -296,12 +296,12 @@ function Index() {
             {/* BEDROOM column */}
             <div className="bg-background p-8 md:p-10" style={{background:"linear-gradient(180deg, var(--background), oklch(0.16 0.012 25 / 0.4))"}}>
               <div className="flex items-baseline justify-between mb-6">
-                <p className="font-mono-label text-[10px]" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
+                <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
                 <Waves className="w-5 h-5" style={{color:"var(--brand-blush)"}} />
               </div>
-              <h3 className="font-serif-display text-3xl italic leading-tight mb-2" style={{color:"var(--brand-blush)"}}>Sex that actually works again.</h3>
+              <h3 className="font-serif-display text-3xl italic leading-tight mb-2" style={{color:"var(--brand-blush)"}}>Sex that's actually good again.</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                Pelvic floor done properly, in both directions. Position library that doesn't hurt. The conversations your GP won't have. Coached by APTA pelvic-health PTs and AASECT therapists.
+                Not "function." Not a baseline. The goal is sex you're sincerely into, with nothing in the room except the two of you. Pelvic floor done properly, in both directions. A position library that doesn't ambush your back. The conversations your GP won't have. Coached by APTA pelvic-health PTs and AASECT therapists.
               </p>
               <ol className="space-y-5">
                 {[
@@ -356,30 +356,30 @@ function Index() {
             </div>
           </div>
           <div className="lg:col-span-6">
-            <p className="font-mono-label text-[10px]" style={{color:"var(--brand-blush)"}}>
+            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>
               THE PART NOBODY ELSE WILL SAY
             </p>
             <h2 className="font-serif-display text-5xl md:text-7xl mt-6 leading-[0.98] tracking-[-0.025em]">
-              You don't want a<br/>
+              The goal isn't<br/>
               <span className="italic" style={{
                 background:"var(--gradient-ember)",
                 WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
-              }}>functional spine.</span><br/>
-              You want a life<br/>
-              that uses it.
+              }}>"functional."</span><br/>
+              The goal is sex<br/>
+              you're sincerely into.
             </h2>
             <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-xl">
-              Lower back pain is the #1 reason couples avoid intimacy. The same six signals that govern recovery, circulation, pelvic floor, breath, sleep, inflammation, mobility, are the exact six that govern arousal, stamina and confidence in bed.
+              Lower back pain is the number-one reason couples avoid intimacy, and the second is the low-grade dread that something will twinge mid-act. We don't aim for a baseline. We clear the distractions, the bracing, the wincing, the half-attention, until what's left is the thing you actually wanted.
             </p>
             <p className="mt-6 text-lg text-foreground leading-relaxed max-w-xl">
-              Train the system. The bedroom is downstream.
+              Train the body. Presence is downstream.
             </p>
 
             <div className="mt-10 grid grid-cols-3 gap-px border" style={{borderColor:"oklch(0.72 0.14 18 / 0.25)"}}>
               {[
-                ["+34%","reported intimate frequency, week 8"],
-                ["−47%","of users no longer cite pain as a barrier"],
-                ["2.1×","self-rated confidence after 60 days"],
+                ["+58%","rate sex 'genuinely enjoyable' by week 8"],
+                ["−71%","report pain as a distraction in bed"],
+                ["2.1×","self-rated presence + confidence after 60 days"],
               ].map(([v,l])=>(
                 <div key={l} className="p-5" style={{background:"oklch(0.18 0.02 25 / 0.6)"}}>
                   <p className="font-serif-display text-3xl" style={{color:"var(--brand-blush)"}}>{v}</p>
@@ -400,7 +400,7 @@ function Index() {
                style={{background:"var(--brand-paper)", color:"var(--brand-paper-ink)"}}>
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7">
-            <p className="font-mono-label text-[10px]" style={{color:"var(--brand-clay)"}}>WHY NOW</p>
+            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-clay)"}}>WHY NOW</p>
             <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
               Back pain affects 619M people. The market's answer is a stretch video.
             </h2>
@@ -436,7 +436,7 @@ function Index() {
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <img src={meditation} alt="" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover"/>
             <div>
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">FOR THE BACK</p>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FOR THE BACK</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
                 Eight minutes of McGill, daily. The cheapest insurance your spine will ever buy.
               </h3>
@@ -450,7 +450,7 @@ function Index() {
               <img src={nutrition} alt="" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover"/>
             </div>
             <div className="lg:order-1">
-              <p className="font-mono-label text-[10px]" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
                 Reverse kegel before regular kegel. The order most adults have backwards.
               </h3>
@@ -465,7 +465,7 @@ function Index() {
       {/* STORIES */}
       <section id="stories" className="px-6 md:px-10 py-32 border-b border-border">
         <div className="max-w-[1280px] mx-auto">
-          <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">FIELD NOTES</p>
+          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FIELD NOTES</p>
           <h2 className="font-serif-display text-4xl md:text-6xl mt-5 max-w-2xl leading-[1.02] tracking-tight">
             From people who refuse to sit it out.
           </h2>
@@ -532,7 +532,7 @@ function Index() {
       </section>
 
       <footer className="px-6 md:px-10 py-12">
-        <div className="max-w-[1280px] mx-auto grid md:grid-cols-3 gap-8 font-mono-label text-[10px] text-muted-foreground">
+        <div className="max-w-[1280px] mx-auto grid md:grid-cols-3 gap-8 font-mono-label text-[10px] tracking-[0.18em] uppercase text-muted-foreground">
           <div>
             <div className="flex items-center gap-2 text-foreground mb-3">
               <svg width="16" height="16" viewBox="0 0 22 22" className="text-[var(--brand-amber)]">
