@@ -118,14 +118,6 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const PILLARS = [
-  { n: "01", icon: Activity,   title: "Spine",        desc: "Strength, mobility, and load tolerance, programmed by physiotherapists, sequenced to your phase." },
-  { n: "02", icon: Waves,      title: "Pelvic Floor", desc: "The deep stabilizers your back depends on, and the muscles that govern intimate performance." },
-  { n: "03", icon: Heart,      title: "Cardio-Vitals",desc: "Resting BP, heart rate, HRV. Vascular health is sexual health. Your back rides on it." },
-  { n: "04", icon: Brain,      title: "Breath & CNS", desc: "HRV-paced breathwork and pain-reframing visualization. Down-regulate to perform up." },
-  { n: "05", icon: AppleIcon,  title: "Nutrition",    desc: "Anti-inflammatory plate, hydration, and connective-tissue protein targets, calibrated daily." },
-  { n: "06", icon: Moon,       title: "Sleep",        desc: "Continuity and depth. Where tissue rebuilds, hormones reset, and tomorrow's pain is decided." },
-];
 
 function Index() {
   return (
