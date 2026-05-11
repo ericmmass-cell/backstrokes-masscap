@@ -17,10 +17,10 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "BackStroke — the protocol the wellness industry forgot to write" },
-      { name: "description", content: "Eight minutes of McGill, a pelvic floor that actually relaxes, and a sex life that stops scheduling itself around your back. Coached by McGill-trained PTs and AASECT therapists. Not a stretch video." },
-      { property: "og:title", content: "BackStroke — for the back, and the bedroom. Same pelvis." },
-      { property: "og:description", content: "Eight minutes of McGill, a pelvic floor that actually relaxes, and sex you're sincerely into. The protocol the wellness industry forgot to write." },
+      { title: "BackStroke — the protocol Goop would have charged you $400 for" },
+      { name: "description", content: "Eight minutes of McGill, a pelvic floor that knows how to exhale, and a sex life that stops checking in with your L4. Coached by people with letters after their names. Not a man in a tank top." },
+      { property: "og:title", content: "BackStroke — same pelvis, two jobs." },
+      { property: "og:description", content: "Eight minutes of McGill, a pelvic floor that finally returns your calls, and sex you're sincerely into. The protocol the wellness aisle was too embarrassed to write." },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -80,7 +80,7 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              Two things. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that stops talking. Sex you're sincerely into.</span> Same pelvis, same nerves, same muscles. We don't chase a baseline. We coach the eight or nine specific things that get you out of bed without wincing, and back into it fully present, with nothing in the room except the two of you.
+              Two things. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that stops talking. Sex you're sincerely into.</span> Same pelvis, same nerves, same muscles — your anatomy was never going to keep them in separate rooms. We coach the eight or nine specific things that get you out of bed without the audible noise, and back into it without one eye on the clock and the other on your lumbar.
             </p>
 
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
@@ -97,10 +97,10 @@ function Index() {
             </div>
 
             <p className="mt-6 text-sm text-muted-foreground max-w-xl leading-relaxed">
-              Directed by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, and AASECT-certified therapists. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a tank top yelling about discipline.</span>
+              Directed by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, and AASECT-certified therapists. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a tank top yelling about discipline. No one is going to call your spine a temple.</span>
             </p>
             <p className="mt-2 font-mono-label text-[9px] text-muted-foreground tracking-[0.16em] uppercase opacity-70">
-              <span className="opacity-60">*</span> yours, specifically. We're talking to you.
+              <span className="opacity-60">*</span> yours, specifically. Yes, you. The one rolling to the side to get out of bed.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
@@ -240,7 +240,7 @@ function Index() {
               </h2>
             </div>
             <p className="lg:col-span-5 text-muted-foreground leading-relaxed max-w-md">
-              Tap a zone. Log today's pain. Run a real flex set with breath pacing. Flip the switch and watch the after-dark protocol assemble itself around your spine. <span className="italic text-foreground">You won't. Most people don't. The ones who do are walking up stairs without bracing six weeks from now.</span>
+              Tap a zone. Log today's pain. Run a real flex set with breath pacing. Flip the switch and watch the after-dark protocol assemble itself around your spine. <span className="italic text-foreground">You won't. Most people won't. The ones who do are the ones tying their shoes standing up six weeks from now, instead of narrating it from a chair.</span>
             </p>
           </div>
           <LiveProtocol />
@@ -257,11 +257,11 @@ function Index() {
             <div>
               <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">THE WORK · TWO LISTS, NOTHING ELSE</p>
               <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight max-w-2xl">
-                The whole product, on one page. <span className="italic text-muted-foreground">No mystery. No funnel.</span>
+                The whole product, on one page. <span className="italic text-muted-foreground">No mystery box. No 14-step funnel that ends in a quiz.</span>
               </h2>
             </div>
             <p className="font-mono-label text-[10px] text-muted-foreground max-w-xs leading-relaxed normal-case tracking-wide">
-              These are the moves, drills and tools we coach. Each one is a thing you do with your body, this week, that makes a measurable difference. That's it. That's the company.
+              These are the moves, drills and tools we coach. Each one is a thing you do with your body, this week, that makes a measurable difference. That's it. That's the company. There is no second page.
             </p>
           </div>
 
@@ -274,16 +274,16 @@ function Index() {
               </div>
               <h3 className="font-serif-display text-3xl italic leading-tight mb-2">Quieter lumbar in two weeks.</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                Not stretching. Endurance, hinging, and a few habits the world refuses to teach. Coached by McGill-trained PTs.
+                Not stretching. Endurance, hinging, and a few habits the wellness aisle refuses to teach because none of them photograph well. Coached by McGill-trained PTs.
               </p>
               <ol className="space-y-5">
                 {[
-                  ["McGill big-3", "Curl-up, side plank, bird dog. Eight minutes. The endurance trio that quiets disc pain better than anything stretching has ever done."],
-                  ["Hip-hinge re-pattern", "Pick up the laundry without flexing your spine. The single move that ends ninety percent of 'I tweaked it bending over.'"],
-                  ["Glute bridge + 90/90 hip switch", "Wake up the muscles that are supposed to be carrying your spine. They've been on holiday since you got a desk job."],
-                  ["Dead-hang + thoracic opener", "Two minutes a day. Decompresses the discs gravity has been compressing all day."],
-                  ["Sleep position audit", "Pillow under the knees, not under the head. The change you make tonight that your morning lumbar notices tomorrow."],
-                  ["Sitting protocol", "When to stand, what to perch on, how to drive a long haul without arriving wrecked. Boring. Decisive."],
+                  ["McGill big-3", "Curl-up, side plank, bird dog. Eight minutes. The endurance trio that out-quiets disc pain better than every stretch your yoga teacher recommended in good faith."],
+                  ["Hip-hinge re-pattern", "How to pick up the laundry without flexing your spine into a question mark. The single move that ends ninety percent of 'I tweaked it bending over.'"],
+                  ["Glute bridge + 90/90 hip switch", "Wake up the muscles that are supposed to be carrying your spine. They have been on paid leave since you accepted the desk job."],
+                  ["Dead-hang + thoracic opener", "Two minutes a day. Decompresses the discs gravity has spent the day politely compressing."],
+                  ["Sleep position audit", "Pillow under the knees, not the head. The boring change you make tonight that your morning lumbar writes you a thank-you note for."],
+                  ["Sitting protocol", "When to stand, what to perch on, how to drive a long haul without arriving as a folded napkin. Boring. Decisive."],
                 ].map(([h, b], i) => (
                   <li key={h} className="flex gap-4">
                     <span className="font-mono-label text-[10px] text-muted-foreground pt-1 w-6 shrink-0">B.0{i+1}</span>
@@ -304,17 +304,17 @@ function Index() {
               </div>
               <h3 className="font-serif-display text-3xl italic leading-tight mb-2" style={{color:"var(--brand-blush)"}}>Sex you're sincerely into. Again.</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                Not "function." Not a baseline. Not "blood flow." Pelvic floor done properly, in both directions. A position library that doesn't ambush your back. The conversations your GP won't have. Coached by APTA pelvic-health PTs and AASECT therapists.
+                Not "function." Not a baseline. Not "blood flow," whatever the supplement guys think that means this quarter. Pelvic floor done properly, in both directions. A position library that doesn't ambush your back. The conversations your GP would rather not have on a Tuesday. Coached by APTA pelvic-health PTs and AASECT therapists.
               </p>
               <ol className="space-y-5">
                 {[
-                  ["Reverse kegel + diaphragmatic drop", "Most adults can't relax their pelvic floor. That's why erections fade, why orgasms feel small, why penetration hurts. We teach the down-train first, then the up-train."],
-                  ["Kegel done correctly", "The one your phone-app version got wrong. Eccentric control for ejaculatory timing in men, arousal and orgasmic depth in women."],
-                  ["Perineal + internal release work", "External and (when indicated) internal trigger-point release. For dyspareunia, vaginismus, post-prostatectomy, post-partum, chronic pelvic pain. Done with a real PT, not a YouTube video."],
-                  ["Position library, scored by spine", "Forty positions ranked by lumbar load, hip flexion, breath access. Pick the one that fits today's back. No more 'pretending it didn't hurt.'"],
-                  ["Lube and tool literacy", "Silicone vs water vs hybrid. Dilator sets, vibrators, cock rings, wedges. What they actually do, when to use them, and the brands a clinician would hand you."],
-                  ["Arousal as parasympathetic skill", "Four-seven-eight before, not after. We coach the breath cadence that lets your nervous system actually arrive. The thing nobody told you was a skill."],
-                  ["The conversation script", "What to say to your partner about pain, pace, what you want. Written by AASECT therapists. Used in your kitchen, not in a clinic."],
+                  ["Reverse kegel + diaphragmatic drop", "Most adults can't relax their pelvic floor on command. That's why erections fade, why orgasms feel small, why penetration hurts. We teach the down-train first, then the up-train. The free app you downloaded skipped step one."],
+                  ["Kegel done correctly", "The one your phone-app version got wrong by counting reps instead of teaching control. Eccentric load for ejaculatory timing in men, arousal and orgasmic depth in women."],
+                  ["Perineal + internal release work", "External and (when indicated) internal trigger-point release. For dyspareunia, vaginismus, post-prostatectomy, post-partum, chronic pelvic pain. Done with a real PT, not a man on YouTube with a foam roller and a theory."],
+                  ["Position library, scored by spine", "Forty positions ranked by lumbar load, hip flexion, breath access. Pick the one that fits today's back. The end of pretending it didn't hurt and lying very still afterwards."],
+                  ["Lube and tool literacy", "Silicone vs water vs hybrid. Dilator sets, vibrators, cock rings, wedges. What they actually do, when to use them, and the brands a clinician would hand you instead of the ones with the prettiest packaging."],
+                  ["Arousal as parasympathetic skill", "Four-seven-eight before, not after. We coach the breath cadence that lets your nervous system actually arrive on time. Apparently this was a skill the whole time."],
+                  ["The conversation script", "What to say to your partner about pain, pace, what you want. Written by AASECT therapists. Used in your kitchen, not in a clinic, not in a group chat."],
                 ].map(([h, b], i) => (
                   <li key={h} className="flex gap-4">
                     <span className="font-mono-label text-[10px] text-muted-foreground pt-1 w-6 shrink-0">F.0{i+1}</span>
@@ -372,10 +372,10 @@ function Index() {
               you're sincerely into.
             </h2>
             <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-xl">
-              Lower back pain is the number-one reason couples stop having sex. The number-two reason is the low-grade dread that something will twinge mid-act. Most adults can't fully relax their pelvic floor — that's why erections fade, why orgasms feel small, why penetration hurts. None of this is a mystery. It's a protocol.
+              Lower back pain is the number-one reason couples stop having sex. The number-two reason is the low-grade dread that something will twinge mid-act and somebody will have to be a good sport about it. Most adults can't fully relax their pelvic floor — that's why erections fade, why orgasms feel small, why penetration hurts. None of this is a mystery. It's a protocol. The mystery is why nobody handed it to you.
             </p>
             <p className="mt-6 text-lg text-foreground leading-relaxed max-w-xl">
-              Train the body. Presence is downstream.
+              Train the body. Presence is downstream. Candles optional.
             </p>
 
             <div className="mt-10 grid grid-cols-3 gap-px border" style={{borderColor:"oklch(0.72 0.14 18 / 0.25)"}}>
@@ -405,10 +405,10 @@ function Index() {
           <div className="lg:col-span-7">
             <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-clay)"}}>WHY NOW</p>
             <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
-              Back pain hits 619M people. The market's answer is a stretch video.
+              Back pain hits 619M people. The market's answer is a stretch video and a magnesium gummy.
             </h2>
             <p className="mt-8 text-lg leading-relaxed" style={{color:"oklch(0.35 0.01 60)"}}>
-              The category is fragmented across PT clinics, telehealth, supplements, and content apps. None of them touch sex, even though the muscles, nerves and breathwork are the same. We're the first protocol that treats the back and the bedroom as one job — because anatomically, they are.
+              The category is fragmented across PT clinics, telehealth, supplements, and content apps that all stop talking the moment your pants come off. None of them touch sex, even though the muscles, nerves and breathwork are the same ones they were charging you for an hour ago. We're the first protocol that treats the back and the bedroom as one job — because anatomically, they always were. The taboo was a marketing decision.
             </p>
             <div className="mt-10 grid grid-cols-3 gap-6">
               {[
@@ -444,7 +444,7 @@ function Index() {
                 Eight minutes of McGill, daily. The rent your spine pays to keep doing things you like.
               </h3>
               <p className="mt-6 text-muted-foreground leading-relaxed">
-                Curl-up, side plank, bird dog. Paced for endurance, not range. Coached on video by spine PTs, scaled to today's pain. The protocol that beat lumbar surgery in head-to-head trials — finally taught properly, instead of buried in a YouTube comment thread.
+                Curl-up, side plank, bird dog. Paced for endurance, not range. Coached on video by spine PTs, scaled to today's pain. The protocol that beat lumbar surgery in head-to-head trials — finally taught properly, instead of buried under a comment thread arguing about whether sit-ups count.
               </p>
             </div>
           </div>
@@ -455,10 +455,10 @@ function Index() {
             <div className="lg:order-1">
               <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-                Reverse kegel before kegel. The order your phone app got wrong.
+                Reverse kegel before kegel. The order your phone app got backwards.
               </h3>
               <p className="mt-6 text-muted-foreground leading-relaxed">
-                A chronically gripping pelvic floor is why arousal stalls, why erections fade, why penetration hurts. We coach the down-train first, with diaphragmatic breath, then the up-train for control. APTA pelvic-health PTs, on video, in plain language. Postpartum and post-prostatectomy protocols built in — same voice, softer register, no shortcuts.
+                A chronically gripping pelvic floor is why arousal stalls, why erections fade, why penetration hurts. We coach the down-train first, with diaphragmatic breath, then the up-train for control. APTA pelvic-health PTs, on video, in plain language. Postpartum and post-prostatectomy protocols built in — same voice, softer register, no shortcuts and no jokes about the part that isn't funny.
               </p>
             </div>
           </div>
@@ -470,13 +470,13 @@ function Index() {
         <div className="max-w-[1280px] mx-auto">
           <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FIELD NOTES</p>
           <h2 className="font-serif-display text-4xl md:text-6xl mt-5 max-w-2xl leading-[1.02] tracking-tight">
-            From people who refuse to sit it out.
+            From people who would rather not sit this one out.
           </h2>
           <div className="mt-16 grid md:grid-cols-3 gap-px bg-border border border-border">
             {[
-              { img: t1, name: "Jake, 32", role: "L4-L5 herniation · Index 71 → 89", quote: "I am back on the bike. I am lifting. I am — and this is none of your business — having sex again. Six weeks." },
-              { img: t2, name: "Maya, 29", role: "Postpartum · Index 54 → 82",       quote: "Nobody told me the down-train. Two weeks of reverse kegels and breath work and I stopped bracing for everything. Including my husband." },
-              { img: t3, name: "Chris, 35", role: "Sciatica · Index 62 → 84",        quote: "I bought four supplements, three apps and a foam roller before this. The Index is the first thing that told me what to actually do today." },
+              { img: t1, name: "Jake, 32", role: "L4-L5 herniation · Index 71 → 89", quote: "I am back on the bike. I am lifting. I am — and this is genuinely none of your business — having sex again. Six weeks. I owe my foam roller an apology." },
+              { img: t2, name: "Maya, 29", role: "Postpartum · Index 54 → 82",       quote: "Nobody told me about the down-train. Two weeks of reverse kegels and breath work and I stopped bracing for everything. Including, eventually, my husband." },
+              { img: t3, name: "Chris, 35", role: "Sciatica · Index 62 → 84",        quote: "I bought four supplements, three apps and a foam roller before this. The Index is the first thing that told me what to do today, in a tone that didn't make me want to throw my phone." },
             ].map((t)=>(
               <figure key={t.name} className="bg-background p-8">
                 <blockquote className="font-serif-display text-xl leading-snug">
@@ -510,7 +510,7 @@ function Index() {
             <span className="italic" style={{color:"var(--brand-amber)", textShadow:"var(--glow-teal)"}}>you stay home.</span>
           </h2>
           <p className="mt-10 text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            Seven-minute baseline. Your protocol assembles the same day. Two weeks free, then $24 a month — less than one PT visit, less than the supplement stack you almost bought last week.
+            Seven-minute baseline. Your protocol assembles the same day. Two weeks free, then $24 a month — less than one PT visit, less than the supplement stack you almost added to cart at 1am last Tuesday.
           </p>
           <div className="mt-12 flex flex-wrap gap-4 justify-center items-center">
             <a href="#" className="flex items-center gap-3 pl-5 pr-7 py-3 rounded-xl bg-foreground text-background hover:opacity-90 transition">
@@ -529,7 +529,7 @@ function Index() {
             </a>
           </div>
           <p className="mt-12 text-[11px] text-muted-foreground max-w-xl mx-auto leading-relaxed italic font-serif-display">
-            Not a medical device. If your back is screaming, see a PT. If your erection is gone for three months, see a urologist. We are coaches, not your doctor — though most of us know yours.
+            Not a medical device. If your back is screaming, see a PT. If your erection has been gone for three months, see a urologist. If you've been ignoring it for longer than that, see a urologist faster. We are coaches, not your doctor — though, statistically, we know yours.
           </p>
         </div>
       </section>
@@ -544,10 +544,10 @@ function Index() {
               </svg>
               <span className="font-serif-display text-base">BackStroke</span>
             </div>
-            <p>Eight minutes a day. The rent your spine pays.</p>
+            <p>Eight minutes a day. The rent your spine pays. Non-negotiable. Sorry.</p>
           </div>
           <div className="md:text-center">© BackStroke Labs · MMXXVI · a backstroke protocol</div>
-          <div className="md:text-right">Built for backs that have things to do.</div>
+          <div className="md:text-right">Built for backs with a calendar.</div>
         </div>
       </footer>
     </div>
