@@ -224,6 +224,87 @@ function Index() {
         </div>
       </div>
 
+      {/* SIX PILLARS — fast, specific, performance + bedroom outcomes */}
+      <section id="six" className="px-6 md:px-10 py-24 border-b border-border">
+        <div className="max-w-[1280px] mx-auto">
+          <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
+            <div>
+              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE SIX · WHAT EACH ONE ACTUALLY DOES</p>
+              <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight max-w-2xl">
+                Six systems. <span className="italic text-muted-foreground">One body that performs — in the gym, on the floor, and in bed.</span>
+              </h2>
+            </div>
+            <p className="font-mono-label text-[10px] text-muted-foreground max-w-xs">
+              Train them in isolation and you get six mediocre wins. Train them as one stack and the body recomposes around capability.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">
+            {[
+              {
+                n: "01", icon: Activity, name: "Spine",
+                what: "Segmental mobility, deep-load tolerance, hip-hinge reprogramming. Targets the discs, erectors and QL — the structural reason you flinch.",
+                perf: "Lift, run, carry kids, sit through a 4-hour flight without bracing.",
+                bed: "Eliminates the 'wrong angle' problem. Hold positions longer, finish without spasm.",
+              },
+              {
+                n: "02", icon: Waves, name: "Pelvic Floor",
+                what: "The deep stabilizers nobody trains: levator ani, transverse abdominis, multifidus. Same muscles that hold your spine hold your erection — and your orgasm.",
+                perf: "Core that braces under load. End leak-on-sneeze. Postpartum recovery that actually finishes.",
+                bed: "Harder erections, delayed ejaculation, stronger orgasms (yes, both sexes). This is the one nobody is selling you.",
+              },
+              {
+                n: "03", icon: Heart, name: "Cardio-Vitals",
+                what: "Resting BP, HRV, endothelial function. The plumbing. Same arteries feed the lumbar discs and the cavernosal tissue.",
+                perf: "Recover faster between sets, between days, between decades.",
+                bed: "Erectile capacity is a vascular event. Lower BP by 10 points and the bedroom notices before the doctor does.",
+              },
+              {
+                n: "04", icon: Brain, name: "Breath & CNS",
+                what: "Vagal tone, 4-7-8 down-regulation, pain-reframing visualization. Built with chronic-pain clinicians and sex therapists.",
+                perf: "Lower next-morning pain. Lower resting heart rate. A nervous system that stops bracing for impact.",
+                bed: "Arousal is parasympathetic. You can't perform from a sympathetic state. This is the unlock most men miss.",
+              },
+              {
+                n: "05", icon: AppleIcon, name: "Nutrition",
+                what: "Anti-inflammatory plate, hydration math, connective-tissue protein, polyphenol load. Calibrated to today's training and last night's sleep.",
+                perf: "Joint pain down inside two weeks. Energy that doesn't crash at 3pm.",
+                bed: "Lower inflammation = higher free testosterone, better blood flow, steadier libido. Not a supplement. Food.",
+              },
+              {
+                n: "06", icon: Moon, name: "Sleep",
+                what: "Continuity, depth, and the 90-minute REM windows where tissue rebuilds and hormones reset.",
+                perf: "This is where tomorrow's pain is decided. Skip it and the other five pillars stop compounding.",
+                bed: "Testosterone is made between 2am and 6am. Morning erections are a vital sign. Protect the window.",
+              },
+            ].map((p) => (
+              <article key={p.n} className="bg-background p-7 hover:bg-card/60 transition group">
+                <div className="flex items-start justify-between mb-6">
+                  <p className="font-mono-label text-[10px] text-muted-foreground">PILLAR {p.n}</p>
+                  <p.icon className="w-5 h-5 text-[var(--brand-amber)] opacity-70 group-hover:opacity-100 transition"/>
+                </div>
+                <h3 className="font-serif-display text-3xl italic">{p.name}</h3>
+                <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.what}</p>
+                <div className="mt-6 pt-5 border-t border-border space-y-3">
+                  <div>
+                    <p className="font-mono-label text-[9px] text-[var(--brand-amber)] mb-1">↗ DAILY LIFE</p>
+                    <p className="text-[13px] text-foreground leading-snug">{p.perf}</p>
+                  </div>
+                  <div>
+                    <p className="font-mono-label text-[9px] mb-1" style={{color:"var(--brand-blush)"}}>◆ AFTER DARK</p>
+                    <p className="text-[13px] text-foreground leading-snug italic">{p.bed}</p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <p className="font-script text-2xl md:text-3xl mt-10 italic text-center" style={{color:"var(--brand-blush)"}}>
+            Six pillars. One Index. <span style={{color:"var(--brand-amber)"}}>A body that shows up.</span>
+          </p>
+        </div>
+      </section>
+
       {/* MARQUEE OF SIGNALS */}
       <div className="border-b border-border overflow-hidden">
         <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex items-center gap-10 font-mono-label text-[10px] text-muted-foreground whitespace-nowrap overflow-x-auto">
