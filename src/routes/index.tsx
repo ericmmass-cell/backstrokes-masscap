@@ -533,39 +533,6 @@ function Index() {
         </div>
       </section>
 
-      {/* PILLARS */}
-      <section id="pillars" className="px-6 md:px-10 py-32 border-b border-border">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="grid lg:grid-cols-12 gap-10 mb-14">
-            <div className="lg:col-span-5">
-              <p className="font-mono-label text-[10px] text-[var(--brand-amber)]">THE PROTOCOL</p>
-              <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
-                Six pillars.<br/>One daily plan.
-              </h2>
-            </div>
-            <div className="lg:col-span-7 lg:pt-3">
-              <p className="text-muted-foreground leading-relaxed max-w-2xl">
-                You don't choose between strength and breathwork, or stretching and nutrition. The Index decides what the spine and the system most need today, and your plan reorders itself around it.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">
-            {PILLARS.map((p)=>(
-              <article key={p.n} className="bg-background p-8 hover:bg-card/50 transition group">
-                <div className="flex items-start justify-between">
-                  <p className="font-mono-label text-[10px] text-muted-foreground">{p.n}</p>
-                  <p.icon className="w-5 h-5 text-[var(--brand-amber)] opacity-70 group-hover:opacity-100 transition"/>
-                </div>
-                <h3 className="font-serif-display text-3xl mt-12">{p.title}</h3>
-                <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{p.desc}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
       {/* AFTER DARK, the spicy thesis, named */}
       <section className="relative px-6 md:px-10 py-32 border-b border-border overflow-hidden"
                style={{background:"radial-gradient(ellipse at 70% 40%, oklch(0.22 0.05 25) 0%, var(--brand-ink) 60%)"}}>
