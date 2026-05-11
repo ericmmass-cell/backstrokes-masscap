@@ -80,7 +80,7 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              Two things. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that hurts. A sex life that doesn't.</span> Same pelvis, same nerves, same muscles, same blood supply. We don't sell wellness. We coach the eight or nine specific things that make your lumbar quieter and your genitals happier, and we coach them properly.
+              Two things. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that hurts. A sex life that doesn't.</span> Same pelvis, same nerves, same muscles, same blood supply. We don't sell wellness. We coach the eight or nine specific things that get you out of bed without wincing, and back into it for better reasons.
             </p>
 
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
