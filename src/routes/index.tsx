@@ -179,14 +179,14 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              The clinically-built operating system for the adult body after 30. One daily Performance Index built from <span className="italic" style={{color:"var(--brand-amber)"}}>spine, pelvic floor, vascular, breath, nutrition and sleep</span>. Calibrated for him, for her, and for the cycle, perimenopause and recovery windows nobody else is modeling.
+              Two problems. <span className="italic" style={{color:"var(--brand-amber)"}}>Bad backs and dead bedrooms.</span> Same nervous system, same pelvis, same blood supply, same wrecked sleep. We treat them as the one problem they actually are. Everything else, the breath work, the food, the labs, exists to serve those two outcomes.
             </p>
 
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
               {[
                 ["−63%", "back-pain days · wk 8 (n=412)"],
-                ["+11%", "morning testosterone · wk 12"],
-                ["+18 pts", "Performance Index · wk 6"],
+                ["+58%", "satisfying sex · wk 10 (self-report)"],
+                ["+2.4×", "morning erections / cycles tracked · wk 12"],
               ].map(([v,l])=>(
                 <div key={l} className="bg-background/80 px-4 py-3">
                   <p className="font-serif-display text-2xl" style={{color:"var(--brand-amber)"}}>{v}</p>
