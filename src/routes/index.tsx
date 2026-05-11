@@ -126,7 +126,7 @@ function Index() {
                 </div>
                 <div className="px-3 pb-3">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-serif-display text-sm">Back<span className="text-[var(--brand-teal)]">Better</span></span>
+                    <span className="font-serif-display text-sm italic">Back<span style={{color:"var(--brand-amber)"}}>Stroke</span></span>
                     <span className="text-[9px]" style={{color:"var(--brand-pink)"}}>🔥 12</span>
                   </div>
                   <p className="font-mono-label text-[7px] text-muted-foreground">TODAY'S PLAN</p>
