@@ -174,12 +174,12 @@ function Index() {
               <span className="italic" style={{
                 background:"var(--gradient-text)",
                 WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
-              }}>Unlock the body.</span><br/>
+              }}>Wake the body.</span><br/>
               <span className="italic" style={{color:"var(--brand-blush)", textShadow:"var(--glow-pink)"}}>Reclaim the bedroom.</span>
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              The clinically-built operating system for the adult body after 30, converging <span className="italic" style={{color:"var(--brand-amber)"}}>spine, pelvic floor, vascular, breath, nutrition and sleep</span> into one adaptive Performance Index. Calibrated for him, for her, and for the cycle, perimenopause and recovery windows nobody else is modeling.
+              The clinically-built operating system for the adult body after 30. One daily Performance Index built from <span className="italic" style={{color:"var(--brand-amber)"}}>spine, pelvic floor, vascular, breath, nutrition and sleep</span>. Calibrated for him, for her, and for the cycle, perimenopause and recovery windows nobody else is modeling.
             </p>
 
             <div className="mt-7 grid sm:grid-cols-3 gap-px bg-border border border-border max-w-xl">
