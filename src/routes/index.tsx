@@ -106,7 +106,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "BackStroke. The Performance Index for spines that have a life" },
-      { name: "description", content: "BackStroke converges spine, vitals, pelvic floor, breath, nutrition and sleep into a single Performance Index, the first integrated protocol linking back health to sexual performance and longevity." },
+      { name: "description", content: "BackStroke brings spine, vascular, pelvic floor, breath, nutrition and sleep into one daily Performance Index. The first protocol that treats back health and sexual function as the same problem." },
       { property: "og:title", content: "BackStroke. Performance Index for the modern spine" },
       { property: "og:description", content: "Six data streams. One adaptive protocol. Measurable gains in pain, capacity, confidence and performance." },
     ],
