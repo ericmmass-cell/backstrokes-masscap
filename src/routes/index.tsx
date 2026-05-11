@@ -54,10 +54,7 @@ function Index() {
           </div>
           <nav className="hidden md:flex items-center gap-9 font-mono-label text-[10px] text-muted-foreground">
             <a href="#try" className="hover:text-foreground transition" style={{color:"var(--brand-amber)"}}>◆ Try Live</a>
-            <a href="#thesis" className="hover:text-foreground transition">Thesis</a>
-            <a href="#index" className="hover:text-foreground transition">The Index</a>
             <a href="#six" className="hover:text-foreground transition">The Work</a>
-            <a href="#evidence" className="hover:text-foreground transition">Evidence</a>
             <a href="#stories" className="hover:text-foreground transition">Stories</a>
           </nav>
           <a href="#try" className="text-sm px-4 py-2 rounded-full bg-foreground text-background font-medium hover:opacity-90 transition">
