@@ -296,7 +296,7 @@ function Index() {
             {/* BEDROOM column */}
             <div className="bg-background p-8 md:p-10" style={{background:"linear-gradient(180deg, var(--background), oklch(0.16 0.012 25 / 0.4))"}}>
               <div className="flex items-baseline justify-between mb-6">
-                <p className="font-mono-label text-[10px]" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
+                <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
                 <Waves className="w-5 h-5" style={{color:"var(--brand-blush)"}} />
               </div>
               <h3 className="font-serif-display text-3xl italic leading-tight mb-2" style={{color:"var(--brand-blush)"}}>Sex that's actually good again.</h3>
@@ -356,7 +356,7 @@ function Index() {
             </div>
           </div>
           <div className="lg:col-span-6">
-            <p className="font-mono-label text-[10px]" style={{color:"var(--brand-blush)"}}>
+            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>
               THE PART NOBODY ELSE WILL SAY
             </p>
             <h2 className="font-serif-display text-5xl md:text-7xl mt-6 leading-[0.98] tracking-[-0.025em]">
@@ -400,7 +400,7 @@ function Index() {
                style={{background:"var(--brand-paper)", color:"var(--brand-paper-ink)"}}>
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7">
-            <p className="font-mono-label text-[10px]" style={{color:"var(--brand-clay)"}}>WHY NOW</p>
+            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-clay)"}}>WHY NOW</p>
             <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
               Back pain affects 619M people. The market's answer is a stretch video.
             </h2>
@@ -450,7 +450,7 @@ function Index() {
               <img src={nutrition} alt="" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover"/>
             </div>
             <div className="lg:order-1">
-              <p className="font-mono-label text-[10px]" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
                 Reverse kegel before regular kegel. The order most adults have backwards.
               </h3>
