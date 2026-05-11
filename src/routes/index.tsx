@@ -391,7 +391,7 @@ function Index() {
                 n: "04", icon: Brain, name: "Breath & CNS",
                 what: "Vagal tone, 4-7-8 down-regulation, interoceptive retraining, cognitive defusion for chronic pain. Built with chronic-pain clinicians, ISSWSH and AASECT therapists, not wellness influencers.",
                 perf: "Lower next-morning pain. Lower resting heart rate. A nervous system that stops bracing for an impact that isn't coming.",
-                bed: "Arousal is parasympathetic, that's not a metaphor, it's the wiring. You cannot perform, or arrive, from a sympathetic state. The unlock most adults never hear named out loud.",
+                bed: "Arousal is parasympathetic. Not a metaphor, it's the wiring. You cannot perform, or arrive, from a sympathetic state. The piece most adults never hear named out loud.",
               },
               {
                 n: "05", icon: AppleIcon, name: "Nutrition",
