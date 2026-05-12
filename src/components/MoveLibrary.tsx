@@ -258,7 +258,7 @@ export const BACK_STATS: MoveDetail[] = [
       "Day 9-14: intensity drops, pain-free intervals double.",
     ],
     why: "Endurance training takes 10-14 days to express. The studies showing 'no effect' at week 1 measured the wrong week.",
-    evidence: "McGill SM. Ultimate Back Fitness, 6th ed. Adaptation timeline.",
+    evidence: "Peer-reviewed adaptation timeline literature for endurance training.",
   },
 ];
 
