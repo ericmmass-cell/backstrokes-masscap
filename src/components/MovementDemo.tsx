@@ -1,385 +1,483 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Suspense, useRef } from "react";
+import { Suspense, useMemo, useRef } from "react";
 import * as THREE from "three";
 
 /**
- * Procedural 3D movement demo.
+ * Procedural 3D movement demo, v2 — stylised anatomical figure.
  *
- * A stylised humanoid built from spheres and capsules, animated per-move with
- * keyframed joint rotations. The point isn't anatomical accuracy — the point
- * is that the user can see the rhythm of the move (rise / hold / lower) while
- * the timer runs.
+ * Design rules:
+ *   1. Anatomical proportions: head ≈ 1/7.5 of body length. Torso 2.5, upper
+ *      arm 1.6, forearm 1.4, hand 0.65, thigh 2.1, shin 1.9, foot 0.8.
+ *   2. Joint hierarchy: pelvis is the root; spine + shoulders chain up;
+ *      arms branch from shoulders; legs branch from pelvis.
+ *   3. Each move animates joint angles only — never re-creates meshes per frame.
+ *   4. Materials: PBR with warm subsurface-feeling skin tone.
+ *   5. Lighting: three-point (key gold + fill blush + rim) with shadow casting.
  *
- * Per-move animations live in `animate{MoveName}`. Each returns the joint
- * angles given a time offset, smoothed with `easeInOutSine`.
- *
- * In production this gets replaced with a rigged GLB shot by the council.
+ * The real production path is a rigged GLB (Mixamo / Ready Player Me) with
+ * baked animations. Drop a .glb into src/assets/3d/ and swap in `useGLTF`
+ * + `useAnimations` — the rest of the player is stable.
  */
 
 type MoveKey = "curl-up" | "side-plank" | "bird-dog" | "breath" | "reverse-kegel" | "decomp";
 
-const SKIN = "#c89665"; // warm amber-stone
-const ACCENT_GOLD = "#d6a85a";
-const ACCENT_BLUSH = "#b06a64";
+/* ───────── Materials ───────── */
+
+const SKIN = "#c98d65";
+const SKIN_SHADOW = "#8a5d40";
+const GOLD = "#d6a85a";
+const BLUSH = "#b06a64";
+
+function useSkinMaterial() {
+  return useMemo(
+    () =>
+      new THREE.MeshPhysicalMaterial({
+        color: SKIN,
+        roughness: 0.55,
+        metalness: 0.05,
+        clearcoat: 0.15,
+        clearcoatRoughness: 0.4,
+        sheen: 0.3,
+        sheenColor: new THREE.Color("#e8b88c"),
+        sheenRoughness: 0.5,
+      }),
+    [],
+  );
+}
+
+/* ───────── Body primitives ───────── */
+
+function Segment({
+  length,
+  radius,
+  taperTo = 1,
+  material,
+  position = [0, 0, 0] as [number, number, number],
+  rotation = [0, 0, 0] as [number, number, number],
+  children,
+}: {
+  length: number;
+  radius: number;
+  taperTo?: number;
+  material: THREE.Material;
+  position?: [number, number, number];
+  rotation?: [number, number, number];
+  children?: React.ReactNode;
+}) {
+  // A segment is rendered as a tapered capsule, pivoting at its top (-Y end).
+  // The +Y end is the distal joint where children attach.
+  return (
+    <group position={position} rotation={rotation}>
+      <mesh position={[0, length / 2, 0]} castShadow receiveShadow>
+        <cylinderGeometry args={[radius * taperTo, radius, length, 24, 1]} />
+        <primitive object={material} attach="material" />
+      </mesh>
+      {/* Joint capsule at proximal end */}
+      <mesh position={[0, 0, 0]} castShadow>
+        <sphereGeometry args={[radius * 1.05, 20, 20]} />
+        <primitive object={material} attach="material" />
+      </mesh>
+      {/* Children attach at the distal end */}
+      <group position={[0, length, 0]}>{children}</group>
+    </group>
+  );
+}
+
+function Head({ material }: { material: THREE.Material }) {
+  return (
+    <group>
+      {/* Neck */}
+      <mesh position={[0, 0.06, 0]} castShadow>
+        <cylinderGeometry args={[0.07, 0.08, 0.12, 16]} />
+        <primitive object={material} attach="material" />
+      </mesh>
+      {/* Head */}
+      <mesh position={[0, 0.22, 0]} castShadow>
+        <sphereGeometry args={[0.13, 24, 24]} />
+        <primitive object={material} attach="material" />
+      </mesh>
+      {/* Jaw / chin shadow plane */}
+      <mesh position={[0, 0.16, 0.08]} castShadow>
+        <sphereGeometry args={[0.07, 16, 16]} />
+        <meshStandardMaterial color={SKIN_SHADOW} roughness={0.6} />
+      </mesh>
+    </group>
+  );
+}
+
+function Hand({ material }: { material: THREE.Material }) {
+  // Stylised hand: rounded paddle.
+  return (
+    <mesh position={[0, 0.05, 0]} rotation={[0, 0, 0]} castShadow>
+      <sphereGeometry args={[0.07, 16, 16]} />
+      <primitive object={material} attach="material" />
+    </mesh>
+  );
+}
+
+function Foot({ material }: { material: THREE.Material }) {
+  return (
+    <mesh position={[0, 0.05, 0.08]} rotation={[Math.PI / 2.5, 0, 0]} castShadow>
+      <capsuleGeometry args={[0.07, 0.18, 8, 12]} />
+      <primitive object={material} attach="material" />
+    </mesh>
+  );
+}
+
+/* ───────── Torso — segmented spine ───────── */
+
+function Torso({
+  spineFlex,
+  material,
+}: {
+  spineFlex: number; // 0 to 1, drives curl
+  material: THREE.Material;
+}) {
+  // The spine is 4 segments stacked: sacrum → lumbar → thoracic → cervical
+  // Each rotates slightly to produce the curl curve.
+  const segs = [
+    { len: 0.16, rot: spineFlex * 0.08 }, // sacrum
+    { len: 0.18, rot: spineFlex * 0.16 }, // lumbar
+    { len: 0.2, rot: spineFlex * 0.18 }, // thoracic
+    { len: 0.1, rot: spineFlex * 0.12 }, // cervical
+  ];
+
+  return (
+    <group>
+      <Segment length={segs[0].len} radius={0.16} taperTo={0.96} material={material} rotation={[segs[0].rot, 0, 0]}>
+        <Segment length={segs[1].len} radius={0.14} taperTo={0.92} material={material} rotation={[segs[1].rot, 0, 0]}>
+          <Segment length={segs[2].len} radius={0.16} taperTo={0.95} material={material} rotation={[segs[2].rot, 0, 0]}>
+            <Segment length={segs[3].len} radius={0.1} taperTo={0.9} material={material} rotation={[segs[3].rot, 0, 0]}>
+              <Head material={material} />
+            </Segment>
+            {/* Shoulders */}
+            <group position={[0, -0.02, 0]}>
+              <Shoulder side="left" material={material} />
+              <Shoulder side="right" material={material} />
+            </group>
+          </Segment>
+        </Segment>
+      </Segment>
+    </group>
+  );
+}
+
+function Shoulder({ side, material }: { side: "left" | "right"; material: THREE.Material }) {
+  const dir = side === "left" ? -1 : 1;
+  return (
+    <group position={[dir * 0.22, 0, 0]}>
+      <mesh castShadow>
+        <sphereGeometry args={[0.1, 20, 20]} />
+        <primitive object={material} attach="material" />
+      </mesh>
+    </group>
+  );
+}
+
+/* ───────── Arms ───────── */
+
+function Arm({
+  side,
+  shoulderRot,
+  elbowFlex,
+  material,
+}: {
+  side: "left" | "right";
+  shoulderRot: [number, number, number];
+  elbowFlex: number; // 0 straight, 1 fully bent
+  material: THREE.Material;
+}) {
+  return (
+    <group rotation={shoulderRot}>
+      <Segment length={0.34} radius={0.06} taperTo={0.85} material={material} rotation={[Math.PI, 0, 0]}>
+        <group rotation={[-elbowFlex * 1.7, 0, 0]}>
+          <Segment length={0.3} radius={0.05} taperTo={0.75} material={material}>
+            <Hand material={material} />
+          </Segment>
+        </group>
+      </Segment>
+    </group>
+  );
+}
+
+/* ───────── Legs ───────── */
+
+function Leg({
+  side,
+  hipRot,
+  kneeFlex,
+  material,
+}: {
+  side: "left" | "right";
+  hipRot: [number, number, number];
+  kneeFlex: number;
+  material: THREE.Material;
+}) {
+  return (
+    <group position={[(side === "left" ? -1 : 1) * 0.14, 0, 0]} rotation={hipRot}>
+      <Segment length={0.46} radius={0.09} taperTo={0.78} material={material} rotation={[Math.PI, 0, 0]}>
+        <group rotation={[-kneeFlex * 1.8, 0, 0]}>
+          <Segment length={0.42} radius={0.07} taperTo={0.75} material={material}>
+            <Foot material={material} />
+          </Segment>
+        </group>
+      </Segment>
+    </group>
+  );
+}
+
+/* ───────── Floor / environment ───────── */
+
+function Environment() {
+  return (
+    <>
+      {/* Floor */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
+        <planeGeometry args={[8, 6]} />
+        <meshStandardMaterial color="#0f0d0b" roughness={0.95} metalness={0} />
+      </mesh>
+      {/* Mat — gold rim */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]} receiveShadow>
+        <ringGeometry args={[0.6, 1.4, 64]} />
+        <meshBasicMaterial color={GOLD} transparent opacity={0.06} />
+      </mesh>
+      {/* Subtle inner mat ring */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.0015, 0]} receiveShadow>
+        <ringGeometry args={[0.5, 0.52, 64]} />
+        <meshBasicMaterial color={GOLD} transparent opacity={0.18} />
+      </mesh>
+    </>
+  );
+}
+
+/* ───────── Animation curves ───────── */
 
 const ease = (t: number) => -(Math.cos(Math.PI * t) - 1) / 2;
 const wrap = (t: number, period: number) => (t % period) / period;
 
-/* ───────── Body parts ───────── */
-
-function Limb({
-  length = 0.6,
-  radius = 0.07,
-  color = SKIN,
-}: {
-  length?: number;
-  radius?: number;
-  color?: string;
-}) {
-  // Capsule = cylinder + two spheres. Center at origin, length along Y.
-  return (
-    <group>
-      <mesh>
-        <cylinderGeometry args={[radius, radius, length, 16]} />
-        <meshStandardMaterial color={color} roughness={0.6} metalness={0.08} />
-      </mesh>
-      <mesh position={[0, length / 2, 0]}>
-        <sphereGeometry args={[radius, 16, 16]} />
-        <meshStandardMaterial color={color} roughness={0.6} metalness={0.08} />
-      </mesh>
-      <mesh position={[0, -length / 2, 0]}>
-        <sphereGeometry args={[radius, 16, 16]} />
-        <meshStandardMaterial color={color} roughness={0.6} metalness={0.08} />
-      </mesh>
-    </group>
-  );
+function repCycle(t: number, period: number) {
+  // Quarter rise, half hold, quarter lower. Returns 0–1.
+  const c = wrap(t, period);
+  if (c < 0.25) return ease(c / 0.25);
+  if (c < 0.75) return 1;
+  return 1 - ease((c - 0.75) / 0.25);
 }
 
-function Head() {
-  return (
-    <mesh>
-      <sphereGeometry args={[0.16, 24, 24]} />
-      <meshStandardMaterial color={SKIN} roughness={0.55} metalness={0.1} />
-    </mesh>
-  );
-}
+/* ───────── Per-move rigs ───────── */
 
-function Torso() {
-  return (
-    <mesh>
-      <capsuleGeometry args={[0.18, 0.7, 8, 16]} />
-      <meshStandardMaterial color={SKIN} roughness={0.55} metalness={0.1} />
-    </mesh>
-  );
-}
-
-function Floor() {
-  return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.001, 0]} receiveShadow>
-      <planeGeometry args={[8, 6]} />
-      <meshStandardMaterial color="#0c0c0d" roughness={1} metalness={0} />
-    </mesh>
-  );
-}
-
-/* ───────── Curl-up rig ───────── */
-
-function CurlUp({ t }: { t: number }) {
-  // 4-second rep cycle: 1s rise, 2s hold (mostly), 1s lower.
-  const cycle = wrap(t, 4);
-  // Curve: rises from 0 to 1 in first 25%, holds at 1 until 75%, drops back.
-  let rise = 0;
-  if (cycle < 0.25) rise = ease(cycle / 0.25);
-  else if (cycle < 0.75) rise = 1;
-  else rise = 1 - ease((cycle - 0.75) / 0.25);
-
-  const tiltDeg = 22 * rise; // 0–22°
-  const torsoRot = THREE.MathUtils.degToRad(tiltDeg);
+function CurlUp({ t, material }: { t: number; material: THREE.Material }) {
+  const rep = repCycle(t, 4);
+  // Hip pivot rotation — curl flexes whole upper body. Spine adds the chin tuck.
+  const hipRot = rep * THREE.MathUtils.degToRad(18);
+  const spineFlex = rep;
+  // Subtle breath
+  const breath = Math.sin(t * 1.4) * 0.005;
 
   return (
     <group>
-      {/* Floor */}
-      <Floor />
-
-      {/* Whole body laid supine along +X. Hip pivot at origin, head at +X. */}
-      <group rotation={[0, 0, Math.PI / 2]}>
-        {/* From here y+ is along the body. Hip at y=0, head end at y=1. */}
-
-        {/* Bent leg (right): thigh up, shin back. Hinge at hip going forward. */}
-        <group position={[0, -0.05, 0.18]}>
-          {/* Thigh */}
-          <group rotation={[-Math.PI / 2.4, 0, 0]}>
-            <group position={[0, 0.3, 0]}>
-              <Limb length={0.6} />
-            </group>
-          </group>
-          {/* Shin (going back to floor) */}
-          <group position={[0, 0, 0.55]} rotation={[Math.PI / 1.4, 0, 0]}>
-            <group position={[0, -0.3, 0]}>
-              <Limb length={0.6} />
-            </group>
+      <Environment />
+      {/* Supine — body lies along +Z, hip pivot at origin */}
+      <group position={[0, 0.08, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        {/* Pelvis pivot */}
+        <group rotation={[-hipRot, 0, 0]}>
+          <Torso spineFlex={spineFlex} material={material} />
+          {/* Arms — reach forward toward bent knee for hand-under-lumbar curl */}
+          <group position={[0, 0.5, 0.02]}>
+            <Arm side="left" shoulderRot={[-0.4 - rep * 0.2, 0.15, 0]} elbowFlex={0.7 + rep * 0.2} material={material} />
+            <Arm side="right" shoulderRot={[-0.4 - rep * 0.2, -0.15, 0]} elbowFlex={0.7 + rep * 0.2} material={material} />
           </group>
         </group>
 
-        {/* Straight leg (left) */}
-        <group position={[0, -0.05, -0.18]}>
-          <group position={[0, -0.6, 0]}>
-            <Limb length={1.2} />
-          </group>
+        {/* Legs branch from pelvis */}
+        {/* Bent knee on left */}
+        <group rotation={[-1.4, 0, 0]}>
+          <Leg side="left" hipRot={[0, 0, 0]} kneeFlex={1.5 + breath} material={material} />
         </group>
-
-        {/* Upper body group — this is what rotates for the curl */}
-        <group rotation={[torsoRot, 0, 0]}>
-          {/* Torso */}
-          <group position={[0, 0.45, 0]}>
-            <Torso />
-          </group>
-
-          {/* Head */}
-          <group position={[0, 0.95, 0]}>
-            <Head />
-          </group>
-
-          {/* Arms: hands resting under the lumbar (palms toward back) */}
-          <group position={[0, 0.3, 0.2]}>
-            <group rotation={[0.2, 0, 0]} position={[0, -0.05, 0]}>
-              <Limb length={0.65} />
-            </group>
-          </group>
-          <group position={[0, 0.3, -0.2]}>
-            <group rotation={[0.2, 0, 0]} position={[0, -0.05, 0]}>
-              <Limb length={0.65} />
-            </group>
-          </group>
+        {/* Right leg long, on floor */}
+        <group rotation={[0.1, 0, 0]}>
+          <Leg side="right" hipRot={[0, 0, 0]} kneeFlex={0.05} material={material} />
         </group>
       </group>
-
-      {/* Subtle floor highlight under hips */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]}>
-        <ringGeometry args={[0.5, 1.2, 32]} />
-        <meshBasicMaterial color={ACCENT_GOLD} transparent opacity={0.05} />
-      </mesh>
     </group>
   );
 }
 
-/* ───────── Side plank rig ───────── */
-
-function SidePlank({ t }: { t: number }) {
-  // 4-second cycle: rise 1s, hold 2s, lower 1s
-  const cycle = wrap(t, 4);
-  let rise = 0;
-  if (cycle < 0.25) rise = ease(cycle / 0.25);
-  else if (cycle < 0.75) rise = 1;
-  else rise = 1 - ease((cycle - 0.75) / 0.25);
-
-  const lift = 0.35 * rise; // 0 to 0.35 hip lift
+function SidePlank({ t, material }: { t: number; material: THREE.Material }) {
+  const rep = repCycle(t, 4);
+  const lift = rep * 0.22; // hip lift off floor
 
   return (
     <group>
-      <Floor />
-      {/* Whole body on side, length along +X */}
-      <group rotation={[0, 0, 0]} position={[0, 0.15, 0]}>
-        {/* Forearm down at one end, supporting */}
-        <group position={[-0.55, -0.05 - lift * 0.3, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <Limb length={0.5} radius={0.07} />
+      <Environment />
+      {/* Body lies on left side along X axis, lifts at hips. */}
+      <group position={[0, 0.18 + lift, 0]} rotation={[0, 0, Math.PI / 2]}>
+        {/* Spine angles to match the side plank line */}
+        <group rotation={[0, 0, -rep * 0.18]}>
+          <Torso spineFlex={0} material={material} />
+
+          {/* Supporting (down) forearm */}
+          <group position={[0, 0.55, 0]}>
+            <Arm
+              side="left"
+              shoulderRot={[1.5, 0, 0]}
+              elbowFlex={0.9}
+              material={material}
+            />
+          </group>
+
+          {/* Top arm — vertical when lifted, lateral when down */}
+          <group position={[0, 0.55, 0]}>
+            <Arm
+              side="right"
+              shoulderRot={[-rep * 1.5, 0, 0]}
+              elbowFlex={0.0}
+              material={material}
+            />
+          </group>
         </group>
 
-        {/* Torso lifted */}
-        <group position={[0, lift, 0]} rotation={[0, 0, 0]}>
-          <group rotation={[0, 0, Math.PI / 2]}>
-            <Torso />
-          </group>
-
-          {/* Head */}
-          <group position={[-0.55, 0.05, 0]}>
-            <Head />
-          </group>
-
-          {/* Top arm */}
-          <group position={[0, 0.18, 0]} rotation={[0, 0, Math.PI / 2]}>
-            <Limb length={0.65} />
-          </group>
+        {/* Legs stacked, slight knee bend (week 1) */}
+        <group rotation={[0, 0, 0]}>
+          <Leg side="left" hipRot={[0, 0, 0]} kneeFlex={0.4} material={material} />
         </group>
-
-        {/* Legs stacked, bent (week 1) */}
-        <group position={[0.5, -0.1 - lift * 0.2, 0]}>
-          <group rotation={[0, 0, Math.PI / 2.6]}>
-            <Limb length={0.7} />
-          </group>
+        <group rotation={[0, 0, 0]} position={[0.04, 0, 0]}>
+          <Leg side="right" hipRot={[0, 0, 0]} kneeFlex={0.4} material={material} />
         </group>
       </group>
-
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]}>
-        <ringGeometry args={[0.4, 1.0, 32]} />
-        <meshBasicMaterial color={ACCENT_GOLD} transparent opacity={0.05} />
-      </mesh>
     </group>
   );
 }
 
-/* ───────── Bird dog rig ───────── */
-
-function BirdDog({ t }: { t: number }) {
-  // 6s cycle: 1.5 rise side A, 1.5 hold A, switch, 1.5 rise side B, 1.5 hold B
-  const cycle = wrap(t, 6);
+function BirdDog({ t, material }: { t: number; material: THREE.Material }) {
+  // 6s cycle: side A lifts, holds, lowers, then side B does the same.
+  const c = wrap(t, 6);
   let leftLift = 0;
   let rightLift = 0;
-  if (cycle < 0.25) leftLift = ease(cycle / 0.25);
-  else if (cycle < 0.5) leftLift = 1 - ease((cycle - 0.25) / 0.25);
-  else if (cycle < 0.75) rightLift = ease((cycle - 0.5) / 0.25);
-  else rightLift = 1 - ease((cycle - 0.75) / 0.25);
+  if (c < 0.5) leftLift = repCycle(c * 4, 1);
+  else rightLift = repCycle((c - 0.5) * 4, 1);
 
   return (
     <group>
-      <Floor />
+      <Environment />
+      {/* Quadruped — spine horizontal */}
+      <group position={[0, 0.5, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <Torso spineFlex={0} material={material} />
 
-      {/* Quadruped — torso horizontal, supported by 4 limbs */}
-      <group position={[0, 0.5, 0]}>
-        {/* Torso horizontal along X */}
-        <group rotation={[0, 0, Math.PI / 2]}>
-          <Torso />
-        </group>
-
-        {/* Head forward */}
-        <group position={[0.55, 0.04, 0]}>
-          <Head />
+        {/* Right (support) arm — straight down */}
+        <group position={[0, 0.55, 0]}>
+          <Arm side="right" shoulderRot={[1.5, 0, 0]} elbowFlex={0} material={material} />
         </group>
 
-        {/* Support arm (right) */}
-        <group position={[0.35, -0.05, 0.18]} rotation={[0, 0, Math.PI]}>
-          <group position={[0, 0.3, 0]}>
-            <Limb length={0.55} />
-          </group>
+        {/* Left arm — extends forward when leftLift > 0 */}
+        <group position={[0, 0.55, 0]}>
+          <Arm
+            side="left"
+            shoulderRot={[1.5 - leftLift * 1.5, 0, 0]}
+            elbowFlex={leftLift * 0.05}
+            material={material}
+          />
         </group>
-        {/* Lifted arm (left) — extends forward when leftLift > 0 */}
-        <group position={[0.35, 0, -0.18]}>
-          <group
-            rotation={[
-              0,
-              0,
-              THREE.MathUtils.degToRad(180 - 90 * leftLift),
-            ]}
-            position={[Math.sin(leftLift * Math.PI / 2) * 0.25, leftLift * 0.05, 0]}
-          >
-            <group position={[0, 0.3, 0]}>
-              <Limb length={0.55} />
-            </group>
+
+        {/* Left (support) leg — straight down */}
+        <group position={[0, -0.05, 0]}>
+          <Leg side="left" hipRot={[1.5, 0, 0]} kneeFlex={1.5} material={material} />
+        </group>
+
+        {/* Right leg — extends back when rightLift > 0 */}
+        <group position={[0, -0.05, 0]}>
+          <Leg
+            side="right"
+            hipRot={[1.5 + rightLift * 1.5, 0, 0]}
+            kneeFlex={1.5 - rightLift * 1.5}
+            material={material}
+          />
+        </group>
+      </group>
+    </group>
+  );
+}
+
+function Supine({ t, material, color = GOLD }: { t: number; material: THREE.Material; color?: string }) {
+  // 8s breath cycle — torso scales slightly with breath
+  const breath = (Math.sin((t / 8) * Math.PI * 2) + 1) / 2;
+  const scale = 1 + breath * 0.05;
+
+  return (
+    <group>
+      <Environment />
+      <group position={[0, 0.08, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <group scale={[1, scale, 1]}>
+          <Torso spineFlex={0} material={material} />
+          <group position={[0, 0.5, 0]}>
+            <Arm side="left" shoulderRot={[0.1, 0.4, 0]} elbowFlex={0.05} material={material} />
+            <Arm side="right" shoulderRot={[0.1, -0.4, 0]} elbowFlex={0.05} material={material} />
           </group>
         </group>
 
-        {/* Support leg (left) */}
-        <group position={[-0.35, -0.05, -0.18]} rotation={[0, 0, Math.PI]}>
-          <group position={[0, 0.3, 0]}>
-            <Limb length={0.55} />
-          </group>
-        </group>
-        {/* Lifted leg (right) — extends back when rightLift > 0 */}
-        <group position={[-0.35, 0, 0.18]}>
-          <group
-            rotation={[
-              0,
-              0,
-              THREE.MathUtils.degToRad(180 + 90 * rightLift),
-            ]}
-            position={[-Math.sin(rightLift * Math.PI / 2) * 0.25, rightLift * 0.05, 0]}
-          >
-            <group position={[0, 0.3, 0]}>
-              <Limb length={0.55} />
-            </group>
-          </group>
+        <group rotation={[-0.4, 0, 0]}>
+          <Leg side="left" hipRot={[0, 0, 0]} kneeFlex={1.0} material={material} />
+          <Leg side="right" hipRot={[0, 0, 0]} kneeFlex={1.0} material={material} />
         </group>
       </group>
 
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]}>
-        <ringGeometry args={[0.5, 1.2, 32]} />
-        <meshBasicMaterial color={ACCENT_GOLD} transparent opacity={0.05} />
+      {/* Breath halo */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.002, 0]}>
+        <ringGeometry args={[0.55, 0.55 + 0.45 * breath, 64]} />
+        <meshBasicMaterial color={color} transparent opacity={0.06 + 0.08 * breath} />
       </mesh>
     </group>
   );
 }
 
-/* ───────── Breath / decomp / kegel — supine, gentle pulse ───────── */
-
-function SupineWithPulse({ t, color = ACCENT_GOLD }: { t: number; color?: string }) {
-  // 8s cycle for 4-7-8 breath: 4s inhale-expand, 4s exhale-contract
-  const cycle = wrap(t, 8);
-  let scale = 1;
-  if (cycle < 0.5) scale = 1 + 0.06 * ease(cycle / 0.5);
-  else scale = 1 + 0.06 * (1 - ease((cycle - 0.5) / 0.5));
-
-  return (
-    <group>
-      <Floor />
-      {/* Lying flat */}
-      <group rotation={[0, 0, Math.PI / 2]} position={[0, 0.15, 0]}>
-        {/* Legs (bent slightly, knees up) */}
-        <group position={[0, -0.5, 0]} rotation={[-0.3, 0, 0]}>
-          <Limb length={1.0} />
-        </group>
-
-        {/* Torso pulses gently */}
-        <group position={[0, 0.45, 0]} scale={[1, 1, scale]}>
-          <Torso />
-        </group>
-
-        {/* Head */}
-        <group position={[0, 0.95, 0]}>
-          <Head />
-        </group>
-
-        {/* Arms by sides (palms up for decomp / kegel) */}
-        <group position={[0, 0.3, 0.22]} rotation={[0.1, 0, 0]}>
-          <Limb length={0.65} />
-        </group>
-        <group position={[0, 0.3, -0.22]} rotation={[0.1, 0, 0]}>
-          <Limb length={0.65} />
-        </group>
-      </group>
-
-      {/* Breath halo — gentle pulsing ring */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.001, 0]}>
-        <ringGeometry args={[0.5, 0.5 + 0.4 * scale, 64]} />
-        <meshBasicMaterial color={color} transparent opacity={0.08 * scale} />
-      </mesh>
-    </group>
-  );
-}
-
-/* ───────── Scene wrapper ───────── */
+/* ───────── Scene ───────── */
 
 function Scene({ moveKey, paused }: { moveKey: MoveKey; paused: boolean }) {
   const tRef = useRef(0);
-  const cameraRotation = useRef(0);
+  const camRotRef = useRef(0);
+  const material = useSkinMaterial();
 
   useFrame((state, delta) => {
     if (!paused) tRef.current += delta;
-    // Subtle camera orbit
-    cameraRotation.current += delta * 0.08;
+    camRotRef.current += delta * 0.06;
     const cam = state.camera;
-    const r = 2.6;
-    cam.position.x = Math.sin(cameraRotation.current) * r;
-    cam.position.z = Math.cos(cameraRotation.current) * r;
-    cam.position.y = 1.4;
-    cam.lookAt(0, 0.3, 0);
+    // Camera framing per move
+    let r = 2.6;
+    let camY = 1.3;
+    let lookY = 0.4;
+    if (moveKey === "bird-dog") {
+      r = 2.4;
+      camY = 1.1;
+      lookY = 0.55;
+    } else if (moveKey === "side-plank") {
+      r = 2.5;
+      camY = 1.2;
+      lookY = 0.4;
+    }
+    cam.position.x = Math.sin(camRotRef.current) * r;
+    cam.position.z = Math.cos(camRotRef.current) * r;
+    cam.position.y = camY;
+    cam.lookAt(0, lookY, 0);
   });
 
   const t = tRef.current;
+
   switch (moveKey) {
     case "curl-up":
-      return <CurlUp t={t} />;
+      return <CurlUp t={t} material={material} />;
     case "side-plank":
-      return <SidePlank t={t} />;
+      return <SidePlank t={t} material={material} />;
     case "bird-dog":
-      return <BirdDog t={t} />;
+      return <BirdDog t={t} material={material} />;
     case "breath":
-      return <SupineWithPulse t={t} color={ACCENT_BLUSH} />;
+      return <Supine t={t} material={material} color={BLUSH} />;
     case "reverse-kegel":
-      return <SupineWithPulse t={t} color={ACCENT_BLUSH} />;
+      return <Supine t={t} material={material} color={BLUSH} />;
     case "decomp":
-      return <SupineWithPulse t={t} color={ACCENT_GOLD} />;
+      return <Supine t={t} material={material} color={GOLD} />;
   }
 }
+
+/* ───────── Public component ───────── */
 
 export function MovementDemo({
   moveKey,
@@ -392,14 +490,33 @@ export function MovementDemo({
     <div className="absolute inset-0">
       <Canvas
         shadows
-        camera={{ position: [2.2, 1.4, 1.8], fov: 38 }}
+        camera={{ position: [2.2, 1.3, 1.8], fov: 36 }}
         gl={{ antialias: true, alpha: false }}
-        style={{ background: "radial-gradient(ellipse at 40% 30%, #1d1916 0%, #0e0c0a 60%, #050403 100%)" }}
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 50% at 50% 30%, #1f1a16 0%, #100c0a 60%, #050403 100%)",
+        }}
       >
-        <ambientLight intensity={0.35} />
-        <directionalLight position={[3, 4, 2]} intensity={1.2} color="#f4d493" castShadow />
-        <directionalLight position={[-2, 2, -2]} intensity={0.35} color="#b06a64" />
-        <pointLight position={[0, 2, 0]} intensity={0.4} color="#e6c690" />
+        {/* Key light — warm gold from above-front */}
+        <directionalLight
+          position={[2.4, 4.2, 2.6]}
+          intensity={1.6}
+          color="#f4d493"
+          castShadow
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+          shadow-camera-left={-3}
+          shadow-camera-right={3}
+          shadow-camera-top={3}
+          shadow-camera-bottom={-3}
+          shadow-bias={-0.0005}
+        />
+        {/* Fill light — blush from opposite */}
+        <directionalLight position={[-2.6, 2.2, -1.4]} intensity={0.45} color="#b06a64" />
+        {/* Rim light — cool from behind for separation */}
+        <directionalLight position={[0, 2.4, -3]} intensity={0.5} color="#e8c69a" />
+        {/* Ambient — minimal, so shadows read */}
+        <ambientLight intensity={0.18} />
 
         <Suspense fallback={null}>
           <Scene moveKey={moveKey} paused={paused} />
@@ -408,3 +525,30 @@ export function MovementDemo({
     </div>
   );
 }
+
+/*
+  ─────────────────────────────────────────────────────────────────────────────
+  Production swap path
+  ─────────────────────────────────────────────────────────────────────────────
+  When you have rigged GLB assets, replace the per-move <CurlUp/> etc. with:
+
+      import { useGLTF, useAnimations } from "@react-three/drei";
+
+      function CurlUpReal() {
+        const { scene, animations } = useGLTF("/src/assets/3d/curl-up.glb");
+        const { actions } = useAnimations(animations, scene);
+        useEffect(() => actions.curlUp?.reset().play(), []);
+        return <primitive object={scene} />;
+      }
+
+  Mixamo workflow:
+    1. Pick a humanoid character (free at mixamo.com)
+    2. For each move: search Mixamo (e.g. "crunch", "side plank", "bird dog")
+    3. Export as FBX with animation
+    4. Convert FBX → GLB with `npx fbx2gltf` or Blender
+    5. Drop in src/assets/3d/{move-key}.glb
+
+  This file's interface (the MoveKey union, the paused prop, the Canvas
+  wrapper) stays the same. Only the per-move rig component changes.
+  ─────────────────────────────────────────────────────────────────────────────
+*/
