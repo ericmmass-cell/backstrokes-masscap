@@ -102,13 +102,17 @@ function Index() {
             <p className="mt-2 font-mono-label text-[9px] text-muted-foreground tracking-[0.16em] uppercase opacity-70">
               <span className="opacity-60">*</span> yours, specifically. The one currently rolling sideways out of bed like it's launching a kayak.
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-6">
-              <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
+            <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7">
+              <a href="#cta" className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition self-start" style={{boxShadow:"var(--glow-teal)"}}>
                 Get the protocol <ArrowUpRight className="w-4 h-4"/>
               </a>
-              <span className="font-script text-2xl leading-tight max-w-[260px] italic" style={{color:"var(--brand-blush)"}}>
-                Fit. Flex. <span style={{color:"var(--brand-amber)"}}>Fuck.</span> In that order. House rule.
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="hidden sm:block h-px w-8 bg-border"/>
+                <span className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground">House rule</span>
+                <span className="font-script text-xl sm:text-2xl leading-none italic" style={{color:"var(--brand-blush)"}}>
+                  Fit. Flex. <span style={{color:"var(--brand-amber)"}}>Fuck.</span>
+                </span>
+              </div>
             </div>
           </div>
 
