@@ -201,13 +201,39 @@ function Index() {
         </div>
       </div>
 
+      {/* 01 · LIVE PROTOCOL · prove the thing immediately */}
+      <section id="try" className="px-6 md:px-10 py-20 md:py-28 border-b border-border relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
+             style={{ backgroundImage: "radial-gradient(var(--brand-amber) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
+        <div className="max-w-[1280px] mx-auto relative">
+          <div className="grid lg:grid-cols-12 gap-10 items-end mb-10">
+            <div className="lg:col-span-7">
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">◆ TRY IT · 01 · NO SIGNUP, NO QUIZ, NO EMAIL HOSTAGE</p>
+              <h2 className="font-serif-display text-4xl md:text-6xl mt-4 leading-[0.98] tracking-tight">
+                Stop reading the pitch.<br/>
+                <span className="italic" style={{ color: "var(--brand-blush)", textShadow: "var(--glow-pink)" }}>
+                  Run a session.
+                </span>
+              </h2>
+            </div>
+            <p className="lg:col-span-5 text-muted-foreground leading-relaxed max-w-md">
+              Tap a zone. Log today's pain. Run a real flex set with breath pacing. Flip the switch and watch the after-dark protocol assemble around your spine, in public, on the marketing page. <span className="italic text-foreground">Most people will scroll past this. The ones who tap are the ones tying their shoes standing up in six weeks.</span>
+            </p>
+          </div>
+          <LiveProtocol />
+          <p className="font-mono-label text-[9px] text-muted-foreground mt-4 text-center">
+            INTERACTIVE PREVIEW · NO ACCOUNT, NO COOKIE WALL, NO PDF EMAILED IN 3-5 BUSINESS DAYS
+          </p>
+        </div>
+      </section>
+
       {/* 02 · THE PROBLEM. Indict the category. */}
       <section id="problem" className="px-6 md:px-10 py-28 md:py-32 border-b border-border">
         <div className="max-w-[1280px] mx-auto">
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-end mb-14">
             <div className="lg:col-span-8">
               <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">
-                THE PROBLEM · 01
+                THE PROBLEM · 02
               </p>
               <h2 className="font-serif-display text-4xl md:text-6xl mt-4 leading-[1.0] tracking-[-0.02em]">
                 You have one body. <span className="italic text-muted-foreground">It has been quoted by four specialists, two apps, and a candle.</span>
@@ -289,7 +315,7 @@ function Index() {
           </div>
           <div className="lg:col-span-6">
             <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>
-              THE INSIGHT · 02
+              THE INSIGHT · 03
             </p>
             <h2 className="font-serif-display text-5xl md:text-7xl mt-6 leading-[0.98] tracking-[-0.025em]">
               Same pelvis.<br/>
@@ -317,7 +343,7 @@ function Index() {
       <section className="px-6 md:px-10 py-28 md:py-32 border-b border-border">
         <div className="max-w-[1280px] mx-auto">
           <div className="mb-16 max-w-2xl">
-            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">METHODOLOGY · 03</p>
+            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">METHODOLOGY · 04</p>
             <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight">
               How the one protocol does the two jobs.
             </h2>
@@ -327,7 +353,7 @@ function Index() {
             {/* BACK spread */}
             <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
               <div className="lg:col-span-7 relative">
-                <img src={mcgillStudy} alt="Overhead study, McGill curl-up engagement" loading="lazy" width={1280} height={1024}
+                <img src={mcgillStudy} alt="Overhead study, curl-up engagement" loading="lazy" width={1280} height={1024}
                      className="w-full aspect-[5/4] object-cover" style={{boxShadow:"var(--shadow-lift)"}}/>
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between font-mono-label text-[9px] text-white/70">
                   <span>FIG. 02 · CURL-UP · 8 SEC HOLD</span>
@@ -387,7 +413,7 @@ function Index() {
         <div className="max-w-[1280px] mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
             <div>
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">THE WORK · 04 · TWO LISTS, NOTHING ELSE, NO TIER 3</p>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">THE WORK · 05 · TWO LISTS, NOTHING ELSE, NO TIER 3</p>
               <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight max-w-2xl">
                 The whole product, on one page. <span className="italic text-muted-foreground">No mystery box. No 14-step funnel that lands on a quiz that recommends ashwagandha.</span>
               </h2>
@@ -409,7 +435,7 @@ function Index() {
                   bottomTitle="A quieter lumbar in two weeks."
                   images={[
                     { src: backStudy, alt: "Lateral study of the lumbar spine in a bird-dog plank", caption: "FIG. 04 · LATERAL · L4-L5" },
-                    { src: mcgillStudy, alt: "Overhead study, McGill curl-up engagement", caption: "FIG. 02 · CURL-UP · 8 SEC HOLD" },
+                    { src: mcgillStudy, alt: "Overhead study, curl-up engagement", caption: "FIG. 02 · CURL-UP · 8 SEC HOLD" },
                     { src: portrait, alt: "Coach portrait, studio light", caption: "FIG. 06 · COACH · STUDIO" },
                   ]}
                 />
@@ -481,31 +507,7 @@ function Index() {
         </div>
       </section>
 
-      {/* 06 · LIVE PROTOCOL */}
-      <section id="try" className="px-6 md:px-10 py-28 md:py-32 border-b border-border relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
-             style={{ backgroundImage: "radial-gradient(var(--brand-amber) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
-        <div className="max-w-[1280px] mx-auto relative">
-          <div className="grid lg:grid-cols-12 gap-10 items-end mb-10">
-            <div className="lg:col-span-7">
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">◆ TRY IT · 05 · NO SIGNUP, NO QUIZ, NO EMAIL HOSTAGE</p>
-              <h2 className="font-serif-display text-4xl md:text-6xl mt-4 leading-[0.98] tracking-tight">
-                Stop reading the pitch.<br/>
-                <span className="italic" style={{ color: "var(--brand-blush)", textShadow: "var(--glow-pink)" }}>
-                  Run a session.
-                </span>
-              </h2>
-            </div>
-            <p className="lg:col-span-5 text-muted-foreground leading-relaxed max-w-md">
-              Tap a zone. Log today's pain. Run a real flex set with breath pacing. Flip the switch and watch the after-dark protocol assemble around your spine, in public, on the marketing page. <span className="italic text-foreground">Most people will scroll past this. The ones who tap are the ones tying their shoes standing up in six weeks.</span>
-            </p>
-          </div>
-          <LiveProtocol />
-          <p className="font-mono-label text-[9px] text-muted-foreground mt-4 text-center">
-            INTERACTIVE PREVIEW · NO ACCOUNT, NO COOKIE WALL, NO PDF EMAILED IN 3-5 BUSINESS DAYS
-          </p>
-        </div>
-      </section>
+      {/* moved: live protocol now sits directly after the tagline strip */}
 
       {/* 07 · FIELD NOTES · proof = numbers + quotes */}
       <section id="stories" className="px-6 md:px-10 py-28 md:py-32 border-b border-border">

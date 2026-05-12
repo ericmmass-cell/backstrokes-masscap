@@ -25,7 +25,7 @@ export const BACK_MOVES: MoveDetail[] = [
   {
     key: "mcgill",
     ref: "B.01",
-    label: "McGill big-3",
+    label: "Spine big-3",
     blurb: "Curl-up, side plank, bird dog. 8 min. Out-quiets discs.",
     sets: "Circuit × 3",
     duration: "8 min",
@@ -35,8 +35,8 @@ export const BACK_MOVES: MoveDetail[] = [
       "Bird dog: opposite arm + leg, draw a square in the air with the heel before returning. 4 reps each side.",
     ],
     cues: ["Brace abs like you're about to be poked.", "Exhale on every hold.", "No lumbar flexion. Ever."],
-    why: "Endurance, not range. Stuart McGill's lab showed disc patients respond to isometric endurance, not stretching. Stretching feels good, doesn't quiet symptoms.",
-    evidence: "McGill SM. Low Back Disorders, 3rd ed. (2015). Endurance > flexibility for disc-related LBP.",
+    why: "Endurance, not range. Clinical research on disc patients shows they respond to isometric endurance, not stretching. Stretching feels good, doesn't quiet symptoms.",
+    evidence: "Peer-reviewed spine literature: endurance beats flexibility for disc-related low-back pain.",
   },
   {
     key: "hinge",
@@ -258,7 +258,7 @@ export const BACK_STATS: MoveDetail[] = [
       "Day 9-14: intensity drops, pain-free intervals double.",
     ],
     why: "Endurance training takes 10-14 days to express. The studies showing 'no effect' at week 1 measured the wrong week.",
-    evidence: "McGill SM. Ultimate Back Fitness, 6th ed. Adaptation timeline.",
+    evidence: "Peer-reviewed adaptation timeline literature for endurance training.",
   },
 ];
 
