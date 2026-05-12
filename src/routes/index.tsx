@@ -97,7 +97,7 @@ function Index() {
             </div>
 
             <p className="mt-6 text-sm text-muted-foreground max-w-xl leading-relaxed">
-              Directed by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, and AASECT-certified therapists. <span className="text-foreground italic">No life coaches. No supplement stack. No man in a weighted vest with opinions about discipline. Nobody is going to call your spine a temple. It's a column. Treat it like one.</span>
+              Directed by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, and AASECT-certified therapists. <span className="text-foreground italic">No life coaches. No supplement stack. No man in a weighted vest with opinions about discipline. No jade egg, no $90 candle, no app gamifying your pelvic floor like it's Duolingo. Nobody is going to call your spine a temple. It's a column. Treat it like one.</span>
             </p>
             <p className="mt-2 font-mono-label text-[9px] text-muted-foreground tracking-[0.16em] uppercase opacity-70">
               <span className="opacity-60">*</span> yours, specifically. The one currently rolling sideways out of bed like it's launching a kayak.
