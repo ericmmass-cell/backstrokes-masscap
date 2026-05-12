@@ -265,24 +265,7 @@ function Index() {
                 <p className="text-sm text-muted-foreground leading-relaxed mb-7 max-w-md">
                   Endurance, hinging, six habits the wellness aisle won't sell because none of them come in a tub.
                 </p>
-                <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-5">
-                  {[
-                    ["McGill big-3", "Curl-up, side plank, bird dog. 8 min. Out-quiets discs."],
-                    ["Hip-hinge re-pattern", "Pick up laundry without folding into a question mark."],
-                    ["Glute bridge + 90/90", "Reactivate the muscles on paid leave since the desk job."],
-                    ["Dead-hang + thoracic opener", "2 min. Decompresses what Zoom spent the day compressing."],
-                    ["Sleep position audit", "Pillow under the knees. Tomorrow's lumbar writes a thank-you."],
-                    ["Sitting protocol", "When to stand, what to perch on. Boring. Decisive. Free."],
-                  ].map(([h, b], i) => (
-                    <li key={h} className="flex gap-3 border-t border-border/60 pt-3">
-                      <span className="font-mono-label text-[9px] text-[var(--brand-amber)] pt-1 shrink-0">B.0{i+1}</span>
-                      <div>
-                        <p className="font-serif-display text-base leading-tight">{h}</p>
-                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{b}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
+                <MoveList items={BACK_MOVES} accent="amber" />
               </div>
             </div>
 
