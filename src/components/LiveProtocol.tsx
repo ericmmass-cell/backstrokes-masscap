@@ -123,35 +123,48 @@ export function LiveProtocol() {
       </div>
 
       {/* Mode tabs */}
-      <div className="grid grid-cols-3 border-b border-border">
-        {([
-          { id: "fix",  label: "Fix",   sub: "the back",     icon: Activity },
-          { id: "flex", label: "Flex",  sub: "the system",   icon: Dumbbell },
-          { id: "fuck", label: "F*ck",  sub: "the lights off", icon: Flame },
-        ] as const).map((t) => {
-          const Icon = t.icon;
-          const active = mode === t.id;
-          return (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => setMode(t.id)}
-              className={`relative px-4 py-4 text-left transition-colors ${active ? "bg-background" : "bg-transparent hover:bg-background/40"}`}
-            >
-              <div className="flex items-center gap-2">
-                <Icon className="w-4 h-4" style={{ color: active ? (t.id === "fuck" ? "var(--brand-blush)" : "var(--brand-amber)") : "var(--muted-foreground)" }} />
-                <span className="font-serif-display text-2xl italic" style={{ color: active ? (t.id === "fuck" ? "var(--brand-blush)" : "var(--foreground)") : "var(--muted-foreground)" }}>
-                  {t.label}
-                </span>
-              </div>
-              <p className="font-mono-label text-[9px] text-muted-foreground mt-1">{t.sub}</p>
-              {active && (
-                <span className="absolute left-0 right-0 bottom-0 h-[2px]"
-                      style={{ background: t.id === "fuck" ? "var(--brand-blush)" : "var(--brand-amber)" }} />
-              )}
-            </button>
-          );
-        })}
+      <div className="relative">
+        <p className="absolute top-2 left-4 font-mono-label text-[8px] tracking-[0.22em] uppercase text-[var(--brand-amber)] z-10 pointer-events-none">
+          Pick one ↓
+        </p>
+        <div role="tablist" aria-label="Protocol mode" className="grid grid-cols-3 border-b border-border">
+          {([
+            { id: "fix",  label: "Fix",   sub: "the back",     icon: Activity },
+            { id: "flex", label: "Flex",  sub: "the system",   icon: Dumbbell },
+            { id: "fuck", label: "F*ck",  sub: "the lights off", icon: Flame },
+          ] as const).map((t, i) => {
+            const Icon = t.icon;
+            const active = mode === t.id;
+            const accent = t.id === "fuck" ? "var(--brand-blush)" : "var(--brand-amber)";
+            return (
+              <button
+                key={t.id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => setMode(t.id)}
+                className={`group relative px-4 pt-7 pb-4 text-left cursor-pointer transition-colors ${i > 0 ? "border-l border-border" : ""} ${active ? "bg-background" : "bg-transparent hover:bg-background/60"}`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <Icon className="w-4 h-4 transition-colors" style={{ color: active ? accent : "var(--muted-foreground)" }} />
+                    <span className="font-serif-display text-2xl italic transition-colors" style={{ color: active ? (t.id === "fuck" ? "var(--brand-blush)" : "var(--foreground)") : "var(--muted-foreground)" }}>
+                      {t.label}
+                    </span>
+                  </div>
+                  {!active && (
+                    <span className="font-mono-label text-[8px] tracking-[0.2em] uppercase opacity-60 group-hover:opacity-100 transition-opacity" style={{ color: accent }}>
+                      Tap →
+                    </span>
+                  )}
+                </div>
+                <p className="font-mono-label text-[9px] text-muted-foreground mt-1">{t.sub}</p>
+                <span className="absolute left-0 right-0 bottom-0 h-[2px] transition-opacity"
+                      style={{ background: accent, opacity: active ? 1 : 0.2 }} />
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Body */}
