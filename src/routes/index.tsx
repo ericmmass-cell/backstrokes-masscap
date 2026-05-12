@@ -136,7 +136,7 @@ function Index() {
                 <div className="px-3 pb-3">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-serif-display text-sm italic">Back<span style={{color:"var(--brand-amber)"}}>Stroke</span></span>
-                    <span className="text-[9px]" style={{color:"var(--brand-pink)"}}>🔥 12</span>
+                    <span className="font-mono-label text-[8px]" style={{color:"var(--brand-pink)"}}>STREAK 12</span>
                   </div>
                   <p className="font-mono-label text-[7px] text-muted-foreground">TODAY · 8 MIN · NO CANDLE</p>
                   <h4 className="font-serif-display text-base mt-0.5 leading-tight">McGill big-3<br/><span className="italic">+ reverse kegel</span></h4>
