@@ -7,9 +7,9 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "BackStroke — Issue No. 01" },
+      { title: "BackStroke - Issue No. 01" },
       { name: "description", content: "An eight-minute daily protocol for the back and the bedroom. Coached by McGill-trained PTs and APTA pelvic-health PTs. The protocol the wellness aisle was too embarrassed to write." },
-      { property: "og:title", content: "BackStroke — Issue No. 01" },
+      { property: "og:title", content: "BackStroke - Issue No. 01" },
       { property: "og:description", content: "Same pelvis, two jobs. Eight minutes a day. Coached by people with letters after their names." },
     ],
     links: [
@@ -31,28 +31,28 @@ function Index() {
       {/* ==================== § Masthead ==================== */}
       <Masthead streak={streak} />
 
-      {/* ==================== § 01 — Cover ==================== */}
+      {/* ==================== § 01 - Cover ==================== */}
       <Cover />
 
-      {/* ==================== § 02 — Lede ==================== */}
+      {/* ==================== § 02 - Lede ==================== */}
       <Lede />
 
-      {/* ==================== § 03 — The Thesis ==================== */}
+      {/* ==================== § 03 - The Thesis ==================== */}
       <Thesis />
 
-      {/* ==================== § 04 — The Protocol ==================== */}
+      {/* ==================== § 04 - The Protocol ==================== */}
       <ProtocolTable />
 
-      {/* ==================== § 05 — Fig. 02 ==================== */}
+      {/* ==================== § 05 - Fig. 02 ==================== */}
       <FigureLink />
 
-      {/* ==================== § 06 — Field Notes ==================== */}
+      {/* ==================== § 06 - Field Notes ==================== */}
       <FieldNotes />
 
-      {/* ==================== § 07 — The Index (price) ==================== */}
+      {/* ==================== § 07 - The Index (price) ==================== */}
       <PriceCard />
 
-      {/* ==================== § 08 — Colophon / CTA ==================== */}
+      {/* ==================== § 08 - Colophon / CTA ==================== */}
       <Colophon />
     </div>
   );
@@ -68,7 +68,7 @@ function Masthead({ streak }: { streak: number | null }) {
           Back<span style={{ color: "var(--brand-amber)" }}>Stroke</span>
         </Link>
         <div className="text-center">
-          <span className="hidden sm:inline">Issue No. 01 — {ISSUE_DATE}</span>
+          <span className="hidden sm:inline">Issue No. 01 - {ISSUE_DATE}</span>
           <span className="sm:hidden">№ 01</span>
         </div>
         <nav className="flex items-center justify-end gap-5 md:gap-7">
@@ -90,7 +90,7 @@ function Cover() {
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 pt-12 md:pt-20 pb-16 md:pb-28 grid lg:grid-cols-12 gap-10">
         <div className="lg:col-span-8">
           <div className="flex items-center gap-4 fig-label text-[var(--brand-amber)]">
-            <span>§ 01 — Cover</span>
+            <span>§ 01 - Cover</span>
             <span className="flex-1 h-px bg-current opacity-40" />
             <span className="opacity-60">A daily protocol for the back &amp; the bedroom</span>
           </div>
@@ -102,24 +102,24 @@ function Cover() {
 
           <div className="mt-10 md:mt-14 grid grid-cols-12 gap-6 items-end">
             <p className="col-span-12 md:col-span-7 font-serif-display text-xl md:text-2xl leading-snug" style={{ color: "var(--brand-paper)" }}>
-              An eight-minute daily protocol for the back you stopped trusting and the sex you stopped scheduling — coached by the people who would have written this if a wellness app had asked them to.
+              An eight-minute daily protocol for the back you stopped trusting and the sex you stopped scheduling - coached by the people who would have written this if a wellness app had asked them to.
             </p>
             <div className="col-span-12 md:col-span-5">
               <Link to="/session" className="inline-flex items-center gap-3 px-6 py-4 fig-label text-[var(--brand-ink)]" style={{ background: "var(--brand-amber)" }}>
-                ◆ Run today's session — 8:00
+                ◆ Run today's session - 8:00
               </Link>
               <p className="mt-3 fig-label opacity-60 text-[9px]">No signup · runs in this tab</p>
             </div>
           </div>
         </div>
 
-        {/* Fig. 01 — spine, ivory line on ink */}
+        {/* Fig. 01 - spine, ivory line on ink */}
         <aside className="lg:col-span-4 relative flex flex-col items-center">
           <div className="absolute -top-2 left-0 right-0 flex items-center gap-2 fig-label opacity-60">
             <span>Fig. 01</span><span className="flex-1 h-px bg-current opacity-40" /><span>The column</span>
           </div>
           <SpineMark className="w-[180px] md:w-[240px] h-auto mt-10" stroke={1} />
-          <p className="fig-label opacity-50 mt-4 text-center max-w-[200px] leading-relaxed text-[9px]">Lumbar spine — site of the negotiation.</p>
+          <p className="fig-label opacity-50 mt-4 text-center max-w-[200px] leading-relaxed text-[9px]">Lumbar spine - site of the negotiation.</p>
         </aside>
       </div>
 
@@ -134,12 +134,12 @@ function Lede() {
     <section className="border-b border-[var(--brand-paper)]/15">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-20 md:py-28 grid lg:grid-cols-12 gap-10">
         <div className="lg:col-span-3">
-          <p className="fig-label text-[var(--brand-amber)]">§ 02 — Lede</p>
+          <p className="fig-label text-[var(--brand-amber)]">§ 02 - Lede</p>
           <p className="fig-label opacity-50 mt-3 text-[9px]">Standfirst</p>
         </div>
         <div className="lg:col-span-9">
           <p className="drop-cap font-serif-display text-2xl md:text-[28px] leading-[1.4] measure" style={{ color: "var(--brand-paper)" }}>
-            Lower back pain is the number-one reason couples stop having sex. Number two is the low-grade dread that something will twinge mid-act and somebody will have to be a good sport. Most adults can't fully relax their pelvic floor — that is why erections fade, why orgasms feel small, why penetration hurts. None of this is a mystery. It is a protocol. The mystery is why nobody handed it to you.
+            Lower back pain is the number-one reason couples stop having sex. Number two is the low-grade dread that something will twinge mid-act and somebody will have to be a good sport. Most adults can't fully relax their pelvic floor - that is why erections fade, why orgasms feel small, why penetration hurts. None of this is a mystery. It is a protocol. The mystery is why nobody handed it to you.
           </p>
           <div className="mt-10 grid sm:grid-cols-3 gap-8">
             {[
@@ -169,7 +169,7 @@ function Thesis() {
     <section id="thesis" className="border-b border-[var(--brand-paper)]/15">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-20 md:py-28">
         <div className="flex items-center gap-4 fig-label text-[var(--brand-amber)]">
-          <span>§ 03 — The Thesis</span>
+          <span>§ 03 - The Thesis</span>
           <span className="flex-1 h-px bg-current opacity-40" />
           <span className="opacity-60">Three tenets</span>
         </div>
@@ -193,7 +193,7 @@ function ProtocolTable() {
     <section id="protocol" className="plate-paper">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-20 md:py-28">
         <div className="flex items-center gap-4 fig-label" style={{ color: "var(--brand-oxblood)" }}>
-          <span>§ 04 — The Protocol</span>
+          <span>§ 04 - The Protocol</span>
           <span className="flex-1 h-px bg-current opacity-40" />
           <span className="opacity-60">Eight minutes · daily</span>
         </div>
@@ -244,7 +244,7 @@ function FigureLink() {
     <section className="border-y border-[var(--brand-paper)]/15">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-20 md:py-28">
         <div className="flex items-center gap-4 fig-label text-[var(--brand-amber)]">
-          <span>§ 05 — Fig. 02</span>
+          <span>§ 05 - Fig. 02</span>
           <span className="flex-1 h-px bg-current opacity-40" />
           <span className="opacity-60">The link</span>
         </div>
@@ -258,7 +258,7 @@ function FigureLink() {
             <p className="mt-8 measure leading-relaxed opacity-85 font-serif-display text-lg md:text-xl">
               The muscles that stabilize your lumbar are continuous with the muscles that govern erection, orgasm and pain-free penetration. The breath that down-regulates your nervous system is the breath that drops your pelvic floor. The category sells these as separate problems with separate subscriptions. Anatomically, they are one job. The taboo was a marketing decision.
             </p>
-            <p className="mt-6 fig-label opacity-60">— Coached by McGill-trained spine PTs · APTA pelvic-health PTs · ISSWSH + AASECT therapists · UCSF urology &amp; ob-gyn consults</p>
+            <p className="mt-6 fig-label opacity-60">- Coached by McGill-trained spine PTs · APTA pelvic-health PTs · ISSWSH + AASECT therapists · UCSF urology &amp; ob-gyn consults</p>
           </div>
 
           <figure className="lg:col-span-5 order-1 lg:order-2 relative px-6 py-10 plate-paper">
@@ -280,14 +280,14 @@ function FigureLink() {
 
 function FieldNotes() {
   const notes = [
-    { who: "Jake, 32", tag: "L4-L5 herniation · 6 weeks", quote: "I am back on the bike. I am lifting. I am — and this is genuinely none of your business — having sex again. I owe my foam roller an apology." },
+    { who: "Jake, 32", tag: "L4-L5 herniation · 6 weeks", quote: "I am back on the bike. I am lifting. I am - and this is genuinely none of your business - having sex again. I owe my foam roller an apology." },
     { who: "Maya, 29", tag: "Postpartum · 2 weeks", quote: "Nobody told me about the down-train. Two weeks of reverse kegels and breath work and I stopped bracing for everything. Including, eventually, my husband." },
   ];
   return (
     <section id="field" className="border-b border-[var(--brand-paper)]/15">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-20 md:py-28">
         <div className="flex items-center gap-4 fig-label text-[var(--brand-amber)]">
-          <span>§ 06 — Field Notes</span>
+          <span>§ 06 - Field Notes</span>
           <span className="flex-1 h-px bg-current opacity-40" />
           <span className="opacity-60">Two of many</span>
         </div>
@@ -317,7 +317,7 @@ function PriceCard() {
     <section className="border-b border-[var(--brand-paper)]/15">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-20 md:py-28">
         <div className="flex items-center gap-4 fig-label text-[var(--brand-amber)]">
-          <span>§ 07 — The Index</span>
+          <span>§ 07 - The Index</span>
           <span className="flex-1 h-px bg-current opacity-40" />
           <span className="opacity-60">Subscription</span>
         </div>
@@ -350,7 +350,7 @@ function PriceCard() {
               ))}
             </div>
             <Link to="/session" className="mt-8 inline-flex items-center gap-3 px-6 py-4 fig-label text-[var(--brand-ink)]" style={{ background: "var(--brand-amber)" }}>
-              ◆ Run a session first — free
+              ◆ Run a session first - free
             </Link>
           </div>
         </div>
@@ -373,12 +373,12 @@ function Colophon() {
             </p>
           </div>
           <div className="md:text-center text-[10px] leading-relaxed opacity-80">
-            <p>Issue No. 01 — {ISSUE_DATE}</p>
+            <p>Issue No. 01 - {ISSUE_DATE}</p>
             <p className="mt-2">© BackStroke Labs · a backstroke protocol</p>
           </div>
           <div className="md:text-right text-[10px] leading-relaxed opacity-80">
             <p>Not a medical device. If your back is screaming, see a PT.</p>
-            <p className="mt-2">If your erection has been gone for three months, see a urologist. If you have been ignoring it longer than that, see a urologist faster. We are coaches, not your doctor — though, statistically, we know yours.</p>
+            <p className="mt-2">If your erection has been gone for three months, see a urologist. If you have been ignoring it longer than that, see a urologist faster. We are coaches, not your doctor - though, statistically, we know yours.</p>
           </div>
         </div>
       </div>

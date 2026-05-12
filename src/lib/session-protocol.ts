@@ -1,5 +1,5 @@
 /**
- * V1 protocol — hardcoded 8-minute block.
+ * V1 protocol - hardcoded 8-minute block.
  * Easy to swap for future personalization tracks.
  */
 export type Block = {
@@ -20,7 +20,7 @@ export const PROTOCOL_V1: Block[] = [
   },
   {
     id: "side-plank",
-    name: "Side plank — both sides",
+    name: "Side plank - both sides",
     detail: "2 × 20s each side.",
     cue: "Elbow under shoulder. Hips stacked. Don't let them sag.",
     durationSec: 90,

@@ -44,7 +44,7 @@ export function PelvisMark({ className, stroke = 1.25 }: Props) {
       {/* sit bones */}
       <path d="M120 110 C 100 130 100 150 130 158" />
       <path d="M200 110 C 220 130 220 150 190 158" />
-      {/* pelvic floor sling — the point of the figure */}
+      {/* pelvic floor sling - the point of the figure */}
       <path d="M132 158 C 160 174 200 174 188 158" strokeDasharray="3 3" />
       <path d="M140 150 C 160 162 200 162 180 150" opacity="0.5" />
       {/* legend tick marks */}
