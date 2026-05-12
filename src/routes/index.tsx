@@ -118,11 +118,11 @@ function Index() {
               <img src={heroCouple} alt="" width={1024} height={1280}
                    className="w-full aspect-[4/5] object-cover rounded-sm" style={{boxShadow:"var(--shadow-lift)"}}/>
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] text-white/80">
-                <span>SUBJECT 04 · DAY 42</span>
-                <span style={{color:"var(--brand-pink)"}}>● LIVE</span>
+                <span>SUBJECT 04 · DAY 42 · L4-L5, FORMERLY VOCAL</span>
+                <span style={{color:"var(--brand-pink)"}}>● REC</span>
               </div>
               <span className="absolute -top-4 left-4 font-script text-2xl rotate-[-4deg] drop-shadow-lg" style={{color:"var(--brand-pink)"}}>
-                Same pelvis, darling.
+                Same pelvis. Two jobs.
               </span>
             </div>
 
