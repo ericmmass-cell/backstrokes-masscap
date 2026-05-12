@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SessionRouteImport } from './routes/session'
 import { Route as ScienceRouteImport } from './routes/science'
 import { Route as ProtocolRouteImport } from './routes/protocol'
 import { Route as PositionsRouteImport } from './routes/positions'
@@ -19,6 +20,11 @@ import { Route as ConversationRouteImport } from './routes/conversation'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShareTokenRouteImport } from './routes/share.$token'
 
+const SessionRoute = SessionRouteImport.update({
+  id: '/session',
+  path: '/session',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ScienceRoute = ScienceRouteImport.update({
   id: '/science',
   path: '/science',
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/positions': typeof PositionsRoute
   '/protocol': typeof ProtocolRoute
   '/science': typeof ScienceRoute
+  '/session': typeof SessionRoute
   '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRoutesByTo {
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/positions': typeof PositionsRoute
   '/protocol': typeof ProtocolRoute
   '/science': typeof ScienceRoute
+  '/session': typeof SessionRoute
   '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRoutesById {
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/positions': typeof PositionsRoute
   '/protocol': typeof ProtocolRoute
   '/science': typeof ScienceRoute
+  '/session': typeof SessionRoute
   '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRouteTypes {
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/positions'
     | '/protocol'
     | '/science'
+    | '/session'
     | '/share/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/positions'
     | '/protocol'
     | '/science'
+    | '/session'
     | '/share/$token'
   id:
     | '__root__'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/positions'
     | '/protocol'
     | '/science'
+    | '/session'
     | '/share/$token'
   fileRoutesById: FileRoutesById
 }
@@ -144,11 +156,19 @@ export interface RootRouteChildren {
   PositionsRoute: typeof PositionsRoute
   ProtocolRoute: typeof ProtocolRoute
   ScienceRoute: typeof ScienceRoute
+  SessionRoute: typeof SessionRoute
   ShareTokenRoute: typeof ShareTokenRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/session': {
+      id: '/session'
+      path: '/session'
+      fullPath: '/session'
+      preLoaderRoute: typeof SessionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/science': {
       id: '/science'
       path: '/science'
@@ -224,6 +244,7 @@ const rootRouteChildren: RootRouteChildren = {
   PositionsRoute: PositionsRoute,
   ProtocolRoute: ProtocolRoute,
   ScienceRoute: ScienceRoute,
+  SessionRoute: SessionRoute,
   ShareTokenRoute: ShareTokenRoute,
 }
 export const routeTree = rootRouteImport
