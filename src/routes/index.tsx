@@ -231,7 +231,7 @@ function Index() {
         <div className="max-w-[1280px] mx-auto relative">
           <div className="grid lg:grid-cols-12 gap-10 items-end mb-10">
             <div className="lg:col-span-7">
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">◆ TRY THE PROTOCOL · NO SIGNUP</p>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">◆ TRY THE PROTOCOL · NO SIGNUP, NO QUIZ, NO EMAIL HOSTAGE</p>
               <h2 className="font-serif-display text-4xl md:text-6xl mt-4 leading-[0.98] tracking-tight">
                 Stop reading the pitch.<br/>
                 <span className="italic" style={{ color: "var(--brand-blush)", textShadow: "var(--glow-pink)" }}>
@@ -240,12 +240,12 @@ function Index() {
               </h2>
             </div>
             <p className="lg:col-span-5 text-muted-foreground leading-relaxed max-w-md">
-              Tap a zone. Log today's pain. Run a real flex set with breath pacing. Flip the switch and watch the after-dark protocol assemble itself around your spine. <span className="italic text-foreground">You won't. Most people won't. The ones who do are the ones tying their shoes standing up six weeks from now, instead of narrating it from a chair.</span>
+              Tap a zone. Log today's pain. Run a real flex set with breath pacing. Flip the switch and watch the after-dark protocol assemble around your spine, in public, on the marketing page. <span className="italic text-foreground">Most people will scroll past this. The ones who tap are the ones tying their shoes standing up in six weeks, instead of giving the floor a TED talk.</span>
             </p>
           </div>
           <LiveProtocol />
           <p className="font-mono-label text-[9px] text-muted-foreground mt-4 text-center">
-            FIG. 04 · INTERACTIVE PREVIEW · THE INDEX UPDATES IN REAL TIME ABOVE
+            FIG. 04 · INTERACTIVE PREVIEW · NO ACCOUNT, NO COOKIE WALL, NO PDF EMAILED IN 3-5 BUSINESS DAYS
           </p>
         </div>
       </section>
