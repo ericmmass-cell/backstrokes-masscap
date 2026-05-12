@@ -327,7 +327,7 @@ function Index() {
             {/* BACK spread */}
             <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
               <div className="lg:col-span-7 relative">
-                <img src={mcgillStudy} alt="Overhead study, McGill curl-up engagement" loading="lazy" width={1280} height={1024}
+                <img src={mcgillStudy} alt="Overhead study, curl-up engagement" loading="lazy" width={1280} height={1024}
                      className="w-full aspect-[5/4] object-cover" style={{boxShadow:"var(--shadow-lift)"}}/>
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between font-mono-label text-[9px] text-white/70">
                   <span>FIG. 02 · CURL-UP · 8 SEC HOLD</span>
