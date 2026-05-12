@@ -97,7 +97,7 @@ function Index() {
             </div>
 
             <p className="mt-6 text-sm text-muted-foreground max-w-xl leading-relaxed">
-              Directed by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, and AASECT-certified therapists. <span className="text-foreground italic">No life coaches. No supplement stack. No man in a weighted vest with opinions about discipline. Nobody is going to call your spine a temple. It's a column. Treat it like one.</span>
+              Directed by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, and AASECT-certified therapists. <span className="text-foreground italic">No life coaches. No supplement stack. No man in a weighted vest with opinions about discipline. No jade egg, no $90 candle, no app gamifying your pelvic floor like it's Duolingo. Nobody is going to call your spine a temple. It's a column. Treat it like one.</span>
             </p>
             <p className="mt-2 font-mono-label text-[9px] text-muted-foreground tracking-[0.16em] uppercase opacity-70">
               <span className="opacity-60">*</span> yours, specifically. The one currently rolling sideways out of bed like it's launching a kayak.
@@ -375,7 +375,7 @@ function Index() {
               Lower back pain is the number-one reason couples stop having sex. Number two is the low-grade dread that something will twinge mid-act and someone will have to be a good sport about it. Most adults can't fully relax their pelvic floor. That is why erections fade, why orgasms feel small, why penetration hurts. None of this is a mystery. It is a protocol with seven moves and a breath count. The mystery is why nobody handed it to you, and why the ones who almost did wanted ninety dollars and your email.
             </p>
             <p className="mt-6 text-lg text-foreground leading-relaxed max-w-xl">
-              Train the body. Presence is downstream. Candles strictly optional. We will not sell you one.
+              Train the body. Presence is downstream. Candles strictly optional. Jade eggs strictly discouraged. We will not sell you either.
             </p>
 
             <div className="mt-10 grid grid-cols-3 gap-px border" style={{borderColor:"oklch(0.72 0.14 18 / 0.25)"}}>
@@ -529,7 +529,7 @@ function Index() {
             </a>
           </div>
           <p className="mt-12 text-[11px] text-muted-foreground max-w-xl mx-auto leading-relaxed italic font-serif-display">
-            Not a medical device. If your back is screaming, see a PT. If your erection has been gone for three months, see a urologist. If you've been ignoring it longer than that, see a urologist faster, then call your mother. We are coaches, not your doctor. Statistically, we know yours.
+            Not a medical device. If your back is screaming, see a PT. If sex hurts, if arousal has quietly left the chat, if your erection has been MIA for three months: see a pelvic-health PT, a gynecologist, a urologist. Pick the relevant one. If you've been ignoring it longer than that, go faster, then call your mother. We are coaches, not your doctor. Statistically, we know yours.
           </p>
         </div>
       </section>
