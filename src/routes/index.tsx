@@ -341,42 +341,32 @@ function Index() {
       </div>
 
 
-      {/* NEXT STEP · primary CTA after the work */}
+      {/* PRE-SIGNUP · early access CTA after the work */}
       <section className="px-6 md:px-10 py-20 border-b border-border bg-card/30">
         <div className="max-w-[1280px] mx-auto grid md:grid-cols-12 gap-10 items-center">
           <div className="md:col-span-7">
             <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">
-              NEXT STEP · 6 MIN, NO CARD
+              PRE-SIGNUP · COHORT 01 · SUMMER 2026
             </p>
             <h2 className="font-serif-display text-3xl md:text-4xl mt-3 leading-[1.05] tracking-tight">
-              Get your back and bedroom protocol.
-              <span className="italic text-muted-foreground"> Built from your intake, not a quiz that recommends ashwagandha.</span>
+              Get on the list before intake opens.
+              <span className="italic text-muted-foreground"> Cohorts are capped so the PT replies are still from a person.</span>
             </h2>
             <p className="text-sm text-muted-foreground mt-4 max-w-xl leading-relaxed">
-              Tell us where it hurts, how you sleep, and what sex looks like right now. You see week 1 inside the dashboard before you pay anything.
+              We open intake in waves of 200. Pre-signup gets you a spot, week 1 of the protocol to read, and a heads-up 48 hours before the public link. No card. One email.
             </p>
+            <ul className="mt-5 grid sm:grid-cols-3 gap-3 font-mono-label text-[10px] tracking-[0.18em] uppercase text-muted-foreground">
+              <li className="flex items-center gap-2"><span style={{color:"var(--brand-amber)"}}>01</span> Skip the queue</li>
+              <li className="flex items-center gap-2"><span style={{color:"var(--brand-amber)"}}>02</span> Read week 1 free</li>
+              <li className="flex items-center gap-2"><span style={{color:"var(--brand-amber)"}}>03</span> Founding price locked</li>
+            </ul>
           </div>
-          <div className="md:col-span-5 flex flex-col gap-3 md:items-end">
-            <a
-              href="#intake"
-              className="group inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] font-mono-label text-[11px] tracking-[0.22em] uppercase hover:opacity-90 transition"
-              style={{ boxShadow: "var(--shadow-ember)" }}
-            >
-              Start the intake
-              <span aria-hidden className="inline-block transition-transform group-hover:translate-x-0.5">→</span>
-            </a>
-            <a
-              href="#protocol"
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-border text-foreground/80 font-mono-label text-[10px] tracking-[0.22em] uppercase hover:text-foreground hover:border-foreground/40 transition"
-            >
-              See a sample week first
-            </a>
-            <p className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground mt-1">
-              No subscription. Cancel inside the app. Real PT, not a chatbot.
-            </p>
+          <div className="md:col-span-5">
+            <EarlyAccessForm accent="amber" />
           </div>
         </div>
       </section>
+
 
       {/* AFTER DARK, the spicy thesis, named */}
       <section className="relative px-6 md:px-10 py-32 border-b border-border overflow-hidden"
