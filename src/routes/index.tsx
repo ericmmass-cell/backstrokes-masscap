@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "BackStroke. The protocol Goop would have repackaged at $400 a candle." },
-      { name: "description", content: "Eight minutes of McGill. A pelvic floor that knows how to exhale. Sex your L4 stays out of. Coached by people with letters after their name and a license they would prefer to keep." },
+      { name: "description", content: "Eight minutes a day. A pelvic floor that knows how to exhale. Sex your L4 stays out of. Built with medical and therapeutic advisors who have letters after their name and a license they would prefer to keep." },
       { property: "og:title", content: "BackStroke. Same pelvis, two jobs, finally on speaking terms." },
       { property: "og:description", content: "The thing your PT would say at the bar after two drinks, if your PT drank. Built for the back. Settled in the bedroom." },
     ],
