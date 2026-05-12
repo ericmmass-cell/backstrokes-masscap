@@ -409,7 +409,7 @@ function Index() {
                   bottomTitle="A quieter lumbar in two weeks."
                   images={[
                     { src: backStudy, alt: "Lateral study of the lumbar spine in a bird-dog plank", caption: "FIG. 04 · LATERAL · L4-L5" },
-                    { src: mcgillStudy, alt: "Overhead study, McGill curl-up engagement", caption: "FIG. 02 · CURL-UP · 8 SEC HOLD" },
+                    { src: mcgillStudy, alt: "Overhead study, curl-up engagement", caption: "FIG. 02 · CURL-UP · 8 SEC HOLD" },
                     { src: portrait, alt: "Coach portrait, studio light", caption: "FIG. 06 · COACH · STUDIO" },
                   ]}
                 />
