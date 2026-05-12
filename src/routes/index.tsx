@@ -17,6 +17,7 @@ import mcgillStudy from "@/assets/mcgill-study.jpg";
 import sheetGrip from "@/assets/sheet-grip.jpg";
 import { LiveProtocol } from "@/components/LiveProtocol";
 import { MoveList, StatStrip, BACK_MOVES, BEDROOM_MOVES, BACK_STATS, BEDROOM_STATS } from "@/components/MoveLibrary";
+import { MobileImageCarousel } from "@/components/MobileImageCarousel";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -248,7 +249,22 @@ function Index() {
           <div className="grid lg:grid-cols-2 gap-px bg-border border border-border">
             {/* BACK column */}
             <div className="bg-background">
-              <div className="relative aspect-[16/10] overflow-hidden">
+              {/* Mobile: tap-to-zoom carousel */}
+              <div className="md:hidden">
+                <MobileImageCarousel
+                  accent="amber"
+                  topLabel="FIG. 01 · LATERAL · L4-L5 · ● THE BACK"
+                  bottomEyebrow="For the back"
+                  bottomTitle="A quieter lumbar in two weeks."
+                  images={[
+                    { src: backStudy, alt: "Lateral study of the lumbar spine in a bird-dog plank", caption: "FIG. 01 · LATERAL · L4-L5" },
+                    { src: mcgillStudy, alt: "Overhead study, McGill curl-up engagement", caption: "FIG. 03 · CURL-UP · 8 SEC HOLD" },
+                    { src: portrait, alt: "Coach portrait, studio light", caption: "FIG. 05 · COACH · STUDIO" },
+                  ]}
+                />
+              </div>
+              {/* Desktop: original hero */}
+              <div className="relative aspect-[16/10] overflow-hidden hidden md:block">
                 <img src={backStudy} alt="Lateral study of the lumbar spine in a bird-dog plank" loading="lazy" width={1024} height={640}
                      className="w-full h-full object-cover"/>
                 <div className="absolute inset-0" style={{background:"linear-gradient(180deg, transparent 40%, oklch(0.12 0.012 30) 100%)"}}/>
@@ -271,7 +287,22 @@ function Index() {
 
             {/* BEDROOM column */}
             <div className="bg-background" style={{background:"linear-gradient(180deg, var(--background), oklch(0.16 0.012 25 / 0.4))"}}>
-              <div className="relative aspect-[16/10] overflow-hidden">
+              {/* Mobile: tap-to-zoom carousel */}
+              <div className="md:hidden">
+                <MobileImageCarousel
+                  accent="blush"
+                  topLabel="FIG. 02 · 11:42 PM · ● THE BEDROOM"
+                  bottomEyebrow="For the bedroom"
+                  bottomTitle="Sex you're sincerely into. Again."
+                  images={[
+                    { src: bedroomStudy, alt: "Low-light bedroom study, two adults under linen", caption: "FIG. 02 · 11:42 PM · LIGHTS LOW" },
+                    { src: sheetGrip, alt: "Hands gripping linen, low light", caption: "FIG. 04 · GRIP · INVOLUNTARY" },
+                    { src: intimate, alt: "Two figures, close, low light", caption: "FIG. 06 · CLOSE · UNHURRIED" },
+                  ]}
+                />
+              </div>
+              {/* Desktop: original hero */}
+              <div className="relative aspect-[16/10] overflow-hidden hidden md:block">
                 <img src={bedroomStudy} alt="Low-light bedroom study, two adults under linen" loading="lazy" width={1024} height={640}
                      className="w-full h-full object-cover"/>
                 <div className="absolute inset-0" style={{background:"linear-gradient(180deg, transparent 40%, oklch(0.12 0.012 30) 100%)"}}/>
