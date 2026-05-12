@@ -354,13 +354,13 @@ function Index() {
                  className="w-full aspect-[4/5] object-cover"
                  style={{boxShadow:"var(--shadow-ember)"}}/>
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] text-white/70">
-              <span>FIG. 03 · AFTER DARK</span>
+              <span>FIG. 03 · AFTER DARK · NO CANDLE BUDGET</span>
               <span style={{color:"var(--brand-blush)"}}>● 22:47</span>
             </div>
           </div>
           <div className="lg:col-span-6">
             <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>
-              THE PART NOBODY ELSE WILL SAY
+              THE PART NOBODY ELSE WILL PUT ON THE WEBSITE
             </p>
             <h2 className="font-serif-display text-5xl md:text-7xl mt-6 leading-[0.98] tracking-[-0.025em]">
               The goal isn't<br/>
@@ -372,10 +372,10 @@ function Index() {
               you're sincerely into.
             </h2>
             <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-xl">
-              Lower back pain is the number-one reason couples stop having sex. The number-two reason is the low-grade dread that something will twinge mid-act and somebody will have to be a good sport about it. Most adults can't fully relax their pelvic floor — that's why erections fade, why orgasms feel small, why penetration hurts. None of this is a mystery. It's a protocol. The mystery is why nobody handed it to you.
+              Lower back pain is the number-one reason couples stop having sex. Number two is the low-grade dread that something will twinge mid-act and someone will have to be a good sport about it. Most adults can't fully relax their pelvic floor. That is why erections fade, why orgasms feel small, why penetration hurts. None of this is a mystery. It is a protocol with seven moves and a breath count. The mystery is why nobody handed it to you, and why the ones who almost did wanted ninety dollars and your email.
             </p>
             <p className="mt-6 text-lg text-foreground leading-relaxed max-w-xl">
-              Train the body. Presence is downstream. Candles optional.
+              Train the body. Presence is downstream. Candles strictly optional. We will not sell you one.
             </p>
 
             <div className="mt-10 grid grid-cols-3 gap-px border" style={{borderColor:"oklch(0.72 0.14 18 / 0.25)"}}>
