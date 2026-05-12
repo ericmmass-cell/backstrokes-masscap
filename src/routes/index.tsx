@@ -441,10 +441,10 @@ function Index() {
             <div>
               <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FOR THE BACK</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-                Eight minutes of McGill, daily. The rent your spine pays to keep doing things you like.
+                Eight minutes of McGill, daily. The rent your spine pays so you can keep doing the things you used to enjoy before the desk job.
               </h3>
               <p className="mt-6 text-muted-foreground leading-relaxed">
-                Curl-up, side plank, bird dog. Paced for endurance, not range. Coached on video by spine PTs, scaled to today's pain. The protocol that beat lumbar surgery in head-to-head trials — finally taught properly, instead of buried under a comment thread arguing about whether sit-ups count.
+                Curl-up, side plank, bird dog. Paced for endurance, not range. Coached on video by spine PTs, scaled to today's pain. The protocol that beat lumbar surgery in head-to-head trials, finally taught properly, instead of buried under a Reddit thread litigating whether sit-ups count as "anti-flexion" since 2014.
               </p>
             </div>
           </div>
@@ -455,10 +455,10 @@ function Index() {
             <div className="lg:order-1">
               <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
               <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-                Reverse kegel before kegel. The order your phone app got backwards.
+                Reverse kegel before kegel. The order your phone app got backwards while charging you $9.99 a month.
               </h3>
               <p className="mt-6 text-muted-foreground leading-relaxed">
-                A chronically gripping pelvic floor is why arousal stalls, why erections fade, why penetration hurts. We coach the down-train first, with diaphragmatic breath, then the up-train for control. APTA pelvic-health PTs, on video, in plain language. Postpartum and post-prostatectomy protocols built in — same voice, softer register, no shortcuts and no jokes about the part that isn't funny.
+                A chronically gripping pelvic floor is why arousal stalls, why erections fade, why penetration hurts. We coach the down-train first, with diaphragmatic breath, then the up-train for control. APTA pelvic-health PTs, on video, in plain language. Postpartum and post-prostatectomy protocols built in. Same voice, softer register, no shortcuts, and no jokes about the part that isn't funny.
               </p>
             </div>
           </div>
