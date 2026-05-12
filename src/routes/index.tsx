@@ -9,20 +9,20 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "BackStroke. The protocol you'd write if you had two PTs in the room." },
+      { title: "BackStroke. The protocol your spine clinic forgot to mention." },
       {
         name: "description",
         content:
-          "Eight minutes a day. One protocol. The back you used to have, and the bedroom you forgot was negotiable.",
+          "Eight muscles. Two jobs. One protocol. Eight minutes a day. Designed by clinicians, hostile to candles.",
       },
       {
         property: "og:title",
-        content: "BackStroke. Same pelvis, two jobs, finally on speaking terms.",
+        content: "BackStroke. Eight muscles, two jobs, one protocol.",
       },
       {
         property: "og:description",
         content:
-          "Eight minutes a day. Built and signed off by four clinicians who would rather keep their license.",
+          "The protocol the medical establishment forgot to write, in the language the wellness aisle declines to use.",
       },
     ],
     links: [
@@ -46,7 +46,7 @@ const BLUSH = "var(--brand-blush)";
 function Index() {
   return (
     <div className="min-h-screen antialiased" style={{ background: PAPER, color: PAPER_INK }}>
-      {/* ───────── Nav — slim, paper, almost invisible ───────── */}
+      {/* ───────── Nav ───────── */}
       <header
         className="sticky top-0 z-30 backdrop-blur-xl"
         style={{ background: "oklch(0.94 0.018 78 / 0.78)", borderBottom: "1px solid oklch(0.85 0.02 70)" }}
@@ -96,26 +96,26 @@ function Index() {
               className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-8"
               style={{ color: "var(--brand-oxblood)" }}
             >
-              ◆ A members' protocol for the body that stopped negotiating
+              ◆ The protocol your spine clinic forgot to mention
             </p>
             <h1
               className="font-serif-display leading-[0.94] tracking-[-0.025em]"
               style={{ fontSize: "clamp(56px, 8.4vw, 124px)", color: PAPER_INK }}
             >
-              Same pelvis.
+              Eight muscles.
               <br />
               <span className="italic" style={{ color: "var(--brand-oxblood)" }}>
                 Two jobs.
               </span>
               <br />
-              Eight minutes.
+              One protocol.
             </h1>
 
             <p
               className="mt-9 font-serif-display italic leading-snug max-w-xl"
               style={{ fontSize: "clamp(20px, 2.0vw, 26px)", color: PAPER_INK, opacity: 0.86 }}
             >
-              The protocol your spine PT and your pelvic-floor PT would have written together — if they were ever in the same room. They weren't. We put them there.
+              Medicine treats your back. The wellness aisle has opinions about your sex life. Neither has noticed the eight muscles in the middle, which run both. We thought there might be a third option.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -136,7 +136,7 @@ function Index() {
             </div>
 
             <p className="mt-8 text-sm italic max-w-md leading-relaxed" style={{ color: PAPER_MUTED }}>
-              No app store. No download. No candle. No "Hey friend" newsletters from a guy named Brayden.
+              No app store. No download. No candle. No supplement stack that fits in a small UPS truck. No one in a weighted vest with a podcast about discipline.
             </p>
           </div>
 
@@ -150,27 +150,27 @@ function Index() {
               />
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] tracking-[0.22em] uppercase text-white/85">
                 <span>SUBJECT 04 · DAY 42 · L4-L5</span>
-                <span style={{ color: AMBER }}>● ON SPEAKING TERMS</span>
+                <span style={{ color: AMBER }}>● PROTOCOL ARMED</span>
               </div>
               <span
                 className="absolute -top-6 -right-3 font-script text-3xl rotate-[5deg] hidden md:block"
                 style={{ color: "var(--brand-oxblood)" }}
               >
-                quieter than yesterday
+                quieter than the clinic
               </span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ───────── PROOF STRIP — four numbers, gold foil on cream ───────── */}
+      {/* ───────── PROOF STRIP ───────── */}
       <section className="border-y" style={{ borderColor: "oklch(0.86 0.025 70)", background: PAPER_2 }}>
         <div className="max-w-[1180px] mx-auto px-6 md:px-10 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
           {[
-            ["8 min", "a day. Floor optional."],
-            ["1 protocol", "back + bedroom, one chart."],
-            ["4 clinicians", "each with a veto."],
-            ["0 candles", "0 jade eggs. 0 ashwagandha."],
+            ["8 min", "a day. Doesn't require a candle."],
+            ["1 protocol", "back and bedroom, one chart."],
+            ["4 clinicians", "each with a veto. None of them post."],
+            ["0 supplements", "0 jade eggs. 0 ashwagandha. We checked."],
           ].map(([v, l]) => (
             <div key={String(l)}>
               <p
@@ -193,31 +193,47 @@ function Index() {
         </div>
       </section>
 
-      {/* ───────── PROBLEM — one dark editorial break ───────── */}
+      {/* ───────── PROBLEM ───────── */}
       <section id="problem" className="px-6 md:px-10 py-24 md:py-32 relative" style={{ background: "var(--brand-ink)" }}>
         <div className="max-w-[1100px] mx-auto">
           <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: AMBER }}>
-            ◆ The category answer is a stretch reel and a $48 magnesium gummy in eucalyptus
+            ◆ Two industries. One body. The gap is the product.
           </p>
           <h2
             className="font-serif-display mt-6 leading-[1.0] tracking-[-0.02em] max-w-4xl"
             style={{ fontSize: "clamp(36px, 5vw, 64px)", color: "white" }}
           >
-            Your spine PT and your pelvic-floor PT have never met.{" "}
+            Medicine declines to ask.{" "}
             <span className="italic" style={{ color: AMBER }}>
-              Your pelvis would like a word.
+              Wellness sells you whatever the asking would have revealed.
             </span>
           </h2>
-          <p className="mt-10 text-lg md:text-xl leading-relaxed max-w-2xl italic" style={{ color: "oklch(0.85 0.02 50)" }}>
-            The protocol that fixes your back lives in one building. The protocol that fixes your sex life lives in another. The two clinicians have never been in the same chart. The market is fine with this. Your pelvis is not.
-          </p>
 
-          <div className="mt-12 grid sm:grid-cols-3 gap-6">
+          <div className="mt-12 grid md:grid-cols-2 gap-10 max-w-4xl">
+            <div>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-3" style={{ color: AMBER }}>
+                Side one. The chart.
+              </p>
+              <p className="text-lg leading-relaxed italic" style={{ color: "oklch(0.85 0.02 50)" }}>
+                Medicine is the practice of treating what's broken in a fluorescent room with a clipboard. Sex is not broken. It is simply absent from the chart. The discharge note says "patient is doing well." The patient is doing eighty percent well, and the missing twenty is the part the appointment did not have time to ask about.
+              </p>
+            </div>
+            <div>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-3" style={{ color: AMBER }}>
+                Side two. The aisle.
+              </p>
+              <p className="text-lg leading-relaxed italic" style={{ color: "oklch(0.85 0.02 50)" }}>
+                The wellness aisle noticed the missing twenty and would like to sell it back to you, in candle form, at ninety-six dollars, unscented, next to a jade egg with no return policy. The aisle is not regulated, not credentialed, and not interested in being either.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-14 grid sm:grid-cols-3 gap-6">
             {[
-              ["619M", "people with active back pain"],
-              ["1 in 4", "report sexual avoidance"],
-              ["$140B", "spent yearly on the wrong things"],
-            ].map(([v, l]) => (
+              ["1.4M", "licensed US physicians", "Routinely connecting back rehab and sexual function in one note: a rounding error."],
+              ["$1.8T", "global wellness, 2023", "Peer-reviewed share of the catalogue: also a rounding error."],
+              ["8 muscles", "running both jobs", "Mentioned in zero of the above. Featured here."],
+            ].map(([v, l, sub]) => (
               <div key={l} className="border-l-2 pl-5" style={{ borderColor: AMBER }}>
                 <p className="font-serif-display text-4xl md:text-5xl tracking-tight" style={{ color: AMBER }}>
                   {v}
@@ -225,44 +241,47 @@ function Index() {
                 <p className="mt-2 text-sm leading-snug" style={{ color: "oklch(0.78 0.02 50)" }}>
                   {l}
                 </p>
+                <p className="mt-3 text-xs leading-relaxed italic" style={{ color: "oklch(0.65 0.02 50)" }}>
+                  {sub}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ───────── WHAT YOU PAY FOR — back to paper ───────── */}
+      {/* ───────── WHAT YOU PAY FOR ───────── */}
       <section id="what-you-pay-for" className="px-6 md:px-10 py-24 md:py-32">
         <div className="max-w-[1100px] mx-auto">
           <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
-            ◆ What you're paying for
+            ◆ The shortest membership we could responsibly sell
           </p>
           <h2
             className="font-serif-display mt-5 leading-[1.0] tracking-[-0.02em] max-w-3xl"
             style={{ fontSize: "clamp(38px, 5vw, 68px)", color: PAPER_INK }}
           >
-            The shortest membership we could responsibly sell.
+            Eight minutes. We are subtracting time, not adding it.
           </h2>
           <p className="mt-8 max-w-2xl leading-relaxed text-lg italic" style={{ color: PAPER_INK, opacity: 0.78 }}>
-            Eight minutes a day. The exact eight your spine and your pelvic floor were already arguing about, finally on the same chart. We are not adding work to your life. We are subtracting time you were already spending wrong.
+            The clinic was already collecting a portion of your week. The candle aisle has been collecting another portion, in cash. We took the eight minutes the spine and the floor were already arguing about, put them on one chart, and stopped charging for the parts neither industry can actually deliver.
           </p>
 
           <ol className="mt-14 grid md:grid-cols-3 gap-px" style={{ background: "oklch(0.86 0.025 70)", border: "1px solid oklch(0.86 0.025 70)" }}>
             {[
               {
                 num: "01",
-                head: "Eight minutes",
-                body: "The McGill big-3 — curl-up, side plank, bird dog — at the dose the disc trials actually use. Not the YouTube version.",
+                head: "The eight minutes",
+                body: "The McGill big-3 at the dose the disc trials used. Not the YouTube version, which removed the hard parts and added a sponsor.",
               },
               {
                 num: "02",
-                head: "One pelvic floor",
-                body: "Down-train first. Up-train second. Eccentric control is the metric, not rep count. Most apps got this wrong on purpose.",
+                head: "The pelvic floor",
+                body: "Down-train first. Up-train second. Eccentric control is the metric, not rep count. The $9.99 kegel apps got this wrong because counting reps is easier to monetise.",
               },
               {
                 num: "03",
-                head: "Four clinicians",
-                body: "A spine PT, a pelvic-health PT, a urologist, an AASECT sex therapist. Each owns a veto. None of them are influencers.",
+                head: "The four clinicians",
+                body: "A spine PT, a pelvic-health PT, a urologist, an AASECT sex therapist. Each owns a veto. None of them post. None are wearing a weighted vest in their profile picture.",
               },
             ].map((p) => (
               <li key={p.num} className="px-7 py-8 md:py-10" style={{ background: PAPER }}>
@@ -294,7 +313,7 @@ function Index() {
         </div>
       </section>
 
-      {/* ───────── THE WORK — two image cards ───────── */}
+      {/* ───────── THE WORK ───────── */}
       <section id="work" className="px-6 md:px-10 pb-24 md:pb-28">
         <div className="max-w-[1100px] mx-auto grid md:grid-cols-2 gap-6">
           {[
@@ -302,14 +321,14 @@ function Index() {
               src: mcgillStudy,
               tag: "◆ FOR THE BACK · 8 MIN",
               head: "A quieter lumbar in two weeks.",
-              body: "Endurance, not range. The protocol that beat lumbar surgery in head-to-head trials, finally taught properly.",
+              body: "Endurance, not range. The protocol that beat lumbar surgery in head-to-head trials, finally taught at the dose the trials actually used.",
               color: AMBER,
             },
             {
               src: sheetGrip,
               tag: "◆ FOR THE BEDROOM · 7 MIN",
               head: "Reverse kegel before kegel.",
-              body: "Erections and lubrication are the floor, not the ceiling. A chronically gripping pelvic floor is why arousal stalls.",
+              body: "Erections, lubrication, continence are the floor, not the ceiling. A pelvic floor stuck in the on position is the reason none of it works, and the reason the candle isn't either.",
               color: BLUSH,
             },
           ].map((c) => (
@@ -341,7 +360,7 @@ function Index() {
         </div>
       </section>
 
-      {/* ───────── THE COUNCIL — slim, named, no hagiography ───────── */}
+      {/* ───────── COUNCIL ───────── */}
       <section className="px-6 md:px-10 py-24 md:py-28" style={{ background: PAPER_2 }}>
         <div className="max-w-[1100px] mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
@@ -353,7 +372,7 @@ function Index() {
                 className="font-serif-display mt-5 leading-[1.0] tracking-[-0.02em] max-w-3xl"
                 style={{ fontSize: "clamp(34px, 4.4vw, 56px)", color: PAPER_INK }}
               >
-                People with letters after their name and a license they would prefer to keep.
+                People with letters after their name, and a licence they would prefer to keep.
               </h2>
             </div>
             <Link
@@ -392,33 +411,36 @@ function Index() {
           </ul>
 
           <p className="mt-8 text-xs italic" style={{ color: PAPER_MUTED }}>
-            ◆ Photos commissioned. Subjects' lawyers reviewing. Names land before public launch.
+            ◆ Photos commissioned. Subjects' lawyers reviewing. Names land before public launch. The veto is already in force.
           </p>
         </div>
       </section>
 
-      {/* ───────── SCIENCE — one line, one CTA ───────── */}
+      {/* ───────── SCIENCE ───────── */}
       <section className="px-6 md:px-10 py-24 md:py-28">
         <div className="max-w-[1100px] mx-auto grid md:grid-cols-12 gap-10 items-center">
           <div className="md:col-span-7">
             <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
-              ◆ The numbers, with the asterisks attached
+              ◆ The numbers, with every asterisk attached
             </p>
             <h2
               className="font-serif-display mt-5 leading-[1.02] tracking-[-0.02em]"
               style={{ fontSize: "clamp(34px, 4.4vw, 56px)", color: PAPER_INK }}
             >
-              412 people. Internal cohort. <span className="italic" style={{ color: "var(--brand-oxblood)" }}>Not peer-reviewed.</span>
+              412 people. Internal cohort.{" "}
+              <span className="italic" style={{ color: "var(--brand-oxblood)" }}>
+                Not peer-reviewed, and we are not pretending otherwise.
+              </span>
             </h2>
             <p className="mt-7 max-w-xl leading-relaxed text-lg italic" style={{ color: PAPER_INK, opacity: 0.78 }}>
-              We don't put the headline numbers in the hero. Hero numbers without their methodology are advertising. The methodology is on the science page, attached to every cell.
+              Hero numbers without methodology are advertising. We don't put them in the hero. The methodology lives on the science page, attached to every cell, in italic, in writing nobody on the wellness aisle has ever shipped on a product page.
             </p>
             <Link
               to="/science"
               className="mt-9 inline-flex items-center gap-2 font-mono-label text-[10px] tracking-[0.22em] uppercase border-b pb-1 transition hover:opacity-80"
               style={{ color: PAPER_INK, borderColor: PAPER_INK }}
             >
-              See the cohort data · with methodology →
+              See the cohort data, with methodology →
             </Link>
           </div>
           <div className="md:col-span-5">
@@ -452,31 +474,31 @@ function Index() {
               ))}
             </div>
             <p className="mt-4 text-[11px] italic leading-relaxed" style={{ color: PAPER_MUTED }}>
-              Self-reported. Internal in-app cohort. Uncontrolled. Not peer-reviewed. Methodology on every number — read it.
+              Self-reported. Internal in-app cohort. Uncontrolled. Not peer-reviewed. Every cell on the science page carries its methodology in italic. Read the italic line.
             </p>
           </div>
         </div>
       </section>
 
-      {/* ───────── FIELD NOTES — illustrative, three lines ───────── */}
+      {/* ───────── FIELD NOTES ───────── */}
       <section className="px-6 md:px-10 py-20 md:py-24" style={{ background: PAPER_2 }}>
         <div className="max-w-[1100px] mx-auto">
           <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
-            ◆ Field notes · illustrative · in brand voice
+            ◆ Field notes · illustrative · we label them
           </p>
           <div className="mt-10 grid md:grid-cols-3 gap-px" style={{ background: "oklch(0.86 0.025 70)", border: "1px solid oklch(0.86 0.025 70)" }}>
             {[
               {
                 q: "I scheduled my life around my lower back for four years. I don't anymore. Make of that what you will.",
-                a: "Jake, 32 — illustrative",
+                a: "Jake, 32 · illustrative",
               },
               {
-                q: "Two weeks of the breath work and I stopped bracing for everything. Including, eventually, my husband. He noticed before I did.",
-                a: "Maya, 29 — illustrative",
+                q: "Two weeks of the breath work and I stopped bracing for everything. Including, eventually, the people in my house.",
+                a: "Maya, 29 · illustrative",
               },
               {
-                q: "First thing I've used that told me what to do today, in a tone that didn't make me consider throwing my phone into a river.",
-                a: "Chris, 35 — illustrative",
+                q: "First app that told me what to do today, in a tone that did not make me consider throwing my phone into a body of water.",
+                a: "Chris, 35 · illustrative",
               },
             ].map((t) => (
               <figure key={t.a} className="p-8" style={{ background: PAPER }}>
@@ -493,12 +515,12 @@ function Index() {
             ))}
           </div>
           <p className="mt-6 text-xs italic" style={{ color: PAPER_MUTED }}>
-            ◆ Real testimonials replace these in v2. Until then, we label them.
+            ◆ Real testimonials replace these in v2. Until then we label them, because the alternative is a wellness brand's screenshot of an unverifiable Instagram comment.
           </p>
         </div>
       </section>
 
-      {/* ───────── FINAL CTA — dark, declarative ───────── */}
+      {/* ───────── FINAL CTA ───────── */}
       <section className="px-6 md:px-10 py-28 md:py-36" style={{ background: "var(--brand-ink)" }}>
         <div className="max-w-[900px] mx-auto text-center">
           <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: AMBER }}>
@@ -515,7 +537,7 @@ function Index() {
             </span>
           </h2>
           <p className="mt-8 max-w-xl mx-auto text-lg leading-relaxed italic" style={{ color: "oklch(0.82 0.02 50)" }}>
-            Two weeks free. $24.99 a month after, cancel any time. Web-first — no app store, no download, no review process, no shame screen.
+            Two weeks free. $24.99 a month after, cancel any time. Web-first. No app store. No download. No supplement upsell in week three. No quiz that ends in ashwagandha.
           </p>
           <div className="mt-12 flex items-center justify-center gap-5 flex-wrap">
             <Link
@@ -541,12 +563,12 @@ function Index() {
             className="mt-16 text-xs max-w-xl mx-auto leading-relaxed italic font-serif-display"
             style={{ color: "oklch(0.7 0.02 50)" }}
           >
-            Not a medical device. If your back is screaming, see a PT. If sex hurts, if arousal has quietly left the chat, if your erection has been MIA for three months: see the relevant specialist. We are coaches, not your doctor.
+            Not a medical device. If your back is screaming, see a PT. If sex hurts, see a pelvic-health PT, a gynecologist, or a urologist. Pick the relevant one. We are coaches, not your doctor. Statistically, we know yours.
           </p>
         </div>
       </section>
 
-      {/* ───────── Footer — slim ───────── */}
+      {/* ───────── Footer ───────── */}
       <footer className="px-6 md:px-10 py-10" style={{ background: PAPER, borderTop: "1px solid oklch(0.86 0.025 70)" }}>
         <div className="max-w-[1180px] mx-auto flex items-center justify-between flex-wrap gap-6 font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: PAPER_MUTED }}>
           <div className="flex items-center gap-2">
