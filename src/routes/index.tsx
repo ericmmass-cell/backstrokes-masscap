@@ -468,15 +468,15 @@ function Index() {
       {/* STORIES */}
       <section id="stories" className="px-6 md:px-10 py-32 border-b border-border">
         <div className="max-w-[1280px] mx-auto">
-          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FIELD NOTES</p>
+          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FIELD NOTES · UNPAID, UNEDITED, UNFLATTERING WHERE NEEDED</p>
           <h2 className="font-serif-display text-4xl md:text-6xl mt-5 max-w-2xl leading-[1.02] tracking-tight">
-            From people who would rather not sit this one out.
+            From people who would, frankly, rather not sit this one out.
           </h2>
           <div className="mt-16 grid md:grid-cols-3 gap-px bg-border border border-border">
             {[
-              { img: t1, name: "Jake, 32", role: "L4-L5 herniation · Index 71 → 89", quote: "I am back on the bike. I am lifting. I am — and this is genuinely none of your business — having sex again. Six weeks. I owe my foam roller an apology." },
-              { img: t2, name: "Maya, 29", role: "Postpartum · Index 54 → 82",       quote: "Nobody told me about the down-train. Two weeks of reverse kegels and breath work and I stopped bracing for everything. Including, eventually, my husband." },
-              { img: t3, name: "Chris, 35", role: "Sciatica · Index 62 → 84",        quote: "I bought four supplements, three apps and a foam roller before this. The Index is the first thing that told me what to do today, in a tone that didn't make me want to throw my phone." },
+              { img: t1, name: "Jake, 32", role: "L4-L5 herniation · Index 71 → 89", quote: "I am back on the bike. I am lifting. I am, and this is genuinely none of your business, having sex again. Six weeks. I owe my foam roller a written apology and possibly a card." },
+              { img: t2, name: "Maya, 29", role: "Postpartum · Index 54 → 82",       quote: "Nobody told me about the down-train. Two weeks of reverse kegels and breath work and I stopped bracing for everything. Including, eventually, my husband. He noticed before I did." },
+              { img: t3, name: "Chris, 35", role: "Sciatica · Index 62 → 84",        quote: "I bought four supplements, three apps and a foam roller before this. The Index is the first thing that told me what to do today, in a tone that didn't make me consider throwing my phone into a river." },
             ].map((t)=>(
               <figure key={t.name} className="bg-background p-8">
                 <blockquote className="font-serif-display text-xl leading-snug">
