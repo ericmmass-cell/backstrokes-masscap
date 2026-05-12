@@ -553,7 +553,7 @@ function Index() {
           </div>
 
           <p className="mt-10 font-mono-label text-[10px] tracking-[0.18em] uppercase text-muted-foreground text-center">
-            Coached by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, and AASECT-certified therapists.
+            Built with medical and therapeutic advisors. Letters after their name. Licenses they would prefer to keep.
           </p>
         </div>
       </section>
