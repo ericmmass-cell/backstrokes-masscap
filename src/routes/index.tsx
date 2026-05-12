@@ -75,7 +75,7 @@ function Index() {
               <span className="italic" style={{
                 background:"var(--gradient-text)",
                 WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
-              }}>Quiet the lumbar.</span><br/>
+              }}>Settle the spine.</span><br/>
               <span className="italic" style={{color:"var(--brand-blush)", textShadow:"var(--glow-pink)"}}>Have the sex.</span>
             </h1>
 
