@@ -287,7 +287,22 @@ function Index() {
 
             {/* BEDROOM column */}
             <div className="bg-background" style={{background:"linear-gradient(180deg, var(--background), oklch(0.16 0.012 25 / 0.4))"}}>
-              <div className="relative aspect-[16/10] overflow-hidden">
+              {/* Mobile: tap-to-zoom carousel */}
+              <div className="md:hidden">
+                <MobileImageCarousel
+                  accent="blush"
+                  topLabel="FIG. 02 · 11:42 PM · ● THE BEDROOM"
+                  bottomEyebrow="For the bedroom"
+                  bottomTitle="Sex you're sincerely into. Again."
+                  images={[
+                    { src: bedroomStudy, alt: "Low-light bedroom study, two adults under linen", caption: "FIG. 02 · 11:42 PM · LIGHTS LOW" },
+                    { src: sheetGrip, alt: "Hands gripping linen, low light", caption: "FIG. 04 · GRIP · INVOLUNTARY" },
+                    { src: intimate, alt: "Two figures, close, low light", caption: "FIG. 06 · CLOSE · UNHURRIED" },
+                  ]}
+                />
+              </div>
+              {/* Desktop: original hero */}
+              <div className="relative aspect-[16/10] overflow-hidden hidden md:block">
                 <img src={bedroomStudy} alt="Low-light bedroom study, two adults under linen" loading="lazy" width={1024} height={640}
                      className="w-full h-full object-cover"/>
                 <div className="absolute inset-0" style={{background:"linear-gradient(180deg, transparent 40%, oklch(0.12 0.012 30) 100%)"}}/>
