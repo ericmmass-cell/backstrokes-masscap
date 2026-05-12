@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "BackStroke. The protocol Goop would have repackaged at $400 a candle." },
-      { name: "description", content: "Eight minutes of McGill. A pelvic floor that knows how to exhale. Sex your L4 stays out of. Coached by people with letters after their name and a license they would prefer to keep." },
+      { name: "description", content: "Eight minutes a day. A pelvic floor that knows how to exhale. Sex your L4 stays out of. Built with medical and therapeutic advisors who have letters after their name and a license they would prefer to keep." },
       { property: "og:title", content: "BackStroke. Same pelvis, two jobs, finally on speaking terms." },
       { property: "og:description", content: "The thing your PT would say at the bar after two drinks, if your PT drank. Built for the back. Settled in the bedroom." },
     ],
@@ -83,7 +83,7 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              One protocol. Eight muscles. <span className="italic" style={{color:"var(--brand-amber)"}}>Two jobs the wellness aisle insists on selling separately, usually in candle form, for $96.</span> BackStroke is built by McGill-trained spine PTs and APTA pelvic-floor PTs who, after years of writing the same chart in two different buildings, decided to write it once.
+              One protocol. Eight muscles. <span className="italic" style={{color:"var(--brand-amber)"}}>Two jobs the wellness aisle insists on selling separately, usually in candle form, for $96.</span> BackStroke is built with medical and therapeutic advisors who, after years of writing the same chart in two different buildings, decided to write it once.
             </p>
 
             {/* What you actually get */}
@@ -102,7 +102,7 @@ function Index() {
             </div>
 
             <p className="mt-6 text-sm text-muted-foreground max-w-xl leading-relaxed">
-              Coached by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, AASECT-certified therapists. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a weighted vest with a podcast about discipline.</span>
+              Built with medical and therapeutic advisors. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a weighted vest with a podcast about discipline.</span>
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7">
@@ -146,7 +146,7 @@ function Index() {
                     <span className="font-mono-label text-[8px]" style={{color:"var(--brand-pink)"}}>STREAK 12</span>
                   </div>
                   <p className="font-mono-label text-[7px] text-muted-foreground">TODAY · 8 MIN · NO CANDLE</p>
-                  <h4 className="font-serif-display text-base mt-0.5 leading-tight">McGill big-3<br/><span className="italic">+ reverse kegel</span></h4>
+                  <h4 className="font-serif-display text-base mt-0.5 leading-tight">Spine big-3<br/><span className="italic">+ reverse kegel</span></h4>
                   <p className="text-[9px] text-muted-foreground mt-0.5">Floor. Now. No mat sold separately.</p>
                   <button className="mt-2 w-full py-1.5 rounded-md text-[10px] font-semibold bg-[var(--brand-teal)] text-[var(--brand-ink)]">Run session</button>
                   <div className="grid grid-cols-2 gap-1.5 mt-2">
@@ -223,7 +223,7 @@ function Index() {
             <div className="bg-background p-7 md:p-9">
               <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">TUESDAY · 11 AM</p>
               <p className="font-serif-display text-2xl md:text-3xl mt-3 leading-tight">
-                Spine clinic. Bird-dog, McGill big-3, instructions to "stay active."
+                Spine clinic. Bird-dog, the big-3, instructions to "stay active."
               </p>
               <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
                 Nobody asks how sex is going. Nobody mentions that the muscles being trained are the same ones running the show on Saturday night. Discharge note: "Patient is doing well." Patient is not.
@@ -341,7 +341,7 @@ function Index() {
               <div className="lg:col-span-5">
                 <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">For the back</p>
                 <h3 className="font-serif-display text-3xl md:text-4xl mt-4 leading-[1.05]">
-                  Eight minutes of McGill. The rent your spine pays.
+                  Eight minutes for the spine. The rent your back pays.
                 </h3>
                 <p className="mt-5 text-muted-foreground leading-relaxed text-sm">
                   Curl-up, side plank, bird dog. Endurance, not range. The protocol that beat lumbar surgery in head-to-head trials, finally taught properly.
@@ -370,7 +370,7 @@ function Index() {
                   Reverse kegel <span className="italic" style={{color:"var(--brand-blush)"}}>before</span> kegel.
                 </h3>
                 <p className="mt-5 text-muted-foreground leading-relaxed text-sm">
-                  Erections and lubrication are the floor, not the ceiling. A chronically gripping pelvic floor is why arousal stalls and penetration hurts. Down-train, then up-train. APTA pelvic-health PTs, on video, in plain language.
+                  Erections and lubrication are the floor, not the ceiling. A chronically gripping pelvic floor is why arousal stalls and penetration hurts. Down-train, then up-train. Pelvic-health coaching, on video, in plain language.
                 </p>
                 <StatStrip items={BEDROOM_STATS} accent="blush" />
                 <p className="mt-4 text-[11px] text-muted-foreground italic">
@@ -553,7 +553,7 @@ function Index() {
           </div>
 
           <p className="mt-10 font-mono-label text-[10px] tracking-[0.18em] uppercase text-muted-foreground text-center">
-            Coached by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, and AASECT-certified therapists.
+            Built with medical and therapeutic advisors. Letters after their name. Licenses they would prefer to keep.
           </p>
         </div>
       </section>
