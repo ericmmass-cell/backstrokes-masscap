@@ -329,7 +329,7 @@ function Index() {
           </div>
 
           <p className="font-script text-2xl md:text-3xl mt-12 italic text-center" style={{color:"var(--brand-blush)"}}>
-            Two lists. <span style={{color:"var(--brand-amber)"}}>One pelvis. The whole point.</span>
+            Two lists. <span style={{color:"var(--brand-amber)"}}>One pelvis. The whole company.</span>
           </p>
         </div>
       </section>
