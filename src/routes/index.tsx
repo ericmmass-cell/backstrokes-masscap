@@ -453,30 +453,72 @@ function Index() {
 
       {/* METHODOLOGY · two editorial spreads, back + bedroom */}
       <section className="px-6 md:px-10 py-32 border-b border-border">
-        <div className="max-w-[1280px] mx-auto space-y-32">
-          <div className="grid lg:grid-cols-2 gap-14 items-center">
-            <img src={meditation} alt="" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover"/>
-            <div>
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FOR THE BACK</p>
-              <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-                Eight minutes of McGill, daily. The rent your spine pays so you can keep doing the things you used to enjoy before the desk job.
+        <div className="max-w-[1280px] mx-auto space-y-24">
+          {/* BACK spread */}
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            <div className="lg:col-span-7 relative">
+              <img src={mcgillStudy} alt="Overhead study, McGill curl-up engagement" loading="lazy" width={1280} height={1024}
+                   className="w-full aspect-[5/4] object-cover" style={{boxShadow:"var(--shadow-lift)"}}/>
+              <div className="absolute top-3 left-3 right-3 flex items-center justify-between font-mono-label text-[9px] text-white/70">
+                <span>FIG. 03 · CURL-UP · 8 SEC HOLD</span>
+                <span style={{color:"var(--brand-amber)"}}>● THE BACK</span>
+              </div>
+              <div className="absolute -bottom-4 -right-4 hidden md:block bg-[var(--brand-ink)] border border-border px-4 py-3 rounded-sm" style={{boxShadow:"var(--glow-teal)"}}>
+                <p className="font-mono-label text-[8px] tracking-[0.2em] text-muted-foreground">DAILY DOSE</p>
+                <p className="font-serif-display text-2xl" style={{color:"var(--brand-amber)"}}>8 min</p>
+              </div>
+            </div>
+            <div className="lg:col-span-5">
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">For the back</p>
+              <h3 className="font-serif-display text-3xl md:text-4xl mt-4 leading-[1.05]">
+                Eight minutes of McGill. The rent your spine pays.
               </h3>
-              <p className="mt-6 text-muted-foreground leading-relaxed">
-                Curl-up, side plank, bird dog. Paced for endurance, not range. Coached on video by spine PTs, scaled to today's pain. The protocol that beat lumbar surgery in head-to-head trials, finally taught properly, instead of buried under a Reddit thread litigating whether sit-ups count as "anti-flexion" since 2014.
+              <p className="mt-5 text-muted-foreground leading-relaxed text-sm">
+                Curl-up, side plank, bird dog. Endurance, not range. The protocol that beat lumbar surgery in head-to-head trials, finally taught properly.
               </p>
+              <ul className="mt-6 grid grid-cols-3 gap-px bg-border border border-border">
+                {[["3", "moves"], ["8 min", "daily"], ["wk 2", "first drop"]].map(([v,l])=>(
+                  <li key={l} className="bg-background px-3 py-3">
+                    <p className="font-serif-display text-lg" style={{color:"var(--brand-amber)"}}>{v}</p>
+                    <p className="font-mono-label text-[9px] text-muted-foreground mt-1 uppercase tracking-wider">{l}</p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-          <div className="grid lg:grid-cols-2 gap-14 items-center">
-            <div className="lg:order-2">
-              <img src={nutrition} alt="" loading="lazy" width={1024} height={768} className="w-full aspect-[5/4] object-cover"/>
+
+          {/* BEDROOM spread */}
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            <div className="lg:col-span-7 lg:order-2 relative">
+              <img src={sheetGrip} alt="Hands gripping linen, low light" loading="lazy" width={1280} height={1024}
+                   className="w-full aspect-[5/4] object-cover" style={{boxShadow:"var(--shadow-lift)"}}/>
+              <div className="absolute top-3 left-3 right-3 flex items-center justify-between font-mono-label text-[9px] text-white/70">
+                <span>FIG. 04 · GRIP · INVOLUNTARY</span>
+                <span style={{color:"var(--brand-blush)"}}>● THE BEDROOM</span>
+              </div>
+              <div className="absolute -bottom-4 -left-4 hidden md:block bg-[var(--brand-ink)] border border-border px-4 py-3 rounded-sm" style={{boxShadow:"var(--glow-pink)"}}>
+                <p className="font-mono-label text-[8px] tracking-[0.2em] text-muted-foreground">SEQUENCE</p>
+                <p className="font-serif-display text-xl italic" style={{color:"var(--brand-blush)"}}>Down-train first</p>
+              </div>
             </div>
-            <div className="lg:order-1">
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
-              <h3 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.05]">
-                Reverse kegel before kegel. The order your phone app got backwards while charging you $9.99 a month.
+            <div className="lg:col-span-5 lg:order-1">
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>For the bedroom</p>
+              <h3 className="font-serif-display text-3xl md:text-4xl mt-4 leading-[1.05]">
+                Reverse kegel <span className="italic" style={{color:"var(--brand-blush)"}}>before</span> kegel.
               </h3>
-              <p className="mt-6 text-muted-foreground leading-relaxed">
-                Erections and lubrication are the floor, not the ceiling. Plenty of people clear the mechanical bar and still spend the whole time bracing for a twinge or rationing breath. The point is sex you actually enjoy, start to finish, with your nervous system in the room. A chronically gripping pelvic floor is why arousal stalls, why erections fade, why penetration hurts. We coach the down-train first, with diaphragmatic breath, then the up-train for control. APTA pelvic-health PTs, on video, in plain language. Postpartum and post-prostatectomy protocols built in. Same voice, softer register, no shortcuts, and no jokes about the part that isn't funny.
+              <p className="mt-5 text-muted-foreground leading-relaxed text-sm">
+                Erections and lubrication are the floor, not the ceiling. A chronically gripping pelvic floor is why arousal stalls and penetration hurts. Down-train, then up-train. APTA pelvic-health PTs, on video, in plain language.
+              </p>
+              <ul className="mt-6 grid grid-cols-3 gap-px bg-border border border-border">
+                {[["1.", "down-train"], ["2.", "up-train"], ["3.", "load"]].map(([v,l])=>(
+                  <li key={l} className="bg-background px-3 py-3">
+                    <p className="font-serif-display text-lg" style={{color:"var(--brand-blush)"}}>{v}</p>
+                    <p className="font-mono-label text-[9px] text-muted-foreground mt-1 uppercase tracking-wider">{l}</p>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 text-[11px] text-muted-foreground italic">
+                Postpartum and post-prostatectomy protocols built in. Same voice, softer register.
               </p>
             </div>
           </div>
