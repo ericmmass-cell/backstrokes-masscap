@@ -304,17 +304,17 @@ function Index() {
               </div>
               <h3 className="font-serif-display text-3xl italic leading-tight mb-2" style={{color:"var(--brand-blush)"}}>Sex you're sincerely into. Again.</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                Not "function." Not a baseline. Not "blood flow," whatever the supplement guys think that means this quarter. Pelvic floor done properly, in both directions. A position library that doesn't ambush your back. The conversations your GP would rather not have on a Tuesday. Coached by APTA pelvic-health PTs and AASECT therapists.
+                Not "function." Not a baseline. Not "blood flow," whatever the supplement guys decided that means this quarter. Pelvic floor done properly, in both directions. A position library scored against your spine. The conversations your GP would clearly rather not have on a Tuesday at 4:50pm.
               </p>
               <ol className="space-y-5">
                 {[
-                  ["Reverse kegel + diaphragmatic drop", "Most adults can't relax their pelvic floor on command. That's why erections fade, why orgasms feel small, why penetration hurts. We teach the down-train first, then the up-train. The free app you downloaded skipped step one."],
-                  ["Kegel done correctly", "The one your phone-app version got wrong by counting reps instead of teaching control. Eccentric load for ejaculatory timing in men, arousal and orgasmic depth in women."],
-                  ["Perineal + internal release work", "External and (when indicated) internal trigger-point release. For dyspareunia, vaginismus, post-prostatectomy, post-partum, chronic pelvic pain. Done with a real PT, not a man on YouTube with a foam roller and a theory."],
-                  ["Position library, scored by spine", "Forty positions ranked by lumbar load, hip flexion, breath access. Pick the one that fits today's back. The end of pretending it didn't hurt and lying very still afterwards."],
-                  ["Lube and tool literacy", "Silicone vs water vs hybrid. Dilator sets, vibrators, cock rings, wedges. What they actually do, when to use them, and the brands a clinician would hand you instead of the ones with the prettiest packaging."],
-                  ["Arousal as parasympathetic skill", "Four-seven-eight before, not after. We coach the breath cadence that lets your nervous system actually arrive on time. Apparently this was a skill the whole time."],
-                  ["The conversation script", "What to say to your partner about pain, pace, what you want. Written by AASECT therapists. Used in your kitchen, not in a clinic, not in a group chat."],
+                  ["Reverse kegel + diaphragmatic drop", "Most adults can't relax their pelvic floor on command. That is why erections fade, why orgasms feel small, why penetration hurts. We coach the down-train first, then the up-train. The free app you downloaded skipped step one and called it a feature."],
+                  ["Kegel done correctly", "The one your phone-app version got wrong by counting reps instead of teaching control. Eccentric load for ejaculatory timing in men, arousal and orgasmic depth in women. Counting was never the hard part."],
+                  ["Perineal + internal release work", "External and (when indicated) internal trigger-point release. For dyspareunia, vaginismus, post-prostatectomy, postpartum, chronic pelvic pain. Done with a credentialed PT, not a shirtless man on YouTube with a lacrosse ball and a thesis."],
+                  ["Position library, scored by spine", "Forty positions ranked by lumbar load, hip flexion, breath access. Pick the one your back can sign off on tonight. The end of pretending it didn't twinge and lying very still afterwards."],
+                  ["Lube and tool literacy", "Silicone vs water vs hybrid. Dilator sets, vibrators, cock rings, wedges. What they actually do, when to use them, and which brands a clinician would hand you instead of the ones with the prettiest serif logo."],
+                  ["Arousal as parasympathetic skill", "Four-seven-eight before, not after. We coach the breath cadence that lets your nervous system actually arrive on time. Apparently this was a teachable skill the entire time."],
+                  ["The conversation script", "What to say to your partner about pain, pace, what you want. Written by AASECT therapists. Performed in your kitchen. Not in a clinic. Not in a group chat called Wine Witches."],
                 ].map(([h, b], i) => (
                   <li key={h} className="flex gap-4">
                     <span className="font-mono-label text-[10px] text-muted-foreground pt-1 w-6 shrink-0">F.0{i+1}</span>
