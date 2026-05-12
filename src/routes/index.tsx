@@ -71,7 +71,7 @@ function Index() {
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-10 items-center relative">
           <div className="lg:col-span-7 relative z-10">
             <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)] mb-6">
-              ◆ THE INDEX FOR THE MODERN SPINE<span className="opacity-50">*</span>
+              ◆ FOR ADULTS WITH A BACK <span className="opacity-50">/</span> AND A SEX LIFE <span className="opacity-50">/</span> BOTH NEGOTIATING<span className="opacity-50">*</span>
             </p>
             <h1 className="font-serif-display text-[52px] md:text-[78px] lg:text-[96px] leading-[0.92] tracking-[-0.025em]">
               Your back hurts.<br/>
@@ -79,24 +79,39 @@ function Index() {
                 background:"var(--gradient-text)",
                 WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
               }}>Your sex life</span><br/>
-              <span className="italic" style={{color:"var(--brand-blush)", textShadow:"var(--glow-pink)"}}>knows.</span>
+              <span className="italic" style={{color:"var(--brand-blush)", textShadow:"var(--glow-pink)"}}>noticed.</span>
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              Same pelvis. Same eight muscles. <span className="italic" style={{color:"var(--brand-amber)"}}>One protocol.</span> The category sells you two, in different buildings, on different Tuesdays, by people who do not return each other's calls.
+              BackStroke is the eight-minute, MD-and-PT-coached protocol that treats both ends of the same pelvis. <span className="italic text-muted-foreground">Because they were always the same pelvis. The category just bills them separately.</span>
+            </p>
+
+            {/* What you actually get */}
+            <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-px bg-border border border-border max-w-2xl">
+              {[
+                ["8 min", "a day. Floor optional."],
+                ["1 protocol", "back + bedroom, one chart."],
+                ["2 outcomes", "quieter spine, better sex."],
+                ["0 candles", "0 jade eggs. 0 ashwagandha."],
+              ].map(([v,l])=>(
+                <div key={String(l)} className="bg-background/80 px-4 py-3">
+                  <p className="font-serif-display text-2xl tracking-tight" style={{color:"var(--brand-amber)"}}>{v}</p>
+                  <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{l}</p>
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-6 text-sm text-muted-foreground max-w-xl leading-relaxed">
+              Coached by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, AASECT-certified therapists. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a weighted vest with a podcast about discipline.</span>
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7">
               <a href="#signup" className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition self-start" style={{boxShadow:"var(--glow-teal)"}}>
                 Get on the list <ArrowUpRight className="w-4 h-4"/>
               </a>
-              <div className="flex items-center gap-3">
-                <span className="hidden sm:block h-px w-8 bg-border"/>
-                <span className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground">House rule</span>
-                <span className="font-script text-xl sm:text-2xl leading-none italic" style={{color:"var(--brand-blush)"}}>
-                  Fit. Flex. <span style={{color:"var(--brand-amber)"}}>Fuck.</span>
-                </span>
-              </div>
+              <a href="#try" className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-muted-foreground hover:text-foreground transition">
+                or try a session first <span className="opacity-50">→</span>
+              </a>
             </div>
 
             <p className="mt-10 font-mono-label text-[9px] text-muted-foreground tracking-[0.16em] uppercase opacity-70 max-w-xl">
