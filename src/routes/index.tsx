@@ -272,18 +272,18 @@ function Index() {
                 <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FOR THE BACK</p>
                 <Activity className="w-5 h-5 text-[var(--brand-amber)]" />
               </div>
-              <h3 className="font-serif-display text-3xl italic leading-tight mb-2">Quieter lumbar in two weeks.</h3>
+              <h3 className="font-serif-display text-3xl italic leading-tight mb-2">A quieter lumbar in two weeks.</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                Not stretching. Endurance, hinging, and a few habits the wellness aisle refuses to teach because none of them photograph well. Coached by McGill-trained PTs.
+                Not stretching. Endurance, hinging, and a small set of habits the wellness aisle won't sell you because none of them come in a tub.
               </p>
               <ol className="space-y-5">
                 {[
-                  ["McGill big-3", "Curl-up, side plank, bird dog. Eight minutes. The endurance trio that out-quiets disc pain better than every stretch your yoga teacher recommended in good faith."],
-                  ["Hip-hinge re-pattern", "How to pick up the laundry without flexing your spine into a question mark. The single move that ends ninety percent of 'I tweaked it bending over.'"],
-                  ["Glute bridge + 90/90 hip switch", "Wake up the muscles that are supposed to be carrying your spine. They have been on paid leave since you accepted the desk job."],
-                  ["Dead-hang + thoracic opener", "Two minutes a day. Decompresses the discs gravity has spent the day politely compressing."],
-                  ["Sleep position audit", "Pillow under the knees, not the head. The boring change you make tonight that your morning lumbar writes you a thank-you note for."],
-                  ["Sitting protocol", "When to stand, what to perch on, how to drive a long haul without arriving as a folded napkin. Boring. Decisive."],
+                  ["McGill big-3", "Curl-up, side plank, bird dog. Eight minutes. The endurance trio that out-quiets disc pain better than every stretch your yoga teacher recommended in good faith and a Lululemon discount."],
+                  ["Hip-hinge re-pattern", "How to pick up the laundry without folding your spine into a question mark. The single move that retires ninety percent of 'I tweaked it bending over to feed the cat.'"],
+                  ["Glute bridge + 90/90 hip switch", "Reactivate the muscles supposed to be carrying your spine. They have been on paid leave since you accepted the desk job, with full benefits and a foam-roller stipend."],
+                  ["Dead-hang + thoracic opener", "Two minutes a day. Decompresses the discs gravity has spent the day politely compressing while you nodded through a Zoom."],
+                  ["Sleep position audit", "Pillow under the knees, not under the head. The boring change you make tonight that your morning lumbar writes you a thank-you note for, in cursive."],
+                  ["Sitting protocol", "When to stand, what to perch on, how to drive a long haul without arriving as a folded napkin. Boring. Decisive. Free."],
                 ].map(([h, b], i) => (
                   <li key={h} className="flex gap-4">
                     <span className="font-mono-label text-[10px] text-muted-foreground pt-1 w-6 shrink-0">B.0{i+1}</span>
