@@ -16,7 +16,7 @@ type ZoneId = typeof ZONES[number]["id"];
 const FIX_PRESCRIPTION: Record<ZoneId, { move: string; sets: string; why: string }> = {
   cervical: { move: "Chin tuck + thoracic opener", sets: "3 × 8 · 4 min", why: "Decompress C5-C7. Resets desk-loaded cervical curve." },
   thoracic: { move: "Quadruped thread-the-needle", sets: "2 × 10/side · 5 min", why: "Restores rotation. The segment that fails when the lumbar overworks." },
-  lumbar:   { move: "McGill big-3 + hip airplane", sets: "Circuit × 3 · 9 min", why: "Endurance over flexibility. The protocol that actually quiets discs." },
+  lumbar:   { move: "Spine big-3 + hip airplane", sets: "Circuit × 3 · 9 min", why: "Endurance over flexibility. The protocol that actually quiets discs." },
   sacral:   { move: "90/90 hip switches + glute bridge", sets: "3 × 6 · 6 min", why: "Frees the SI joint, fires the glutes that should be carrying the spine." },
   pelvic:   { move: "Reverse kegel + diaphragmatic breath", sets: "4 × 10 · 7 min", why: "Down-regulates over-tonic floor. Pre-requisite for everything below." },
 };
