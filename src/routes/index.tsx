@@ -481,31 +481,7 @@ function Index() {
         </div>
       </section>
 
-      {/* 06 · LIVE PROTOCOL */}
-      <section id="try" className="px-6 md:px-10 py-28 md:py-32 border-b border-border relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
-             style={{ backgroundImage: "radial-gradient(var(--brand-amber) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
-        <div className="max-w-[1280px] mx-auto relative">
-          <div className="grid lg:grid-cols-12 gap-10 items-end mb-10">
-            <div className="lg:col-span-7">
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">◆ TRY IT · 05 · NO SIGNUP, NO QUIZ, NO EMAIL HOSTAGE</p>
-              <h2 className="font-serif-display text-4xl md:text-6xl mt-4 leading-[0.98] tracking-tight">
-                Stop reading the pitch.<br/>
-                <span className="italic" style={{ color: "var(--brand-blush)", textShadow: "var(--glow-pink)" }}>
-                  Run a session.
-                </span>
-              </h2>
-            </div>
-            <p className="lg:col-span-5 text-muted-foreground leading-relaxed max-w-md">
-              Tap a zone. Log today's pain. Run a real flex set with breath pacing. Flip the switch and watch the after-dark protocol assemble around your spine, in public, on the marketing page. <span className="italic text-foreground">Most people will scroll past this. The ones who tap are the ones tying their shoes standing up in six weeks.</span>
-            </p>
-          </div>
-          <LiveProtocol />
-          <p className="font-mono-label text-[9px] text-muted-foreground mt-4 text-center">
-            INTERACTIVE PREVIEW · NO ACCOUNT, NO COOKIE WALL, NO PDF EMAILED IN 3-5 BUSINESS DAYS
-          </p>
-        </div>
-      </section>
+      {/* moved: live protocol now sits directly after the tagline strip */}
 
       {/* 07 · FIELD NOTES · proof = numbers + quotes */}
       <section id="stories" className="px-6 md:px-10 py-28 md:py-32 border-b border-border">
