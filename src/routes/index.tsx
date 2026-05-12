@@ -338,7 +338,7 @@ function Index() {
       <div className="border-b border-border overflow-hidden">
         <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex items-center gap-10 font-mono-label text-[10px] text-muted-foreground whitespace-nowrap overflow-x-auto">
           <span className="text-foreground">WE TRACK ·</span>
-          {["Pain log","Range of motion","Sitting hours","Pelvic-floor tone","Erection / arousal log","Position comfort","Lube / tool use","Sleep position"].map(x=>(
+          {["Pain log","Range of motion","Sitting hours","Pelvic-floor tone","Erection / arousal log","Position comfort","Lube / tool use","Sleep position","Things we don't track: vibes"].map(x=>(
             <span key={x}>{x}</span>
           ))}
         </div>
