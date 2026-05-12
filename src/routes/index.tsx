@@ -17,10 +17,10 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "BackStroke — the protocol Goop would have charged you $400 for" },
-      { name: "description", content: "Eight minutes of McGill, a pelvic floor that knows how to exhale, and a sex life that stops checking in with your L4. Coached by people with letters after their names. Not a man in a tank top." },
-      { property: "og:title", content: "BackStroke — same pelvis, two jobs." },
-      { property: "og:description", content: "Eight minutes of McGill, a pelvic floor that finally returns your calls, and sex you're sincerely into. The protocol the wellness aisle was too embarrassed to write." },
+      { title: "BackStroke. The protocol Goop would have repackaged at $400 a candle." },
+      { name: "description", content: "Eight minutes of McGill. A pelvic floor that knows how to exhale. Sex your L4 stays out of. Coached by people with letters after their name and a license they would prefer to keep." },
+      { property: "og:title", content: "BackStroke. Same pelvis, two jobs, finally on speaking terms." },
+      { property: "og:description", content: "The thing your PT would say at the bar after two drinks, if your PT drank. Built for the back. Settled in the bedroom." },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
