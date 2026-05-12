@@ -18,6 +18,7 @@ import sheetGrip from "@/assets/sheet-grip.jpg";
 import { LiveProtocol } from "@/components/LiveProtocol";
 import { MoveList, StatStrip, BACK_MOVES, BEDROOM_MOVES, BACK_STATS, BEDROOM_STATS } from "@/components/MoveLibrary";
 import { MobileImageCarousel } from "@/components/MobileImageCarousel";
+import { EarlyAccessForm } from "@/components/EarlyAccessForm";
 
 export const Route = createFileRoute("/")({
   component: Index,
