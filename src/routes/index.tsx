@@ -304,7 +304,7 @@ function Index() {
               </div>
               <h3 className="font-serif-display text-3xl italic leading-tight mb-2" style={{color:"var(--brand-blush)"}}>Sex you're sincerely into. Again.</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                Not "function." Not a baseline. Not "blood flow," whatever the supplement guys decided that means this quarter. Pelvic floor done properly, in both directions. A position library scored against your spine. The conversations your GP would clearly rather not have on a Tuesday at 4:50pm.
+                The bar isn't getting it up. It isn't getting wet. It isn't "blood flow," whatever the supplement guys decided that means this quarter. The bar is sex you're actually present for. Sex you finish thinking about the person, not your L4. Pelvic floor done properly in both directions, a position library scored against your spine, and the conversations your GP would clearly rather not have on a Tuesday at 4:50pm.
               </p>
               <ol className="space-y-5">
                 {[
