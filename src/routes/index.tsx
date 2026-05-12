@@ -363,33 +363,23 @@ function Index() {
               THE PART NOBODY ELSE WILL PUT ON THE WEBSITE
             </p>
             <h2 className="font-serif-display text-5xl md:text-7xl mt-6 leading-[0.98] tracking-[-0.025em]">
-              The goal isn't<br/>
+              Same pelvis.<br/>
               <span className="italic" style={{
                 background:"var(--gradient-ember)",
                 WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
-              }}>"functional."</span><br/>
-              The goal is sex<br/>
-              you're sincerely into.
+              }}>Two jobs.</span><br/>
+              Nobody wants to<br/>
+              say it out loud.
             </h2>
             <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-xl">
-              Lower back pain is the number-one reason couples stop having sex. Number two is the low-grade dread that something will twinge mid-act and someone will have to be a good sport about it. Most adults can't fully relax their pelvic floor. That is why erections fade, why orgasms feel small, why penetration hurts. None of this is a mystery. It is a protocol with seven moves and a breath count. The mystery is why nobody handed it to you, and why the ones who almost did wanted ninety dollars and your email.
+              The eight muscles that stabilize your spine are the same eight that govern arousal, orgasm, continence and pain-free penetration. Your PT knows. Your GP knows. The app charging $9.99 to count kegels knows. They simply will not put it on the homepage, because someone in legal is on a call about it.
+            </p>
+            <p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-xl">
+              We will. Lower back pain is the leading reason couples stop having sex. The runner-up is the quiet dread that something will twinge mid-act and someone will have to be a good sport about it. Neither is a mystery. Both have a protocol. The mystery is why the people who almost handed it to you wanted ninety dollars and your email first.
             </p>
             <p className="mt-6 text-lg text-foreground leading-relaxed max-w-xl">
               Train the body. Presence is downstream. Candles strictly optional. Jade eggs strictly discouraged. We will not sell you either.
             </p>
-
-            <div className="mt-10 grid grid-cols-3 gap-px border" style={{borderColor:"oklch(0.72 0.14 18 / 0.25)"}}>
-              {[
-                ["+58%","rate sex 'genuinely enjoyable' by week 8"],
-                ["−71%","report pain as a distraction in bed"],
-                ["2.1×","self-rated presence + confidence after 60 days"],
-              ].map(([v,l])=>(
-                <div key={l} className="p-5" style={{background:"oklch(0.18 0.02 25 / 0.6)"}}>
-                  <p className="font-serif-display text-3xl" style={{color:"var(--brand-blush)"}}>{v}</p>
-                  <p className="text-[11px] text-muted-foreground mt-2 leading-snug">{l}</p>
-                </div>
-              ))}
-            </div>
 
             <p className="font-serif-display text-2xl italic mt-10" style={{color:"var(--brand-amber)"}}>
               Strong back. Steady breath. Hot life.
