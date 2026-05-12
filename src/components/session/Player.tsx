@@ -135,7 +135,7 @@ export function Player() {
       {/* Bottom: next up + key hints */}
       <footer className="px-6 md:px-10 pb-6">
         <div className="flex items-center justify-between fig-label opacity-50 text-[10px]">
-          <span>{t.next ? `Next — ${t.next.name}` : "Last block"}</span>
+          <span>{t.next ? `Next - ${t.next.name}` : "Last block"}</span>
           <span>Space play/pause · → skip</span>
         </div>
       </footer>
