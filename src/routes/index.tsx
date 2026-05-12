@@ -146,7 +146,7 @@ function Index() {
                     <span className="font-mono-label text-[8px]" style={{color:"var(--brand-pink)"}}>STREAK 12</span>
                   </div>
                   <p className="font-mono-label text-[7px] text-muted-foreground">TODAY · 8 MIN · NO CANDLE</p>
-                  <h4 className="font-serif-display text-base mt-0.5 leading-tight">McGill big-3<br/><span className="italic">+ reverse kegel</span></h4>
+                  <h4 className="font-serif-display text-base mt-0.5 leading-tight">Spine big-3<br/><span className="italic">+ reverse kegel</span></h4>
                   <p className="text-[9px] text-muted-foreground mt-0.5">Floor. Now. No mat sold separately.</p>
                   <button className="mt-2 w-full py-1.5 rounded-md text-[10px] font-semibold bg-[var(--brand-teal)] text-[var(--brand-ink)]">Run session</button>
                   <div className="grid grid-cols-2 gap-1.5 mt-2">
