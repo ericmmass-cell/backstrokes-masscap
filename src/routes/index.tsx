@@ -370,7 +370,7 @@ function Index() {
                   Reverse kegel <span className="italic" style={{color:"var(--brand-blush)"}}>before</span> kegel.
                 </h3>
                 <p className="mt-5 text-muted-foreground leading-relaxed text-sm">
-                  Erections and lubrication are the floor, not the ceiling. A chronically gripping pelvic floor is why arousal stalls and penetration hurts. Down-train, then up-train. APTA pelvic-health PTs, on video, in plain language.
+                  Erections and lubrication are the floor, not the ceiling. A chronically gripping pelvic floor is why arousal stalls and penetration hurts. Down-train, then up-train. Pelvic-health coaching, on video, in plain language.
                 </p>
                 <StatStrip items={BEDROOM_STATS} accent="blush" />
                 <p className="mt-4 text-[11px] text-muted-foreground italic">
