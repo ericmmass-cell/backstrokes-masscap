@@ -341,7 +341,7 @@ function Index() {
               <div className="lg:col-span-5">
                 <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">For the back</p>
                 <h3 className="font-serif-display text-3xl md:text-4xl mt-4 leading-[1.05]">
-                  Eight minutes of McGill. The rent your spine pays.
+                  Eight minutes for the spine. The rent your back pays.
                 </h3>
                 <p className="mt-5 text-muted-foreground leading-relaxed text-sm">
                   Curl-up, side plank, bird dog. Endurance, not range. The protocol that beat lumbar surgery in head-to-head trials, finally taught properly.
