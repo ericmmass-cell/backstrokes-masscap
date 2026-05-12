@@ -16,6 +16,7 @@ import bedroomStudy from "@/assets/bedroom-study.jpg";
 import mcgillStudy from "@/assets/mcgill-study.jpg";
 import sheetGrip from "@/assets/sheet-grip.jpg";
 import { LiveProtocol } from "@/components/LiveProtocol";
+import { MoveList, StatStrip, BACK_MOVES, BEDROOM_MOVES, BACK_STATS, BEDROOM_STATS } from "@/components/MoveLibrary";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -264,24 +265,7 @@ function Index() {
                 <p className="text-sm text-muted-foreground leading-relaxed mb-7 max-w-md">
                   Endurance, hinging, six habits the wellness aisle won't sell because none of them come in a tub.
                 </p>
-                <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-5">
-                  {[
-                    ["McGill big-3", "Curl-up, side plank, bird dog. 8 min. Out-quiets discs."],
-                    ["Hip-hinge re-pattern", "Pick up laundry without folding into a question mark."],
-                    ["Glute bridge + 90/90", "Reactivate the muscles on paid leave since the desk job."],
-                    ["Dead-hang + thoracic opener", "2 min. Decompresses what Zoom spent the day compressing."],
-                    ["Sleep position audit", "Pillow under the knees. Tomorrow's lumbar writes a thank-you."],
-                    ["Sitting protocol", "When to stand, what to perch on. Boring. Decisive. Free."],
-                  ].map(([h, b], i) => (
-                    <li key={h} className="flex gap-3 border-t border-border/60 pt-3">
-                      <span className="font-mono-label text-[9px] text-[var(--brand-amber)] pt-1 shrink-0">B.0{i+1}</span>
-                      <div>
-                        <p className="font-serif-display text-base leading-tight">{h}</p>
-                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{b}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
+                <MoveList items={BACK_MOVES} accent="amber" />
               </div>
             </div>
 
@@ -304,25 +288,7 @@ function Index() {
                 <p className="text-sm text-muted-foreground leading-relaxed mb-7 max-w-md">
                   Not blood flow. Not getting it up or wet. Sex you finish thinking about the person, not your L4.
                 </p>
-                <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-5">
-                  {[
-                    ["Reverse kegel + diaphragm drop", "Down-train the floor. The step the $9.99 app skipped."],
-                    ["Kegel, done correctly", "Eccentric load. For ejaculatory control and orgasmic depth."],
-                    ["Perineal + internal release", "PT-led trigger work. Dyspareunia, vaginismus, post-partum, post-prostatectomy."],
-                    ["Position library, scored by spine", "40 positions ranked by lumbar load and breath access."],
-                    ["Lube + tool literacy", "Silicone vs water. Dilators, wedges, rings. What clinicians actually hand you."],
-                    ["Arousal as parasympathetic skill", "4-7-8 before, not after. Apparently this was teachable."],
-                    ["The conversation script", "What to say about pain, pace, what you want. Written by AASECT."],
-                  ].map(([h, b], i) => (
-                    <li key={h} className="flex gap-3 border-t border-border/60 pt-3">
-                      <span className="font-mono-label text-[9px] text-[var(--brand-blush)] pt-1 shrink-0">F.0{i+1}</span>
-                      <div>
-                        <p className="font-serif-display text-base leading-tight" style={{color:"var(--brand-blush)"}}>{h}</p>
-                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{b}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
+                <MoveList items={BEDROOM_MOVES} accent="blush" />
               </div>
             </div>
           </div>
@@ -447,14 +413,7 @@ function Index() {
               <p className="mt-5 text-muted-foreground leading-relaxed text-sm">
                 Curl-up, side plank, bird dog. Endurance, not range. The protocol that beat lumbar surgery in head-to-head trials, finally taught properly.
               </p>
-              <ul className="mt-6 grid grid-cols-3 gap-px bg-border border border-border">
-                {[["3", "moves"], ["8 min", "daily"], ["wk 2", "first drop"]].map(([v,l])=>(
-                  <li key={l} className="bg-background px-3 py-3">
-                    <p className="font-serif-display text-lg" style={{color:"var(--brand-amber)"}}>{v}</p>
-                    <p className="font-mono-label text-[9px] text-muted-foreground mt-1 uppercase tracking-wider">{l}</p>
-                  </li>
-                ))}
-              </ul>
+              <StatStrip items={BACK_STATS} accent="amber" />
             </div>
           </div>
 
@@ -480,14 +439,7 @@ function Index() {
               <p className="mt-5 text-muted-foreground leading-relaxed text-sm">
                 Erections and lubrication are the floor, not the ceiling. A chronically gripping pelvic floor is why arousal stalls and penetration hurts. Down-train, then up-train. APTA pelvic-health PTs, on video, in plain language.
               </p>
-              <ul className="mt-6 grid grid-cols-3 gap-px bg-border border border-border">
-                {[["1.", "down-train"], ["2.", "up-train"], ["3.", "load"]].map(([v,l])=>(
-                  <li key={l} className="bg-background px-3 py-3">
-                    <p className="font-serif-display text-lg" style={{color:"var(--brand-blush)"}}>{v}</p>
-                    <p className="font-mono-label text-[9px] text-muted-foreground mt-1 uppercase tracking-wider">{l}</p>
-                  </li>
-                ))}
-              </ul>
+              <StatStrip items={BEDROOM_STATS} accent="blush" />
               <p className="mt-4 text-[11px] text-muted-foreground italic">
                 Postpartum and post-prostatectomy protocols built in. Same voice, softer register.
               </p>
