@@ -529,7 +529,7 @@ function Index() {
             </a>
           </div>
           <p className="mt-12 text-[11px] text-muted-foreground max-w-xl mx-auto leading-relaxed italic font-serif-display">
-            Not a medical device. If your back is screaming, see a PT. If your erection has been gone for three months, see a urologist. If you've been ignoring it longer than that, see a urologist faster, then call your mother. We are coaches, not your doctor. Statistically, we know yours.
+            Not a medical device. If your back is screaming, see a PT. If sex hurts, if arousal has quietly left the chat, if your erection has been MIA for three months: see a pelvic-health PT, a gynecologist, a urologist. Pick the relevant one. If you've been ignoring it longer than that, go faster, then call your mother. We are coaches, not your doctor. Statistically, we know yours.
           </p>
         </div>
       </section>
