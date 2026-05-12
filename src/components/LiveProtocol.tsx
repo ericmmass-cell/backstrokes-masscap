@@ -326,34 +326,49 @@ export function LiveProtocol() {
               <button
                 type="button"
                 onClick={() => setAfterDark(v => !v)}
-                className="relative w-14 h-7 rounded-full border transition"
+                aria-pressed={afterDark}
+                className="group flex items-center gap-3 px-3 py-2 rounded-full border cursor-pointer transition"
                 style={{
                   borderColor: afterDark ? "var(--brand-blush)" : "var(--border)",
-                  background: afterDark ? "var(--brand-blush)" : "transparent",
+                  background: afterDark ? "color-mix(in oklab, var(--brand-blush) 12%, transparent)" : "transparent",
                   boxShadow: afterDark ? "var(--glow-pink)" : "none",
                 }}
-                aria-label="Toggle after dark"
               >
-                <span
-                  className="absolute top-0.5 w-5 h-5 rounded-full transition-all"
-                  style={{
-                    left: afterDark ? "calc(100% - 22px)" : "2px",
-                    background: afterDark ? "var(--brand-ink)" : "var(--muted-foreground)",
-                  }}
-                />
+                <span className="font-mono-label text-[9px] tracking-[0.22em] uppercase" style={{ color: afterDark ? "var(--brand-blush)" : "var(--muted-foreground)" }}>
+                  {afterDark ? "Lights off" : "Tap to reveal"}
+                </span>
+                <span className="relative w-10 h-5 rounded-full border" style={{
+                  borderColor: afterDark ? "var(--brand-blush)" : "var(--border)",
+                  background: afterDark ? "var(--brand-blush)" : "transparent",
+                }}>
+                  <span
+                    className="absolute top-0.5 w-3.5 h-3.5 rounded-full transition-all"
+                    style={{
+                      left: afterDark ? "calc(100% - 16px)" : "2px",
+                      background: afterDark ? "var(--brand-ink)" : "var(--muted-foreground)",
+                    }}
+                  />
+                </span>
               </button>
             </div>
 
             {!afterDark ? (
-              <div className="bg-background border border-border p-8 text-center">
-                <p className="text-sm text-muted-foreground italic max-w-sm mx-auto leading-relaxed">
+              <button
+                type="button"
+                onClick={() => setAfterDark(true)}
+                className="w-full bg-background border border-dashed border-border hover:border-[var(--brand-blush)] p-8 text-center cursor-pointer transition group"
+              >
+                <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase mb-3" style={{ color: "var(--brand-blush)" }}>
+                  Tap anywhere to reveal ↓
+                </p>
+                <p className="text-sm text-muted-foreground italic max-w-sm mx-auto leading-relaxed group-hover:text-foreground transition">
                   Flip the switch. We'll match positions to your spine, your pelvic floor, and the breath cadence your nervous system needs to actually arrive.
                 </p>
-              </div>
+              </button>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border border border-border animate-fade-in">
                 {matched.map((p) => (
-                  <article key={p.id} className="bg-background p-5 group hover:bg-card/60 transition">
+                  <article key={p.id} className="bg-background p-5 group hover:bg-card/60 transition cursor-pointer">
                     <div className="flex items-baseline justify-between">
                       <p className="font-mono-label text-[9px] text-muted-foreground">POSITION {p.id}</p>
                       <p className="font-mono-label text-[9px]" style={{ color: "var(--brand-blush)" }}>{p.durationMin} MIN</p>
