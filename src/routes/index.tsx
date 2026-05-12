@@ -413,14 +413,7 @@ function Index() {
               <p className="mt-5 text-muted-foreground leading-relaxed text-sm">
                 Curl-up, side plank, bird dog. Endurance, not range. The protocol that beat lumbar surgery in head-to-head trials, finally taught properly.
               </p>
-              <ul className="mt-6 grid grid-cols-3 gap-px bg-border border border-border">
-                {[["3", "moves"], ["8 min", "daily"], ["wk 2", "first drop"]].map(([v,l])=>(
-                  <li key={l} className="bg-background px-3 py-3">
-                    <p className="font-serif-display text-lg" style={{color:"var(--brand-amber)"}}>{v}</p>
-                    <p className="font-mono-label text-[9px] text-muted-foreground mt-1 uppercase tracking-wider">{l}</p>
-                  </li>
-                ))}
-              </ul>
+              <StatStrip items={BACK_STATS} accent="amber" />
             </div>
           </div>
 
