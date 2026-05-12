@@ -507,10 +507,10 @@ function Index() {
           <h2 className="font-serif-display text-5xl md:text-7xl lg:text-8xl mt-2 leading-[0.95] tracking-[-0.025em]">
             Don't let your back<br/>
             be the reason<br/>
-            <span className="italic" style={{color:"var(--brand-amber)", textShadow:"var(--glow-teal)"}}>you stay home.</span>
+            <span className="italic" style={{color:"var(--brand-amber)", textShadow:"var(--glow-teal)"}}>you stayed in.</span>
           </h2>
           <p className="mt-10 text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            Seven-minute baseline. Your protocol assembles the same day. Two weeks free, then $24 a month — less than one PT visit, less than the supplement stack you almost added to cart at 1am last Tuesday.
+            Seven-minute baseline. Your protocol assembles the same day. Two weeks free, then $24 a month. Less than a single PT visit. Less than the supplement stack you almost added to cart at 1:47am last Tuesday. Less than the wedge pillow you already own and don't use.
           </p>
           <div className="mt-12 flex flex-wrap gap-4 justify-center items-center">
             <a href="#" className="flex items-center gap-3 pl-5 pr-7 py-3 rounded-xl bg-foreground text-background hover:opacity-90 transition">
