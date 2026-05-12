@@ -405,16 +405,16 @@ function Index() {
           <div className="lg:col-span-7">
             <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-clay)"}}>WHY NOW</p>
             <h2 className="font-serif-display text-4xl md:text-6xl mt-5 leading-[1.02] tracking-tight">
-              Back pain hits 619M people. The market's answer is a stretch video and a magnesium gummy.
+              Back pain hits 619M people. The market's answer is a stretch reel and a $48 magnesium gummy in eucalyptus.
             </h2>
             <p className="mt-8 text-lg leading-relaxed" style={{color:"oklch(0.35 0.01 60)"}}>
-              The category is fragmented across PT clinics, telehealth, supplements, and content apps that all stop talking the moment your pants come off. None of them touch sex, even though the muscles, nerves and breathwork are the same ones they were charging you for an hour ago. We're the first protocol that treats the back and the bedroom as one job — because anatomically, they always were. The taboo was a marketing decision.
+              The category is fragmented across PT clinics, telehealth, supplements, and content apps that all go conveniently silent the moment your pants come off. None of them touch sex, even though the muscles, nerves and breathwork are the exact ones they were billing you for an hour ago. We are the first protocol that treats the back and the bedroom as one job, because anatomically they always were. The taboo was a quarterly marketing decision in a midtown office.
             </p>
             <div className="mt-10 grid grid-cols-3 gap-6">
               {[
-                ["$140B", "Global back pain market"],
+                ["$140B", "Global back-pain market, mostly spent on furniture and herbal capsules"],
                 ["1 in 4", "Adults with chronic LBP report sexual avoidance"],
-                ["72%", "Of users report measurable Index gain by week 4"],
+                ["72%", "Of users post a measurable Index gain by week 4"],
               ].map(([v,l])=>(
                 <div key={l} className="border-t pt-4" style={{borderColor:"oklch(0.18 0.01 60 / 0.15)"}}>
                   <p className="font-serif-display text-3xl">{v}</p>
