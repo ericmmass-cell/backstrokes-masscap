@@ -288,25 +288,7 @@ function Index() {
                 <p className="text-sm text-muted-foreground leading-relaxed mb-7 max-w-md">
                   Not blood flow. Not getting it up or wet. Sex you finish thinking about the person, not your L4.
                 </p>
-                <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-5">
-                  {[
-                    ["Reverse kegel + diaphragm drop", "Down-train the floor. The step the $9.99 app skipped."],
-                    ["Kegel, done correctly", "Eccentric load. For ejaculatory control and orgasmic depth."],
-                    ["Perineal + internal release", "PT-led trigger work. Dyspareunia, vaginismus, post-partum, post-prostatectomy."],
-                    ["Position library, scored by spine", "40 positions ranked by lumbar load and breath access."],
-                    ["Lube + tool literacy", "Silicone vs water. Dilators, wedges, rings. What clinicians actually hand you."],
-                    ["Arousal as parasympathetic skill", "4-7-8 before, not after. Apparently this was teachable."],
-                    ["The conversation script", "What to say about pain, pace, what you want. Written by AASECT."],
-                  ].map(([h, b], i) => (
-                    <li key={h} className="flex gap-3 border-t border-border/60 pt-3">
-                      <span className="font-mono-label text-[9px] text-[var(--brand-blush)] pt-1 shrink-0">F.0{i+1}</span>
-                      <div>
-                        <p className="font-serif-display text-base leading-tight" style={{color:"var(--brand-blush)"}}>{h}</p>
-                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{b}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
+                <MoveList items={BEDROOM_MOVES} accent="blush" />
               </div>
             </div>
           </div>
