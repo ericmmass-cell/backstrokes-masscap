@@ -47,7 +47,7 @@ function Index() {
                 Back<span style={{color:"var(--brand-amber)"}}>Stroke</span>
               </span>
               <span className="font-script text-[12px] text-muted-foreground -mt-0.5 tracking-wide">
-                a members' protocol for <span className="italic" style={{color:"var(--brand-blush)"}}>the body that wants its life back</span>
+                a members' protocol for <span className="italic" style={{color:"var(--brand-blush)"}}>the body that stopped negotiating</span>
               </span>
             </div>
             <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">℠</sup>
