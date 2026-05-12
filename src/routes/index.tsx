@@ -102,13 +102,17 @@ function Index() {
             <p className="mt-2 font-mono-label text-[9px] text-muted-foreground tracking-[0.16em] uppercase opacity-70">
               <span className="opacity-60">*</span> yours, specifically. The one currently rolling sideways out of bed like it's launching a kayak.
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-6">
-              <a href="#cta" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition" style={{boxShadow:"var(--glow-teal)"}}>
+            <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7">
+              <a href="#cta" className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-[var(--brand-amber)] text-[var(--brand-ink)] text-sm font-semibold hover:opacity-90 transition self-start" style={{boxShadow:"var(--glow-teal)"}}>
                 Get the protocol <ArrowUpRight className="w-4 h-4"/>
               </a>
-              <span className="font-script text-2xl leading-tight max-w-[260px] italic" style={{color:"var(--brand-blush)"}}>
-                Fit. Flex. <span style={{color:"var(--brand-amber)"}}>Fuck.</span> In that order. House rule.
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="hidden sm:block h-px w-8 bg-border"/>
+                <span className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground">House rule</span>
+                <span className="font-script text-xl sm:text-2xl leading-none italic" style={{color:"var(--brand-blush)"}}>
+                  Fit. Flex. <span style={{color:"var(--brand-amber)"}}>Fuck.</span>
+                </span>
+              </div>
             </div>
           </div>
 
@@ -196,30 +200,30 @@ function Index() {
 
       {/* CREDIBILITY BAND */}
       <div className="border-b border-border bg-card/40">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-9 grid md:grid-cols-[auto_1fr] gap-6 md:gap-12 items-center">
-          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)] whitespace-nowrap">
-            Coached by ↓
-          </p>
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 font-serif-display text-sm md:text-[15px] text-muted-foreground">
-            <span><span className="text-foreground italic">McGill-trained</span> spine PTs</span>
-            <span className="opacity-30">·</span>
-            <span><span className="text-foreground italic">APTA</span> Pelvic Health (men &amp; women)</span>
-            <span className="opacity-30">·</span>
-            <span><span className="text-foreground italic">ISSWSH</span> + <span className="text-foreground italic">AASECT</span> sex therapists</span>
-            <span className="opacity-30">·</span>
-            <span><span className="text-foreground italic">UCSF</span> Urology &amp; Ob-Gyn consults</span>
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-10">
+          <div className="grid md:grid-cols-[140px_1fr] gap-6 md:gap-12 items-start">
+            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)] md:pt-1">
+              Coached by ↓
+            </p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 font-serif-display text-sm md:text-[15px] text-muted-foreground">
+              <li><span className="text-foreground italic">McGill-trained</span> spine PTs</li>
+              <li><span className="text-foreground italic">APTA</span> Pelvic Health (men &amp; women)</li>
+              <li><span className="text-foreground italic">ISSWSH</span> + <span className="text-foreground italic">AASECT</span> sex therapists</li>
+              <li><span className="text-foreground italic">UCSF</span> Urology &amp; Ob-Gyn consults</li>
+            </ul>
           </div>
         </div>
         <div className="border-t border-border/60 bg-background/40">
-          <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center gap-x-6 gap-y-1 font-mono-label text-[9px] tracking-[0.16em] uppercase text-muted-foreground">
-            <span className="text-[var(--brand-amber)]">Evidence base ·</span>
-            <span>McGill spine endurance protocols</span>
-            <span className="opacity-30">·</span>
-            <span>NIH NIDDK pelvic floor (2023)</span>
-            <span className="opacity-30">·</span>
-            <span>ISSWSH female sexual function consensus</span>
-            <span className="opacity-30">·</span>
-            <span>AUA erectile + ejaculatory guidelines</span>
+          <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-4 grid md:grid-cols-[140px_1fr] gap-2 md:gap-12 items-start">
+            <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">
+              Evidence base ↓
+            </p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1.5 font-mono-label text-[9px] tracking-[0.16em] uppercase text-muted-foreground">
+              <li>McGill spine endurance protocols</li>
+              <li>NIH NIDDK pelvic floor (2023)</li>
+              <li>ISSWSH female sexual function consensus</li>
+              <li>AUA erectile + ejaculatory guidelines</li>
+            </ul>
           </div>
         </div>
       </div>
