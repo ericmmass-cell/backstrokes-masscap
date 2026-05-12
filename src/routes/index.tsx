@@ -74,16 +74,16 @@ function Index() {
               ◆ FOR ADULTS WITH A BACK <span className="opacity-50">/</span> AND A SEX LIFE <span className="opacity-50">/</span> BOTH NEGOTIATING<span className="opacity-50">*</span>
             </p>
             <h1 className="font-serif-display text-[52px] md:text-[78px] lg:text-[96px] leading-[0.92] tracking-[-0.025em]">
-              Fix the back.<br/>
+              One pelvis.<br/>
               <span className="italic" style={{
                 background:"var(--gradient-text)",
                 WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
-              }}>Settle the spine.</span><br/>
-              <span className="italic" style={{color:"var(--brand-blush)", textShadow:"var(--glow-pink)"}}>Have the sex.</span>
+              }}>Two jobs.</span><br/>
+              <span className="italic" style={{color:"var(--brand-blush)", textShadow:"var(--glow-pink)"}}>Eight minutes a day.</span>
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              Two outcomes. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that goes quiet. Sex you're sincerely into.</span> Same pelvis, same nerves, same eight muscles. Your anatomy was never going to keep them in separate rooms. The category insisted on it for tax reasons.
+              BackStroke is the coached protocol for adults whose back pain quietly took the sex life with it. <span className="italic" style={{color:"var(--brand-amber)"}}>Eight muscles run both jobs.</span> We train the eight. Spine PTs and pelvic-floor PTs on one chart, instead of two clinics that don't return each other's calls.
             </p>
 
             {/* What you actually get */}
