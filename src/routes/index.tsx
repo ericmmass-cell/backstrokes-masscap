@@ -544,10 +544,10 @@ function Index() {
               </svg>
               <span className="font-serif-display text-base">BackStroke</span>
             </div>
-            <p>Eight minutes a day. The rent your spine pays. Non-negotiable. Sorry.</p>
+            <p>Eight minutes a day. The rent your spine pays. Non-negotiable. We don't make the rules. Gravity does.</p>
           </div>
-          <div className="md:text-center">© BackStroke Labs · MMXXVI · a backstroke protocol</div>
-          <div className="md:text-right">Built for backs with a calendar.</div>
+          <div className="md:text-center">© BackStroke Labs · MMXXVI · a backstroke protocol · no candle revenue</div>
+          <div className="md:text-right">Built for backs with a calendar and a sense of humour.</div>
         </div>
       </footer>
     </div>
