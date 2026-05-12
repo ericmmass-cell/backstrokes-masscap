@@ -74,16 +74,16 @@ function Index() {
               ◆ FOR ADULTS WITH A BACK <span className="opacity-50">/</span> AND A SEX LIFE <span className="opacity-50">/</span> BOTH NEGOTIATING<span className="opacity-50">*</span>
             </p>
             <h1 className="font-serif-display text-[52px] md:text-[78px] lg:text-[96px] leading-[0.92] tracking-[-0.025em]">
-              Your back hurts.<br/>
+              Fix the back.<br/>
               <span className="italic" style={{
                 background:"var(--gradient-text)",
                 WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
-              }}>Your sex life</span><br/>
-              <span className="italic" style={{color:"var(--brand-blush)", textShadow:"var(--glow-pink)"}}>noticed.</span>
+              }}>Settle the spine.</span><br/>
+              <span className="italic" style={{color:"var(--brand-blush)", textShadow:"var(--glow-pink)"}}>Have the sex.</span>
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              BackStroke is the eight-minute, MD-and-PT-coached protocol that treats both ends of the same pelvis. <span className="italic text-muted-foreground">Because they were always the same pelvis. The category just bills them separately.</span>
+              Two outcomes. <span className="italic" style={{color:"var(--brand-amber)"}}>A back that goes quiet. Sex you're sincerely into.</span> Same pelvis, same nerves, same eight muscles. Your anatomy was never going to keep them in separate rooms. The category insisted on it for tax reasons.
             </p>
 
             {/* What you actually get */}
