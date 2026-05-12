@@ -102,7 +102,7 @@ function Index() {
             </div>
 
             <p className="mt-6 text-sm text-muted-foreground max-w-xl leading-relaxed">
-              Coached by McGill-trained spine PTs, APTA pelvic-health PTs, urology and sleep physicians, AASECT-certified therapists. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a weighted vest with a podcast about discipline.</span>
+              Built with medical and therapeutic advisors. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a weighted vest with a podcast about discipline.</span>
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7">
