@@ -304,7 +304,7 @@ function Index() {
               </div>
               <h3 className="font-serif-display text-3xl italic leading-tight mb-2" style={{color:"var(--brand-blush)"}}>Sex you're sincerely into. Again.</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                Not "function." Not a baseline. Not "blood flow," whatever the supplement guys decided that means this quarter. Pelvic floor done properly, in both directions. A position library scored against your spine. The conversations your GP would clearly rather not have on a Tuesday at 4:50pm.
+                The bar isn't getting it up. It isn't getting wet. It isn't "blood flow," whatever the supplement guys decided that means this quarter. The bar is sex you're actually present for. Sex you finish thinking about the person, not your L4. Pelvic floor done properly in both directions, a position library scored against your spine, and the conversations your GP would clearly rather not have on a Tuesday at 4:50pm.
               </p>
               <ol className="space-y-5">
                 {[
@@ -458,7 +458,7 @@ function Index() {
                 Reverse kegel before kegel. The order your phone app got backwards while charging you $9.99 a month.
               </h3>
               <p className="mt-6 text-muted-foreground leading-relaxed">
-                A chronically gripping pelvic floor is why arousal stalls, why erections fade, why penetration hurts. We coach the down-train first, with diaphragmatic breath, then the up-train for control. APTA pelvic-health PTs, on video, in plain language. Postpartum and post-prostatectomy protocols built in. Same voice, softer register, no shortcuts, and no jokes about the part that isn't funny.
+                Erections and lubrication are the floor, not the ceiling. Plenty of people clear the mechanical bar and still spend the whole time bracing for a twinge or rationing breath. The point is sex you actually enjoy, start to finish, with your nervous system in the room. A chronically gripping pelvic floor is why arousal stalls, why erections fade, why penetration hurts. We coach the down-train first, with diaphragmatic breath, then the up-train for control. APTA pelvic-health PTs, on video, in plain language. Postpartum and post-prostatectomy protocols built in. Same voice, softer register, no shortcuts, and no jokes about the part that isn't funny.
               </p>
             </div>
           </div>
