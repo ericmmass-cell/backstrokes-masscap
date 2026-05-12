@@ -223,7 +223,7 @@ function Index() {
             <div className="bg-background p-7 md:p-9">
               <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">TUESDAY · 11 AM</p>
               <p className="font-serif-display text-2xl md:text-3xl mt-3 leading-tight">
-                Spine clinic. Bird-dog, McGill big-3, instructions to "stay active."
+                Spine clinic. Bird-dog, the big-3, instructions to "stay active."
               </p>
               <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
                 Nobody asks how sex is going. Nobody mentions that the muscles being trained are the same ones running the show on Saturday night. Discharge note: "Patient is doing well." Patient is not.
