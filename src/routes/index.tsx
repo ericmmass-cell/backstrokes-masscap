@@ -16,6 +16,7 @@ import bedroomStudy from "@/assets/bedroom-study.jpg";
 import mcgillStudy from "@/assets/mcgill-study.jpg";
 import sheetGrip from "@/assets/sheet-grip.jpg";
 import { LiveProtocol } from "@/components/LiveProtocol";
+import { MoveList, StatStrip, BACK_MOVES, BEDROOM_MOVES, BACK_STATS, BEDROOM_STATS } from "@/components/MoveLibrary";
 
 export const Route = createFileRoute("/")({
   component: Index,
