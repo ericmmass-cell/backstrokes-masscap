@@ -233,7 +233,7 @@ function Index() {
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-end mb-14">
             <div className="lg:col-span-8">
               <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">
-                THE PROBLEM · 01
+                THE PROBLEM · 02
               </p>
               <h2 className="font-serif-display text-4xl md:text-6xl mt-4 leading-[1.0] tracking-[-0.02em]">
                 You have one body. <span className="italic text-muted-foreground">It has been quoted by four specialists, two apps, and a candle.</span>
@@ -315,7 +315,7 @@ function Index() {
           </div>
           <div className="lg:col-span-6">
             <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>
-              THE INSIGHT · 02
+              THE INSIGHT · 03
             </p>
             <h2 className="font-serif-display text-5xl md:text-7xl mt-6 leading-[0.98] tracking-[-0.025em]">
               Same pelvis.<br/>
@@ -343,7 +343,7 @@ function Index() {
       <section className="px-6 md:px-10 py-28 md:py-32 border-b border-border">
         <div className="max-w-[1280px] mx-auto">
           <div className="mb-16 max-w-2xl">
-            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">METHODOLOGY · 03</p>
+            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">METHODOLOGY · 04</p>
             <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight">
               How the one protocol does the two jobs.
             </h2>
@@ -413,7 +413,7 @@ function Index() {
         <div className="max-w-[1280px] mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
             <div>
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">THE WORK · 04 · TWO LISTS, NOTHING ELSE, NO TIER 3</p>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">THE WORK · 05 · TWO LISTS, NOTHING ELSE, NO TIER 3</p>
               <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight max-w-2xl">
                 The whole product, on one page. <span className="italic text-muted-foreground">No mystery box. No 14-step funnel that lands on a quiz that recommends ashwagandha.</span>
               </h2>
