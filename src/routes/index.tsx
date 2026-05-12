@@ -83,7 +83,7 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              One protocol. Eight muscles. <span className="italic" style={{color:"var(--brand-amber)"}}>Two jobs the wellness aisle insists on selling separately, usually in candle form, for $96.</span> BackStroke is built by McGill-trained spine PTs and APTA pelvic-floor PTs who, after years of writing the same chart in two different buildings, decided to write it once.
+              One protocol. Eight muscles. <span className="italic" style={{color:"var(--brand-amber)"}}>Two jobs the wellness aisle insists on selling separately, usually in candle form, for $96.</span> BackStroke is built with medical and therapeutic advisors who, after years of writing the same chart in two different buildings, decided to write it once.
             </p>
 
             {/* What you actually get */}
