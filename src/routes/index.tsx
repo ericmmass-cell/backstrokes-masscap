@@ -375,7 +375,7 @@ function Index() {
               Lower back pain is the number-one reason couples stop having sex. Number two is the low-grade dread that something will twinge mid-act and someone will have to be a good sport about it. Most adults can't fully relax their pelvic floor. That is why erections fade, why orgasms feel small, why penetration hurts. None of this is a mystery. It is a protocol with seven moves and a breath count. The mystery is why nobody handed it to you, and why the ones who almost did wanted ninety dollars and your email.
             </p>
             <p className="mt-6 text-lg text-foreground leading-relaxed max-w-xl">
-              Train the body. Presence is downstream. Candles strictly optional. We will not sell you one.
+              Train the body. Presence is downstream. Candles strictly optional. Jade eggs strictly discouraged. We will not sell you either.
             </p>
 
             <div className="mt-10 grid grid-cols-3 gap-px border" style={{borderColor:"oklch(0.72 0.14 18 / 0.25)"}}>
