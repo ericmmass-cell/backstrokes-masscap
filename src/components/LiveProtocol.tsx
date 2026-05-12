@@ -123,35 +123,48 @@ export function LiveProtocol() {
       </div>
 
       {/* Mode tabs */}
-      <div className="grid grid-cols-3 border-b border-border">
-        {([
-          { id: "fix",  label: "Fix",   sub: "the back",     icon: Activity },
-          { id: "flex", label: "Flex",  sub: "the system",   icon: Dumbbell },
-          { id: "fuck", label: "F*ck",  sub: "the lights off", icon: Flame },
-        ] as const).map((t) => {
-          const Icon = t.icon;
-          const active = mode === t.id;
-          return (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => setMode(t.id)}
-              className={`relative px-4 py-4 text-left transition-colors ${active ? "bg-background" : "bg-transparent hover:bg-background/40"}`}
-            >
-              <div className="flex items-center gap-2">
-                <Icon className="w-4 h-4" style={{ color: active ? (t.id === "fuck" ? "var(--brand-blush)" : "var(--brand-amber)") : "var(--muted-foreground)" }} />
-                <span className="font-serif-display text-2xl italic" style={{ color: active ? (t.id === "fuck" ? "var(--brand-blush)" : "var(--foreground)") : "var(--muted-foreground)" }}>
-                  {t.label}
-                </span>
-              </div>
-              <p className="font-mono-label text-[9px] text-muted-foreground mt-1">{t.sub}</p>
-              {active && (
-                <span className="absolute left-0 right-0 bottom-0 h-[2px]"
-                      style={{ background: t.id === "fuck" ? "var(--brand-blush)" : "var(--brand-amber)" }} />
-              )}
-            </button>
-          );
-        })}
+      <div className="relative">
+        <p className="absolute top-2 left-4 font-mono-label text-[8px] tracking-[0.22em] uppercase text-[var(--brand-amber)] z-10 pointer-events-none">
+          Pick one ↓
+        </p>
+        <div role="tablist" aria-label="Protocol mode" className="grid grid-cols-3 border-b border-border">
+          {([
+            { id: "fix",  label: "Fix",   sub: "the back",     icon: Activity },
+            { id: "flex", label: "Flex",  sub: "the system",   icon: Dumbbell },
+            { id: "fuck", label: "F*ck",  sub: "the lights off", icon: Flame },
+          ] as const).map((t, i) => {
+            const Icon = t.icon;
+            const active = mode === t.id;
+            const accent = t.id === "fuck" ? "var(--brand-blush)" : "var(--brand-amber)";
+            return (
+              <button
+                key={t.id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => setMode(t.id)}
+                className={`group relative px-4 pt-7 pb-4 text-left cursor-pointer transition-colors ${i > 0 ? "border-l border-border" : ""} ${active ? "bg-background" : "bg-transparent hover:bg-background/60"}`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <Icon className="w-4 h-4 transition-colors" style={{ color: active ? accent : "var(--muted-foreground)" }} />
+                    <span className="font-serif-display text-2xl italic transition-colors" style={{ color: active ? (t.id === "fuck" ? "var(--brand-blush)" : "var(--foreground)") : "var(--muted-foreground)" }}>
+                      {t.label}
+                    </span>
+                  </div>
+                  {!active && (
+                    <span className="font-mono-label text-[8px] tracking-[0.2em] uppercase opacity-60 group-hover:opacity-100 transition-opacity" style={{ color: accent }}>
+                      Tap →
+                    </span>
+                  )}
+                </div>
+                <p className="font-mono-label text-[9px] text-muted-foreground mt-1">{t.sub}</p>
+                <span className="absolute left-0 right-0 bottom-0 h-[2px] transition-opacity"
+                      style={{ background: accent, opacity: active ? 1 : 0.2 }} />
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Body */}
@@ -313,34 +326,49 @@ export function LiveProtocol() {
               <button
                 type="button"
                 onClick={() => setAfterDark(v => !v)}
-                className="relative w-14 h-7 rounded-full border transition"
+                aria-pressed={afterDark}
+                className="group flex items-center gap-3 px-3 py-2 rounded-full border cursor-pointer transition"
                 style={{
                   borderColor: afterDark ? "var(--brand-blush)" : "var(--border)",
-                  background: afterDark ? "var(--brand-blush)" : "transparent",
+                  background: afterDark ? "color-mix(in oklab, var(--brand-blush) 12%, transparent)" : "transparent",
                   boxShadow: afterDark ? "var(--glow-pink)" : "none",
                 }}
-                aria-label="Toggle after dark"
               >
-                <span
-                  className="absolute top-0.5 w-5 h-5 rounded-full transition-all"
-                  style={{
-                    left: afterDark ? "calc(100% - 22px)" : "2px",
-                    background: afterDark ? "var(--brand-ink)" : "var(--muted-foreground)",
-                  }}
-                />
+                <span className="font-mono-label text-[9px] tracking-[0.22em] uppercase" style={{ color: afterDark ? "var(--brand-blush)" : "var(--muted-foreground)" }}>
+                  {afterDark ? "Lights off" : "Tap to reveal"}
+                </span>
+                <span className="relative w-10 h-5 rounded-full border" style={{
+                  borderColor: afterDark ? "var(--brand-blush)" : "var(--border)",
+                  background: afterDark ? "var(--brand-blush)" : "transparent",
+                }}>
+                  <span
+                    className="absolute top-0.5 w-3.5 h-3.5 rounded-full transition-all"
+                    style={{
+                      left: afterDark ? "calc(100% - 16px)" : "2px",
+                      background: afterDark ? "var(--brand-ink)" : "var(--muted-foreground)",
+                    }}
+                  />
+                </span>
               </button>
             </div>
 
             {!afterDark ? (
-              <div className="bg-background border border-border p-8 text-center">
-                <p className="text-sm text-muted-foreground italic max-w-sm mx-auto leading-relaxed">
+              <button
+                type="button"
+                onClick={() => setAfterDark(true)}
+                className="w-full bg-background border border-dashed border-border hover:border-[var(--brand-blush)] p-8 text-center cursor-pointer transition group"
+              >
+                <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase mb-3" style={{ color: "var(--brand-blush)" }}>
+                  Tap anywhere to reveal ↓
+                </p>
+                <p className="text-sm text-muted-foreground italic max-w-sm mx-auto leading-relaxed group-hover:text-foreground transition">
                   Flip the switch. We'll match positions to your spine, your pelvic floor, and the breath cadence your nervous system needs to actually arrive.
                 </p>
-              </div>
+              </button>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border border border-border animate-fade-in">
                 {matched.map((p) => (
-                  <article key={p.id} className="bg-background p-5 group hover:bg-card/60 transition">
+                  <article key={p.id} className="bg-background p-5 group hover:bg-card/60 transition cursor-pointer">
                     <div className="flex items-baseline justify-between">
                       <p className="font-mono-label text-[9px] text-muted-foreground">POSITION {p.id}</p>
                       <p className="font-mono-label text-[9px]" style={{ color: "var(--brand-blush)" }}>{p.durationMin} MIN</p>
