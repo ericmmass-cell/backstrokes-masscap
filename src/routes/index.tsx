@@ -1,612 +1,572 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import portrait from "@/assets/portrait.jpg";
-import intimate from "@/assets/intimate.jpg";
-import backStudy from "@/assets/back-study.jpg";
-import bedroomStudy from "@/assets/bedroom-study.jpg";
-import mcgillStudy from "@/assets/mcgill-study.jpg";
 import sheetGrip from "@/assets/sheet-grip.jpg";
-import { LiveProtocol } from "@/components/LiveProtocol";
-import { MoveList, StatStrip, BACK_MOVES, BEDROOM_MOVES, BACK_STATS, BEDROOM_STATS } from "@/components/MoveLibrary";
-import { MobileImageCarousel } from "@/components/MobileImageCarousel";
-import { EarlyAccessForm } from "@/components/EarlyAccessForm";
-import { BaselineCTA } from "@/components/BaselineCTA";
-import { ScreeningGate } from "@/components/ScreeningGate";
+import mcgillStudy from "@/assets/mcgill-study.jpg";
 import { COUNCIL } from "./council";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "BackStroke. The protocol Goop would have repackaged at $400 a candle." },
-      { name: "description", content: "Eight minutes a day. A pelvic floor that knows how to exhale. Sex your L4 stays out of. Built with a named clinical council." },
-      { property: "og:title", content: "BackStroke. Same pelvis, two jobs, finally on speaking terms." },
-      { property: "og:description", content: "We don't sell wellness. We coach the eight or nine specific things that get you out of bed without wincing — and back into it for better reasons." },
+      { title: "BackStroke. The protocol you'd write if you had two PTs in the room." },
+      {
+        name: "description",
+        content:
+          "Eight minutes a day. One protocol. The back you used to have, and the bedroom you forgot was negotiable.",
+      },
+      {
+        property: "og:title",
+        content: "BackStroke. Same pelvis, two jobs, finally on speaking terms.",
+      },
+      {
+        property: "og:description",
+        content:
+          "Eight minutes a day. Built and signed off by four clinicians who would rather keep their license.",
+      },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap",
+      },
     ],
   }),
 });
 
+const PAPER = "oklch(0.94 0.018 78)";
+const PAPER_2 = "oklch(0.92 0.022 76)";
+const PAPER_INK = "oklch(0.18 0.01 40)";
+const PAPER_MUTED = "oklch(0.45 0.02 40)";
+const AMBER = "var(--brand-amber)";
+const BLUSH = "var(--brand-blush)";
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background text-foreground antialiased">
-      {/* Nav */}
-      <header className="sticky top-0 z-30 backdrop-blur-xl bg-background/70 border-b border-border/60">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <svg width="22" height="22" viewBox="0 0 22 22" className="text-[var(--brand-amber)]">
-              <circle cx="11" cy="11" r="10" stroke="currentColor" strokeWidth="1" fill="none"/>
-              <circle cx="11" cy="11" r="3" fill="currentColor"/>
+    <div className="min-h-screen antialiased" style={{ background: PAPER, color: PAPER_INK }}>
+      {/* ───────── Nav — slim, paper, almost invisible ───────── */}
+      <header
+        className="sticky top-0 z-30 backdrop-blur-xl"
+        style={{ background: "oklch(0.94 0.018 78 / 0.78)", borderBottom: "1px solid oklch(0.85 0.02 70)" }}
+      >
+        <div className="max-w-[1180px] mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2.5">
+            <svg width="22" height="22" viewBox="0 0 22 22" style={{ color: "var(--brand-oxblood)" }}>
+              <circle cx="11" cy="11" r="10" stroke="currentColor" strokeWidth="1" fill="none" />
+              <circle cx="11" cy="11" r="3" fill="currentColor" />
             </svg>
-            <div className="flex flex-col leading-none">
-              <span className="font-serif-display text-xl tracking-tight italic">
-                Back<span style={{color:"var(--brand-amber)"}}>Stroke</span>
-              </span>
-              <span className="font-script text-[12px] text-muted-foreground -mt-0.5 tracking-wide">
-                a members' protocol for <span className="italic" style={{color:"var(--brand-blush)"}}>the body that stopped negotiating</span>
-              </span>
-            </div>
-            <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">℠</sup>
-          </div>
-          <nav className="hidden md:flex items-center gap-7 font-mono-label text-[10px] tracking-[0.18em] text-muted-foreground uppercase">
-            <a href="#problem" className="hover:text-foreground transition-colors">The problem</a>
-            <a href="#insight" className="hover:text-foreground transition-colors">The insight</a>
-            <a href="#work" className="hover:text-foreground transition-colors">The work</a>
-            <Link to="/council" className="hover:text-foreground transition-colors">Council</Link>
-            <Link to="/science" className="hover:text-foreground transition-colors">Science</Link>
-            <Link to="/positions" className="hover:text-foreground transition-colors">Positions</Link>
-            <a href="#try" className="hover:text-foreground transition-colors" style={{color:"var(--brand-amber)"}}>◆ Try live</a>
+            <span className="font-serif-display text-xl tracking-tight italic" style={{ color: PAPER_INK }}>
+              Back<span style={{ color: "var(--brand-oxblood)" }}>Stroke</span>
+            </span>
+            <sup className="font-mono-label text-[8px] ml-0.5" style={{ color: PAPER_MUTED }}>
+              ℠
+            </sup>
+          </Link>
+          <nav className="hidden md:flex items-center gap-7 font-mono-label text-[10px] tracking-[0.18em] uppercase">
+            <a href="#problem" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
+              Problem
+            </a>
+            <a href="#work" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
+              Work
+            </a>
+            <Link to="/council" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
+              Council
+            </Link>
+            <Link to="/science" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
+              Science
+            </Link>
           </nav>
-          <Link to="/dashboard" className="text-[12px] tracking-[0.14em] uppercase font-mono-label px-4 py-2 rounded-full bg-foreground text-background hover:opacity-90 transition">
-            Today
+          <Link
+            to="/dashboard"
+            className="text-[12px] tracking-[0.14em] uppercase font-mono-label px-4 py-2 rounded-full hover:opacity-90 transition"
+            style={{ background: PAPER_INK, color: PAPER }}
+          >
+            Try a session
           </Link>
         </div>
       </header>
 
-      {/* 01 · HERO. Manifesto-led. Spine first, bedroom reveal in the body. */}
-      <section className="relative px-6 md:px-10 pt-16 md:pt-20 pb-20 border-b border-border overflow-hidden">
-        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-10 items-center relative">
-          <div className="lg:col-span-7 relative z-10">
-            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)] mb-6">
-              ◆ FOR THE ADULT WITH A BACK · AND A CALENDAR · AND A SENSE OF HUMOUR
+      {/* ───────── HERO ───────── */}
+      <section className="px-6 md:px-10 pt-24 md:pt-32 pb-24 md:pb-28 relative overflow-hidden">
+        <div className="max-w-[1180px] mx-auto grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="lg:col-span-7 relative">
+            <p
+              className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-8"
+              style={{ color: "var(--brand-oxblood)" }}
+            >
+              ◆ A members' protocol for the body that stopped negotiating
             </p>
-
-            <h1 className="font-serif-display text-[40px] md:text-[60px] lg:text-[72px] leading-[1.0] tracking-[-0.02em]">
-              We don't sell wellness.<br/>
-              <span className="italic" style={{
-                background:"var(--gradient-text)",
-                WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
-              }}>
-                We coach the eight or nine specific things
-              </span><br/>
-              that get you out of bed <span className="italic" style={{color:"var(--brand-blush)"}}>without wincing.</span>
+            <h1
+              className="font-serif-display leading-[0.94] tracking-[-0.025em]"
+              style={{ fontSize: "clamp(56px, 8.4vw, 124px)", color: PAPER_INK }}
+            >
+              Same pelvis.
+              <br />
+              <span className="italic" style={{ color: "var(--brand-oxblood)" }}>
+                Two jobs.
+              </span>
+              <br />
+              Eight minutes.
             </h1>
 
-            <p className="mt-7 text-lg md:text-xl text-foreground/90 max-w-2xl leading-snug font-serif-display">
-              Eight minutes a day for the spine. Endurance, not range. A pelvic floor that knows how to exhale. <span className="italic" style={{color:"var(--brand-amber)"}}>And — quietly, in the body paragraph, where it belongs — the reason you'll get back into bed for better reasons too.</span>
+            <p
+              className="mt-9 font-serif-display italic leading-snug max-w-xl"
+              style={{ fontSize: "clamp(20px, 2.0vw, 26px)", color: PAPER_INK, opacity: 0.86 }}
+            >
+              The protocol your spine PT and your pelvic-floor PT would have written together — if they were ever in the same room. They weren't. We put them there.
             </p>
 
-            <p className="mt-6 text-base text-muted-foreground max-w-xl leading-relaxed">
-              Built and reviewed by a four-person clinical council — a McGill-trained spine PT, an APTA pelvic-health PT, a urologist, and an AASECT-certified sex therapist. <span className="text-foreground italic">No life coaches. No supplement stack. No guy in a weighted vest with a podcast about discipline.</span>
-            </p>
-
-            {/* PRIMARY CTA — single action, no app store. Email capture sits beside it. */}
-            <div className="mt-9 flex flex-col gap-6">
-              <BaselineCTA size="lg" />
-
-              <div className="border-t border-border pt-6">
-                <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-muted-foreground mb-3">
-                  Or get the protocol notes
-                </p>
-                <p className="text-sm text-muted-foreground max-w-md mb-3 leading-relaxed">
-                  One email a week, written by the council. No sales. <span className="italic">No "Hey friend" newsletters from a guy named Brayden.</span>
-                </p>
-                <EarlyAccessForm accent="amber" />
-              </div>
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold transition hover:opacity-90"
+                style={{ background: PAPER_INK, color: PAPER, boxShadow: "0 12px 30px -10px oklch(0.18 0.01 40 / 0.4)" }}
+              >
+                Run the baseline · 7 min <ArrowUpRight className="w-4 h-4" />
+              </Link>
+              <a
+                href="#what-you-pay-for"
+                className="font-mono-label text-[10px] tracking-[0.22em] uppercase hover:opacity-80 transition"
+                style={{ color: PAPER_MUTED }}
+              >
+                Or read what you're paying for →
+              </a>
             </div>
 
-            <p className="mt-8 font-mono-label text-[9px] text-muted-foreground tracking-[0.16em] uppercase">
-              <Link to="/science" className="hover:text-foreground transition underline-offset-4 hover:underline">
-                ◆ see the cohort data →
-              </Link>
+            <p className="mt-8 text-sm italic max-w-md leading-relaxed" style={{ color: PAPER_MUTED }}>
+              No app store. No download. No candle. No "Hey friend" newsletters from a guy named Brayden.
             </p>
           </div>
 
-          {/* Right: subject portrait — single subject, neutral, not a bedroom. Replace asset when shoot lands. */}
           <div className="lg:col-span-5 relative">
             <div className="relative">
-              <img src={portrait} alt="Subject portrait" width={1024} height={1280}
-                   className="w-full aspect-[4/5] object-cover rounded-sm" style={{boxShadow:"var(--shadow-lift)"}}/>
-              <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] text-white/80">
-                <span>SUBJECT 04 · DAY 42 · L4-L5, FORMERLY VOCAL</span>
-                <span style={{color:"var(--brand-pink)"}}>● REC</span>
+              <img
+                src={portrait}
+                alt=""
+                className="w-full aspect-[4/5] object-cover rounded-sm"
+                style={{ boxShadow: "0 40px 80px -20px oklch(0.18 0.01 40 / 0.35)" }}
+              />
+              <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] tracking-[0.22em] uppercase text-white/85">
+                <span>SUBJECT 04 · DAY 42 · L4-L5</span>
+                <span style={{ color: AMBER }}>● ON SPEAKING TERMS</span>
               </div>
-              <span className="absolute -top-4 left-4 font-script text-2xl rotate-[-4deg] drop-shadow-lg" style={{color:"var(--brand-pink)"}}>
-                Out of bed. Without wincing.
+              <span
+                className="absolute -top-6 -right-3 font-script text-3xl rotate-[5deg] hidden md:block"
+                style={{ color: "var(--brand-oxblood)" }}
+              >
+                quieter than yesterday
               </span>
-              {/* TODO(asset): swap for a neutral single-subject photo, back-pain-aged adult, not in a bedroom. */}
             </div>
           </div>
         </div>
-
-        {/* Decorative grid lines */}
-        <div className="absolute inset-x-0 top-0 h-full pointer-events-none opacity-[0.04]"
-             style={{backgroundImage:"linear-gradient(to right, white 1px, transparent 1px)", backgroundSize:"calc(100%/12) 100%"}}/>
       </section>
 
-      {/* TAGLINE STRIP — the only on-page instance of the full lockup, besides the footer signature. */}
-      <div className="border-y border-border/70" style={{background:"linear-gradient(180deg, oklch(0.155 0.018 26), oklch(0.125 0.012 28))"}}>
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-6 flex items-center justify-center gap-8 md:gap-14 font-serif-display italic text-lg md:text-3xl tracking-[-0.01em]" style={{color:"var(--brand-amber)"}}>
-          <span className="opacity-40 text-xs not-italic">◆</span>
-          <span>Fit.</span>
-          <span className="opacity-30 not-italic font-mono-label text-[10px]">·</span>
-          <span>Flex.</span>
-          <span className="opacity-30 not-italic font-mono-label text-[10px]">·</span>
-          <span style={{color:"var(--brand-blush)"}}>Fuck.</span>
-          <span className="opacity-40 text-xs not-italic">◆</span>
-        </div>
-      </div>
-
-      {/* 02 · LIVE PROTOCOL */}
-      <section id="try" className="px-6 md:px-10 py-20 md:py-28 border-b border-border relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
-             style={{ backgroundImage: "radial-gradient(var(--brand-amber) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
-        <div className="max-w-[1280px] mx-auto relative">
-          <div className="grid lg:grid-cols-12 gap-10 items-end mb-10">
-            <div className="lg:col-span-7">
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">◆ TRY IT · 01 · NO SIGNUP, NO QUIZ, NO EMAIL HOSTAGE</p>
-              <h2 className="font-serif-display text-4xl md:text-6xl mt-4 leading-[0.98] tracking-tight">
-                Stop reading the pitch.<br/>
-                <span className="italic" style={{ color: "var(--brand-blush)", textShadow: "var(--glow-pink)" }}>
-                  Run a session.
-                </span>
-              </h2>
+      {/* ───────── PROOF STRIP — four numbers, gold foil on cream ───────── */}
+      <section className="border-y" style={{ borderColor: "oklch(0.86 0.025 70)", background: PAPER_2 }}>
+        <div className="max-w-[1180px] mx-auto px-6 md:px-10 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
+          {[
+            ["8 min", "a day. Floor optional."],
+            ["1 protocol", "back + bedroom, one chart."],
+            ["4 clinicians", "each with a veto."],
+            ["0 candles", "0 jade eggs. 0 ashwagandha."],
+          ].map(([v, l]) => (
+            <div key={String(l)}>
+              <p
+                className="font-serif-display tracking-tight leading-none"
+                style={{
+                  fontSize: "clamp(34px, 4vw, 52px)",
+                  background: "var(--gradient-text)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
+                {v}
+              </p>
+              <p className="mt-3 font-serif-display italic text-base leading-snug" style={{ color: PAPER_INK, opacity: 0.78 }}>
+                {l}
+              </p>
             </div>
-            <p className="lg:col-span-5 text-muted-foreground leading-relaxed max-w-md">
-              Tap a zone. Log today's pain. Run a real flex set with breath pacing. Flip the switch and watch the after-dark protocol assemble around your spine, in public, on the marketing page. <span className="italic text-foreground">Most people will scroll past this. The ones who tap are the ones tying their shoes standing up in six weeks.</span>
-            </p>
-          </div>
-          <LiveProtocol />
-          <p className="font-mono-label text-[9px] text-muted-foreground mt-4 text-center">
-            INTERACTIVE PREVIEW · NO ACCOUNT, NO COOKIE WALL, NO PDF EMAILED IN 3-5 BUSINESS DAYS
+          ))}
+        </div>
+      </section>
+
+      {/* ───────── PROBLEM — one dark editorial break ───────── */}
+      <section id="problem" className="px-6 md:px-10 py-24 md:py-32 relative" style={{ background: "var(--brand-ink)" }}>
+        <div className="max-w-[1100px] mx-auto">
+          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: AMBER }}>
+            ◆ The category answer is a stretch reel and a $48 magnesium gummy in eucalyptus
           </p>
-        </div>
-      </section>
+          <h2
+            className="font-serif-display mt-6 leading-[1.0] tracking-[-0.02em] max-w-4xl"
+            style={{ fontSize: "clamp(36px, 5vw, 64px)", color: "white" }}
+          >
+            Your spine PT and your pelvic-floor PT have never met.{" "}
+            <span className="italic" style={{ color: AMBER }}>
+              Your pelvis would like a word.
+            </span>
+          </h2>
+          <p className="mt-10 text-lg md:text-xl leading-relaxed max-w-2xl italic" style={{ color: "oklch(0.85 0.02 50)" }}>
+            The protocol that fixes your back lives in one building. The protocol that fixes your sex life lives in another. The two clinicians have never been in the same chart. The market is fine with this. Your pelvis is not.
+          </p>
 
-      {/* 03 · THE PROBLEM */}
-      <section id="problem" className="px-6 md:px-10 py-28 md:py-32 border-b border-border">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-end mb-14">
-            <div className="lg:col-span-8">
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">
-                THE PROBLEM · 02
-              </p>
-              <h2 className="font-serif-display text-4xl md:text-6xl mt-4 leading-[1.0] tracking-[-0.02em]">
-                You have one body. <span className="italic text-muted-foreground">It has been quoted by four specialists, two apps, and a candle.</span>
-              </h2>
-            </div>
-            <p className="lg:col-span-4 text-base text-muted-foreground leading-relaxed">
-              The protocol that fixes your back lives in one building. The protocol that fixes your sex life lives in another. The two clinicians have never met. The market is fine with this. Your pelvis is not.
-            </p>
-          </div>
-
-          {/* The split */}
-          <div className="grid md:grid-cols-2 gap-px bg-border border border-border mb-14">
-            <div className="bg-background p-7 md:p-9">
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">TUESDAY · 11 AM</p>
-              <p className="font-serif-display text-2xl md:text-3xl mt-3 leading-tight">
-                Spine clinic. Bird-dog, the big-3, instructions to "stay active."
-              </p>
-              <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
-                Nobody asks how sex is going. Nobody mentions that the muscles being trained are the same ones running the show on Saturday night. Discharge note: "Patient is doing well." Patient is not.
-              </p>
-            </div>
-            <div className="bg-background p-7 md:p-9" style={{background:"linear-gradient(180deg, var(--background), oklch(0.16 0.012 25 / 0.4))"}}>
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>THURSDAY · 4 PM</p>
-              <p className="font-serif-display text-2xl md:text-3xl mt-3 leading-tight" style={{color:"var(--brand-blush)"}}>
-                Pelvic-floor PT. Reverse kegels, breath cues, a homework PDF.
-              </p>
-              <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
-                Nobody asks about lumbar endurance. Nobody mentions that bracing all day for back pain is exactly why nothing down-trains at night. The two notes never end up in the same chart. Your insurance prefers it that way.
-              </p>
-            </div>
-          </div>
-
-          {/* The receipts */}
-          <div className="grid md:grid-cols-3 gap-px bg-border border border-border mb-14">
+          <div className="mt-12 grid sm:grid-cols-3 gap-6">
             {[
-              ["619M", "people with active back pain. The category answer is a stretch reel and a $48 magnesium gummy in eucalyptus."],
-              ["1 in 4", "adults with chronic low-back pain report sexual avoidance. None of their PT notes say so."],
-              ["$140B", "spent annually on back pain. Mostly on furniture, herbal capsules, and one very confident podcast guest."],
-            ].map(([v,l])=>(
-              <div key={l} className="bg-background p-7 md:p-9">
-                <p className="font-serif-display text-4xl md:text-5xl tracking-tight" style={{color:"var(--brand-amber)"}}>{v}</p>
-                <p className="text-xs md:text-sm text-muted-foreground mt-3 leading-relaxed">{l}</p>
+              ["619M", "people with active back pain"],
+              ["1 in 4", "report sexual avoidance"],
+              ["$140B", "spent yearly on the wrong things"],
+            ].map(([v, l]) => (
+              <div key={l} className="border-l-2 pl-5" style={{ borderColor: AMBER }}>
+                <p className="font-serif-display text-4xl md:text-5xl tracking-tight" style={{ color: AMBER }}>
+                  {v}
+                </p>
+                <p className="mt-2 text-sm leading-snug" style={{ color: "oklch(0.78 0.02 50)" }}>
+                  {l}
+                </p>
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="grid lg:grid-cols-12 gap-10 items-start">
-            <div className="lg:col-span-5">
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-muted-foreground">A SHORT, AFFECTIONATE LIST OF WHAT'S NOT WORKING</p>
-            </div>
-            <ul className="lg:col-span-7 space-y-3 font-serif-display text-lg md:text-xl leading-snug">
-              <li className="flex gap-4"><span className="font-mono-label text-[10px] text-muted-foreground pt-2 shrink-0 w-8">01</span><span>The kegel app charging $9.99 to count reps like Duolingo, in haptic feedback, with a streak.</span></li>
-              <li className="flex gap-4"><span className="font-mono-label text-[10px] text-muted-foreground pt-2 shrink-0 w-8">02</span><span>The supplement stack that fits in a small UPS truck and has done less for your spine than a chair without wheels.</span></li>
-              <li className="flex gap-4"><span className="font-mono-label text-[10px] text-muted-foreground pt-2 shrink-0 w-8">03</span><span>The stretch-video influencer with two cats and zero patients.</span></li>
-              <li className="flex gap-4"><span className="font-mono-label text-[10px] text-muted-foreground pt-2 shrink-0 w-8">04</span><span>The candle. Always the candle. Unscented, $96, sold next to a jade egg with no return policy.</span></li>
-              <li className="flex gap-4"><span className="font-mono-label text-[10px] text-muted-foreground pt-2 shrink-0 w-8">05</span><span>The guy in a weighted vest with strong opinions about discipline and a podcast about it.</span></li>
-            </ul>
-          </div>
+      {/* ───────── WHAT YOU PAY FOR — back to paper ───────── */}
+      <section id="what-you-pay-for" className="px-6 md:px-10 py-24 md:py-32">
+        <div className="max-w-[1100px] mx-auto">
+          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
+            ◆ What you're paying for
+          </p>
+          <h2
+            className="font-serif-display mt-5 leading-[1.0] tracking-[-0.02em] max-w-3xl"
+            style={{ fontSize: "clamp(38px, 5vw, 68px)", color: PAPER_INK }}
+          >
+            The shortest membership we could responsibly sell.
+          </h2>
+          <p className="mt-8 max-w-2xl leading-relaxed text-lg italic" style={{ color: PAPER_INK, opacity: 0.78 }}>
+            Eight minutes a day. The exact eight your spine and your pelvic floor were already arguing about, finally on the same chart. We are not adding work to your life. We are subtracting time you were already spending wrong.
+          </p>
 
-          <p className="font-script text-2xl md:text-3xl mt-14 italic text-center max-w-3xl mx-auto" style={{color:"var(--brand-blush)"}}>
-            None of it is bad faith. <span style={{color:"var(--brand-amber)"}}>It is just the wrong unit of analysis.</span>
+          <ol className="mt-14 grid md:grid-cols-3 gap-px" style={{ background: "oklch(0.86 0.025 70)", border: "1px solid oklch(0.86 0.025 70)" }}>
+            {[
+              {
+                num: "01",
+                head: "Eight minutes",
+                body: "The McGill big-3 — curl-up, side plank, bird dog — at the dose the disc trials actually use. Not the YouTube version.",
+              },
+              {
+                num: "02",
+                head: "One pelvic floor",
+                body: "Down-train first. Up-train second. Eccentric control is the metric, not rep count. Most apps got this wrong on purpose.",
+              },
+              {
+                num: "03",
+                head: "Four clinicians",
+                body: "A spine PT, a pelvic-health PT, a urologist, an AASECT sex therapist. Each owns a veto. None of them are influencers.",
+              },
+            ].map((p) => (
+              <li key={p.num} className="px-7 py-8 md:py-10" style={{ background: PAPER }}>
+                <p
+                  className="font-serif-display tracking-tight"
+                  style={{
+                    fontSize: "44px",
+                    background: "var(--gradient-text)",
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    color: "transparent",
+                  }}
+                >
+                  {p.num}
+                </p>
+                <h3 className="font-serif-display text-2xl mt-2 leading-tight" style={{ color: PAPER_INK }}>
+                  {p.head}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed" style={{ color: PAPER_INK, opacity: 0.72 }}>
+                  {p.body}
+                </p>
+              </li>
+            ))}
+          </ol>
+
+          <p className="mt-10 font-script text-2xl md:text-3xl italic max-w-2xl" style={{ color: "var(--brand-oxblood)" }}>
+            Strong back. Steady breath. <span style={{ color: AMBER }}>Hot life.</span>
           </p>
         </div>
       </section>
 
-      {/* 04 · THE INSIGHT */}
-      <section id="insight" className="relative px-6 md:px-10 py-28 md:py-32 border-b border-border overflow-hidden"
-               style={{background:"radial-gradient(ellipse at 70% 40%, oklch(0.22 0.05 25) 0%, var(--brand-ink) 60%)"}}>
-        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-14 items-center relative">
-          <div className="lg:col-span-6 relative">
-            <img src={intimate} alt="" loading="lazy" width={1024} height={1280}
-                 className="w-full aspect-[4/5] object-cover"
-                 style={{boxShadow:"var(--shadow-ember)"}}/>
-            <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] text-white/70">
-              <span>FIG. 01 · AFTER DARK · NO CANDLE BUDGET</span>
-              <span style={{color:"var(--brand-blush)"}}>● 22:47</span>
-            </div>
-          </div>
-          <div className="lg:col-span-6">
-            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>
-              THE INSIGHT · 03
-            </p>
-            <h2 className="font-serif-display text-5xl md:text-7xl mt-6 leading-[0.98] tracking-[-0.025em]">
-              Same pelvis.<br/>
-              <span className="italic" style={{
-                background:"var(--gradient-ember)",
-                WebkitBackgroundClip:"text", backgroundClip:"text", color:"transparent"
-              }}>Two jobs.</span><br/>
-              One protocol.
-            </h2>
-            <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-xl">
-              The eight muscles that stabilize your spine are the same eight that govern arousal, orgasm, continence and pain-free penetration. Your PT knows. Your GP knows. The app charging $9.99 to count kegels knows. They will not put it on the homepage, because someone in legal is on a call about it.
-            </p>
-            <p className="mt-6 text-lg text-foreground leading-relaxed max-w-xl">
-              Train the body. Presence is downstream. Candles strictly optional. Jade eggs strictly discouraged. We will not sell you either.
-            </p>
-
-            <p className="font-serif-display text-2xl italic mt-10" style={{color:"var(--brand-amber)"}}>
-              Strong back. Steady breath. Hot life.
-            </p>
-          </div>
+      {/* ───────── THE WORK — two image cards ───────── */}
+      <section id="work" className="px-6 md:px-10 pb-24 md:pb-28">
+        <div className="max-w-[1100px] mx-auto grid md:grid-cols-2 gap-6">
+          {[
+            {
+              src: mcgillStudy,
+              tag: "◆ FOR THE BACK · 8 MIN",
+              head: "A quieter lumbar in two weeks.",
+              body: "Endurance, not range. The protocol that beat lumbar surgery in head-to-head trials, finally taught properly.",
+              color: AMBER,
+            },
+            {
+              src: sheetGrip,
+              tag: "◆ FOR THE BEDROOM · 7 MIN",
+              head: "Reverse kegel before kegel.",
+              body: "Erections and lubrication are the floor, not the ceiling. A chronically gripping pelvic floor is why arousal stalls.",
+              color: BLUSH,
+            },
+          ].map((c) => (
+            <article
+              key={c.head}
+              className="relative overflow-hidden"
+              style={{ boxShadow: "0 30px 60px -20px oklch(0.18 0.01 40 / 0.35)", border: "1px solid oklch(0.86 0.025 70)" }}
+            >
+              <div className="relative aspect-[5/6]">
+                <img src={c.src} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                <div
+                  className="absolute inset-0"
+                  style={{ background: "linear-gradient(180deg, transparent 40%, oklch(0.1 0 0 / 0.85) 100%)" }}
+                />
+                <div className="absolute top-5 left-5 right-5 flex items-center justify-between">
+                  <span className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-white/85">
+                    {c.tag}
+                  </span>
+                </div>
+                <div className="absolute bottom-5 left-5 right-5">
+                  <h3 className="font-serif-display text-3xl md:text-4xl italic leading-[1.05]" style={{ color: "white" }}>
+                    {c.head}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-white/85 max-w-sm">{c.body}</p>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* 05 · METHODOLOGY */}
-      <section className="px-6 md:px-10 py-28 md:py-32 border-b border-border">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="mb-16 max-w-2xl">
-            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">METHODOLOGY · 04</p>
-            <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight">
-              How the one protocol does the two jobs.
-            </h2>
-          </div>
-
-          <div className="space-y-24">
-            {/* BACK spread */}
-            <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-              <div className="lg:col-span-7 relative">
-                <img src={mcgillStudy} alt="Overhead study, curl-up engagement" loading="lazy" width={1280} height={1024}
-                     className="w-full aspect-[5/4] object-cover" style={{boxShadow:"var(--shadow-lift)"}}/>
-                <div className="absolute top-3 left-3 right-3 flex items-center justify-between font-mono-label text-[9px] text-white/70">
-                  <span>FIG. 02 · CURL-UP · 8 SEC HOLD</span>
-                  <span style={{color:"var(--brand-amber)"}}>● THE BACK</span>
-                </div>
-                <div className="absolute -bottom-4 -right-4 hidden md:block bg-[var(--brand-ink)] border border-border px-4 py-3 rounded-sm" style={{boxShadow:"var(--glow-teal)"}}>
-                  <p className="font-mono-label text-[8px] tracking-[0.2em] text-muted-foreground">DAILY DOSE</p>
-                  <p className="font-serif-display text-2xl" style={{color:"var(--brand-amber)"}}>8 min</p>
-                </div>
-              </div>
-              <div className="lg:col-span-5">
-                <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">For the back</p>
-                <h3 className="font-serif-display text-3xl md:text-4xl mt-4 leading-[1.05]">
-                  Eight minutes for the spine. The rent your back pays.
-                </h3>
-                <p className="mt-5 text-muted-foreground leading-relaxed text-sm">
-                  Curl-up, side plank, bird dog. Endurance, not range. The protocol that beat lumbar surgery in head-to-head trials, finally taught properly.
-                </p>
-                <StatStrip items={BACK_STATS} accent="amber" />
-              </div>
-            </div>
-
-            {/* BEDROOM spread */}
-            <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-              <div className="lg:col-span-7 lg:order-2 relative">
-                <img src={sheetGrip} alt="Hands gripping linen, low light" loading="lazy" width={1280} height={1024}
-                     className="w-full aspect-[5/4] object-cover" style={{boxShadow:"var(--shadow-lift)"}}/>
-                <div className="absolute top-3 left-3 right-3 flex items-center justify-between font-mono-label text-[9px] text-white/70">
-                  <span>FIG. 03 · GRIP · INVOLUNTARY</span>
-                  <span style={{color:"var(--brand-blush)"}}>● THE BEDROOM</span>
-                </div>
-                <div className="absolute -bottom-4 -left-4 hidden md:block bg-[var(--brand-ink)] border border-border px-4 py-3 rounded-sm" style={{boxShadow:"var(--glow-pink)"}}>
-                  <p className="font-mono-label text-[8px] tracking-[0.2em] text-muted-foreground">SEQUENCE</p>
-                  <p className="font-serif-display text-xl italic" style={{color:"var(--brand-blush)"}}>Down-train first</p>
-                </div>
-              </div>
-              <div className="lg:col-span-5 lg:order-1">
-                <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>For the bedroom</p>
-                <h3 className="font-serif-display text-3xl md:text-4xl mt-4 leading-[1.05]">
-                  Reverse kegel <span className="italic" style={{color:"var(--brand-blush)"}}>before</span> kegel.
-                </h3>
-                <p className="mt-5 text-muted-foreground leading-relaxed text-sm">
-                  Erections and lubrication are the floor, not the ceiling. A chronically gripping pelvic floor is why arousal stalls and penetration hurts. Down-train, then up-train. Pelvic-health coaching, on video, in plain language.
-                </p>
-                <StatStrip items={BEDROOM_STATS} accent="blush" />
-                <p className="mt-4 text-[11px] text-muted-foreground italic">
-                  Postpartum and post-prostatectomy protocols built in, with a clinician-consent screen before content unlocks.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 06 · THE WORK */}
-      <section id="work" className="px-6 md:px-10 py-28 md:py-32 border-b border-border">
-        <div className="max-w-[1280px] mx-auto">
+      {/* ───────── THE COUNCIL — slim, named, no hagiography ───────── */}
+      <section className="px-6 md:px-10 py-24 md:py-28" style={{ background: PAPER_2 }}>
+        <div className="max-w-[1100px] mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
             <div>
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">THE WORK · 05 · TWO LISTS, NOTHING ELSE, NO TIER 3</p>
-              <h2 className="font-serif-display text-4xl md:text-5xl mt-4 leading-[1.02] tracking-tight max-w-2xl">
-                The whole product, on one page. <span className="italic text-muted-foreground">No mystery box. No 14-step funnel that lands on a quiz that recommends ashwagandha.</span>
-              </h2>
-            </div>
-            <p className="font-mono-label text-[10px] text-muted-foreground max-w-xs leading-relaxed normal-case tracking-wide">
-              Tap any move to expand the steps, cues and citations. There is no second page. No upsell deck. No hidden tier where the real protocol lives.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-px bg-border border border-border">
-            {/* BACK column */}
-            <div className="bg-background">
-              <div className="md:hidden">
-                <MobileImageCarousel
-                  accent="amber"
-                  topLabel="FIG. 04 · LATERAL · L4-L5 · ● THE BACK"
-                  bottomEyebrow="For the back"
-                  bottomTitle="A quieter lumbar in two weeks."
-                  images={[
-                    { src: backStudy, alt: "Lateral study of the lumbar spine in a bird-dog plank", caption: "FIG. 04 · LATERAL · L4-L5" },
-                    { src: mcgillStudy, alt: "Overhead study, curl-up engagement", caption: "FIG. 02 · CURL-UP · 8 SEC HOLD" },
-                    { src: portrait, alt: "Coach portrait, studio light", caption: "FIG. 06 · COACH · STUDIO" },
-                  ]}
-                />
-              </div>
-              <div className="relative aspect-[16/10] overflow-hidden hidden md:block">
-                <img src={backStudy} alt="Lateral study of the lumbar spine in a bird-dog plank" loading="lazy" width={1024} height={640}
-                     className="w-full h-full object-cover"/>
-                <div className="absolute inset-0" style={{background:"linear-gradient(180deg, transparent 40%, oklch(0.12 0.012 30) 100%)"}}/>
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] text-white/70">
-                  <span>FIG. 04 · LATERAL · L4-L5</span>
-                  <span style={{color:"var(--brand-amber)"}}>● THE BACK</span>
-                </div>
-                <div className="absolute bottom-4 left-5 right-5">
-                  <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)] mb-1">For the back</p>
-                  <h3 className="font-serif-display text-3xl md:text-4xl italic leading-[1.05]">A quieter lumbar in two weeks.</h3>
-                </div>
-              </div>
-              <div className="p-7 md:p-9">
-                <p className="text-sm text-muted-foreground leading-relaxed mb-7 max-w-md">
-                  Endurance, hinging, six habits the supplement aisle won't sell because none of them come in a tub.
-                </p>
-                <MoveList items={BACK_MOVES} accent="amber" />
-              </div>
-            </div>
-
-            {/* BEDROOM column */}
-            <div className="bg-background" style={{background:"linear-gradient(180deg, var(--background), oklch(0.16 0.012 25 / 0.4))"}}>
-              <div className="md:hidden">
-                <MobileImageCarousel
-                  accent="blush"
-                  topLabel="FIG. 05 · 11:42 PM · ● THE BEDROOM"
-                  bottomEyebrow="For the bedroom"
-                  bottomTitle="Sex you're sincerely into. Again."
-                  images={[
-                    { src: bedroomStudy, alt: "Low-light bedroom study, two adults under linen", caption: "FIG. 05 · 11:42 PM · LIGHTS LOW" },
-                    { src: sheetGrip, alt: "Hands gripping linen, low light", caption: "FIG. 03 · GRIP · INVOLUNTARY" },
-                    { src: intimate, alt: "Two figures, close, low light", caption: "FIG. 07 · CLOSE · UNHURRIED" },
-                  ]}
-                />
-              </div>
-              <div className="relative aspect-[16/10] overflow-hidden hidden md:block">
-                <img src={bedroomStudy} alt="Low-light bedroom study, two adults under linen" loading="lazy" width={1024} height={640}
-                     className="w-full h-full object-cover"/>
-                <div className="absolute inset-0" style={{background:"linear-gradient(180deg, transparent 40%, oklch(0.12 0.012 30) 100%)"}}/>
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] text-white/70">
-                  <span>FIG. 05 · 11:42 PM · LIGHTS LOW</span>
-                  <span style={{color:"var(--brand-blush)"}}>● THE BEDROOM</span>
-                </div>
-                <div className="absolute bottom-4 left-5 right-5">
-                  <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-1" style={{color:"var(--brand-blush)"}}>For the bedroom</p>
-                  <h3 className="font-serif-display text-3xl md:text-4xl italic leading-[1.05]" style={{color:"var(--brand-blush)"}}>Sex you're sincerely into. Again.</h3>
-                </div>
-              </div>
-              <div className="p-7 md:p-9">
-                <p className="text-sm text-muted-foreground leading-relaxed mb-7 max-w-md">
-                  Not blood flow. Not getting it up or wet. Sex you finish thinking about the person, not your L4.
-                </p>
-                <MoveList items={BEDROOM_MOVES} accent="blush" />
-              </div>
-            </div>
-          </div>
-
-          {/* Cohort-specific screening gates — preview of the onboarding behavior. */}
-          <div className="mt-14 grid lg:grid-cols-2 gap-6">
-            <ScreeningGate cohort="postpartum" />
-            <ScreeningGate cohort="post-prostatectomy" />
-          </div>
-
-          <p className="font-script text-2xl md:text-3xl mt-12 italic text-center" style={{color:"var(--brand-blush)"}}>
-            Two lists. <span style={{color:"var(--brand-amber)"}}>One pelvis. The whole company.</span>
-          </p>
-        </div>
-      </section>
-
-      {/* 07 · THE COUNCIL */}
-      <section id="council" className="px-6 md:px-10 py-28 md:py-32 border-b border-border">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="grid lg:grid-cols-12 gap-10 items-end mb-12">
-            <div className="lg:col-span-8">
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">
-                THE COUNCIL · 06 · FOUR CLINICIANS · EACH WITH A SPECIFIC VETO
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
+                ◆ The council · four clinicians · each with a veto
               </p>
-              <h2 className="font-serif-display text-4xl md:text-6xl mt-4 leading-[1.0] tracking-[-0.02em]">
-                People with letters after their name <span className="italic text-muted-foreground">and a license they would prefer to keep.</span>
+              <h2
+                className="font-serif-display mt-5 leading-[1.0] tracking-[-0.02em] max-w-3xl"
+                style={{ fontSize: "clamp(34px, 4.4vw, 56px)", color: PAPER_INK }}
+              >
+                People with letters after their name and a license they would prefer to keep.
               </h2>
             </div>
-            <p className="lg:col-span-4 text-sm text-muted-foreground leading-relaxed">
-              Each council member owns a specific domain inside the protocol. Each has the right to veto a line of copy, a video cue, or an onboarding branch. Profiles are TBD — fill in as the names confirm.
-            </p>
+            <Link
+              to="/council"
+              className="font-mono-label text-[10px] tracking-[0.22em] uppercase hover:opacity-80 transition"
+              style={{ color: PAPER_INK }}
+            >
+              Read the full profiles →
+            </Link>
           </div>
 
-          <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border">
+          <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ background: "oklch(0.86 0.025 70)", border: "1px solid oklch(0.86 0.025 70)" }}>
             {COUNCIL.map((m) => (
-              <li key={m.slot} className="bg-background p-6">
+              <li key={m.slot} className="p-6" style={{ background: PAPER }}>
                 <div
-                  className="w-20 h-20 rounded-full border border-border bg-card/40 grid place-items-center font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground"
+                  className="w-16 h-16 rounded-full grid place-items-center font-mono-label text-[9px] tracking-[0.18em] uppercase"
+                  style={{ background: "oklch(0.88 0.03 70)", color: PAPER_MUTED }}
                   aria-hidden
                 >
-                  TBD<br/>photo
+                  TBD
                 </div>
-                <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)] mt-5">
+                <p
+                  className="font-mono-label text-[10px] tracking-[0.22em] uppercase mt-5"
+                  style={{ color: "var(--brand-oxblood)" }}
+                >
                   {m.slot}
                 </p>
-                <p className="font-serif-display text-lg mt-2 leading-snug">{m.name}</p>
-                <p className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground mt-2">
-                  {m.credentials}
+                <p className="font-serif-display text-lg mt-2 leading-snug" style={{ color: PAPER_INK }}>
+                  {m.name}
                 </p>
-                <p className="text-xs text-muted-foreground mt-4 leading-relaxed">{m.bioShort}</p>
-                <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase mt-4" style={{ color: "var(--brand-blush)" }}>
-                  Consults on
+                <p className="text-xs mt-3 leading-relaxed italic" style={{ color: PAPER_INK, opacity: 0.7 }}>
+                  {m.bioShort}
                 </p>
-                <p className="text-xs mt-1 leading-snug">{m.consultsOn}</p>
               </li>
             ))}
           </ul>
 
-          <div className="mt-10 text-center">
-            <Link to="/council" className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-foreground hover:opacity-80 transition underline-offset-4 hover:underline">
-              ◆ read the full council profiles →
+          <p className="mt-8 text-xs italic" style={{ color: PAPER_MUTED }}>
+            ◆ Photos commissioned. Subjects' lawyers reviewing. Names land before public launch.
+          </p>
+        </div>
+      </section>
+
+      {/* ───────── SCIENCE — one line, one CTA ───────── */}
+      <section className="px-6 md:px-10 py-24 md:py-28">
+        <div className="max-w-[1100px] mx-auto grid md:grid-cols-12 gap-10 items-center">
+          <div className="md:col-span-7">
+            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
+              ◆ The numbers, with the asterisks attached
+            </p>
+            <h2
+              className="font-serif-display mt-5 leading-[1.02] tracking-[-0.02em]"
+              style={{ fontSize: "clamp(34px, 4.4vw, 56px)", color: PAPER_INK }}
+            >
+              412 people. Internal cohort. <span className="italic" style={{ color: "var(--brand-oxblood)" }}>Not peer-reviewed.</span>
+            </h2>
+            <p className="mt-7 max-w-xl leading-relaxed text-lg italic" style={{ color: PAPER_INK, opacity: 0.78 }}>
+              We don't put the headline numbers in the hero. Hero numbers without their methodology are advertising. The methodology is on the science page, attached to every cell.
+            </p>
+            <Link
+              to="/science"
+              className="mt-9 inline-flex items-center gap-2 font-mono-label text-[10px] tracking-[0.22em] uppercase border-b pb-1 transition hover:opacity-80"
+              style={{ color: PAPER_INK, borderColor: PAPER_INK }}
+            >
+              See the cohort data · with methodology →
             </Link>
+          </div>
+          <div className="md:col-span-5">
+            <div
+              className="grid grid-cols-2 gap-px"
+              style={{ background: "oklch(0.86 0.025 70)", border: "1px solid oklch(0.86 0.025 70)" }}
+            >
+              {[
+                ["−63%", "back-pain days · wk 8"],
+                ["+58%", "rate sex 'enjoyable' · wk 10"],
+                ["2.4×", "morning erections · wk 12"],
+                ["−47%", "pain as a barrier · wk 12"],
+              ].map(([v, l]) => (
+                <div key={l} className="p-5" style={{ background: PAPER }}>
+                  <p
+                    className="font-serif-display tracking-tight leading-none"
+                    style={{
+                      fontSize: "clamp(28px, 3.4vw, 44px)",
+                      background: "var(--gradient-text)",
+                      WebkitBackgroundClip: "text",
+                      backgroundClip: "text",
+                      color: "transparent",
+                    }}
+                  >
+                    {v}
+                  </p>
+                  <p className="font-mono-label text-[9px] tracking-[0.18em] uppercase mt-3" style={{ color: PAPER_MUTED }}>
+                    {l}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 text-[11px] italic leading-relaxed" style={{ color: PAPER_MUTED }}>
+              Self-reported. Internal in-app cohort. Uncontrolled. Not peer-reviewed. Methodology on every number — read it.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* 08 · FIELD NOTES — testimonials labeled illustrative until real ones are commissioned */}
-      <section id="stories" className="px-6 md:px-10 py-28 md:py-32 border-b border-border">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="flex items-end justify-between flex-wrap gap-4">
-            <div>
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FIELD NOTES · 07 · ILLUSTRATIVE</p>
-              <h2 className="font-serif-display text-4xl md:text-6xl mt-5 max-w-2xl leading-[1.02] tracking-tight">
-                Placeholder voices, written in the room tone.
-              </h2>
-            </div>
-            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-muted-foreground max-w-sm leading-relaxed normal-case">
-              Real testimonials are being commissioned. Until they land, these three are <span className="italic text-foreground">illustrative</span> — written by the brand, not the cohort. We label them as such.
-            </p>
-          </div>
-
-          <div className="mt-10 grid md:grid-cols-3 gap-px bg-border border border-border">
+      {/* ───────── FIELD NOTES — illustrative, three lines ───────── */}
+      <section className="px-6 md:px-10 py-20 md:py-24" style={{ background: PAPER_2 }}>
+        <div className="max-w-[1100px] mx-auto">
+          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
+            ◆ Field notes · illustrative · in brand voice
+          </p>
+          <div className="mt-10 grid md:grid-cols-3 gap-px" style={{ background: "oklch(0.86 0.025 70)", border: "1px solid oklch(0.86 0.025 70)" }}>
             {[
-              { name: "Jake, 32 (illustrative)", role: "L4-L5 herniation", quote: "I scheduled my life around my lower back for four years. I don't anymore. Make of that what you will." },
-              { name: "Maya, 29 (illustrative)", role: "Postpartum", quote: "Two weeks of the breath work and I stopped bracing for everything. Including, eventually, my husband. He noticed before I did." },
-              { name: "Chris, 35 (illustrative)", role: "Sciatica", quote: "First thing I have used that told me what to do today, in a tone that didn't make me consider throwing my phone into a river." },
-            ].map((t)=>(
-              <figure key={t.name} className="bg-background p-8">
-                <blockquote className="font-serif-display text-xl leading-snug">
-                  &ldquo;{t.quote}&rdquo;
+              {
+                q: "I scheduled my life around my lower back for four years. I don't anymore. Make of that what you will.",
+                a: "Jake, 32 — illustrative",
+              },
+              {
+                q: "Two weeks of the breath work and I stopped bracing for everything. Including, eventually, my husband. He noticed before I did.",
+                a: "Maya, 29 — illustrative",
+              },
+              {
+                q: "First thing I've used that told me what to do today, in a tone that didn't make me consider throwing my phone into a river.",
+                a: "Chris, 35 — illustrative",
+              },
+            ].map((t) => (
+              <figure key={t.a} className="p-8" style={{ background: PAPER }}>
+                <blockquote
+                  className="font-serif-display text-lg md:text-xl leading-snug italic"
+                  style={{ color: PAPER_INK }}
+                >
+                  &ldquo;{t.q}&rdquo;
                 </blockquote>
-                <figcaption className="mt-8 pt-6 border-t border-border">
-                  <p className="text-sm">{t.name}</p>
-                  <p className="font-mono-label text-[9px] text-muted-foreground mt-0.5">{t.role}</p>
+                <figcaption className="mt-6 font-mono-label text-[10px] tracking-[0.18em] uppercase" style={{ color: PAPER_MUTED }}>
+                  {t.a}
                 </figcaption>
               </figure>
             ))}
           </div>
-
-          <p className="mt-8 font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground text-center">
-            ◆ illustrative · in brand voice · real cohort quotes replace these in v2
+          <p className="mt-6 text-xs italic" style={{ color: PAPER_MUTED }}>
+            ◆ Real testimonials replace these in v2. Until then, we label them.
           </p>
         </div>
       </section>
 
-      {/* 09 · PRE-SIGNUP — single Stripe-stubbed CTA + repeated email capture */}
-      <section id="signup" className="relative px-6 md:px-10 py-32 border-b border-border overflow-hidden bg-card/30">
-        <div className="absolute inset-0 opacity-30 pointer-events-none"
-             style={{background:"radial-gradient(ellipse at 50% 50%, oklch(0.78 0.14 195 / 0.25), transparent 60%)"}}/>
-        <div className="max-w-[900px] mx-auto text-center relative">
-          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">
-            PRE-SIGNUP · 08 · COHORT 01 · SUMMER 2026
+      {/* ───────── FINAL CTA — dark, declarative ───────── */}
+      <section className="px-6 md:px-10 py-28 md:py-36" style={{ background: "var(--brand-ink)" }}>
+        <div className="max-w-[900px] mx-auto text-center">
+          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: AMBER }}>
+            ◆ Eight minutes is shorter than this homepage
           </p>
-          <h2 className="font-serif-display text-5xl md:text-7xl lg:text-8xl mt-4 leading-[0.95] tracking-[-0.025em]">
-            Don't let your back<br/>
-            be the reason<br/>
-            <span className="italic" style={{color:"var(--brand-amber)", textShadow:"var(--glow-teal)"}}>you stayed in.</span>
+          <h2
+            className="font-serif-display mt-6 leading-[0.96] tracking-[-0.025em]"
+            style={{ fontSize: "clamp(44px, 6vw, 88px)", color: "white" }}
+          >
+            Don't let your back<br />
+            be the reason{" "}
+            <span className="italic" style={{ color: AMBER }}>
+              you stayed in.
+            </span>
           </h2>
-          <p className="mt-8 text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Two weeks free, then $24.99 a month. Cancel any time. Web-first — no app store, no download, no review process. The product is the work.
+          <p className="mt-8 max-w-xl mx-auto text-lg leading-relaxed italic" style={{ color: "oklch(0.82 0.02 50)" }}>
+            Two weeks free. $24.99 a month after, cancel any time. Web-first — no app store, no download, no review process, no shame screen.
           </p>
-
-          <div className="mt-10 flex justify-center">
-            <BaselineCTA size="lg" />
+          <div className="mt-12 flex items-center justify-center gap-5 flex-wrap">
+            <Link
+              to="/dashboard"
+              className="inline-flex items-center justify-center gap-2 px-9 py-5 rounded-full text-base font-semibold transition hover:opacity-90"
+              style={{
+                background: AMBER,
+                color: "var(--brand-ink)",
+                boxShadow: "0 0 32px oklch(0.78 0.13 78 / 0.35)",
+              }}
+            >
+              Run the 7-minute baseline <ArrowUpRight className="w-5 h-5" />
+            </Link>
+            <Link
+              to="/science"
+              className="font-mono-label text-[10px] tracking-[0.22em] uppercase hover:opacity-80 transition"
+              style={{ color: "oklch(0.78 0.02 50)" }}
+            >
+              Or read the science first →
+            </Link>
           </div>
-
-          <div className="mt-14 max-w-lg mx-auto border-t border-border pt-10">
-            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-muted-foreground mb-3">
-              Or get the protocol notes — one email a week, written by the council
-            </p>
-            <EarlyAccessForm accent="amber" />
-          </div>
-
-          <p className="mt-12 text-[11px] text-muted-foreground max-w-xl mx-auto leading-relaxed italic font-serif-display">
-            Not a medical device. If your back is screaming, see a PT. If sex hurts, if arousal has quietly left the chat, if your erection has been MIA for three months: see a pelvic-health PT, a gynecologist, a urologist. Pick the relevant one. We are coaches, not your doctor.
+          <p
+            className="mt-16 text-xs max-w-xl mx-auto leading-relaxed italic font-serif-display"
+            style={{ color: "oklch(0.7 0.02 50)" }}
+          >
+            Not a medical device. If your back is screaming, see a PT. If sex hurts, if arousal has quietly left the chat, if your erection has been MIA for three months: see the relevant specialist. We are coaches, not your doctor.
           </p>
         </div>
       </section>
 
-      <footer className="px-6 md:px-10 py-12">
-        <div className="max-w-[1280px] mx-auto grid md:grid-cols-3 gap-8 font-mono-label text-[10px] tracking-[0.18em] uppercase text-muted-foreground">
-          <div>
-            <div className="flex items-center gap-2 text-foreground mb-3">
-              <svg width="16" height="16" viewBox="0 0 22 22" className="text-[var(--brand-amber)]">
-                <circle cx="11" cy="11" r="10" stroke="currentColor" strokeWidth="1" fill="none"/>
-                <circle cx="11" cy="11" r="3" fill="currentColor"/>
-              </svg>
-              <span className="font-serif-display text-base">BackStroke</span>
-            </div>
-            <p>Eight minutes a day. The rent your spine pays. Non-negotiable. We don't make the rules. Gravity does.</p>
-            <p className="mt-3 font-serif-display italic text-foreground/80 normal-case tracking-normal">Fit. Flex. Fuck.</p>
+      {/* ───────── Footer — slim ───────── */}
+      <footer className="px-6 md:px-10 py-10" style={{ background: PAPER, borderTop: "1px solid oklch(0.86 0.025 70)" }}>
+        <div className="max-w-[1180px] mx-auto flex items-center justify-between flex-wrap gap-6 font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: PAPER_MUTED }}>
+          <div className="flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 22 22" style={{ color: "var(--brand-oxblood)" }}>
+              <circle cx="11" cy="11" r="10" stroke="currentColor" strokeWidth="1" fill="none" />
+              <circle cx="11" cy="11" r="3" fill="currentColor" />
+            </svg>
+            <span className="font-serif-display text-base italic normal-case tracking-normal" style={{ color: PAPER_INK }}>
+              Back<span style={{ color: "var(--brand-oxblood)" }}>Stroke</span>
+            </span>
           </div>
-          <div className="md:text-center flex flex-col gap-2">
-            <Link to="/dashboard" className="hover:text-foreground transition">Today (dashboard)</Link>
-            <Link to="/positions" className="hover:text-foreground transition">Position library</Link>
-            <Link to="/conversation" className="hover:text-foreground transition">Conversation script</Link>
-            <Link to="/science" className="hover:text-foreground transition">Science</Link>
-            <Link to="/council" className="hover:text-foreground transition">The council</Link>
-            <Link to="/protocol" className="hover:text-foreground transition">Run the baseline</Link>
-            <Link to="/podcast" className="hover:text-foreground transition">Podcast</Link>
+          <div className="flex flex-wrap gap-x-7 gap-y-2 justify-center">
+            <Link to="/dashboard" className="hover:opacity-80 transition">Today</Link>
+            <Link to="/positions" className="hover:opacity-80 transition">Positions</Link>
+            <Link to="/conversation" className="hover:opacity-80 transition">Scripts</Link>
+            <Link to="/science" className="hover:opacity-80 transition">Science</Link>
+            <Link to="/council" className="hover:opacity-80 transition">Council</Link>
+            <Link to="/podcast" className="hover:opacity-80 transition">Podcast</Link>
           </div>
-          <div className="md:text-right">
-            © BackStroke Labs · MMXXVI · a backstroke protocol · no candle revenue
-          </div>
+          <span>℠ MMXXVI · no candle revenue</span>
         </div>
       </footer>
     </div>
