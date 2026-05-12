@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Suspense, useMemo, useRef } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { evaluateMovement, type Pose, type SubjectPose, BONE_NAMES } from "@/lib/pose";
 import { getMovement } from "@/lib/movements";
@@ -301,7 +301,86 @@ function Scene({ moveKey, paused }: { moveKey: MoveKey; paused: boolean }) {
   );
 }
 
-/* ───────── Public component ───────── */
+/* ───────── Procedural canvas (fallback) ───────── */
+
+function ProceduralCanvas({
+  moveKey,
+  paused = false,
+}: {
+  moveKey: MoveKey;
+  paused?: boolean;
+}) {
+  return (
+    <Canvas
+      shadows
+      camera={{ position: [2.2, 1.1, 1.8], fov: 36 }}
+      gl={{ antialias: true, alpha: false }}
+      style={{
+        background:
+          "radial-gradient(ellipse 80% 50% at 50% 30%, #1f1a16 0%, #100c0a 60%, #050403 100%)",
+      }}
+    >
+      <directionalLight
+        position={[2.4, 4.2, 2.6]}
+        intensity={1.6}
+        color="#f4d493"
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+        shadow-camera-left={-3}
+        shadow-camera-right={3}
+        shadow-camera-top={3}
+        shadow-camera-bottom={-3}
+        shadow-bias={-0.0005}
+      />
+      <directionalLight position={[-2.6, 2.2, -1.4]} intensity={0.45} color={BLUSH} />
+      <directionalLight position={[0, 2.4, -3]} intensity={0.5} color="#e8c69a" />
+      <ambientLight intensity={0.18} />
+
+      <Suspense fallback={null}>
+        <Scene moveKey={moveKey} paused={paused} />
+      </Suspense>
+    </Canvas>
+  );
+}
+
+/* ───────── Video player ───────── */
+
+function VideoPlayer({
+  moveKey,
+  paused = false,
+}: {
+  moveKey: MoveKey;
+  paused?: boolean;
+}) {
+  const ref = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (paused) v.pause();
+    else void v.play().catch(() => {});
+  }, [paused]);
+
+  return (
+    <video
+      ref={ref}
+      src={`/demos/${moveKey}.mp4`}
+      poster={`/demos/${moveKey}.jpg`}
+      autoPlay
+      loop
+      muted
+      playsInline
+      className="w-full h-full object-cover"
+      style={{
+        background:
+          "radial-gradient(ellipse 80% 50% at 50% 30%, #1f1a16 0%, #100c0a 60%, #050403 100%)",
+      }}
+    />
+  );
+}
+
+/* ───────── Public component — video-first, procedural fallback ───────── */
 
 export function MovementDemo({
   moveKey,
@@ -310,38 +389,37 @@ export function MovementDemo({
   moveKey: MoveKey;
   paused?: boolean;
 }) {
+  // null = probing, true = use video, false = fallback to procedural
+  const [hasVideo, setHasVideo] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`/demos/${moveKey}.mp4`, { method: "HEAD" })
+      .then((r) => {
+        if (cancelled) return;
+        setHasVideo(r.ok && r.headers.get("content-type")?.startsWith("video") !== false);
+      })
+      .catch(() => {
+        if (!cancelled) setHasVideo(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [moveKey]);
+
   return (
     <div className="absolute inset-0">
-      <Canvas
-        shadows
-        camera={{ position: [2.2, 1.1, 1.8], fov: 36 }}
-        gl={{ antialias: true, alpha: false }}
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 50% at 50% 30%, #1f1a16 0%, #100c0a 60%, #050403 100%)",
-        }}
-      >
-        <directionalLight
-          position={[2.4, 4.2, 2.6]}
-          intensity={1.6}
-          color="#f4d493"
-          castShadow
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
-          shadow-camera-left={-3}
-          shadow-camera-right={3}
-          shadow-camera-top={3}
-          shadow-camera-bottom={-3}
-          shadow-bias={-0.0005}
-        />
-        <directionalLight position={[-2.6, 2.2, -1.4]} intensity={0.45} color={BLUSH} />
-        <directionalLight position={[0, 2.4, -3]} intensity={0.5} color="#e8c69a" />
-        <ambientLight intensity={0.18} />
+      {hasVideo === true ? (
+        <VideoPlayer moveKey={moveKey} paused={paused} />
+      ) : (
+        <ProceduralCanvas moveKey={moveKey} paused={paused} />
+      )}
 
-        <Suspense fallback={null}>
-          <Scene moveKey={moveKey} paused={paused} />
-        </Suspense>
-      </Canvas>
+      {hasVideo === false && (
+        <div className="absolute bottom-4 right-4 font-mono-label text-[9px] tracking-[0.22em] uppercase text-white/40 pointer-events-none">
+          ◆ procedural · video TBD
+        </div>
+      )}
     </div>
   );
 }
