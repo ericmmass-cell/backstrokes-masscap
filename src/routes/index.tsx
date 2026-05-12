@@ -273,64 +273,84 @@ function Index() {
 
           <div className="grid lg:grid-cols-2 gap-px bg-border border border-border">
             {/* BACK column */}
-            <div className="bg-background p-8 md:p-10">
-              <div className="flex items-baseline justify-between mb-6">
-                <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">FOR THE BACK</p>
-                <Activity className="w-5 h-5 text-[var(--brand-amber)]" />
+            <div className="bg-background">
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <img src={backStudy} alt="Lateral study of the lumbar spine in a bird-dog plank" loading="lazy" width={1024} height={640}
+                     className="w-full h-full object-cover"/>
+                <div className="absolute inset-0" style={{background:"linear-gradient(180deg, transparent 40%, oklch(0.12 0.012 30) 100%)"}}/>
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] text-white/70">
+                  <span>FIG. 01 · LATERAL · L4-L5</span>
+                  <span style={{color:"var(--brand-amber)"}}>● THE BACK</span>
+                </div>
+                <div className="absolute bottom-4 left-5 right-5">
+                  <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)] mb-1">For the back</p>
+                  <h3 className="font-serif-display text-3xl md:text-4xl italic leading-[1.05]">A quieter lumbar in two weeks.</h3>
+                </div>
               </div>
-              <h3 className="font-serif-display text-3xl italic leading-tight mb-2">A quieter lumbar in two weeks.</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                Not stretching. Endurance, hinging, and a small set of habits the wellness aisle won't sell you because none of them come in a tub.
-              </p>
-              <ol className="space-y-5">
-                {[
-                  ["McGill big-3", "Curl-up, side plank, bird dog. Eight minutes. The endurance trio that out-quiets disc pain better than every stretch your yoga teacher recommended in good faith and a Lululemon discount."],
-                  ["Hip-hinge re-pattern", "How to pick up the laundry without folding your spine into a question mark. The single move that retires ninety percent of 'I tweaked it bending over to feed the cat.'"],
-                  ["Glute bridge + 90/90 hip switch", "Reactivate the muscles supposed to be carrying your spine. They have been on paid leave since you accepted the desk job, with full benefits and a foam-roller stipend."],
-                  ["Dead-hang + thoracic opener", "Two minutes a day. Decompresses the discs gravity has spent the day politely compressing while you nodded through a Zoom."],
-                  ["Sleep position audit", "Pillow under the knees, not under the head. The boring change you make tonight that your morning lumbar writes you a thank-you note for, in cursive."],
-                  ["Sitting protocol", "When to stand, what to perch on, how to drive a long haul without arriving as a folded napkin. Boring. Decisive. Free."],
-                ].map(([h, b], i) => (
-                  <li key={h} className="flex gap-4">
-                    <span className="font-mono-label text-[10px] text-muted-foreground pt-1 w-6 shrink-0">B.0{i+1}</span>
-                    <div>
-                      <p className="font-serif-display text-lg leading-tight">{h}</p>
-                      <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{b}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <div className="p-7 md:p-9">
+                <p className="text-sm text-muted-foreground leading-relaxed mb-7 max-w-md">
+                  Endurance, hinging, six habits the wellness aisle won't sell because none of them come in a tub.
+                </p>
+                <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-5">
+                  {[
+                    ["McGill big-3", "Curl-up, side plank, bird dog. 8 min. Out-quiets discs."],
+                    ["Hip-hinge re-pattern", "Pick up laundry without folding into a question mark."],
+                    ["Glute bridge + 90/90", "Reactivate the muscles on paid leave since the desk job."],
+                    ["Dead-hang + thoracic opener", "2 min. Decompresses what Zoom spent the day compressing."],
+                    ["Sleep position audit", "Pillow under the knees. Tomorrow's lumbar writes a thank-you."],
+                    ["Sitting protocol", "When to stand, what to perch on. Boring. Decisive. Free."],
+                  ].map(([h, b], i) => (
+                    <li key={h} className="flex gap-3 border-t border-border/60 pt-3">
+                      <span className="font-mono-label text-[9px] text-[var(--brand-amber)] pt-1 shrink-0">B.0{i+1}</span>
+                      <div>
+                        <p className="font-serif-display text-base leading-tight">{h}</p>
+                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{b}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </div>
 
             {/* BEDROOM column */}
-            <div className="bg-background p-8 md:p-10" style={{background:"linear-gradient(180deg, var(--background), oklch(0.16 0.012 25 / 0.4))"}}>
-              <div className="flex items-baseline justify-between mb-6">
-                <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{color:"var(--brand-blush)"}}>FOR THE BEDROOM</p>
-                <Waves className="w-5 h-5" style={{color:"var(--brand-blush)"}} />
+            <div className="bg-background" style={{background:"linear-gradient(180deg, var(--background), oklch(0.16 0.012 25 / 0.4))"}}>
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <img src={bedroomStudy} alt="Low-light bedroom study, two adults under linen" loading="lazy" width={1024} height={640}
+                     className="w-full h-full object-cover"/>
+                <div className="absolute inset-0" style={{background:"linear-gradient(180deg, transparent 40%, oklch(0.12 0.012 30) 100%)"}}/>
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] text-white/70">
+                  <span>FIG. 02 · 11:42 PM · LIGHTS LOW</span>
+                  <span style={{color:"var(--brand-blush)"}}>● THE BEDROOM</span>
+                </div>
+                <div className="absolute bottom-4 left-5 right-5">
+                  <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-1" style={{color:"var(--brand-blush)"}}>For the bedroom</p>
+                  <h3 className="font-serif-display text-3xl md:text-4xl italic leading-[1.05]" style={{color:"var(--brand-blush)"}}>Sex you're sincerely into. Again.</h3>
+                </div>
               </div>
-              <h3 className="font-serif-display text-3xl italic leading-tight mb-2" style={{color:"var(--brand-blush)"}}>Sex you're sincerely into. Again.</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-                The bar isn't getting it up. It isn't getting wet. It isn't "blood flow," whatever the supplement guys decided that means this quarter. The bar is sex you're actually present for. Sex you finish thinking about the person, not your L4. Pelvic floor done properly in both directions, a position library scored against your spine, and the conversations your GP would clearly rather not have on a Tuesday at 4:50pm.
-              </p>
-              <ol className="space-y-5">
-                {[
-                  ["Reverse kegel + diaphragmatic drop", "Most adults can't relax their pelvic floor on command. That is why erections fade, why orgasms feel small, why penetration hurts. We coach the down-train first, then the up-train. The free app you downloaded skipped step one and called it a feature."],
-                  ["Kegel done correctly", "The one your phone-app version got wrong by counting reps instead of teaching control. Eccentric load for ejaculatory timing in men, arousal and orgasmic depth in women. Counting was never the hard part."],
-                  ["Perineal + internal release work", "External and (when indicated) internal trigger-point release. For dyspareunia, vaginismus, post-prostatectomy, postpartum, chronic pelvic pain. Done with a credentialed PT, not a shirtless man on YouTube with a lacrosse ball and a thesis."],
-                  ["Position library, scored by spine", "Forty positions ranked by lumbar load, hip flexion, breath access. Pick the one your back can sign off on tonight. The end of pretending it didn't twinge and lying very still afterwards."],
-                  ["Lube and tool literacy", "Silicone vs water vs hybrid. Dilator sets, vibrators, cock rings, wedges. What they actually do, when to use them, and which brands a clinician would hand you instead of the ones with the prettiest serif logo."],
-                  ["Arousal as parasympathetic skill", "Four-seven-eight before, not after. We coach the breath cadence that lets your nervous system actually arrive on time. Apparently this was a teachable skill the entire time."],
-                  ["The conversation script", "What to say to your partner about pain, pace, what you want. Written by AASECT therapists. Performed in your kitchen. Not in a clinic. Not in a group chat called Wine Witches."],
-                ].map(([h, b], i) => (
-                  <li key={h} className="flex gap-4">
-                    <span className="font-mono-label text-[10px] text-muted-foreground pt-1 w-6 shrink-0">F.0{i+1}</span>
-                    <div>
-                      <p className="font-serif-display text-lg leading-tight" style={{color:"var(--brand-blush)"}}>{h}</p>
-                      <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{b}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <div className="p-7 md:p-9">
+                <p className="text-sm text-muted-foreground leading-relaxed mb-7 max-w-md">
+                  Not blood flow. Not getting it up or wet. Sex you finish thinking about the person, not your L4.
+                </p>
+                <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-5">
+                  {[
+                    ["Reverse kegel + diaphragm drop", "Down-train the floor. The step the $9.99 app skipped."],
+                    ["Kegel, done correctly", "Eccentric load. For ejaculatory control and orgasmic depth."],
+                    ["Perineal + internal release", "PT-led trigger work. Dyspareunia, vaginismus, post-partum, post-prostatectomy."],
+                    ["Position library, scored by spine", "40 positions ranked by lumbar load and breath access."],
+                    ["Lube + tool literacy", "Silicone vs water. Dilators, wedges, rings. What clinicians actually hand you."],
+                    ["Arousal as parasympathetic skill", "4-7-8 before, not after. Apparently this was teachable."],
+                    ["The conversation script", "What to say about pain, pace, what you want. Written by AASECT."],
+                  ].map(([h, b], i) => (
+                    <li key={h} className="flex gap-3 border-t border-border/60 pt-3">
+                      <span className="font-mono-label text-[9px] text-[var(--brand-blush)] pt-1 shrink-0">F.0{i+1}</span>
+                      <div>
+                        <p className="font-serif-display text-base leading-tight" style={{color:"var(--brand-blush)"}}>{h}</p>
+                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{b}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </div>
           </div>
 
