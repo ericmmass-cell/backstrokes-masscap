@@ -446,14 +446,7 @@ function Index() {
               <p className="mt-5 text-muted-foreground leading-relaxed text-sm">
                 Erections and lubrication are the floor, not the ceiling. A chronically gripping pelvic floor is why arousal stalls and penetration hurts. Down-train, then up-train. APTA pelvic-health PTs, on video, in plain language.
               </p>
-              <ul className="mt-6 grid grid-cols-3 gap-px bg-border border border-border">
-                {[["1.", "down-train"], ["2.", "up-train"], ["3.", "load"]].map(([v,l])=>(
-                  <li key={l} className="bg-background px-3 py-3">
-                    <p className="font-serif-display text-lg" style={{color:"var(--brand-blush)"}}>{v}</p>
-                    <p className="font-mono-label text-[9px] text-muted-foreground mt-1 uppercase tracking-wider">{l}</p>
-                  </li>
-                ))}
-              </ul>
+              <StatStrip items={BEDROOM_STATS} accent="blush" />
               <p className="mt-4 text-[11px] text-muted-foreground italic">
                 Postpartum and post-prostatectomy protocols built in. Same voice, softer register.
               </p>
