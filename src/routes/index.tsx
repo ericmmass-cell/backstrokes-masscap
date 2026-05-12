@@ -249,7 +249,22 @@ function Index() {
           <div className="grid lg:grid-cols-2 gap-px bg-border border border-border">
             {/* BACK column */}
             <div className="bg-background">
-              <div className="relative aspect-[16/10] overflow-hidden">
+              {/* Mobile: tap-to-zoom carousel */}
+              <div className="md:hidden">
+                <MobileImageCarousel
+                  accent="amber"
+                  topLabel="FIG. 01 · LATERAL · L4-L5 · ● THE BACK"
+                  bottomEyebrow="For the back"
+                  bottomTitle="A quieter lumbar in two weeks."
+                  images={[
+                    { src: backStudy, alt: "Lateral study of the lumbar spine in a bird-dog plank", caption: "FIG. 01 · LATERAL · L4-L5" },
+                    { src: mcgillStudy, alt: "Overhead study, McGill curl-up engagement", caption: "FIG. 03 · CURL-UP · 8 SEC HOLD" },
+                    { src: portrait, alt: "Coach portrait, studio light", caption: "FIG. 05 · COACH · STUDIO" },
+                  ]}
+                />
+              </div>
+              {/* Desktop: original hero */}
+              <div className="relative aspect-[16/10] overflow-hidden hidden md:block">
                 <img src={backStudy} alt="Lateral study of the lumbar spine in a bird-dog plank" loading="lazy" width={1024} height={640}
                      className="w-full h-full object-cover"/>
                 <div className="absolute inset-0" style={{background:"linear-gradient(180deg, transparent 40%, oklch(0.12 0.012 30) 100%)"}}/>
