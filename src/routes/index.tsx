@@ -83,7 +83,7 @@ function Index() {
             </h1>
 
             <p className="mt-8 text-xl text-foreground max-w-xl leading-snug font-serif-display">
-              BackStroke is eight minutes a day for adults whose back pain has started turning sex into a logistics problem. <span className="italic" style={{color:"var(--brand-amber)"}}>Same pelvis. Same nerves. Same eight muscles doing too much unpaid labor.</span> We train the overlap: spine PTs and pelvic-floor PTs on one chart, because two clinics ignoring each other is not a treatment plan.
+              BackStroke is the eight-minute protocol that treats your spine and your sex life as the same engineering problem, because anatomically they always were. <span className="italic" style={{color:"var(--brand-amber)"}}>Built by spine PTs and pelvic-floor PTs who got tired of writing the same chart twice.</span> No candles. No life coach. No guy in a tank top.
             </p>
 
             {/* What you actually get */}
