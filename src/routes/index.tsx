@@ -202,35 +202,6 @@ function Index() {
         </div>
       </div>
 
-      {/* CREDIBILITY BAND */}
-      <div className="border-b border-border bg-card/40">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-10">
-          <div className="grid md:grid-cols-[140px_1fr] gap-6 md:gap-12 items-start">
-            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)] md:pt-1">
-              Coached by ↓
-            </p>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 font-serif-display text-sm md:text-[15px] text-muted-foreground">
-              <li><span className="text-foreground italic">McGill-trained</span> spine PTs</li>
-              <li><span className="text-foreground italic">APTA</span> Pelvic Health (men &amp; women)</li>
-              <li><span className="text-foreground italic">ISSWSH</span> + <span className="text-foreground italic">AASECT</span> sex therapists</li>
-              <li><span className="text-foreground italic">UCSF</span> Urology &amp; Ob-Gyn consults</li>
-            </ul>
-          </div>
-        </div>
-        <div className="border-t border-border/60 bg-background/40">
-          <div className="max-w-[1280px] mx-auto px-6 md:px-10 py-4 grid md:grid-cols-[140px_1fr] gap-2 md:gap-12 items-start">
-            <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">
-              Evidence base ↓
-            </p>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1.5 font-mono-label text-[9px] tracking-[0.16em] uppercase text-muted-foreground">
-              <li>McGill spine endurance protocols</li>
-              <li>NIH NIDDK pelvic floor (2023)</li>
-              <li>ISSWSH female sexual function consensus</li>
-              <li>AUA erectile + ejaculatory guidelines</li>
-            </ul>
-          </div>
-        </div>
-      </div>
 
       {/* LIVE PROTOCOL, actually fix, flex, f*ck */}
       <section id="try" className="px-6 md:px-10 py-24 border-b border-border relative overflow-hidden">
