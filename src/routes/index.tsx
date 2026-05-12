@@ -11,6 +11,8 @@ import t1 from "@/assets/testimonial-1.jpg";
 import t2 from "@/assets/testimonial-2.jpg";
 import t3 from "@/assets/testimonial-3.jpg";
 import intimate from "@/assets/intimate.jpg";
+import backStudy from "@/assets/back-study.jpg";
+import bedroomStudy from "@/assets/bedroom-study.jpg";
 import { LiveProtocol } from "@/components/LiveProtocol";
 
 export const Route = createFileRoute("/")({
