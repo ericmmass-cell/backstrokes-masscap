@@ -147,7 +147,7 @@ function ConversationPage() {
             Pick a thing. <span className="italic" style={{ color: "var(--brand-amber)" }}>We'll start the sentence.</span>
           </h1>
           <p className="mt-7 text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            Written like a smart friend who has done this before. Not clinical, not coy, not euphemistic. The line is a starter — change a word, change the order, make it yours. The work is saying it out loud.
+            Written like a smart friend who has done this before. Not clinical. Not coy. Not euphemistic. The line is a starter. Change a word, change the order, make it yours. The work is saying it out loud, which is the part the kegel app could not help you with.
           </p>
         </div>
       </section>

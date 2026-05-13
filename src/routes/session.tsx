@@ -360,7 +360,7 @@ function SessionPlayer() {
             Done.
           </h1>
           <p className="mt-6 font-serif-display text-xl italic text-muted-foreground leading-snug">
-            The lumbar doesn't show up on day one — that's day nine. We'll see you tomorrow, with new distractions.
+            The lumbar does not show up on day one. That is day nine. We will see you tomorrow, with new Romans, new saints, or a doctor whose practice has not aged well.
           </p>
           <p className="mt-4 font-mono-label text-[10px] tracking-[0.22em] uppercase text-muted-foreground">
             ◆ {mmss(elapsed)} elapsed · {deck.length} entries available, {Math.min(deck.length, Math.floor(elapsed / QUOTE_INTERVAL) + 1)} shown
@@ -509,7 +509,7 @@ function SessionPlayer() {
             </div>
 
             <p className="mt-5 font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground">
-              {paused ? "Paused. The clock waits. The distractions, less so." : "Inhale on dim, exhale on bright."}
+              {paused ? "Paused. The clock waits. The Romans, less so." : "Inhale on dim, exhale on bright."}
             </p>
           </div>
         </div>

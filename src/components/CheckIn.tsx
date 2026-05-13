@@ -33,7 +33,7 @@ const QUESTIONS: Question[] = [
   {
     id: "back-zone",
     prompt: "Back, this morning.",
-    hint: "Pick everything that's talking. We don't grade you for honesty.",
+    hint: "Pick everything that is talking. We do not grade you for honesty. We grade the chair.",
     multi: true,
     options: [
       { value: "none", label: "Nothing worth naming", delta: +6 },
@@ -47,8 +47,8 @@ const QUESTIONS: Question[] = [
   },
   {
     id: "floor",
-    prompt: "Pelvic floor — how does it feel today?",
-    hint: "Be specific. The floor doesn't lie; we mostly mistranslate.",
+    prompt: "Pelvic floor. How does it feel today?",
+    hint: "Be specific. The floor does not lie. We mostly mistranslate.",
     options: [
       { value: "unnoticed", label: "Unnoticed", delta: +3 },
       { value: "relaxed", label: "Relaxed · soft", delta: +4 },
@@ -68,13 +68,13 @@ const QUESTIONS: Question[] = [
       { value: "stopped", label: "Pain enough to stop", delta: -4 },
       { value: "avoid", label: "Avoided it", delta: -2 },
       { value: "none", label: "Didn't happen", delta: 0 },
-      { value: "skip", label: "Mind your business", delta: 0 },
+      { value: "skip", label: "Mind your business · we already are", delta: 0 },
     ],
   },
   {
     id: "exercise",
     prompt: "Other exercise yesterday.",
-    hint: "On top of the protocol. Sport counts. Sex too — we already asked.",
+    hint: "On top of the protocol. Sport counts. Sex too. We already asked.",
     options: [
       { value: "walk", label: "Walked", delta: +2 },
       { value: "cardio", label: "Cardio", delta: +2 },
@@ -87,7 +87,7 @@ const QUESTIONS: Question[] = [
   {
     id: "sitting",
     prompt: "Sitting hours, yesterday.",
-    hint: "Round honestly. Standing desks count only if you used them.",
+    hint: "Round honestly. Standing desks count only if you raised them. Hotel-room chairs count twice.",
     options: [
       { value: "0-3", label: "0 – 3", delta: +5 },
       { value: "3-6", label: "3 – 6", delta: +2 },
@@ -104,7 +104,7 @@ const QUESTIONS: Question[] = [
       { value: "back-knees", label: "Back · pillow under knees", delta: +3 },
       { value: "side", label: "Side · no pillow", delta: 0 },
       { value: "back", label: "Back · flat", delta: -1 },
-      { value: "stomach", label: "Stomach · yes, again", delta: -4 },
+      { value: "stomach", label: "Stomach · against medical advice", delta: -4 },
     ],
   },
 ];
@@ -131,10 +131,10 @@ function computeDelta(
 
 /** Three-tier feedback line written in voice. */
 function feedbackFor(delta: number): string {
-  if (delta >= 12) return "Logged. The room agrees with you. Quiet day, by your numbers.";
+  if (delta >= 12) return "Logged. The room agrees with you today. Do not get used to it; the disc is moody.";
   if (delta >= 4) return "Logged. Sleep and sitting carried more than they had to. Hold the dose.";
   if (delta > -3) return "Logged. Mostly held the line. The chair is the variable, usually.";
-  if (delta > -10) return "Logged. The numbers are honest. Tomorrow is a flat number too — that's the protocol.";
+  if (delta > -10) return "Logged. The numbers are honest. Tomorrow is a flat number too. That is the protocol. We are coaches, not motivational speakers.";
   return "Logged. Yesterday was a long day. The protocol does not make a thing of it. Eight minutes still.";
 }
 
@@ -199,7 +199,7 @@ export function CheckIn({
             We'd rather know <span style={{ color: "var(--brand-amber)" }}>than guess.</span>
           </h2>
           <p className="text-sm text-muted-foreground mt-3 leading-relaxed max-w-xl italic">
-            Six taps, no follow-up questions. The Index moves on what you log. We don't ask twice and we don't grade you for the stomach answer.
+            Six taps, no follow-up questions. The Index moves on what you log. We do not ask twice and we do not grade you for the stomach answer, which is in the data anyway.
           </p>
         </div>
         <div className="text-right">

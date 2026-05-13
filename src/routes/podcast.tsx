@@ -35,7 +35,7 @@ const EPISODES: Episode[] = [
   },
   {
     num: "02",
-    title: "Down-train first. The eight-million-download mistake.",
+    title: "Down-train first. The mistake eight million downloads agreed on.",
     duration: "00:00",
     guests: "TBD pelvic-health PT",
     blurb:
@@ -82,7 +82,7 @@ function Podcast() {
             The PT and the sex therapist, <span className="italic" style={{ color: "var(--brand-amber)" }}>in the same room, on the record.</span>
           </h1>
           <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-3xl">
-            The chart that should have always been one chart, finally read out loud. Each episode pairs a clinician from the spine side with a clinician from the bedroom side. No supplements. No life coaches. No sponsor that sells a tincture.
+            The chart that should have always been one chart, finally read out loud. Each episode pairs a clinician from the spine side with a clinician from the bedroom side. No supplements. No life coaches. No sponsor that sells a tincture. No host who quit medicine to become an entrepreneur.
           </p>
         </div>
       </section>

@@ -143,7 +143,7 @@ function PositionsPage() {
             Pick something <span className="italic" style={{ color: "var(--brand-amber)" }}>your back can sign off on.</span>
           </h1>
           <p className="mt-7 text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            Every entry has four scores and a one-line note from the clinical council. Filter by today's Index. If the lumbar load is over your cap, the position drops out of the list. We do not hide it dramatically.
+            Every entry has four scores and a one-line note from the clinical council. Filter by today's Index. If the lumbar load is over your cap, the position drops out of the list. We do not hide it dramatically, with a paywall and a candle.
           </p>
         </div>
       </section>
@@ -242,7 +242,7 @@ function PositionsPage() {
 
           {rows.length === 0 ? (
             <p className="font-serif-display text-xl italic text-muted-foreground max-w-md">
-              Nothing in this slice clears today's load cap. Lower the filter, or pick the solo category for a tonight that doesn't ask much of the spine.
+              Nothing in this slice clears today's load cap. Lower the filter. Or pick solo, which the spine has fewer opinions about and the council has no notes on.
             </p>
           ) : (
             <ul className="grid md:grid-cols-2 gap-px bg-border border border-border">

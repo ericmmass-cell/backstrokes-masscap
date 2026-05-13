@@ -47,6 +47,22 @@ function loadState(): SessionState {
   }
 }
 
+/** Rotating P.S. line. Six variants, picks one by day-of-year. */
+function ps(): string {
+  const day = Math.floor(
+    (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000,
+  );
+  const bank = [
+    "P.S. Still no candle revenue. Three weeks in and the lumbar has not asked for one once.",
+    "P.S. The hotel-room chair in your office. We see it. Your spine sees it. You did not pick it.",
+    "P.S. Your standing desk is plugged in, not engaged. We can tell by the curve.",
+    "P.S. The kegel app went quiet last Tuesday. So did the floor it trained.",
+    "P.S. Nobody on the council owns a ring light. This is on purpose.",
+    "P.S. The Pilates instructor on TikTok is statistically wrong about your floor. Statistically.",
+  ];
+  return bank[day % bank.length];
+}
+
 function letterFor(state: SessionState): { lede: string; signer: string; role: string } {
   const dow = new Date().getDay();
   if (state.flareSwapped) {
@@ -57,13 +73,13 @@ function letterFor(state: SessionState): { lede: string; signer: string; role: s
     };
   }
   const map: Record<number, string> = {
-    0: "The 'rest day' is a myth the supplement industry sells. The lumbar adapts to micro-doses. Eight minutes below.",
+    0: "The 'rest day' is a myth the supplement industry sells, alongside a tincture you are now subscribed to. The lumbar adapts to micro-doses of movement. Remove them for 36 hours and you will feel it Monday. Eight minutes below. If you can read this, you can do it. If you cannot, you have other problems.",
     1: "Monday. The lumbar woke up first and is, against its own advice, willing to be reasonable. Hold the dose.",
-    2: "Tuesday. The disc's least sympathetic day, statistically — by now it's done complaining and started litigating. Hold the dose.",
-    3: "Wednesday — the floor's day. Add the reverse kegel after the spine block. The inhale lengthens, the exhale releases.",
-    4: "Thursday. The chair is the variable today, not the protocol. Eight minutes still, then a 30/3 rule the rest of the day.",
-    5: "Friday. The protocol works on Saturdays too — statistically, this is news to most users. Run it before the social part.",
-    6: "The 'rest day' is a myth the supplement industry sells. The lumbar adapts to micro-doses. Eight minutes below.",
+    2: "Tuesday. The disc files motions on Tuesdays. This is consistent with the data, not a personal grudge. The cause is below in the drivers; usually it's the chair, which you would not have chosen for any other reason. We do the eight minutes anyway. Cumulative load is the only thing that moves this number, and the only thing that has ever moved it. No new advice today.",
+    3: "Wednesday. The floor's day. Add the reverse kegel and diaphragmatic breath to the spine block. The inhale lengthens, the exhale releases, nothing should feel like effort. If you can't feel the drop, you are doing a kegel, which is the thing the eight-million-download apps trained you to do. Four sets of ten breaths, seven minutes, after the big-3 not before.",
+    4: "Thursday. The 30/3 rule is the only intervention that touches sitting hours. Stand three minutes every thirty, walk the corridor if there is one, do one hip-hinge set if there isn't. Today's session is unchanged. We are not adding work. We are subtracting time spent at 90°, which is the angle the human body lost an argument with in 1958 and has been losing it since.",
+    5: "Friday. The protocol works on Saturdays too. Statistically, this is news to most users. Run it before the social part of the evening, not at midnight after.",
+    6: "The 'rest day' is a myth the supplement industry sells, alongside a tincture you are now subscribed to. The lumbar adapts to micro-doses of movement. Remove them for 36 hours and you will feel it Monday. Eight minutes below. If you can read this, you can do it. If you cannot, you have other problems.",
   };
   return { lede: map[dow], signer: dow === 3 ? "K.R." : "D.G.", role: dow === 3 ? "pelvic-health PT" : "spine PT" };
 }
@@ -95,7 +111,7 @@ function HeroCard({ state }: { state: SessionState }) {
             Eight minutes for the spine.
           </p>
           <p className="font-serif-display text-base italic text-white/85 mt-1 leading-snug">
-            The rent your back pays. Non-negotiable. We don't make the rules — gravity does.
+            The rent your back pays. Non-negotiable. We don't make the rules. Gravity does.
           </p>
         </div>
       </div>
@@ -130,12 +146,16 @@ function HeroCard({ state }: { state: SessionState }) {
         </p>
 
         <p className="mt-7 font-serif-display italic leading-snug" style={{ fontSize: "clamp(20px, 1.9vw, 26px)" }}>
-          {state.name && <span style={{ color: "var(--brand-amber)" }}>{state.name} — </span>}
+          {state.name && <span style={{ color: "var(--brand-amber)" }}>{state.name}. </span>}
           {letter.lede}
         </p>
 
+        <p className="mt-5 font-serif-display text-base italic leading-snug" style={{ color: "var(--muted-foreground)" }}>
+          {ps()}
+        </p>
+
         <p className="mt-4 font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-blush)" }}>
-          — {letter.signer} · {letter.role}
+          {letter.signer} · {letter.role}
         </p>
 
         <Link
@@ -149,7 +169,7 @@ function HeroCard({ state }: { state: SessionState }) {
         </Link>
 
         <p className="mt-5 font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground">
-          ● log it after, not before. The session is the work.
+          ● log it after, not before. The work is the work. The log is paperwork.
         </p>
       </div>
     </article>
@@ -167,7 +187,7 @@ function BelowStrip({ state }: { state: SessionState }) {
         <p className="font-serif-display text-2xl italic mt-2 leading-tight">
           {state.prevIndex}{" "}
           <span className="text-muted-foreground text-base not-italic">
-            — {diff >= 0 ? "you held the line" : "you sat too long, mostly"}.
+            · {diff >= 0 ? "you held the line" : "the chair won, mostly"}.
           </span>
         </p>
       </div>
@@ -207,7 +227,7 @@ function DistractionTeaser() {
         <p className="font-serif-display text-xl md:text-2xl italic mt-2 leading-snug">
           {isQuote ? `“${d.text}”` : d.text}{" "}
           <span className="text-muted-foreground not-italic font-mono-label text-[10px] tracking-[0.22em] uppercase ml-2">
-            — {d.attribution} · {d.era}
+            · {d.attribution} · {d.era}
           </span>
         </p>
       </div>

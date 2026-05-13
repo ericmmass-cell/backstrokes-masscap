@@ -136,7 +136,7 @@ function Index() {
             </div>
 
             <p className="mt-8 text-sm italic max-w-md leading-relaxed" style={{ color: PAPER_MUTED }}>
-              No app store. No download. No candle. No supplement stack that fits in a small UPS truck. No one in a weighted vest with a podcast about discipline.
+              No app store. No download. No candle. No supplement stack that fits in a small UPS truck. No one in a weighted vest with a podcast about discipline. No chiropractor with a ring light.
             </p>
           </div>
 
@@ -170,7 +170,7 @@ function Index() {
             ["8 min", "a day. Doesn't require a candle."],
             ["1 protocol", "back and bedroom, one chart."],
             ["4 clinicians", "each with a veto. None of them post."],
-            ["0 supplements", "0 jade eggs. 0 ashwagandha. We checked."],
+            ["0 supplements", "0 jade eggs · 0 ashwagandha · 0 things sold in a hemp pouch."],
           ].map(([v, l]) => (
             <div key={String(l)}>
               <p
@@ -232,7 +232,7 @@ function Index() {
             {[
               ["1.4M", "licensed US physicians", "Routinely connecting back rehab and sexual function in one note: a rounding error."],
               ["$1.8T", "global wellness, 2023", "Peer-reviewed share of the catalogue: also a rounding error."],
-              ["8 muscles", "running both jobs", "Mentioned in zero of the above. Featured here."],
+              ["8 muscles", "running both jobs", "Mentioned in zero of the above. Not on a single podcast we would agree to do."],
             ].map(([v, l, sub]) => (
               <div key={l} className="border-l-2 pl-5" style={{ borderColor: AMBER }}>
                 <p className="font-serif-display text-4xl md:text-5xl tracking-tight" style={{ color: AMBER }}>
@@ -276,7 +276,7 @@ function Index() {
               {
                 num: "02",
                 head: "The pelvic floor",
-                body: "Down-train first. Up-train second. Eccentric control is the metric, not rep count. The $9.99 kegel apps got this wrong because counting reps is easier to monetise.",
+                body: "Down-train first. Up-train second. Eccentric control is the metric, not rep count. The $9.99 kegel apps trained eight million pelvic floors in the wrong direction because counting reps fits cleanly on a leaderboard.",
               },
               {
                 num: "03",
@@ -328,7 +328,7 @@ function Index() {
               src: sheetGrip,
               tag: "◆ FOR THE BEDROOM · 7 MIN",
               head: "Reverse kegel before kegel.",
-              body: "Erections, lubrication, continence are the floor, not the ceiling. A pelvic floor stuck in the on position is the reason none of it works, and the reason the candle isn't either.",
+              body: "Erections, lubrication, continence are the floor, not the ceiling. A pelvic floor stuck in the on position is the reason none of it works, and the reason the eucalyptus bath salts on subscription aren't either.",
               color: BLUSH,
             },
           ].map((c) => (
@@ -537,7 +537,7 @@ function Index() {
             </span>
           </h2>
           <p className="mt-8 max-w-xl mx-auto text-lg leading-relaxed italic" style={{ color: "oklch(0.82 0.02 50)" }}>
-            Two weeks free. $24.99 a month after, cancel any time. Web-first. No app store. No download. No supplement upsell in week three. No quiz that ends in ashwagandha.
+            Two weeks free. $24.99 a month after, cancel any time. Web-first. No app store. No download. No supplement upsell in week three. No quiz that ends in ashwagandha. No invitation to a retreat in Tulum.
           </p>
           <div className="mt-12 flex items-center justify-center gap-5 flex-wrap">
             <Link

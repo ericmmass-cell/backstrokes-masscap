@@ -17,6 +17,7 @@ import { Route as PodcastRouteImport } from './routes/podcast'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CouncilRouteImport } from './routes/council'
 import { Route as ConversationRouteImport } from './routes/conversation'
+import { Route as BedroomRouteImport } from './routes/bedroom'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShareTokenRouteImport } from './routes/share.$token'
 
@@ -60,6 +61,11 @@ const ConversationRoute = ConversationRouteImport.update({
   path: '/conversation',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BedroomRoute = BedroomRouteImport.update({
+  id: '/bedroom',
+  path: '/bedroom',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -73,6 +79,7 @@ const ShareTokenRoute = ShareTokenRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bedroom': typeof BedroomRoute
   '/conversation': typeof ConversationRoute
   '/council': typeof CouncilRoute
   '/dashboard': typeof DashboardRoute
@@ -85,6 +92,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bedroom': typeof BedroomRoute
   '/conversation': typeof ConversationRoute
   '/council': typeof CouncilRoute
   '/dashboard': typeof DashboardRoute
@@ -98,6 +106,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bedroom': typeof BedroomRoute
   '/conversation': typeof ConversationRoute
   '/council': typeof CouncilRoute
   '/dashboard': typeof DashboardRoute
@@ -112,6 +121,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/bedroom'
     | '/conversation'
     | '/council'
     | '/dashboard'
@@ -124,6 +134,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/bedroom'
     | '/conversation'
     | '/council'
     | '/dashboard'
@@ -136,6 +147,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/bedroom'
     | '/conversation'
     | '/council'
     | '/dashboard'
@@ -149,6 +161,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BedroomRoute: typeof BedroomRoute
   ConversationRoute: typeof ConversationRoute
   CouncilRoute: typeof CouncilRoute
   DashboardRoute: typeof DashboardRoute
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConversationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bedroom': {
+      id: '/bedroom'
+      path: '/bedroom'
+      fullPath: '/bedroom'
+      preLoaderRoute: typeof BedroomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -237,6 +257,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BedroomRoute: BedroomRoute,
   ConversationRoute: ConversationRoute,
   CouncilRoute: CouncilRoute,
   DashboardRoute: DashboardRoute,

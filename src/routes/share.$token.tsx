@@ -28,7 +28,7 @@ const FALLBACK: SharedItem = {
   kind: "concept",
   topicLabel: "Reverse kegel, in one paragraph",
   line:
-    "It is the opposite of the kegel everyone has heard of. Instead of contracting the pelvic floor, you let it drop on the inhale. A chronically gripping floor is why arousal stalls and penetration hurts. Down-train first, always.",
+    "It is the opposite of the kegel everyone has heard of. Instead of contracting the pelvic floor, you let it drop on the inhale. A chronically gripping floor is why arousal stalls, why penetration hurts, and why the $9.99 app you tried for two months made it worse. Down-train first, always.",
   t: Date.now(),
   token: "demo",
 };

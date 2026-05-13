@@ -45,7 +45,7 @@ const STEPS: Step[] = [
     eyebrow: "03 · HOW LONG YOU SAT",
     prompt: "Average sitting hours per weekday.",
     blurb:
-      "Closest of: 0–3, 3–6, 6–9, 9+. Eight hours of bad geometry overrides eight minutes of good geometry. Bedding and chairs are dosage.",
+      "Closest of: 0–3, 3–6, 6–9, 9+. Eight hours of bad geometry overrides eight minutes of good geometry. Bedding and chairs are dosage. The chair in your office that you would not have chosen for any other reason is double dosage.",
     field: "sitting",
   },
   {
