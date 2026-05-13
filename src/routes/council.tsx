@@ -8,7 +8,7 @@ export const Route = createFileRoute("/council")({
       {
         name: "description",
         content:
-          "Four named clinicians — a McGill-trained spine PT, an APTA pelvic-health PT, a urologist, and an AASECT-certified sex therapist — who keep the BackStroke protocol honest.",
+          "Four named clinicians (a McGill-trained spine PT, an APTA pelvic-health PT, a urologist, an AASECT-certified sex therapist) who keep the BackStroke protocol honest.",
       },
     ],
   }),
@@ -27,7 +27,7 @@ export type CouncilMember = {
 export const COUNCIL: CouncilMember[] = [
   {
     slot: "Spine PT",
-    name: "TBD — McGill-trained spine PT",
+    name: "TBD · McGill-trained spine PT",
     credentials: "DPT · McGill spine lineage",
     consultsOn: "Lumbar endurance · hip hinge · disc-pattern programming",
     bioShort:
@@ -38,7 +38,7 @@ export const COUNCIL: CouncilMember[] = [
   },
   {
     slot: "Pelvic Health PT",
-    name: "TBD — APTA-certified pelvic-health PT",
+    name: "TBD · APTA-certified pelvic-health PT",
     credentials: "DPT · APTA pelvic-health credential · WCS preferred",
     consultsOn: "Pelvic-floor down-training · postpartum · post-prostatectomy",
     bioShort:
@@ -49,7 +49,7 @@ export const COUNCIL: CouncilMember[] = [
   },
   {
     slot: "Urologist",
-    name: "TBD — Board-certified urologist",
+    name: "TBD · Board-certified urologist",
     credentials: "MD · ABU board-certified",
     consultsOn: "Erectile and ejaculatory workup · referral · red flags",
     bioShort:
@@ -60,7 +60,7 @@ export const COUNCIL: CouncilMember[] = [
   },
   {
     slot: "Sex Therapist",
-    name: "TBD — AASECT-certified sex therapist",
+    name: "TBD · AASECT-certified sex therapist",
     credentials: "AASECT-certified · LMFT / LCSW",
     consultsOn: "Communication scripts · arousal · couple-level work",
     bioShort:

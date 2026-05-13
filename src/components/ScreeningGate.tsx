@@ -5,7 +5,7 @@ type Cohort = "postpartum" | "post-prostatectomy";
 const CONTRAINDICATIONS: Record<Cohort, string[]> = {
   postpartum: [
     "If you are within 6 weeks of delivery, do not start active protocols. Pelvic-floor down-training and breathwork are generally appropriate; loaded spine work is not.",
-    "Diastasis recti requires modification of the spine big-3 — bird-dog only, no curl-up, until cleared.",
+    "Diastasis recti requires modification of the spine big-3. Bird-dog only, no curl-up, until cleared.",
     "Bleeding, infection, severe perineal pain, or unresolved dyspareunia: see a pelvic-health PT in person before any in-app session.",
   ],
   "post-prostatectomy": [
@@ -69,7 +69,7 @@ export function ScreeningGate({
             className="font-mono-label text-[10px] tracking-[0.22em] uppercase"
             style={{ color: "var(--brand-amber)" }}
           >
-            ◆ noted — proceed
+            ◆ noted · proceed
           </p>
         ) : (
           <button
@@ -77,7 +77,7 @@ export function ScreeningGate({
             onClick={confirm}
             className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full font-mono-label text-[10px] tracking-[0.22em] uppercase bg-foreground text-background hover:opacity-90 transition"
           >
-            I've consulted my provider — continue
+            I've consulted my provider · continue
           </button>
         )}
       </div>

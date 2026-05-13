@@ -72,7 +72,7 @@ export const COPY: Record<string, CopyEntry> = {
     context: "Free trial has 3 days left.",
     write:
       "Three days left of the trial. After that it is $24.99 a month, which is less than one supplement you would not have bought twice. If your back is quieter, you have your answer.",
-    doNotWrite: "Don't lose access — upgrade now!",
+    doNotWrite: "Don't lose access. Upgrade now!",
   },
   syncFailed: {
     key: "syncFailed",

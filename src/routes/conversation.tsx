@@ -29,18 +29,18 @@ const TOPICS: Topic[] = [
     blurb:
       "Name the specific zone, then name a zone that's fine. Specificity reduces guesswork and rules out a lot of bad guesses.",
     lines: [
-      "My L4-L5 has been doing the talking this week — left side, when I shift weight. The right side is fine. If you notice me flinching it's that, not anything you're doing.",
+      "My L4-L5 has been doing the talking this week. Left side, when I shift weight. The right side is fine. If you notice me flinching it's that, not anything you're doing.",
       "The back has been speaking up on the lower-left, especially when I'm side-lying with my top knee unsupported. Pillow between the knees and we're back in business.",
       "Lumbar is the loud one today. Hips and the floor itself are quiet. I'd like to try something that lets the lower back stay neutral and see how that lands.",
     ],
   },
   {
     id: "pace",
-    label: "Pace — slower, longer pauses, less hurry",
+    label: "Pace · slower, longer pauses, less hurry",
     blurb:
       "Pace is a request, not a complaint. Frame it as what you want, not what isn't working.",
     lines: [
-      "I'd like to go slower tonight. Not because anything's wrong — because slower lets me actually feel what's happening, and I want that.",
+      "I'd like to go slower tonight. Not because anything's wrong. Because slower lets me actually feel what's happening, and I want that.",
       "Could we take longer pauses? Thirty seconds between things, not three. The body responds differently when it's not chasing the next part.",
       "I'm in the mood for unhurried. The clock doesn't need to be involved. We can stop and pick up later if we want.",
     ],
@@ -51,7 +51,7 @@ const TOPICS: Topic[] = [
     blurb:
       "Dilator work is clinician-prescribed. The script frames it as the assignment it is, not a confession.",
     lines: [
-      "I'm working on dilator progressions with my pelvic-health PT. Twice a week, paired with breath work. I want you to know what it is in case you see it on the nightstand — it's not a workaround, it's the work.",
+      "I'm working on dilator progressions with my pelvic-health PT. Twice a week, paired with breath work. I want you to know what it is in case you see it on the nightstand. It's not a workaround. It's the work.",
       "The PT has me on a dilator series for the next eight weeks. The plan is to combine it with diaphragmatic breath, not force. It will probably make tonight easier, not harder.",
       "Tonight I'd like to do twenty minutes of the dilator protocol first. It's part of the rehab plan, and the rest of the evening is friendlier when I've done it.",
     ],
@@ -60,7 +60,7 @@ const TOPICS: Topic[] = [
     id: "what-feels-good",
     label: "What's feeling good right now",
     blurb:
-      "Start with what works, not what hurts. The clinical research is consistent on this — naming the positive lowers defensiveness in both partners.",
+      "Start with what works, not what hurts. The clinical research is consistent on this. Naming the positive lowers defensiveness in both partners.",
     lines: [
       "When you're slow on the inside of my wrist before anything else happens, the rest of the evening lands very differently. I should have told you that a year ago.",
       "Side-by-side facing has been the best one for me this month. Both spines neutral, both faces visible, breath stays available. I'd like more of that.",
@@ -69,12 +69,12 @@ const TOPICS: Topic[] = [
   },
   {
     id: "what-doesnt",
-    label: "What's not working — without making it a verdict",
+    label: "What's not working, without making it a verdict",
     blurb:
       "Specific, observational, no 'always' and no 'you'. The line names the situation, not the partner.",
     lines: [
       "Quadruped with hands flat on the bed has been hurting the lumbar this week. Forearms down works. Just the position, not anything else.",
-      "I notice I'm holding my breath when we're in the standing version — and that usually means the back has tightened up. Could we switch to side-lying if that comes up tonight?",
+      "I notice I'm holding my breath when we're in the standing version, and that usually means the back has tightened up. Could we switch to side-lying if that comes up tonight?",
       "Deep hip flexion has been a no this month. I think it's the disc, not you. Wedge under the pelvis or knees over a pillow and it stops being an issue.",
     ],
   },
@@ -85,7 +85,7 @@ const TOPICS: Topic[] = [
       "A specific request: position, pace, pause, pressure. Specific is generous; vague is a trap.",
     lines: [
       "I'd like to try side-lying with a pillow between my knees tonight. Lower lumbar load, breath stays full, I can pay attention to you instead of monitoring my back.",
-      "Could you stay where you are for the next thirty seconds? Nothing's wrong — I want to feel this part for a bit before we move.",
+      "Could you stay where you are for the next thirty seconds? Nothing's wrong. I want to feel this part for a bit before we move.",
       "If we end up on the bed edge, can I be the one supine and you standing? It works for the lumbar and I can see your face the whole time.",
     ],
   },

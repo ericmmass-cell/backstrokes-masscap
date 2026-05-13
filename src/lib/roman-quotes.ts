@@ -36,7 +36,7 @@ export const ROMAN_QUOTES: RomanQuote[] = [
     attribution: "Vespasian",
     reignedFrom: "AD 69",
     reignedTo: "AD 79",
-    note: "\"Money does not stink.\" Said while defending his tax on the urine collected from Rome's public toilets — used by laundries to bleach togas. When his son Titus objected, Vespasian held a gold coin to his nose and asked whether it smelled.",
+    note: "\"Money does not stink.\" Said while defending his tax on the urine collected from Rome's public toilets, used by laundries to bleach togas. When his son Titus objected, Vespasian held a gold coin to his nose and asked whether it smelled.",
     kind: "quote",
   },
   {

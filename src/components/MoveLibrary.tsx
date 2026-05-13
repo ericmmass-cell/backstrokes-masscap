@@ -164,7 +164,7 @@ export const BEDROOM_MOVES: MoveDetail[] = [
       "Stop before guarding starts.",
       "Internal trigger-point release, dilator work, post-surgical rehab, dyspareunia, vaginismus, post-partum, post-prostatectomy and chronic pelvic pain are clinician-led work. Use the 'find a clinician' link below, not this video.",
     ],
-    why: "External release softens the gate. The internal work — and any work tied to a diagnosis — is in-clinic, not in-app. We route, we don't pretend to deliver it.",
+    why: "External release softens the gate. The internal work (and any work tied to a diagnosis) is in-clinic, not in-app. We route, we don't pretend to deliver it.",
     evidence:
       "Routing logic informed by APTA pelvic-health scope-of-practice guidance and ISSWSH consensus on female sexual pain.",
     clinicianCTA: true,

@@ -209,10 +209,10 @@ function PositionsPage() {
               }}
               className="w-full px-3 py-2 rounded-md bg-background border border-border text-sm"
             >
-              <option value="lumbarLoad">Lumbar load — ascending</option>
-              <option value="breathAccess">Breath access — descending</option>
-              <option value="hipFlexion">Hip flexion — ascending</option>
-              <option value="partnerMobility">Partner mobility — ascending</option>
+              <option value="lumbarLoad">Lumbar load · ascending</option>
+              <option value="breathAccess">Breath access · descending</option>
+              <option value="hipFlexion">Hip flexion · ascending</option>
+              <option value="partnerMobility">Partner mobility · ascending</option>
             </select>
           </div>
 

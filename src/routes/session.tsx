@@ -30,7 +30,7 @@ const PROTOCOL: Move[] = [
     ref: "B.01a",
     label: "Curl-up",
     dose: "4 reps · 8 sec hold each side",
-    cue: "Hands under the lumbar, one knee bent. Lift head and shoulders 20° only — never more. Exhale on every hold.",
+    cue: "Hands under the lumbar, one knee bent. Lift head and shoulders 20° only. Never more. Exhale on every hold.",
     secs: 120,
     moveKey: "curl-up",
     formNotes: [
@@ -185,7 +185,7 @@ function DemoPanel({
             ◆ Procedural · {paused ? "paused" : "looping"}
           </p>
           <p className="font-serif-display text-xs italic text-muted-foreground mt-2 leading-snug">
-            Production version: rigged body capture, council-supervised. This is the rep rhythm — the form is in the notes.
+            Production version: rigged body capture, council-supervised. This is the rep rhythm. The form is in the notes.
           </p>
         </div>
       </aside>

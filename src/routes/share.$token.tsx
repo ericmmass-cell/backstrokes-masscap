@@ -9,7 +9,7 @@ export const Route = createFileRoute("/share/$token")({
       {
         name: "description",
         content:
-          "A two-screen note explaining one specific thing — a position, a script, a breath cue — and what it means for tonight. No login, no install.",
+          "A two-screen note explaining one specific thing (a position, a script, a breath cue) and what it means for tonight. No login, no install.",
       },
     ],
   }),
@@ -66,7 +66,7 @@ function SharePage() {
             This note may have expired, or the link's wrong.
           </h1>
           <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
-            Ask your partner to resend. We don't store these on a server — the link lives in the device that made it.
+            Ask your partner to resend. We don't store these on a server. The link lives in the device that made it.
           </p>
           <Link to="/" className="inline-block mt-8 font-mono-label text-[10px] tracking-[0.22em] uppercase underline-offset-4 hover:underline">
             ◆ go to BackStroke
@@ -103,7 +103,7 @@ function SharePage() {
               Your partner wanted you to read this once.
             </h1>
             <p className="mt-6 text-base text-muted-foreground leading-relaxed">
-              <span className="italic">What this is.</span> {item.topicLabel} — one specific concept from the BackStroke protocol, written in plain language. Two screens. No quiz at the end.
+              <span className="italic">What this is.</span> {item.topicLabel}. One specific concept from the BackStroke protocol, written in plain language. Two screens. No quiz at the end.
             </p>
             <p className="mt-4 text-base text-muted-foreground leading-relaxed">
               <span className="italic">Why it matters.</span> Your partner is working on the part of the protocol that talks. They are not asking you to download anything. They are asking you to read this so the conversation lands easier.
@@ -125,7 +125,7 @@ function SharePage() {
               &ldquo;{item.line}&rdquo;
             </blockquote>
             <p className="mt-8 text-sm text-muted-foreground leading-relaxed">
-              <span className="italic">What it means for tonight.</span> Nothing dramatic — your partner picked it because it's specific. If you want to talk about it, talk about it. If you don't, having read it is enough.
+              <span className="italic">What it means for tonight.</span> Nothing dramatic. Your partner picked it because it's specific. If you want to talk about it, talk about it. If you don't, having read it is enough.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
               <button

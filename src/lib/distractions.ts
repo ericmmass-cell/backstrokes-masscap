@@ -170,7 +170,7 @@ export const DISTRACTIONS: Distraction[] = [
     text: "The tapeworm diet was a real thing, briefly endorsed.",
     attribution: "Various weight-loss pamphlets",
     era: "ca. 1900 – 1925",
-    note: "Pills containing live tapeworm eggs, sold to women who wanted to eat what they wanted. The tapeworm would, in theory, consume the excess calories. In practice it consumed other things — organs, mostly — and had to be flushed out with toxic anti-parasitic regimens.",
+    note: "Pills containing live tapeworm eggs, sold to women who wanted to eat what they wanted. The tapeworm would, in theory, consume the excess calories. In practice it consumed other things (organs, mostly) and had to be flushed out with toxic anti-parasitic regimens.",
     kind: "fact",
   },
   {

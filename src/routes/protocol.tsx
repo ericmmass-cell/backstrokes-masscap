@@ -29,7 +29,7 @@ const STEPS: Step[] = [
     eyebrow: "01 · WHERE IT LIVES",
     prompt: "Tap the zone that's been doing the talking.",
     blurb:
-      "Pick one. We'll route the rest of the baseline around it. You can change it later — bodies update.",
+      "Pick one. We'll route the rest of the baseline around it. You can change it later. Bodies update.",
     field: "pain-zone",
   },
   {
@@ -37,7 +37,7 @@ const STEPS: Step[] = [
     eyebrow: "02 · WHAT MOVES",
     prompt: "Log your range of motion in three positions.",
     blurb:
-      "Forward fold · seated rotation · single-leg balance. Eyeball it. We're not grading geometry — we're picking a starting dose.",
+      "Forward fold · seated rotation · single-leg balance. Eyeball it. We're not grading geometry. We're picking a starting dose.",
     field: "rom",
   },
   {
