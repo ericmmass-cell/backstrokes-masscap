@@ -129,13 +129,13 @@ function computeDelta(
   return total;
 }
 
-/** Three-tier feedback line written in voice. */
+/** Five-tier feedback line written in voice. Never punishes the user. */
 function feedbackFor(delta: number): string {
-  if (delta >= 12) return "Logged. The room agrees with you today. Do not get used to it; the disc is moody.";
-  if (delta >= 4) return "Logged. Sleep and sitting carried more than they had to. Hold the dose.";
-  if (delta > -3) return "Logged. Mostly held the line. The chair is the variable, usually.";
-  if (delta > -10) return "Logged. The numbers are honest. Tomorrow is a flat number too. That is the protocol. We are coaches, not motivational speakers.";
-  return "Logged. Yesterday was a long day. The protocol does not make a thing of it. Eight minutes still.";
+  if (delta >= 12) return "Logged. The room agrees with you today. Do not get used to it. The disc is moody, and so is everyone who has ever been in a room with one.";
+  if (delta >= 4) return "Logged. Sleep and sitting did more of the work than they were paid to. Hold the dose.";
+  if (delta > -3) return "Logged. Mostly held the line. The chair is the variable, usually. The chair is almost always the variable.";
+  if (delta > -10) return "Logged. The numbers are honest. Tomorrow is a flat number too. That is the protocol. We are coaches, not motivational speakers, and the wellness aisle has not paid us to pretend otherwise.";
+  return "Logged. Yesterday was a long day. The protocol does not make a thing of it. Eight minutes, same as ever. Nobody is filming.";
 }
 
 export function CheckIn({

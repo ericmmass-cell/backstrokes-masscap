@@ -47,18 +47,20 @@ function loadState(): SessionState {
   }
 }
 
-/** Rotating P.S. line. Six variants, picks one by day-of-year. */
+/** Rotating P.S. line. Eight variants, picks one by day-of-year. */
 function ps(): string {
   const day = Math.floor(
     (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000,
   );
   const bank = [
-    "P.S. Still no candle revenue. Three weeks in and the lumbar has not asked for one once.",
-    "P.S. The hotel-room chair in your office. We see it. Your spine sees it. You did not pick it.",
+    "P.S. Still no candle revenue. Three weeks in. The lumbar has not requested one.",
+    "P.S. The hotel-room chair in your office. We see it. Your spine sees it. You did not pick it. Someone in 2007 picked it.",
     "P.S. Your standing desk is plugged in, not engaged. We can tell by the curve.",
-    "P.S. The kegel app went quiet last Tuesday. So did the floor it trained.",
-    "P.S. Nobody on the council owns a ring light. This is on purpose.",
-    "P.S. The Pilates instructor on TikTok is statistically wrong about your floor. Statistically.",
+    "P.S. The kegel app went quiet last Tuesday. So did the floor it spent four years drilling.",
+    "P.S. Nobody on the council owns a ring light. This is on purpose. We checked.",
+    "P.S. The Pilates instructor on TikTok is statistically wrong about your floor. The statistics are not on her side. The lighting is.",
+    "P.S. The fascia influencer is a graphic designer with a foam roller and twelve scarves.",
+    "P.S. The brand whose name is a misspelled adjective is not a clinician. Worth confirming, occasionally.",
   ];
   return bank[day % bank.length];
 }

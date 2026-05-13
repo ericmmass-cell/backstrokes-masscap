@@ -136,7 +136,7 @@ function Index() {
             </div>
 
             <p className="mt-8 text-sm italic max-w-md leading-relaxed" style={{ color: PAPER_MUTED }}>
-              No app store. No download. No candle. No supplement stack that fits in a small UPS truck. No one in a weighted vest with a podcast about discipline. No chiropractor with a ring light.
+              No app store. No download. No candle. No supplement stack that arrives in its own UPS truck. No weighted vest, no podcast about discipline. No chiropractor with a ring light. No newsletter sponsored by a brand whose name is a misspelled adjective.
             </p>
           </div>
 
@@ -168,7 +168,7 @@ function Index() {
         <div className="max-w-[1180px] mx-auto px-6 md:px-10 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
           {[
             ["8 min", "a day. Doesn't require a candle."],
-            ["1 protocol", "back and bedroom, one chart."],
+            ["1 protocol", "back and bedroom, on the same chart, against the recommendation of two separate industries."],
             ["4 clinicians", "each with a veto. None of them post."],
             ["0 supplements", "0 jade eggs · 0 ashwagandha · 0 things sold in a hemp pouch."],
           ].map(([v, l]) => (
@@ -215,7 +215,7 @@ function Index() {
                 Side one. The chart.
               </p>
               <p className="text-lg leading-relaxed italic" style={{ color: "oklch(0.85 0.02 50)" }}>
-                Medicine is the practice of treating what's broken in a fluorescent room with a clipboard. Sex is not broken. It is simply absent from the chart. The discharge note says "patient is doing well." The patient is doing eighty percent well, and the missing twenty is the part the appointment did not have time to ask about.
+                Medicine is the practice of treating what's broken, in a fluorescent room, with a clipboard. Sex is not on the list of things broken. It is simply not on the list. The discharge note says "patient is doing well." The patient is doing eighty percent well. The other twenty percent is the part the appointment did not have time to ask about, because the appointment was twelve minutes, six of which were a printer.
               </p>
             </div>
             <div>
@@ -223,7 +223,7 @@ function Index() {
                 Side two. The aisle.
               </p>
               <p className="text-lg leading-relaxed italic" style={{ color: "oklch(0.85 0.02 50)" }}>
-                The wellness aisle noticed the missing twenty and would like to sell it back to you, in candle form, at ninety-six dollars, unscented, next to a jade egg with no return policy. The aisle is not regulated, not credentialed, and not interested in being either.
+                The wellness aisle noticed the missing twenty percent and would like to sell it back to you, in candle form, at ninety-six dollars, unscented, beside a jade egg that arrives with a Substack and no return policy. The aisle is not regulated. Not credentialed. Not interested in becoming either. The aisle has a podcast.
               </p>
             </div>
           </div>
@@ -263,7 +263,7 @@ function Index() {
             Eight minutes. We are subtracting time, not adding it.
           </h2>
           <p className="mt-8 max-w-2xl leading-relaxed text-lg italic" style={{ color: PAPER_INK, opacity: 0.78 }}>
-            The clinic was already collecting a portion of your week. The candle aisle has been collecting another portion, in cash. We took the eight minutes the spine and the floor were already arguing about, put them on one chart, and stopped charging for the parts neither industry can actually deliver.
+            The clinic was already collecting a portion of your week. The candle aisle has been collecting another portion, in cash, in cardamom-scented packaging. We took the eight minutes your spine and your floor have been arguing about behind your back, put them on one chart, and stopped charging for the parts neither industry was ever going to deliver.
           </p>
 
           <ol className="mt-14 grid md:grid-cols-3 gap-px" style={{ background: "oklch(0.86 0.025 70)", border: "1px solid oklch(0.86 0.025 70)" }}>
@@ -271,12 +271,12 @@ function Index() {
               {
                 num: "01",
                 head: "The eight minutes",
-                body: "The McGill big-3 at the dose the disc trials used. Not the YouTube version, which removed the hard parts and added a sponsor.",
+                body: "The McGill big-3 at the dose the disc trials actually used. Not the YouTube version, which removed the hard parts, added a sponsor, and runs eleven minutes longer because of an opening monologue about consistency.",
               },
               {
                 num: "02",
                 head: "The pelvic floor",
-                body: "Down-train first. Up-train second. Eccentric control is the metric, not rep count. The $9.99 kegel apps trained eight million pelvic floors in the wrong direction because counting reps fits cleanly on a leaderboard.",
+                body: "Down-train first. Up-train second. Eccentric control is the metric, not rep count. The $9.99 kegel apps trained eight million pelvic floors in the wrong direction, because counting reps fits cleanly on a leaderboard and nuance does not fit cleanly on anything.",
               },
               {
                 num: "03",
@@ -328,7 +328,7 @@ function Index() {
               src: sheetGrip,
               tag: "◆ FOR THE BEDROOM · 7 MIN",
               head: "Reverse kegel before kegel.",
-              body: "Erections, lubrication, continence are the floor, not the ceiling. A pelvic floor stuck in the on position is the reason none of it works, and the reason the eucalyptus bath salts on subscription aren't either.",
+              body: "Erections, lubrication, continence are the floor, not the ceiling. A pelvic floor stuck in the on position is the reason none of it works. It is also the reason the eucalyptus bath salts on a quarterly subscription have not worked. Bath salts have never untensed a single anything.",
               color: BLUSH,
             },
           ].map((c) => (
@@ -515,7 +515,7 @@ function Index() {
             ))}
           </div>
           <p className="mt-6 text-xs italic" style={{ color: PAPER_MUTED }}>
-            ◆ Real testimonials replace these in v2. Until then we label them, because the alternative is a wellness brand's screenshot of an unverifiable Instagram comment.
+            ◆ Real testimonials replace these in v2. Until then we label them, because the alternative is the unverifiable Instagram-comment screenshot that every wellness brand on earth keeps in a folder titled "social proof FINAL v3 USE THIS ONE".
           </p>
         </div>
       </section>
@@ -537,7 +537,7 @@ function Index() {
             </span>
           </h2>
           <p className="mt-8 max-w-xl mx-auto text-lg leading-relaxed italic" style={{ color: "oklch(0.82 0.02 50)" }}>
-            Two weeks free. $24.99 a month after, cancel any time. Web-first. No app store. No download. No supplement upsell in week three. No quiz that ends in ashwagandha. No invitation to a retreat in Tulum.
+            Two weeks free. $24.99 a month after, cancel any time. Web-first. No app store. No download. No supplement upsell in week three. No quiz that ends in ashwagandha. No invitation to a retreat in Tulum. No certificate at the end. The certificate is your back not hurting.
           </p>
           <div className="mt-12 flex items-center justify-center gap-5 flex-wrap">
             <Link
