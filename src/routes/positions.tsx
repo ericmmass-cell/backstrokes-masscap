@@ -90,6 +90,9 @@ function PositionRow({ p }: { p: Position }) {
       <p className="mt-4 text-xs text-muted-foreground leading-relaxed italic border-t border-border pt-3">
         {p.councilNote}
       </p>
+      <p className="mt-3 text-[10px] uppercase tracking-[0.18em] font-mono-label text-muted-foreground/70">
+        Stop if · sharp back pain · radiating leg symptoms · numbness · pelvic guarding · the feeling that optimism is doing the steering
+      </p>
     </li>
   );
 }
@@ -140,10 +143,10 @@ function PositionsPage() {
             POSITION LIBRARY · 40 ENTRIES · SCORED BY SPINE
           </p>
           <h1 className="font-serif-display text-5xl md:text-7xl mt-5 leading-[0.98] tracking-[-0.025em] max-w-3xl">
-            Pick something <span className="italic" style={{ color: "var(--brand-amber)" }}>your back can sign off on.</span>
+            Bedroom geometry, <span className="italic" style={{ color: "var(--brand-amber)" }}>scored by spine.</span>
           </h1>
           <p className="mt-7 text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            Every entry has four scores and a one-line note from the clinical council. Filter by today's Index. If the lumbar load is over your cap, the position drops out of the list. We do not hide it dramatically, with a paywall and a candle.
+            Every position is scored for lumbar load, hip demand, breath access, and partner mobility. Filter by today's Index. If a position exceeds the cap, it drops out quietly. We do not make it a tragedy. We are not magazine editors.
           </p>
         </div>
       </section>

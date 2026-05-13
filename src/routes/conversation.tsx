@@ -141,13 +141,13 @@ function ConversationPage() {
       <section className="px-6 md:px-10 py-16 md:py-20 border-b border-border print:hidden">
         <div className="max-w-[1280px] mx-auto">
           <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">
-            F.07 · CONVERSATION SCRIPT · AASECT-SUPERVISED
+            F.07 · SCRIPTS · ADULT SENTENCES, READY TO COPY
           </p>
           <h1 className="font-serif-display text-5xl md:text-7xl mt-5 leading-[0.98] tracking-[-0.025em] max-w-3xl">
-            Pick a thing. <span className="italic" style={{ color: "var(--brand-amber)" }}>We'll start the sentence.</span>
+            Say the thing <span className="italic" style={{ color: "var(--brand-amber)" }}>before the body says it for you.</span>
           </h1>
           <p className="mt-7 text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            Written like a smart friend who has done this before. Not clinical. Not coy. Not euphemistic. The line is a starter. Change a word, change the order, make it yours. The work is saying it out loud, which is the part the kegel app could not help you with.
+            Scripts for the moment before silence becomes a whole theory. They sound like a human, not a therapist, not a hostage note, not a brand manager trying to make intimacy on-platform. The line is a starter. Change a word, change the order, make it yours. The work is saying it out loud.
           </p>
         </div>
       </section>
@@ -221,7 +221,7 @@ function ConversationPage() {
             </div>
 
             <p className="mt-8 text-xs text-muted-foreground italic leading-relaxed print:hidden">
-              Voice supervised by the AASECT-certified clinician on the council. Specific, never coy. The line names the situation, not the partner. Use 'I notice' not 'you always.'
+              Specific, never coy. The line names the situation, not the partner. Use 'I notice' not 'you always.' Education and coaching, not therapy.
             </p>
           </main>
         </div>

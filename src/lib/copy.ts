@@ -22,42 +22,42 @@ export const COPY: Record<string, CopyEntry> = {
     key: "emptySessionLog",
     context: "User opens the session log and nothing has been logged today.",
     write:
-      "No session logged today. The spine does not keep score. We do, gently. Open the app when you have eight minutes. Or do not, and we will be here tomorrow, equally gently.",
+      "No tragedy detected. You missed yesterday. The work did not evaporate. Open when you have eight minutes.",
     doNotWrite: "You skipped your workout. Consistency is everything.",
   },
   missedDayAfterStreak: {
     key: "missedDayAfterStreak",
     context: "A streak just broke. User returns the next day.",
     write:
-      "Streak paused at 23. Spines don't track streaks. We restart it tonight, no apology required.",
+      "No tragedy detected. The streak paused. The work did not evaporate. We restart tonight, no apology required.",
     doNotWrite: "You lost your streak! Build it back!",
   },
   painSpike: {
     key: "painSpike",
     context: "User logs pain ≥ 7/10 or selects 'low energy.'",
     write:
-      "Noted: 8 out of 10 today. We are moving to the down-train. The work does not undo itself in one bad day. The disc is loud, not in charge.",
+      "Down-train day. Pain is loud today. Loud is not in charge. We moved the session accordingly.",
     doNotWrite: "Oh no, pain spike! Did you overdo it?",
   },
   scoreNewHigh: {
     key: "scoreNewHigh",
     context: "Index score sets a new personal high.",
     write:
-      "Index 84. The highest you've logged. Sitting hours and sleep position did most of the work. Quiet wins.",
+      "Index 84. The highest you have logged. Sleep position and sitting hours did most of the work. Quiet wins.",
     doNotWrite: "Amazing! New high score!!",
   },
   scoreNewLow: {
     key: "scoreNewLow",
     context: "Index score sets a new personal low.",
     write:
-      "Index 41. The lowest you've logged. Yesterday's body, plus some sitting. Same plan, slightly more patience.",
+      "Index 41. Yesterday's body, plus some sitting, plus possibly the chair you would not have chosen for any other reason. Same plan, slightly more patience.",
     doNotWrite: "Yikes, your score dropped. Try harder tomorrow!",
   },
   returnAfterAbsence: {
     key: "returnAfterAbsence",
     context: "User returns after more than 14 days away.",
     write:
-      "Welcome back. We didn't move the protocol. Pick up where you left off, no narrative required.",
+      "The chair in the corner has been making decisions again. No judgment. Just supervision. Pick up where you left off.",
     doNotWrite: "We missed you! Here's why you should come back…",
   },
   paymentFailed: {
@@ -71,27 +71,27 @@ export const COPY: Record<string, CopyEntry> = {
     key: "trialEnding",
     context: "Free trial has 3 days left.",
     write:
-      "Three days left of the trial. After that it is $24.99 a month, which is less than one supplement you would not have bought twice. If your back is quieter, you have your answer.",
+      "Three days left. After that it is $24.99 a month, which is less than one supplement you would not have bought twice.",
     doNotWrite: "Don't lose access. Upgrade now!",
   },
   syncFailed: {
     key: "syncFailed",
     context: "Background sync to server fails.",
     write:
-      "Could not reach the server. The session is saved locally. It will sync when you are back. The protocol does not require connectivity, which is the only thing the protocol has in common with the candle aisle.",
+      "Saved locally. The server is currently being dramatic. Your session is safe and will sync when the machine returns to adulthood.",
     doNotWrite: "Sync error! Please try again.",
   },
   internetLost: {
     key: "internetLost",
     context: "User goes offline mid-session.",
     write:
-      "Offline. The protocol does not need a connection. Finish the set. We will sync when you are back.",
+      "Offline. The protocol does not need a connection. Finish the set. We sync when you are back.",
     doNotWrite: "You appear to be offline. Please reconnect.",
   },
   morningPush: {
     key: "morningPush",
     context: "Daily morning notification (7am local). Rotation A.",
-    write: "Eight minutes of McGill. Before the day argues.",
+    write: "Eight minutes. Then leave. The spine rent is due. Small payment. No candle accepted.",
     doNotWrite: "Time for your daily workout!",
   },
   morningPushB: {
@@ -118,26 +118,26 @@ export const COPY: Record<string, CopyEntry> = {
     write: "Saved to tonight's shortlist. Two more and we will stop suggesting things. We are not Pinterest.",
     doNotWrite: "Position added to favorites!",
   },
-  councilAudioFinished: {
-    key: "councilAudioFinished",
-    context: "User finishes a council audio (podcast or in-app).",
+  partnerRead: {
+    key: "partnerRead",
+    context: "Partner opens a shared script or position link.",
     write:
-      "End of episode. The chart that should have always been one chart, now is. Tomorrow morning: the protocol. Tomorrow afternoon: the chair.",
-    doNotWrite: "Episode complete! Want to listen to another?",
+      "They read it. The line landed. What you do with that information is, mercifully, not a dashboard metric.",
+    doNotWrite: "Your partner has viewed your shared content!",
   },
   baselineComplete: {
     key: "baselineComplete",
     context: "First-run 7-minute baseline assessment finishes.",
     write:
-      "Baseline saved. Your starting Index is here. The protocol expects nothing from it. We just needed somewhere to begin.",
+      "Baseline complete. Index {N}. The number is not a grade. It is a weather report from a small, overworked region of the body. Begin today.",
     doNotWrite: "Congratulations on completing your baseline!",
   },
   firstSessionComplete: {
     key: "firstSessionComplete",
     context: "First in-app session finishes.",
     write:
-      "First session in. The lumbar does not show up on day one. That is day nine. We will see you tomorrow. Bring the same back; we will use it.",
-    doNotWrite: "Great job on your first session! 🎉",
+      "Done. The lumbar will not send flowers. It may, around day nine, stop interrupting meetings.",
+    doNotWrite: "Great job on your first session!",
   },
   weekOne: {
     key: "weekOne",
@@ -164,8 +164,38 @@ export const COPY: Record<string, CopyEntry> = {
     key: "flareSwap",
     context: "Pain ≥ 7 or 'low energy' selected. Protocol auto-swaps to down-train.",
     write:
-      "Flare day logged. We are switching to the down-train. The streak stays. The streak was never the point. We just know you needed to hear it.",
+      "Flare day. Down-train. The streak is unaffected because the streak was never the point. Pain is loud today. Loud is not the same as in charge.",
     doNotWrite: "Looks like you're hurting. Should we skip today?",
+  },
+  loadingState: {
+    key: "loadingState",
+    context: "Generic loading screen.",
+    write: "Loading. The server is stretching first, which is more than can be said for most of us.",
+    doNotWrite: "Please wait while we load your data...",
+  },
+  genericError: {
+    key: "genericError",
+    context: "Catch-all error state.",
+    write: "Something broke. Not you. Possibly us. Possibly the server, which has been making lifestyle choices.",
+    doNotWrite: "An error occurred. Please try again.",
+  },
+  noPositionsClearedCap: {
+    key: "noPositionsClearedCap",
+    context: "Position-library filter returns zero matches under today's load cap.",
+    write: "No positions clear today's load cap. This is not a sexual referendum. It is geometry having boundaries.",
+    doNotWrite: "No results. Try a different filter.",
+  },
+  noScriptsSaved: {
+    key: "noScriptsSaved",
+    context: "Scripts page, user has no saved lines yet.",
+    write: "No saved scripts yet. This is not a moral failure. Most adults were taught more about long division than desire.",
+    doNotWrite: "You have no saved scripts. Start by saving one!",
+  },
+  subscriptionCancelled: {
+    key: "subscriptionCancelled",
+    context: "User cancels subscription.",
+    write: "Cancelled. You keep access until {date}. We will not send twelve emails pretending to be concerned.",
+    doNotWrite: "We're sorry to see you go. Are you sure?",
   },
 };
 

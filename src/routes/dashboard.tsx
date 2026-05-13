@@ -69,21 +69,21 @@ function letterFor(state: SessionState): { lede: string; signer: string; role: s
   const dow = new Date().getDay();
   if (state.flareSwapped) {
     return {
-      lede: "Flare day. We move to the down-train; the streak is unaffected, because the streak was never the point.",
-      signer: "K.R.",
-      role: "pelvic-health PT",
+      lede: "Flare day. We move to down-train. The streak is unaffected because the streak was never the point. Pain is loud today. Loud is not the same as in charge.",
+      signer: "Floor desk",
+      role: "down-train protocol",
     };
   }
   const map: Record<number, string> = {
-    0: "The 'rest day' is a myth the supplement industry sells, alongside a tincture you are now subscribed to. The lumbar adapts to micro-doses of movement. Remove them for 36 hours and you will feel it Monday. Eight minutes below. If you can read this, you can do it. If you cannot, you have other problems.",
-    1: "Monday. The lumbar woke up first and is, against its own advice, willing to be reasonable. Hold the dose.",
-    2: "Tuesday. The disc files motions on Tuesdays. This is consistent with the data, not a personal grudge. The cause is below in the drivers; usually it's the chair, which you would not have chosen for any other reason. We do the eight minutes anyway. Cumulative load is the only thing that moves this number, and the only thing that has ever moved it. No new advice today.",
-    3: "Wednesday. The floor's day. Add the reverse kegel and diaphragmatic breath to the spine block. The inhale lengthens, the exhale releases, nothing should feel like effort. If you can't feel the drop, you are doing a kegel, which is the thing the eight-million-download apps trained you to do. Four sets of ten breaths, seven minutes, after the big-3 not before.",
-    4: "Thursday. The 30/3 rule is the only intervention that touches sitting hours. Stand three minutes every thirty, walk the corridor if there is one, do one hip-hinge set if there isn't. Today's session is unchanged. We are not adding work. We are subtracting time spent at 90°, which is the angle the human body lost an argument with in 1958 and has been losing it since.",
-    5: "Friday. The protocol works on Saturdays too. Statistically, this is news to most users. Run it before the social part of the evening, not at midnight after.",
-    6: "The 'rest day' is a myth the supplement industry sells, alongside a tincture you are now subscribed to. The lumbar adapts to micro-doses of movement. Remove them for 36 hours and you will feel it Monday. Eight minutes below. If you can read this, you can do it. If you cannot, you have other problems.",
+    0: "The rest day is a myth with excellent packaging. The lumbar adapts to micro-doses of movement. Remove them for 36 hours and Monday becomes a small courtroom drama. Eight minutes. Then go be alive.",
+    1: "Monday. The lumbar has opened negotiations in better faith than expected. Do not reward that by sitting like a shrimp in an expensive chair for nine hours. Eight minutes below. Same dose. Same boring answer. Boring answers are usually the ones that survive discovery.",
+    2: "Tuesday. The disc's litigation day. This is consistent with the data, not a personal grudge. If you are down, it is probably the chair, the sleep position, or the recreational optimism. We do the eight minutes anyway. Cumulative load is the only thing that moves this number.",
+    3: "Wednesday. Floor day. Inhale, let the pelvic floor drop. Exhale, return to rest. If you are squeezing, congratulations, you have recreated the mistake eight million downloads agreed on. Stop that. Release first. Strength later.",
+    4: "Thursday. The 30/3 rule is the intervention. Stand three minutes every thirty. Walk if possible. Hinge if trapped. We are not adding wellness. We are removing time spent at the angle where office furniture quietly became a public health problem.",
+    5: "Friday. Run the protocol before the social part of the evening, not afterward when your lumbar has joined the conversation as an uninvited consultant. The weekend version is identical. The disc does not respect brunch.",
+    6: "The rest day is a myth with excellent packaging. The lumbar adapts to micro-doses of movement. Remove them for 36 hours and Monday becomes a small courtroom drama. Eight minutes. Then go be alive.",
   };
-  return { lede: map[dow], signer: dow === 3 ? "K.R." : "D.G.", role: dow === 3 ? "pelvic-health PT" : "spine PT" };
+  return { lede: map[dow], signer: dow === 3 ? "Floor desk" : "Spine desk", role: dow === 3 ? "down-train protocol" : "endurance protocol" };
 }
 
 /* ───────── Hero card ───────── */
@@ -110,10 +110,10 @@ function HeroCard({ state }: { state: SessionState }) {
 
         <div className="absolute bottom-5 left-5 right-5">
           <p className="font-serif-display text-2xl md:text-3xl italic leading-tight text-white">
-            Eight minutes for the spine.
+            Today, the body has filed a memo.
           </p>
           <p className="font-serif-display text-base italic text-white/85 mt-1 leading-snug">
-            The rent your back pays. Non-negotiable. We don't make the rules. Gravity does.
+            Eight minutes. No improvisation. The spine does not need creativity today. It needs the same boring things done well, like a pension fund with nerve endings.
           </p>
         </div>
       </div>
@@ -171,7 +171,7 @@ function HeroCard({ state }: { state: SessionState }) {
         </Link>
 
         <p className="mt-5 font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground">
-          ● log it after, not before. The work is the work. The log is paperwork.
+          ● log it after, not before. The work is the work. The log is paperwork, and paperwork has had quite enough influence on the human body already.
         </p>
       </div>
     </article>

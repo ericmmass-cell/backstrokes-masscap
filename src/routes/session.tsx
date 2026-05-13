@@ -30,7 +30,7 @@ const PROTOCOL: Move[] = [
     ref: "B.01a",
     label: "Curl-up",
     dose: "4 reps · 8 sec hold each side",
-    cue: "Hands under the lumbar, one knee bent. Lift head and shoulders 20° only. Never more. Exhale on every hold.",
+    cue: "Curl-up. Neutral spine. Small lift. Hold. This is not a sit-up. Sit-ups had their century and used it poorly.",
     secs: 120,
     moveKey: "curl-up",
     formNotes: [
@@ -44,7 +44,7 @@ const PROTOCOL: Move[] = [
     ref: "B.01b",
     label: "Side plank",
     dose: "4 reps · 8 sec hold each side",
-    cue: "Forearm down, knees bent in week 1, full plank in week 2. Stop one rep before you want to.",
+    cue: "Side bridge. Ribs stacked. Hips quiet. The floor is not an enemy. It is a witness.",
     secs: 180,
     moveKey: "side-plank",
     formNotes: [
@@ -58,7 +58,7 @@ const PROTOCOL: Move[] = [
     ref: "B.01c",
     label: "Bird dog",
     dose: "4 reps · 8 sec hold each side",
-    cue: "Opposite arm and leg. Draw a square in the air with the heel before returning. No lumbar shift.",
+    cue: "Bird-dog. Opposite arm and leg. No lumbar sway. Imagine a glass of very judgmental water on your back.",
     secs: 180,
     moveKey: "bird-dog",
     formNotes: [
@@ -89,7 +89,7 @@ const DOWN_TRAIN: Move[] = [
     ref: "F.01b",
     label: "Reverse kegel + diaphragm drop",
     dose: "10 slow breaths",
-    cue: "Belly rises, floor drops. Like initiating urination then stopping. Don't contract. The drop is the rep.",
+    cue: "Inhale. Let the floor drop. Exhale. Let it return. If you are trying hard, you are doing the wrong assignment with admirable intensity.",
     secs: 120,
     moveKey: "reverse-kegel",
     formNotes: [
@@ -360,7 +360,7 @@ function SessionPlayer() {
             Done.
           </h1>
           <p className="mt-6 font-serif-display text-xl italic text-muted-foreground leading-snug">
-            The lumbar does not show up on day one. That is day nine. We will see you tomorrow, with new Romans, new saints, or a doctor whose practice has not aged well.
+            The lumbar will not send flowers. It may, around day nine, stop interrupting meetings.
           </p>
           <p className="mt-4 font-mono-label text-[10px] tracking-[0.22em] uppercase text-muted-foreground">
             ◆ {mmss(elapsed)} elapsed · {deck.length} entries available, {Math.min(deck.length, Math.floor(elapsed / QUOTE_INTERVAL) + 1)} shown
