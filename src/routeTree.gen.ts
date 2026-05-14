@@ -14,6 +14,7 @@ import { Route as ScienceRouteImport } from './routes/science'
 import { Route as ProtocolRouteImport } from './routes/protocol'
 import { Route as PositionsRouteImport } from './routes/positions'
 import { Route as PodcastRouteImport } from './routes/podcast'
+import { Route as PartnerRouteImport } from './routes/partner'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CouncilRouteImport } from './routes/council'
 import { Route as ConversationRouteImport } from './routes/conversation'
@@ -44,6 +45,11 @@ const PositionsRoute = PositionsRouteImport.update({
 const PodcastRoute = PodcastRouteImport.update({
   id: '/podcast',
   path: '/podcast',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnerRoute = PartnerRouteImport.update({
+  id: '/partner',
+  path: '/partner',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/conversation': typeof ConversationRoute
   '/council': typeof CouncilRoute
   '/dashboard': typeof DashboardRoute
+  '/partner': typeof PartnerRoute
   '/podcast': typeof PodcastRoute
   '/positions': typeof PositionsRoute
   '/protocol': typeof ProtocolRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/conversation': typeof ConversationRoute
   '/council': typeof CouncilRoute
   '/dashboard': typeof DashboardRoute
+  '/partner': typeof PartnerRoute
   '/podcast': typeof PodcastRoute
   '/positions': typeof PositionsRoute
   '/protocol': typeof ProtocolRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/conversation': typeof ConversationRoute
   '/council': typeof CouncilRoute
   '/dashboard': typeof DashboardRoute
+  '/partner': typeof PartnerRoute
   '/podcast': typeof PodcastRoute
   '/positions': typeof PositionsRoute
   '/protocol': typeof ProtocolRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/conversation'
     | '/council'
     | '/dashboard'
+    | '/partner'
     | '/podcast'
     | '/positions'
     | '/protocol'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/conversation'
     | '/council'
     | '/dashboard'
+    | '/partner'
     | '/podcast'
     | '/positions'
     | '/protocol'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/conversation'
     | '/council'
     | '/dashboard'
+    | '/partner'
     | '/podcast'
     | '/positions'
     | '/protocol'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   ConversationRoute: typeof ConversationRoute
   CouncilRoute: typeof CouncilRoute
   DashboardRoute: typeof DashboardRoute
+  PartnerRoute: typeof PartnerRoute
   PodcastRoute: typeof PodcastRoute
   PositionsRoute: typeof PositionsRoute
   ProtocolRoute: typeof ProtocolRoute
@@ -208,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/podcast'
       fullPath: '/podcast'
       preLoaderRoute: typeof PodcastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partner': {
+      id: '/partner'
+      path: '/partner'
+      fullPath: '/partner'
+      preLoaderRoute: typeof PartnerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -261,6 +281,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConversationRoute: ConversationRoute,
   CouncilRoute: CouncilRoute,
   DashboardRoute: DashboardRoute,
+  PartnerRoute: PartnerRoute,
   PodcastRoute: PodcastRoute,
   PositionsRoute: PositionsRoute,
   ProtocolRoute: ProtocolRoute,

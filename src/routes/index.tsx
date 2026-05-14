@@ -70,8 +70,11 @@ function Index() {
             <a href="#work" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
               Work
             </a>
-            <Link to="/positions" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
-              Positions
+            <a href="/engine.html" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
+              Engine
+            </a>
+            <Link to="/partner" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
+              Partner
             </Link>
             <Link to="/science" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
               Science
@@ -99,22 +102,23 @@ function Index() {
             </p>
             <h1
               className="font-serif-display leading-[0.94] tracking-[-0.025em]"
-              style={{ fontSize: "clamp(48px, 7.4vw, 108px)", color: PAPER_INK }}
+              style={{ fontSize: "clamp(52px, 8vw, 116px)", color: PAPER_INK }}
             >
-              The app for people
+              Your back should
               <br />
+              not be the{" "}
               <span className="italic" style={{ color: "var(--brand-oxblood)" }}>
-                whose lower back became
+                third person
               </span>
               <br />
-              a third person in bed.
+              in bed.
             </h1>
 
             <p
               className="mt-9 font-serif-display italic leading-snug max-w-xl"
               style={{ fontSize: "clamp(19px, 1.9vw, 25px)", color: PAPER_INK, opacity: 0.86 }}
             >
-              BackStroke gives you one daily protocol for the machinery your spine clinic, kegel app, mattress, chair, and sexual optimism have all been treating as separate issues. Eight minutes. Public-source biomechanics. Position mechanics. Breath. Down-training. Recovery. No candle. No supplement stack. No retreat where the WiFi is bad because transformation prefers poor infrastructure.
+              BackStroke helps keep it out of the room with one short daily protocol and a smarter position plan: spine endurance, pelvic-floor release, breath control, bedroom geometry, and recovery. Three minutes if that is all today has. Eight minutes when it does not. No gummies. No candle. No influencer explaining your pelvis from a ring light.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -126,19 +130,16 @@ function Index() {
                 Run the baseline · 7 min <ArrowUpRight className="w-4 h-4" />
               </Link>
               <a
-                href="#what-you-pay-for"
+                href="/engine.html"
                 className="font-mono-label text-[10px] tracking-[0.22em] uppercase hover:opacity-80 transition"
                 style={{ color: PAPER_MUTED }}
               >
-                Read the public record first →
+                Show me the position engine →
               </a>
             </div>
 
             <p className="mt-8 text-sm italic max-w-md leading-relaxed" style={{ color: PAPER_MUTED }}>
-              No app store. No download. No candle. No supplement stack. No influencer explaining your fascia like it owes him rent. No quiz that ends with ashwagandha and a recurring charge.
-            </p>
-            <p className="mt-5 font-mono-label text-[10px] tracking-[0.22em] uppercase max-w-md leading-relaxed" style={{ color: PAPER_MUTED, opacity: 0.7 }}>
-              ◆ Education and coaching. Not diagnosis. Not therapy. Not a medical device. The body came with legal complexity.
+              Built from public-source biomechanics and practical movement logic. Not medical care. Not sex therapy. Not a retreat with bad WiFi and worse boundaries.
             </p>
           </div>
 
@@ -319,6 +320,60 @@ function Index() {
           <p className="mt-10 font-script text-2xl md:text-3xl italic max-w-2xl" style={{ color: "var(--brand-oxblood)" }}>
             Strong back. Steady breath. <span style={{ color: AMBER }}>Hot life.</span> <span style={{ color: PAPER_MUTED, fontSize: "0.7em" }}>No candle revenue.</span>
           </p>
+        </div>
+      </section>
+
+      {/* ───────── POSITION ENGINE TEASER ───────── */}
+      <section id="engine" className="px-6 md:px-10 py-24 md:py-28 relative" style={{ background: "var(--brand-ink)" }}>
+        <div className="max-w-[1100px] mx-auto">
+          <p className="font-mono-label text-[10px] tracking-[0.28em] uppercase" style={{ color: AMBER }}>
+            ◆ BEDROOM GEOMETRY · RANKED BY YOUR BACK
+          </p>
+          <h2
+            className="font-serif-display mt-6 leading-[1.0] tracking-[-0.02em] max-w-4xl"
+            style={{ fontSize: "clamp(36px, 5vw, 64px)", color: "white" }}
+          >
+            Stop asking the internet for positions.{" "}
+            <span className="italic" style={{ color: AMBER }}>
+              The internet does not know which side your sciatica is on.
+            </span>
+          </h2>
+          <p className="mt-7 max-w-2xl leading-relaxed text-lg italic" style={{ color: "oklch(0.85 0.02 50)" }}>
+            BackStroke indexes the position library by pain vector, floor tone, load tolerance, hip demand, thrust amplitude, and goal for the evening. Tell it where the pain starts, where it travels, how the floor feels, and what you want tonight. It gives you a warm-up, a main course, and a dessert option. With escalate, hold, and de-escalate at every act. Sexy enough to use. Boring enough to work.
+          </p>
+
+          <div className="mt-12 grid sm:grid-cols-3 gap-6 max-w-4xl">
+            {[
+              ["Pain vector in", "Right sciatica, SI joint, hip flexor, central lumbar, piriformis, flare day."],
+              ["Position plan out", "Warm-up, main course, dessert. Load caps. Stop rules. Escalate, hold, or de-escalate at every act."],
+              ["Human language included", "The line to say before your back says it worse. Plus the partner-side version, addressed to them."],
+            ].map(([h, b], i) => (
+              <div key={h as string} className="border-l-2 pl-5" style={{ borderColor: AMBER }}>
+                <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase" style={{ color: AMBER }}>
+                  0{i + 1}
+                </p>
+                <p className="font-serif-display text-xl mt-2 leading-tight" style={{ color: "white" }}>
+                  {h}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed italic" style={{ color: "oklch(0.78 0.02 50)" }}>
+                  {b}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 flex flex-wrap items-center gap-5">
+            <a
+              href="/engine.html"
+              className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold transition hover:opacity-90"
+              style={{ background: AMBER, color: "var(--brand-ink)", boxShadow: "0 12px 30px -10px oklch(0.78 0.13 78 / 0.5)" }}
+            >
+              Build tonight's plan <ArrowUpRight className="w-4 h-4" />
+            </a>
+            <span className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "oklch(0.65 0.02 50)" }}>
+              Six taps · A plan that reads tonight's body
+            </span>
+          </div>
         </div>
       </section>
 
@@ -573,11 +628,17 @@ function Index() {
           <div className="flex flex-wrap gap-x-7 gap-y-2 justify-center">
             <Link to="/dashboard" className="hover:opacity-80 transition">Today</Link>
             <Link to="/session" className="hover:opacity-80 transition">Session</Link>
-            <Link to="/positions" className="hover:opacity-80 transition">Positions</Link>
+            <a href="/engine.html" className="hover:opacity-80 transition">Engine</a>
             <Link to="/conversation" className="hover:opacity-80 transition">Scripts</Link>
+            <Link to="/partner" className="hover:opacity-80 transition">Partner</Link>
             <Link to="/science" className="hover:opacity-80 transition">Science</Link>
           </div>
           <span>℠ MMXXVI · no candle revenue</span>
+        </div>
+        <div className="max-w-[1180px] mx-auto mt-8 pt-6 border-t" style={{ borderColor: "oklch(0.86 0.025 70)" }}>
+          <p className="font-serif-display italic text-sm text-center leading-relaxed" style={{ color: PAPER_MUTED }}>
+            We will not gamify your orgasms. We will not push notify your bedroom. We will not put your floor on a leaderboard.
+          </p>
         </div>
       </footer>
     </div>

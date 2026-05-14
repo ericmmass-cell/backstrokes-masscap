@@ -113,7 +113,7 @@ function HeroCard({ state }: { state: SessionState }) {
             Today, the body has filed a memo.
           </p>
           <p className="font-serif-display text-base italic text-white/85 mt-1 leading-snug">
-            Eight minutes. No improvisation. The spine does not need creativity today. It needs the same boring things done well, like a pension fund with nerve endings.
+            Three minutes if that is all today has. Eight when it does not. The spine does not need creativity. It needs the same boring things done well, like a pension fund with nerve endings.
           </p>
         </div>
       </div>
