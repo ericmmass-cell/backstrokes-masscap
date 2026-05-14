@@ -232,7 +232,7 @@ function DistractionsPanel({
       className="border-t border-border px-7 md:px-10 py-7 relative overflow-hidden"
       style={{
         background:
-          "linear-gradient(180deg, oklch(0.13 0.012 30) 0%, var(--brand-ink) 100%)",
+          "linear-gradient(180deg, oklch(0.92 0.022 76) 0%, oklch(0.94 0.018 78) 100%)",
         minHeight: 280,
       }}
     >
@@ -422,7 +422,7 @@ function SessionPlayer() {
                   style={{
                     left: `${left}%`,
                     background: i <= idx ? "var(--brand-amber)" : "oklch(0.3 0.01 30)",
-                    border: "1px solid var(--brand-ink)",
+                    border: "1px solid var(--brand-paper)",
                   }}
                 />
               );
@@ -447,7 +447,7 @@ function SessionPlayer() {
           <DistractionsPanel deck={deck} isRunning={isRunning} />
         </div>
 
-        <div className="lg:col-span-5 px-6 md:px-10 py-10 grid place-items-center" style={{ background: "linear-gradient(180deg, oklch(0.155 0.018 26) 0%, var(--brand-ink) 100%)" }}>
+        <div className="lg:col-span-5 px-6 md:px-10 py-10 grid place-items-center" style={{ background: "linear-gradient(180deg, oklch(0.96 0.012 80) 0%, oklch(0.92 0.022 76) 100%)" }}>
           <div className="max-w-md w-full text-center">
             <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-muted-foreground">
               {current.ref} · {current.label}

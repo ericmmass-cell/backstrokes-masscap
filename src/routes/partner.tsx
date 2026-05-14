@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/partner")({
   component: Partner,
@@ -24,32 +25,7 @@ const OXBLOOD = "var(--brand-oxblood)";
 function Partner() {
   return (
     <div className="min-h-screen antialiased" style={{ background: PAPER, color: PAPER_INK }}>
-      <header
-        className="sticky top-0 z-30 backdrop-blur-xl"
-        style={{ background: "oklch(0.94 0.018 78 / 0.78)", borderBottom: `1px solid ${RULE}` }}
-      >
-        <div className="max-w-[1180px] mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5">
-            <svg width="22" height="22" viewBox="0 0 22 22" style={{ color: OXBLOOD }}>
-              <circle cx="11" cy="11" r="10" stroke="currentColor" strokeWidth="1" fill="none" />
-              <circle cx="11" cy="11" r="3" fill="currentColor" />
-            </svg>
-            <span
-              className="font-serif-display text-xl tracking-tight italic"
-              style={{ color: PAPER_INK }}
-            >
-              Back<span style={{ color: OXBLOOD }}>Stroke</span>
-            </span>
-          </Link>
-          <Link
-            to="/"
-            className="font-mono-label text-[10px] tracking-[0.18em] uppercase hover:opacity-80 transition"
-            style={{ color: PAPER_MUTED }}
-          >
-            ← back to home
-          </Link>
-        </div>
-      </header>
+      <SiteHeader active="partner" />
 
       {/* HERO */}
       <section className="px-6 md:px-10 pt-20 md:pt-28 pb-12 md:pb-16">

@@ -6,6 +6,7 @@ import {
   maxLoadForIndex,
   type Position,
 } from "@/lib/position-library";
+import { SiteHeader } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/positions")({
   component: PositionsPage,
@@ -120,22 +121,7 @@ function PositionsPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
-      <header className="sticky top-0 z-30 backdrop-blur-xl bg-background/70 border-b border-border/60">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5">
-            <svg width="22" height="22" viewBox="0 0 22 22" className="text-[var(--brand-amber)]">
-              <circle cx="11" cy="11" r="10" stroke="currentColor" strokeWidth="1" fill="none" />
-              <circle cx="11" cy="11" r="3" fill="currentColor" />
-            </svg>
-            <span className="font-serif-display text-xl tracking-tight italic">
-              Back<span style={{ color: "var(--brand-amber)" }}>Stroke</span>
-            </span>
-          </Link>
-          <Link to="/" className="font-mono-label text-[10px] tracking-[0.18em] uppercase text-muted-foreground hover:text-foreground transition">
-            ← back to home
-          </Link>
-        </div>
-      </header>
+      <SiteHeader active="positions" />
 
       <section className="px-6 md:px-10 py-16 md:py-20 border-b border-border">
         <div className="max-w-[1280px] mx-auto">

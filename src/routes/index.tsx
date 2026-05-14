@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import portrait from "@/assets/portrait.jpg";
 import sheetGrip from "@/assets/sheet-grip.jpg";
 import mcgillStudy from "@/assets/mcgill-study.jpg";
+import { SiteHeader } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -45,50 +46,7 @@ const BLUSH = "var(--brand-blush)";
 function Index() {
   return (
     <div className="min-h-screen antialiased" style={{ background: PAPER, color: PAPER_INK }}>
-      {/* ───────── Nav ───────── */}
-      <header
-        className="sticky top-0 z-30 backdrop-blur-xl"
-        style={{ background: "oklch(0.94 0.018 78 / 0.78)", borderBottom: "1px solid oklch(0.85 0.02 70)" }}
-      >
-        <div className="max-w-[1180px] mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5">
-            <svg width="22" height="22" viewBox="0 0 22 22" style={{ color: "var(--brand-oxblood)" }}>
-              <circle cx="11" cy="11" r="10" stroke="currentColor" strokeWidth="1" fill="none" />
-              <circle cx="11" cy="11" r="3" fill="currentColor" />
-            </svg>
-            <span className="font-serif-display text-xl tracking-tight italic" style={{ color: PAPER_INK }}>
-              Back<span style={{ color: "var(--brand-oxblood)" }}>Stroke</span>
-            </span>
-            <sup className="font-mono-label text-[8px] ml-0.5" style={{ color: PAPER_MUTED }}>
-              ℠
-            </sup>
-          </Link>
-          <nav className="hidden md:flex items-center gap-7 font-mono-label text-[10px] tracking-[0.18em] uppercase">
-            <a href="#problem" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
-              Problem
-            </a>
-            <a href="#work" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
-              Work
-            </a>
-            <a href="/engine.html" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
-              Engine
-            </a>
-            <Link to="/partner" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
-              Partner
-            </Link>
-            <Link to="/science" style={{ color: PAPER_MUTED }} className="hover:opacity-80 transition">
-              Science
-            </Link>
-          </nav>
-          <Link
-            to="/dashboard"
-            className="text-[12px] tracking-[0.14em] uppercase font-mono-label px-4 py-2 rounded-full hover:opacity-90 transition"
-            style={{ background: PAPER_INK, color: PAPER }}
-          >
-            Try a session
-          </Link>
-        </div>
-      </header>
+      <SiteHeader active="home" />
 
       {/* ───────── HERO ───────── */}
       <section className="px-6 md:px-10 pt-24 md:pt-32 pb-24 md:pb-28 relative overflow-hidden">

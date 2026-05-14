@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Eyebrow, MonoTag } from "@/components/editorial";
+import { SiteHeader } from "@/components/SiteHeader";
 import { todaysDistraction, THEME_LABEL } from "@/lib/distractions";
 import { CheckIn, type CheckInResult } from "@/components/CheckIn";
 import mcgillStudy from "@/assets/mcgill-study.jpg";
@@ -99,7 +100,7 @@ function HeroCard({ state }: { state: SessionState }) {
       {/* LEFT: editorial photo */}
       <div className="lg:col-span-6 relative aspect-[4/5] lg:aspect-auto lg:min-h-[560px]">
         <img src={mcgillStudy} alt="" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 45%, oklch(0.08 0 0 / 0.7) 100%)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, oklch(0.18 0.01 40 / 0.78) 100%)" }} />
 
         <div className="absolute top-5 left-5 right-5 flex items-center justify-between">
           <MonoTag>FIG. M-04 · OVERHEAD STUDY · DAY {state.streak + 1}</MonoTag>
@@ -119,7 +120,7 @@ function HeroCard({ state }: { state: SessionState }) {
       </div>
 
       {/* RIGHT: Index + letter + CTA */}
-      <div className="lg:col-span-6 px-8 md:px-12 py-10 md:py-14 relative" style={{ background: "linear-gradient(180deg, oklch(0.155 0.018 26) 0%, var(--brand-ink) 100%)" }}>
+      <div className="lg:col-span-6 px-8 md:px-12 py-10 md:py-14 relative" style={{ background: "linear-gradient(180deg, var(--brand-paper) 0%, oklch(0.92 0.022 76) 100%)", color: "var(--brand-paper-ink)" }}>
         <div className="flex items-center justify-between">
           <Eyebrow>Index · {new Date().toLocaleDateString("en-US", { weekday: "long" })}</Eyebrow>
           <MonoTag muted>Day {state.streak + 1}</MonoTag>
@@ -221,7 +222,7 @@ function DistractionTeaser() {
   const d = todaysDistraction();
   const isQuote = d.kind === "quote" || !d.kind;
   return (
-    <div className="border border-border bg-background px-6 py-5 flex items-start justify-between gap-6 flex-wrap" style={{ background: "linear-gradient(180deg, oklch(0.135 0.012 28), var(--brand-ink))" }}>
+    <div className="border border-border px-6 py-5 flex items-start justify-between gap-6 flex-wrap" style={{ background: "linear-gradient(180deg, oklch(0.95 0.018 78), oklch(0.92 0.022 76))" }}>
       <div className="flex-1 min-w-0">
         <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-amber)" }}>
           ◆ Today's distraction · {THEME_LABEL[d.theme]}
@@ -298,34 +299,26 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
-      <header className="sticky top-0 z-30 backdrop-blur-xl bg-background/70 border-b border-border/60">
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5">
-            <svg width="22" height="22" viewBox="0 0 22 22" className="text-[var(--brand-amber)]">
-              <circle cx="11" cy="11" r="10" stroke="currentColor" strokeWidth="1" fill="none" />
-              <circle cx="11" cy="11" r="3" fill="currentColor" />
-            </svg>
-            <span className="font-serif-display text-xl tracking-tight italic">
-              Back<span style={{ color: "var(--brand-amber)" }}>Stroke</span>
-            </span>
-            <sup className="font-mono-label text-[8px] text-muted-foreground ml-0.5">℠</sup>
-          </Link>
-          <nav className="flex items-center gap-5 font-mono-label text-[10px] tracking-[0.18em] uppercase">
-            <Link to="/" className="text-muted-foreground hover:text-foreground transition">Home</Link>
-            <Link to="/positions" className="text-muted-foreground hover:text-foreground transition">Positions</Link>
-            <Link to="/science" className="text-muted-foreground hover:text-foreground transition">Science</Link>
-            {hydrated && state.signedIn ? (
-              <button onClick={signOut} className="text-muted-foreground hover:text-foreground transition">
-                Sign out
-              </button>
-            ) : (
-              <button onClick={signIn} className="px-4 py-2 rounded-full bg-foreground text-background hover:opacity-90 transition">
-                Sign in · demo
-              </button>
-            )}
-          </nav>
+      <SiteHeader active="today" />
+      {hydrated && (
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 pt-3 flex justify-end">
+          {state.signedIn ? (
+            <button
+              onClick={signOut}
+              className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground hover:text-foreground transition"
+            >
+              Sign out · demo
+            </button>
+          ) : (
+            <button
+              onClick={signIn}
+              className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground hover:text-foreground transition"
+            >
+              Sign in · demo
+            </button>
+          )}
         </div>
-      </header>
+      )}
 
       <main className="px-6 md:px-10 py-8 md:py-12">
         <div className="max-w-[1280px] mx-auto space-y-8">
