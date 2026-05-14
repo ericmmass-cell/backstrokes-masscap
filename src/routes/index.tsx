@@ -197,45 +197,45 @@ function Index() {
       </section>
 
       {/* ───────── PROBLEM ───────── */}
-      <section id="problem" className="px-6 md:px-10 py-24 md:py-32 relative" style={{ background: "var(--brand-ink)" }}>
+      <section id="problem" className="px-6 md:px-10 py-24 md:py-32 relative" style={{ background: PAPER_2 }}>
         <div className="max-w-[1100px] mx-auto">
-          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: AMBER }}>
+          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
             ◆ One body. Two invoices.
           </p>
           <h2
             className="font-serif-display mt-6 leading-[1.0] tracking-[-0.02em] max-w-4xl"
-            style={{ fontSize: "clamp(36px, 5vw, 64px)", color: "white" }}
+            style={{ fontSize: "clamp(36px, 5vw, 64px)", color: PAPER_INK }}
           >
             Your body did not separate{" "}
-            <span className="italic" style={{ color: AMBER }}>
+            <span className="italic" style={{ color: "var(--brand-oxblood)" }}>
               back pain and sex. The industries did.
             </span>
           </h2>
 
           <div className="mt-12 grid md:grid-cols-2 gap-10 max-w-4xl">
             <div>
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-3" style={{ color: AMBER }}>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-3" style={{ color: "var(--brand-oxblood)" }}>
                 Side one. The chart.
               </p>
-              <p className="text-lg leading-relaxed italic" style={{ color: "oklch(0.85 0.02 50)" }}>
+              <p className="text-lg leading-relaxed italic" style={{ color: PAPER_INK, opacity: 0.85 }}>
                 Medicine is excellent at the part it is asked, paid, and legally comfortable to see: pain score, reflex, range, imaging, discharge note. Sex is usually not on that note. It is in the life around the note, which is where humans inconveniently continue after appointments end.
               </p>
             </div>
             <div>
-              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-3" style={{ color: AMBER }}>
+              <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-3" style={{ color: "var(--brand-oxblood)" }}>
                 Side two. The aisle.
               </p>
-              <p className="text-lg leading-relaxed italic" style={{ color: "oklch(0.85 0.02 50)" }}>
+              <p className="text-lg leading-relaxed italic" style={{ color: PAPER_INK, opacity: 0.85 }}>
                 The wellness aisle saw the silence and did what unregulated commerce does best: became expensive, scented, and certain. It sold the missing conversation back as magnesium, maca, mattress content, breathwork retreats, and a candle that smells like a divorce attorney with a Pilates reformer.
               </p>
             </div>
           </div>
 
-          <div className="mt-14 max-w-4xl border-l-2 pl-7 py-5" style={{ borderColor: AMBER, background: "oklch(0.14 0.014 30 / 0.6)" }}>
-            <p className="font-mono-label text-[10px] tracking-[0.28em] uppercase mb-3" style={{ color: AMBER }}>
+          <div className="mt-14 max-w-4xl border-l-2 pl-7 py-5" style={{ borderColor: "var(--brand-oxblood)", background: PAPER }}>
+            <p className="font-mono-label text-[10px] tracking-[0.28em] uppercase mb-3" style={{ color: "var(--brand-oxblood)" }}>
               PRODUCT ANSWER
             </p>
-            <p className="font-serif-display text-xl md:text-2xl italic leading-snug" style={{ color: "oklch(0.92 0.015 50)" }}>
+            <p className="font-serif-display text-xl md:text-2xl italic leading-snug" style={{ color: PAPER_INK }}>
               BackStroke puts the two charts together. Spine load. Pelvic-floor tone. Breath. Bedroom geometry. Recovery. One daily protocol, small enough to do and sharp enough to matter.
             </p>
           </div>
@@ -324,21 +324,21 @@ function Index() {
       </section>
 
       {/* ───────── POSITION ENGINE TEASER ───────── */}
-      <section id="engine" className="px-6 md:px-10 py-24 md:py-28 relative" style={{ background: "var(--brand-ink)" }}>
+      <section id="engine" className="px-6 md:px-10 py-24 md:py-28 relative" style={{ background: PAPER }}>
         <div className="max-w-[1100px] mx-auto">
-          <p className="font-mono-label text-[10px] tracking-[0.28em] uppercase" style={{ color: AMBER }}>
+          <p className="font-mono-label text-[10px] tracking-[0.28em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
             ◆ BEDROOM GEOMETRY · RANKED BY YOUR BACK
           </p>
           <h2
             className="font-serif-display mt-6 leading-[1.0] tracking-[-0.02em] max-w-4xl"
-            style={{ fontSize: "clamp(36px, 5vw, 64px)", color: "white" }}
+            style={{ fontSize: "clamp(36px, 5vw, 64px)", color: PAPER_INK }}
           >
             Stop asking the internet for positions.{" "}
-            <span className="italic" style={{ color: AMBER }}>
+            <span className="italic" style={{ color: "var(--brand-oxblood)" }}>
               The internet does not know which side your sciatica is on.
             </span>
           </h2>
-          <p className="mt-7 max-w-2xl leading-relaxed text-lg italic" style={{ color: "oklch(0.85 0.02 50)" }}>
+          <p className="mt-7 max-w-2xl leading-relaxed text-lg italic" style={{ color: PAPER_INK, opacity: 0.85 }}>
             BackStroke indexes the position library by pain vector, floor tone, load tolerance, hip demand, thrust amplitude, and goal for the evening. Tell it where the pain starts, where it travels, how the floor feels, and what you want tonight. It gives you a warm-up, a main course, and a dessert option. With escalate, hold, and de-escalate at every act. Sexy enough to use. Boring enough to work.
           </p>
 
@@ -348,14 +348,14 @@ function Index() {
               ["Position plan out", "Warm-up, main course, dessert. Load caps. Stop rules. Escalate, hold, or de-escalate at every act."],
               ["Human language included", "The line to say before your back says it worse. Plus the partner-side version, addressed to them."],
             ].map(([h, b], i) => (
-              <div key={h as string} className="border-l-2 pl-5" style={{ borderColor: AMBER }}>
-                <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase" style={{ color: AMBER }}>
+              <div key={h as string} className="border-l-2 pl-5" style={{ borderColor: "var(--brand-oxblood)" }}>
+                <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
                   0{i + 1}
                 </p>
-                <p className="font-serif-display text-xl mt-2 leading-tight" style={{ color: "white" }}>
+                <p className="font-serif-display text-xl mt-2 leading-tight" style={{ color: PAPER_INK }}>
                   {h}
                 </p>
-                <p className="mt-3 text-sm leading-relaxed italic" style={{ color: "oklch(0.78 0.02 50)" }}>
+                <p className="mt-3 text-sm leading-relaxed italic" style={{ color: PAPER_INK, opacity: 0.78 }}>
                   {b}
                 </p>
               </div>
@@ -366,11 +366,11 @@ function Index() {
             <a
               href="/engine.html"
               className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold transition hover:opacity-90"
-              style={{ background: AMBER, color: "var(--brand-ink)", boxShadow: "0 12px 30px -10px oklch(0.78 0.13 78 / 0.5)" }}
+              style={{ background: "var(--brand-oxblood)", color: PAPER, boxShadow: "0 12px 30px -10px oklch(0.18 0.01 40 / 0.4)" }}
             >
               Build tonight's plan <ArrowUpRight className="w-4 h-4" />
             </a>
-            <span className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "oklch(0.65 0.02 50)" }}>
+            <span className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: PAPER_MUTED }}>
               Six taps · A plan that reads tonight's body
             </span>
           </div>
@@ -442,7 +442,7 @@ function Index() {
           <div className="mt-10 grid sm:grid-cols-3 gap-px" style={{ background: "oklch(0.86 0.025 70)", border: "1px solid oklch(0.86 0.025 70)" }}>
             {[
               ["Public literature", "Lumbar load, endurance, pelvic-floor down-training, breath and floor coupling. Each claim: source, what it supports, what it does not prove."],
-              ["Internal cohort", "Self-reported, uncontrolled, not peer-reviewed. The caveat is part of the product, not a footnote under it."],
+              ["Cohort data, when we have it", "If and when there are numbers to report, they will be self-reported, uncontrolled, and not peer-reviewed. The caveat will be on the page, not under it."],
               ["The boundary", "The website is useful until it is the wrong tool. Knowing that is part of the product, not an apology for it."],
             ].map(([h, b]) => (
               <div key={h} className="p-7" style={{ background: PAPER }}>
@@ -461,127 +461,23 @@ function Index() {
         </div>
       </section>
 
-      {/* ───────── SCIENCE ───────── */}
-      <section className="px-6 md:px-10 py-24 md:py-28">
-        <div className="max-w-[1100px] mx-auto grid md:grid-cols-12 gap-10 items-center">
-          <div className="md:col-span-7">
-            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
-              ◆ The numbers, with every asterisk attached
-            </p>
-            <h2
-              className="font-serif-display mt-5 leading-[1.02] tracking-[-0.02em]"
-              style={{ fontSize: "clamp(34px, 4.4vw, 56px)", color: PAPER_INK }}
-            >
-              412 people. Internal cohort.{" "}
-              <span className="italic" style={{ color: "var(--brand-oxblood)" }}>
-                Not peer-reviewed, and we are not pretending otherwise.
-              </span>
-            </h2>
-            <p className="mt-7 max-w-xl leading-relaxed text-lg italic" style={{ color: PAPER_INK, opacity: 0.78 }}>
-              Hero numbers without methodology are advertising. We don't put them in the hero. The methodology lives on the science page, attached to every cell, in italic, in writing nobody on the wellness aisle has ever shipped on a product page.
-            </p>
-            <Link
-              to="/science"
-              className="mt-9 inline-flex items-center gap-2 font-mono-label text-[10px] tracking-[0.22em] uppercase border-b pb-1 transition hover:opacity-80"
-              style={{ color: PAPER_INK, borderColor: PAPER_INK }}
-            >
-              See the cohort data, with methodology →
-            </Link>
-          </div>
-          <div className="md:col-span-5">
-            <div
-              className="grid grid-cols-2 gap-px"
-              style={{ background: "oklch(0.86 0.025 70)", border: "1px solid oklch(0.86 0.025 70)" }}
-            >
-              {[
-                ["−63%", "back-pain days · wk 8"],
-                ["+58%", "rate sex 'enjoyable' · wk 10"],
-                ["2.4×", "morning erections · wk 12"],
-                ["−47%", "pain as a barrier · wk 12"],
-              ].map(([v, l]) => (
-                <div key={l} className="p-5" style={{ background: PAPER }}>
-                  <p
-                    className="font-serif-display tracking-tight leading-none"
-                    style={{
-                      fontSize: "clamp(28px, 3.4vw, 44px)",
-                      background: "var(--gradient-text)",
-                      WebkitBackgroundClip: "text",
-                      backgroundClip: "text",
-                      color: "transparent",
-                    }}
-                  >
-                    {v}
-                  </p>
-                  <p className="font-mono-label text-[9px] tracking-[0.18em] uppercase mt-3" style={{ color: PAPER_MUTED }}>
-                    {l}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <p className="mt-4 text-[11px] italic leading-relaxed" style={{ color: PAPER_MUTED }}>
-              Self-reported. Internal in-app cohort. Uncontrolled. Not peer-reviewed. Every cell on the science page carries its methodology in italic. Read the italic line.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ───────── FIELD NOTES ───────── */}
-      <section className="px-6 md:px-10 py-20 md:py-24" style={{ background: PAPER_2 }}>
-        <div className="max-w-[1100px] mx-auto">
-          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
-            ◆ Field notes · illustrative · we label them
-          </p>
-          <div className="mt-10 grid md:grid-cols-3 gap-px" style={{ background: "oklch(0.86 0.025 70)", border: "1px solid oklch(0.86 0.025 70)" }}>
-            {[
-              {
-                q: "I scheduled my life around my lower back for four years. I don't anymore. Make of that what you will.",
-                a: "Jake, 32 · illustrative",
-              },
-              {
-                q: "Two weeks of the breath work and I stopped bracing for everything. Including, eventually, the people in my house.",
-                a: "Maya, 29 · illustrative",
-              },
-              {
-                q: "First app that told me what to do today, in a tone that did not make me consider throwing my phone into a body of water.",
-                a: "Chris, 35 · illustrative",
-              },
-            ].map((t) => (
-              <figure key={t.a} className="p-8" style={{ background: PAPER }}>
-                <blockquote
-                  className="font-serif-display text-lg md:text-xl leading-snug italic"
-                  style={{ color: PAPER_INK }}
-                >
-                  &ldquo;{t.q}&rdquo;
-                </blockquote>
-                <figcaption className="mt-6 font-mono-label text-[10px] tracking-[0.18em] uppercase" style={{ color: PAPER_MUTED }}>
-                  {t.a}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-          <p className="mt-6 text-xs italic" style={{ color: PAPER_MUTED }}>
-            ◆ Real testimonials replace these in v2. Until then we label them, because the alternative is the unverifiable Instagram-comment screenshot that every wellness brand on earth keeps in a folder titled "social proof FINAL v3 USE THIS ONE".
-          </p>
-        </div>
-      </section>
-
       {/* ───────── FINAL CTA ───────── */}
-      <section className="px-6 md:px-10 py-28 md:py-36" style={{ background: "var(--brand-ink)" }}>
+      <section className="px-6 md:px-10 py-28 md:py-36" style={{ background: PAPER_2 }}>
         <div className="max-w-[900px] mx-auto text-center">
-          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: AMBER }}>
+          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
             ◆ Eight minutes is shorter than this homepage
           </p>
           <h2
             className="font-serif-display mt-6 leading-[0.96] tracking-[-0.025em]"
-            style={{ fontSize: "clamp(44px, 6vw, 88px)", color: "white" }}
+            style={{ fontSize: "clamp(44px, 6vw, 88px)", color: PAPER_INK }}
           >
             Do not let your back<br />
             be the reason{" "}
-            <span className="italic" style={{ color: AMBER }}>
+            <span className="italic" style={{ color: "var(--brand-oxblood)" }}>
               you stayed in.
             </span>
           </h2>
-          <p className="mt-8 max-w-xl mx-auto text-lg leading-relaxed italic" style={{ color: "oklch(0.82 0.02 50)" }}>
+          <p className="mt-8 max-w-xl mx-auto text-lg leading-relaxed italic" style={{ color: PAPER_INK, opacity: 0.82 }}>
             Two weeks free. $24.99 a month after. Cancel any time. Less than one drawer-abandoned supplement. More useful than pretending the third person in bed is part of the arrangement.
           </p>
           <div className="mt-12 flex items-center justify-center gap-5 flex-wrap">
@@ -589,9 +485,9 @@ function Index() {
               to="/dashboard"
               className="inline-flex items-center justify-center gap-2 px-9 py-5 rounded-full text-base font-semibold transition hover:opacity-90"
               style={{
-                background: AMBER,
-                color: "var(--brand-ink)",
-                boxShadow: "0 0 32px oklch(0.78 0.13 78 / 0.35)",
+                background: "var(--brand-oxblood)",
+                color: PAPER,
+                boxShadow: "0 14px 36px -12px oklch(0.18 0.01 40 / 0.45)",
               }}
             >
               Run the 7-minute baseline <ArrowUpRight className="w-5 h-5" />
@@ -599,14 +495,14 @@ function Index() {
             <Link
               to="/science"
               className="font-mono-label text-[10px] tracking-[0.22em] uppercase hover:opacity-80 transition"
-              style={{ color: "oklch(0.78 0.02 50)" }}
+              style={{ color: PAPER_MUTED }}
             >
               Or read the science first →
             </Link>
           </div>
           <p
             className="mt-16 text-xs max-w-xl mx-auto leading-relaxed italic font-serif-display"
-            style={{ color: "oklch(0.7 0.02 50)" }}
+            style={{ color: PAPER_MUTED }}
           >
             BackStroke is education and coaching, not diagnosis, treatment, sex therapy, or a substitute for individualized care. New, severe, neurological, pelvic, surgical, coercive, infectious, or frightening symptoms belong with the relevant professional. The website is useful until it is the wrong tool. Knowing that is part of the product.
           </p>
