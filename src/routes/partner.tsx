@@ -175,13 +175,13 @@ function Partner() {
             Looped-in is the lower-friction default. You see the plan after they build it, you read partner lines, you confirm receipt. Co-author lets you build alongside, see their Index, and propose adjustments. They keep final say on every step. The toggle is per session, not a permanent setting. Nothing here is locked.
           </p>
           <div className="mt-10 flex items-center justify-center gap-5 flex-wrap">
-            <Link
-              to="/dashboard"
+            <a
+              href="/engine.html"
               className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold transition hover:opacity-90"
               style={{ background: OXBLOOD, color: PAPER }}
             >
-              Open the partner home
-            </Link>
+              Use the partner-first filter →
+            </a>
             <Link
               to="/conversation"
               className="font-mono-label text-[10px] tracking-[0.22em] uppercase hover:opacity-80 transition"

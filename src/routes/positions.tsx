@@ -134,6 +134,26 @@ function PositionsPage() {
           <p className="mt-7 text-lg text-muted-foreground leading-relaxed max-w-2xl">
             Every position is scored for lumbar load, hip demand, breath access, and partner mobility. Filter by today's Index. If a position exceeds the cap, it drops out quietly. We do not make it a tragedy. We are not magazine editors.
           </p>
+          <div
+            className="mt-8 p-5 border-l-2 max-w-2xl flex flex-wrap items-center gap-5"
+            style={{ borderColor: "var(--brand-oxblood)", background: "var(--card)" }}
+          >
+            <div className="flex-1 min-w-0">
+              <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase mb-1" style={{ color: "var(--brand-oxblood)" }}>
+                Looking for a plan, not a list?
+              </p>
+              <p className="font-serif-display italic text-lg leading-snug">
+                Six taps in the Position Intelligence Engine returns a warm-up, a main course, and a dessert option ranked for tonight's body.
+              </p>
+            </div>
+            <a
+              href="/engine.html"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition hover:opacity-90 shrink-0"
+              style={{ background: "var(--brand-oxblood)", color: "var(--brand-paper)" }}
+            >
+              Open the engine →
+            </a>
+          </div>
         </div>
       </section>
 

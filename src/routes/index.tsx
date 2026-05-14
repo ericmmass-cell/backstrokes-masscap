@@ -89,10 +89,14 @@ function Index() {
               </Link>
               <a
                 href="/engine.html"
-                className="font-mono-label text-[10px] tracking-[0.22em] uppercase hover:opacity-80 transition"
-                style={{ color: PAPER_MUTED }}
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold transition hover:opacity-90"
+                style={{
+                  background: "transparent",
+                  color: "var(--brand-oxblood)",
+                  border: "1.5px solid var(--brand-oxblood)",
+                }}
               >
-                Show me the position engine →
+                Build tonight's plan <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
 
@@ -281,56 +285,175 @@ function Index() {
         </div>
       </section>
 
-      {/* ───────── POSITION ENGINE TEASER ───────── */}
-      <section id="engine" className="px-6 md:px-10 py-24 md:py-28 relative" style={{ background: PAPER }}>
-        <div className="max-w-[1100px] mx-auto">
-          <p className="font-mono-label text-[10px] tracking-[0.28em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
-            ◆ BEDROOM GEOMETRY · RANKED BY YOUR BACK
-          </p>
-          <h2
-            className="font-serif-display mt-6 leading-[1.0] tracking-[-0.02em] max-w-4xl"
-            style={{ fontSize: "clamp(36px, 5vw, 64px)", color: PAPER_INK }}
-          >
-            Stop asking the internet for positions.{" "}
-            <span className="italic" style={{ color: "var(--brand-oxblood)" }}>
-              The internet does not know which side your sciatica is on.
-            </span>
-          </h2>
-          <p className="mt-7 max-w-2xl leading-relaxed text-lg italic" style={{ color: PAPER_INK, opacity: 0.85 }}>
-            BackStroke indexes the position library by pain vector, floor tone, load tolerance, hip demand, thrust amplitude, and goal for the evening. Tell it where the pain starts, where it travels, how the floor feels, and what you want tonight. It gives you a warm-up, a main course, and a dessert option. With escalate, hold, and de-escalate at every act. Sexy enough to use. Boring enough to work.
-          </p>
+      {/* ───────── POSITION ENGINE — the money feature ───────── */}
+      <section id="engine" className="px-6 md:px-10 py-28 md:py-36 relative" style={{ background: PAPER }}>
+        <div className="max-w-[1180px] mx-auto">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+            {/* LEFT: pitch */}
+            <div className="lg:col-span-7">
+              <p className="font-mono-label text-[10px] tracking-[0.28em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
+                ◆ THE POSITION INTELLIGENCE ENGINE
+              </p>
+              <h2
+                className="font-serif-display mt-6 leading-[0.98] tracking-[-0.025em]"
+                style={{ fontSize: "clamp(40px, 5.6vw, 72px)", color: PAPER_INK }}
+              >
+                Six taps in.{" "}
+                <span className="italic" style={{ color: "var(--brand-oxblood)" }}>
+                  Tonight's plan
+                </span>
+                <br />
+                out.
+              </h2>
+              <p className="mt-8 leading-relaxed" style={{ fontSize: "clamp(18px, 1.6vw, 22px)", color: PAPER_INK, opacity: 0.88 }}>
+                The engine asks where the pain lives, how the floor feels, what you have time for, and what kind of evening this is supposed to be. It returns a three-act plan: a warm-up, a main course, and a dessert option, ranked by lumbar load, hip demand, and breath access. You decide escalate, hold, or de-escalate at every act. The plan reroutes around what your back said, not what the magazine intern guessed.
+              </p>
 
-          <div className="mt-12 grid sm:grid-cols-3 gap-6 max-w-4xl">
-            {[
-              ["Pain vector in", "Right sciatica, SI joint, hip flexor, central lumbar, piriformis, flare day."],
-              ["Position plan out", "Warm-up, main course, dessert. Load caps. Stop rules. Escalate, hold, or de-escalate at every act."],
-              ["Human language included", "The line to say before your back says it worse. Plus the partner-side version, addressed to them."],
-            ].map(([h, b], i) => (
-              <div key={h as string} className="border-l-2 pl-5" style={{ borderColor: "var(--brand-oxblood)" }}>
-                <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
-                  0{i + 1}
+              {/* HOW IT WORKS — three steps */}
+              <div className="mt-12">
+                <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: PAPER_MUTED }}>
+                  How it works
                 </p>
-                <p className="font-serif-display text-xl mt-2 leading-tight" style={{ color: PAPER_INK }}>
-                  {h}
-                </p>
-                <p className="mt-3 text-sm leading-relaxed italic" style={{ color: PAPER_INK, opacity: 0.78 }}>
-                  {b}
-                </p>
+                <ol className="mt-5 space-y-5">
+                  {[
+                    ["1", "You answer six questions.", "Where the pain is. What makes it worse. How the floor feels. Today's Index. What the evening is for. How much time you have. No diary. No diagnosis. No moral scoring."],
+                    ["2", "The engine matches your inputs against 18+ scored positions.", "Each carries a hidden scorecard (flexion / extension / rotation / thrust / hip / floor) and visible badges. Your pain vector triggers mechanical exclusions, the Index sets a load cap, the goal shapes the dessert. Magic on the surface, transparent if tapped."],
+                    ["3", "You see a warm-up, a main course, a dessert.", "Each act has a yoga-silhouette figure, a one-line geometry instruction, a partner-line drawer, and three buttons: escalate, hold, de-escalate. The next act re-routes from your choice. No forced crescendo. Recovery is a successful close."],
+                  ].map(([n, h, b]) => (
+                    <li key={n} className="flex gap-5">
+                      <span
+                        className="font-serif-display italic shrink-0 pt-0.5"
+                        style={{ fontSize: "32px", color: "var(--brand-oxblood)", lineHeight: 1 }}
+                      >
+                        {n}
+                      </span>
+                      <div>
+                        <p className="font-serif-display text-lg md:text-xl leading-tight" style={{ color: PAPER_INK }}>
+                          {h}
+                        </p>
+                        <p className="mt-2 text-base leading-relaxed" style={{ color: PAPER_INK, opacity: 0.78 }}>
+                          {b}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
               </div>
-            ))}
-          </div>
 
-          <div className="mt-12 flex flex-wrap items-center gap-5">
-            <a
-              href="/engine.html"
-              className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold transition hover:opacity-90"
-              style={{ background: "var(--brand-oxblood)", color: PAPER, boxShadow: "0 12px 30px -10px oklch(0.18 0.01 40 / 0.4)" }}
-            >
-              Build tonight's plan <ArrowUpRight className="w-4 h-4" />
-            </a>
-            <span className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: PAPER_MUTED }}>
-              Six taps · A plan that reads tonight's body
-            </span>
+              <div className="mt-12 flex flex-wrap items-center gap-5">
+                <a
+                  href="/engine.html"
+                  className="inline-flex items-center justify-center gap-2 px-9 py-5 rounded-full text-base font-semibold transition hover:opacity-90"
+                  style={{
+                    background: "var(--brand-oxblood)",
+                    color: PAPER,
+                    boxShadow: "0 16px 40px -14px oklch(0.32 0.11 22 / 0.5)",
+                  }}
+                >
+                  Build tonight's plan <ArrowUpRight className="w-5 h-5" />
+                </a>
+                <span className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: PAPER_MUTED }}>
+                  Six taps · No sign-up required
+                </span>
+              </div>
+            </div>
+
+            {/* RIGHT: example output mock */}
+            <div className="lg:col-span-5">
+              <div
+                className="border rounded-sm overflow-hidden"
+                style={{
+                  background: "oklch(0.96 0.012 80)",
+                  borderColor: "oklch(0.86 0.025 70)",
+                  boxShadow: "0 30px 80px -30px oklch(0.18 0.01 40 / 0.28)",
+                }}
+              >
+                <div className="px-6 pt-5 pb-4 border-b" style={{ borderColor: "oklch(0.86 0.025 70)" }}>
+                  <p className="font-mono-label text-[9px] tracking-[0.28em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
+                    EXAMPLE · TONIGHT'S PLAN
+                  </p>
+                  <p className="font-mono-label text-[9px] tracking-[0.18em] uppercase mt-2" style={{ color: PAPER_MUTED }}>
+                    Inputs · right sciatica · gripping floor · amber · penetrative · 20 min
+                  </p>
+                </div>
+
+                {[
+                  {
+                    label: "WARM-UP · 2 MIN",
+                    name: "Side-lying breath, knees stacked",
+                    geom: "Pillow between knees. One hand on lower ribs, one on lower abdomen. Inhale, let the floor drop. Exhale, return to rest. No squeezing.",
+                    badges: ["low load", "low thrust", "release-first"],
+                  },
+                  {
+                    label: "MAIN COURSE",
+                    name: "Supported side-lie, low amplitude",
+                    geom: "Affected side up, pillow between knees, pelvis stacked. Partner behind. Movement slow, range small. Spine stays neutral; affected leg stays unloaded.",
+                    badges: ["low lumbar", "high control"],
+                  },
+                  {
+                    label: "DESSERT · YOUR CHOICE",
+                    name: "Spoon close with manual stimulation",
+                    geom: "Climax-conservative. A closing geometry that does not introduce new load. Hold position from main course; partner adds external touch.",
+                    badges: ["climax-friendly", "low load"],
+                  },
+                ].map((act, i) => (
+                  <div
+                    key={act.label}
+                    className="px-6 py-5"
+                    style={{ borderBottom: i < 2 ? "1px solid oklch(0.86 0.025 70)" : undefined }}
+                  >
+                    <p className="font-mono-label text-[9px] tracking-[0.28em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
+                      {act.label}
+                    </p>
+                    <p className="font-serif-display text-lg italic mt-2 leading-tight" style={{ color: PAPER_INK }}>
+                      {act.name}
+                    </p>
+                    <p className="mt-2 text-sm leading-relaxed" style={{ color: PAPER_INK, opacity: 0.78 }}>
+                      {act.geom}
+                    </p>
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {act.badges.map((b) => (
+                        <span
+                          key={b}
+                          className="font-mono-label text-[9px] tracking-[0.06em] px-2 py-1 rounded-sm"
+                          style={{
+                            background: "oklch(0.92 0.022 76)",
+                            color: PAPER_MUTED,
+                            border: "1px solid oklch(0.86 0.025 70)",
+                          }}
+                        >
+                          {b}
+                        </span>
+                      ))}
+                    </div>
+                    {i === 1 && (
+                      <p className="mt-4 pt-3 text-sm italic leading-snug border-t" style={{ color: "var(--brand-oxblood)", borderColor: "oklch(0.86 0.025 70)" }}>
+                        Partner line: "Small. Slow. If my back starts speaking we stop and re-route."
+                      </p>
+                    )}
+                  </div>
+                ))}
+
+                <div className="px-6 py-4 flex items-center gap-2 flex-wrap" style={{ background: "oklch(0.92 0.022 76)" }}>
+                  <span className="font-mono-label text-[9px] tracking-[0.18em] uppercase" style={{ color: PAPER_MUTED }}>
+                    Decision after each act:
+                  </span>
+                  {["↓ De-escalate", "→ Hold", "↑ Escalate"].map((d) => (
+                    <span
+                      key={d}
+                      className="font-mono-label text-[9px] tracking-[0.18em] uppercase px-2.5 py-1 rounded-sm border"
+                      style={{ borderColor: "var(--brand-oxblood)", color: "var(--brand-oxblood)" }}
+                    >
+                      {d}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <p className="mt-4 text-xs italic leading-relaxed text-center" style={{ color: PAPER_MUTED }}>
+                Real output, real positions. Tap the CTA to build yours.
+              </p>
+            </div>
           </div>
         </div>
       </section>

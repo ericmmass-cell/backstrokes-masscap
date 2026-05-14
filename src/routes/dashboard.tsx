@@ -216,6 +216,93 @@ function BelowStrip({ state }: { state: SessionState }) {
   );
 }
 
+/* ───────── Engine card — push the money feature on the daily home ───────── */
+
+function EngineCard({ state }: { state: SessionState }) {
+  // Tag the recommendation by the user's current Index band
+  const indexBand = state.index >= 70 ? "green" : state.index >= 50 ? "amber" : "red";
+  const bandCopy: Record<string, string> = {
+    green: "Quiet enough for a next-step option. Quiet is not permission to become an acrobat with unresolved chair trauma.",
+    amber: "Amber tonight. The plan stays low-flexion, low-thrust, release-first unless you insist on making orthopaedics a spectator sport.",
+    red: "Red. Bedroom plan is release-first only. That is not a punishment. It is the product refusing to let optimism drive without insurance.",
+  };
+  return (
+    <article
+      className="grid lg:grid-cols-12 border border-border overflow-hidden"
+      style={{ boxShadow: "var(--shadow-soft)" }}
+    >
+      <div
+        className="lg:col-span-7 px-7 md:px-10 py-9 md:py-11"
+        style={{ background: "linear-gradient(140deg, oklch(0.96 0.012 80) 0%, oklch(0.92 0.022 76) 100%)" }}
+      >
+        <p
+          className="font-mono-label text-[10px] tracking-[0.28em] uppercase"
+          style={{ color: "var(--brand-oxblood)" }}
+        >
+          ◆ TONIGHT'S GEOMETRY · POSITION INTELLIGENCE ENGINE
+        </p>
+        <h3
+          className="font-serif-display italic mt-3 leading-tight"
+          style={{ fontSize: "clamp(28px, 3vw, 40px)" }}
+        >
+          Build tonight's plan{" "}
+          <span style={{ color: "var(--brand-oxblood)" }}>in six taps.</span>
+        </h3>
+        <p className="mt-4 text-base leading-relaxed text-foreground/85 max-w-xl">
+          {bandCopy[indexBand]} Tell the engine where the pain is, how the floor feels, what the evening is for. It returns a warm-up, a main course, and a dessert option, with escalate / hold / de-escalate at every act.
+        </p>
+        <div className="mt-7 flex flex-wrap items-center gap-4">
+          <a
+            href="/engine.html"
+            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold transition hover:opacity-90"
+            style={{ background: "var(--brand-oxblood)", color: "var(--brand-paper)" }}
+          >
+            Build tonight's plan →
+          </a>
+          <span
+            className="font-mono-label text-[10px] tracking-[0.22em] uppercase"
+            style={{ color: "var(--muted-foreground)" }}
+          >
+            Index {state.index} · cap is {indexBand}
+          </span>
+        </div>
+      </div>
+
+      {/* Right rail: a tiny preview of what the output looks like */}
+      <aside
+        className="lg:col-span-5 px-6 py-7 border-l border-border"
+        style={{ background: "oklch(0.92 0.022 76)" }}
+      >
+        <p className="font-mono-label text-[9px] tracking-[0.28em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
+          What you get back
+        </p>
+        <ul className="mt-4 space-y-3">
+          {[
+            ["WARM-UP", "Two minutes of breath, side-lying."],
+            ["MAIN", "The geometry your back can sign off on."],
+            ["DESSERT", "Climax-conservative, or the next step if quiet."],
+          ].map(([label, body]) => (
+            <li key={label} className="flex gap-3">
+              <span
+                className="font-mono-label text-[9px] tracking-[0.22em] uppercase shrink-0 pt-1"
+                style={{ color: "var(--brand-oxblood)", width: 64 }}
+              >
+                {label}
+              </span>
+              <span className="font-serif-display text-sm italic leading-snug text-foreground/85">
+                {body}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-5 pt-4 border-t border-border text-[11px] italic leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
+          Each act has escalate, hold, or de-escalate. The next act re-routes from your choice. No forced crescendo.
+        </p>
+      </aside>
+    </article>
+  );
+}
+
 /* ───────── Today's distraction — Roman quote teaser ───────── */
 
 function DistractionTeaser() {
@@ -249,28 +336,45 @@ function DistractionTeaser() {
 
 function Shelf() {
   const items = [
+    { label: "Engine", sub: "build tonight's plan, six taps", to: "/engine.html", external: true },
     { label: "Positions", sub: "scored by spine", to: "/positions" },
-    { label: "Scripts", sub: "F.07, AASECT-supervised", to: "/conversation" },
-    { label: "Science", sub: "cohort data + sources", to: "/science" },
-    { label: "Council", sub: "four clinicians, four vetoes", to: "/council" },
+    { label: "Scripts", sub: "ready-to-copy adult sentences", to: "/conversation" },
+    { label: "Partner", sub: "the second user, addressed", to: "/partner" },
+    { label: "Science", sub: "public record + sources", to: "/science" },
   ];
   return (
-    <nav className="grid sm:grid-cols-4 gap-px bg-border border border-border">
-      {items.map((i) => (
-        <Link
-          key={i.to}
-          to={i.to}
-          className="bg-background p-5 hover:bg-card/40 transition group flex items-baseline justify-between gap-3"
-        >
-          <div>
-            <p className="font-serif-display text-lg leading-tight">{i.label}</p>
-            <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground mt-1">{i.sub}</p>
-          </div>
-          <span className="font-mono-label text-[10px] tracking-[0.22em] uppercase shrink-0 group-hover:translate-x-0.5 transition" style={{ color: "var(--brand-amber)" }}>
-            →
-          </span>
-        </Link>
-      ))}
+    <nav className="grid sm:grid-cols-5 gap-px bg-border border border-border">
+      {items.map((i) =>
+        i.external ? (
+          <a
+            key={i.to}
+            href={i.to}
+            className="bg-background p-5 hover:bg-card/40 transition group flex items-baseline justify-between gap-3"
+          >
+            <div>
+              <p className="font-serif-display text-lg leading-tight">{i.label}</p>
+              <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground mt-1">{i.sub}</p>
+            </div>
+            <span className="font-mono-label text-[10px] tracking-[0.22em] uppercase shrink-0 group-hover:translate-x-0.5 transition" style={{ color: "var(--brand-oxblood)" }}>
+              →
+            </span>
+          </a>
+        ) : (
+          <Link
+            key={i.to}
+            to={i.to}
+            className="bg-background p-5 hover:bg-card/40 transition group flex items-baseline justify-between gap-3"
+          >
+            <div>
+              <p className="font-serif-display text-lg leading-tight">{i.label}</p>
+              <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground mt-1">{i.sub}</p>
+            </div>
+            <span className="font-mono-label text-[10px] tracking-[0.22em] uppercase shrink-0 group-hover:translate-x-0.5 transition" style={{ color: "var(--brand-oxblood)" }}>
+              →
+            </span>
+          </Link>
+        )
+      )}
     </nav>
   );
 }
@@ -334,6 +438,7 @@ function Dashboard() {
             }}
           />
           <BelowStrip state={state} />
+          <EngineCard state={state} />
           <DistractionTeaser />
           <Shelf />
         </div>
