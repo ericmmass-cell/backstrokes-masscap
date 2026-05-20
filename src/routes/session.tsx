@@ -6,7 +6,7 @@ import {
   THEME_SOURCES,
   type Distraction,
 } from "@/lib/distractions";
-import { YogaFigure } from "@/components/YogaFigure";
+import { HumanFigure } from "@/components/HumanFigure";
 
 type MoveKey = "curl-up" | "side-plank" | "bird-dog" | "breath" | "reverse-kegel" | "decomp";
 
@@ -137,7 +137,7 @@ function DemoPanel({
     <div className="relative w-full h-full overflow-hidden grid grid-cols-12">
       {/* 3D viewport, takes ~70% on desktop */}
       <div className="col-span-12 md:col-span-8 relative bg-black">
-        <YogaFigure moveKey={move.moveKey} paused={paused} />
+        <HumanFigure moveKey={move.moveKey} paused={paused} />
 
         {/* Top strip — sits over the canvas */}
         <div className="absolute top-4 left-5 right-5 flex items-center justify-between pointer-events-none">

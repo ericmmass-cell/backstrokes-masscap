@@ -16,6 +16,178 @@ const RULE = "#D9CFB5";
 
 type Props = { className?: string };
 
+// Filled-silhouette exercise figures used inside the work-card SVG.
+// Drawn at ~480x300 base coords; the parent group scales them down.
+function WorkCurlUp() {
+  return (
+    <g>
+      {/* Supine torso */}
+      <path
+        fill={INK}
+        d="
+          M 40 178
+          C 30 174, 26 168, 30 158
+          C 34 148, 44 142, 56 140
+          C 70 138, 84 138, 100 136
+          C 100 132, 102 128, 106 124
+          C 110 120, 116 118, 122 118
+          C 130 118, 134 122, 138 128
+          C 142 134, 144 138, 148 140
+          C 174 142, 220 144, 270 146
+          C 310 148, 330 150, 340 152
+          L 340 168
+          C 320 170, 290 172, 250 174
+          C 200 176, 140 180, 90 182
+          C 70 184, 54 184, 46 182
+          C 42 181, 40 180, 40 178 Z
+        "
+      />
+      <circle cx="125" cy="118" r="14" fill={INK} />
+      <path
+        fill={INK}
+        d="
+          M 320 152
+          C 332 150, 348 148, 358 142
+          C 368 136, 374 128, 374 118
+          C 374 110, 370 106, 364 108
+          C 360 110, 358 116, 354 122
+          C 350 130, 344 138, 332 148 Z
+        "
+      />
+      <path
+        fill={INK}
+        d="
+          M 364 116
+          C 370 114, 378 116, 382 124
+          C 386 134, 386 148, 384 162
+          C 382 170, 378 174, 372 174
+          C 368 174, 364 170, 362 162
+          C 360 152, 360 138, 362 126
+          C 362 122, 363 118, 364 116 Z
+        "
+      />
+    </g>
+  );
+}
+
+function WorkSidePlank() {
+  return (
+    <g>
+      <path
+        fill={INK}
+        d="
+          M 84 78
+          C 80 70, 84 60, 92 56
+          C 100 52, 110 56, 114 62
+          L 144 102
+          C 152 110, 160 118, 170 124
+          L 280 198
+          C 290 204, 302 208, 314 208
+          C 326 208, 334 212, 336 220
+          C 338 230, 334 240, 322 240
+          L 280 240
+          C 268 240, 256 234, 246 228
+          L 162 168
+          C 152 162, 142 152, 132 142
+          L 102 100
+          C 92 92, 84 86, 84 78 Z
+        "
+      />
+      <circle cx="98" cy="62" r="13" fill={INK} />
+      <path
+        fill={INK}
+        d="
+          M 90 76
+          C 86 78, 80 82, 76 90
+          C 72 100, 70 124, 70 156
+          C 70 184, 72 208, 78 218
+          C 82 226, 90 230, 96 226
+          C 102 222, 102 216, 98 208
+          C 92 196, 88 184, 88 168
+          C 88 152, 90 132, 96 110
+          C 100 96, 100 86, 98 82
+          C 96 78, 94 76, 90 76 Z
+        "
+      />
+      <ellipse cx="84" cy="222" rx="22" ry="6" fill={INK} />
+    </g>
+  );
+}
+
+function WorkBirdDog() {
+  return (
+    <g>
+      <path
+        fill={INK}
+        d="
+          M 120 130
+          C 110 128, 102 130, 100 138
+          C 98 146, 102 154, 112 156
+          C 130 158, 170 156, 210 154
+          C 250 152, 290 152, 320 154
+          C 332 156, 340 152, 342 144
+          C 344 136, 338 130, 326 128
+          C 290 124, 250 122, 210 124
+          C 180 126, 150 128, 120 130 Z
+        "
+      />
+      <circle cx="116" cy="124" r="13" fill={INK} />
+      <path
+        fill={INK}
+        d="
+          M 132 152
+          C 128 158, 128 178, 130 196
+          C 132 214, 136 230, 144 232
+          C 154 234, 158 226, 156 214
+          C 154 200, 152 184, 152 168
+          C 152 158, 152 152, 146 150
+          C 140 148, 134 150, 132 152 Z
+        "
+      />
+      <ellipse cx="142" cy="234" rx="18" ry="5" fill={INK} />
+      <path
+        fill={INK}
+        d="
+          M 296 154
+          C 292 162, 292 184, 296 204
+          C 300 222, 308 232, 318 232
+          C 326 232, 328 222, 322 204
+          C 316 184, 312 168, 312 158
+          C 312 152, 308 150, 302 150
+          C 298 150, 296 152, 296 154 Z
+        "
+      />
+      <ellipse cx="312" cy="234" rx="20" ry="5" fill={INK} />
+      <path
+        fill={INK}
+        d="
+          M 110 130
+          C 102 124, 92 118, 80 110
+          C 70 102, 60 96, 52 92
+          C 46 88, 44 84, 48 80
+          C 52 76, 60 78, 70 82
+          C 86 88, 100 96, 116 108
+          C 124 114, 128 120, 124 126
+          C 122 130, 116 132, 110 130 Z
+        "
+      />
+      <path
+        fill={INK}
+        d="
+          M 330 148
+          C 340 146, 354 144, 372 142
+          C 388 140, 402 140, 410 142
+          C 416 144, 418 148, 414 152
+          C 410 156, 402 158, 388 158
+          C 372 158, 354 160, 340 162
+          C 332 162, 328 160, 328 156
+          C 328 152, 328 150, 330 148 Z
+        "
+      />
+    </g>
+  );
+}
+
 /* ─────────────────────────────────────────────────────────
    HeroSchematic — the right-rail "control panel" replacing
    the stock portrait. Index gauge, annotated body chart,
@@ -40,36 +212,56 @@ export function HeroSchematic({ className }: Props) {
       <circle cx="395" cy="22" r="3" fill={OX} />
       <text x="386" y="27" fontFamily="Inter, sans-serif" fontSize="9" letterSpacing="2.2" fill={OX} textAnchor="end">ARMED</text>
 
-      {/* Body silhouette — stylized lumbar / pelvis schematic */}
-      <g transform="translate(140, 70)">
-        {/* Head */}
-        <circle cx="70" cy="18" r="14" fill={INK} opacity="0.16" stroke={INK} strokeWidth="1" />
-        {/* Neck */}
-        <line x1="70" y1="32" x2="70" y2="48" stroke={INK} strokeWidth="2" />
-        {/* Shoulders */}
-        <line x1="36" y1="48" x2="104" y2="48" stroke={INK} strokeWidth="2.4" strokeLinecap="round" />
-        {/* Torso */}
-        <path d="M 42 50 L 50 142 L 90 142 L 98 50 Z" fill={INK} opacity="0.08" stroke={INK} strokeWidth="1.2" />
-        {/* Spine */}
-        <line x1="70" y1="50" x2="70" y2="142" stroke={INK} strokeWidth="1.4" strokeDasharray="2 3" />
-        {/* Lumbar marker (L4-L5 region) */}
-        <rect x="62" y="124" width="16" height="18" fill={OX} opacity="0.85" />
-        <line x1="78" y1="133" x2="118" y2="133" stroke={OX} strokeWidth="1" />
-        <text x="122" y="136" fontFamily="Inter, sans-serif" fontSize="9" fontWeight="600" letterSpacing="1.4" fill={OX}>L4 · L5</text>
-        {/* Pelvis */}
-        <path d="M 38 142 Q 70 174 102 142 Q 96 170 70 178 Q 44 170 38 142 Z" fill={INK} opacity="0.10" stroke={INK} strokeWidth="1.2" />
-        {/* Pelvic floor band */}
-        <path d="M 50 168 Q 70 178 90 168" fill="none" stroke={OX} strokeWidth="2.2" />
-        <line x1="50" y1="168" x2="14" y2="168" stroke={OX} strokeWidth="1" />
-        <text x="10" y="171" fontFamily="Inter, sans-serif" fontSize="9" fontWeight="600" letterSpacing="1.4" fill={OX} textAnchor="end">FLOOR</text>
-        {/* Hip flexor markers */}
-        <circle cx="46" cy="158" r="3" fill={OX} />
-        <circle cx="94" cy="158" r="3" fill={OX} />
-        <line x1="94" y1="158" x2="138" y2="158" stroke={OX} strokeWidth="1" />
-        <text x="142" y="161" fontFamily="Inter, sans-serif" fontSize="9" fontWeight="600" letterSpacing="1.4" fill={OX}>HIP · ILIOPSOAS</text>
-        {/* Quads */}
-        <line x1="56" y1="178" x2="56" y2="232" stroke={INK} strokeWidth="2" />
-        <line x1="84" y1="178" x2="84" y2="232" stroke={INK} strokeWidth="2" />
+      {/* Anatomical side-view human figure with clinical annotations */}
+      <g transform="translate(150, 60)">
+        {/* Full body silhouette — side profile, standing */}
+        <path
+          fill={INK}
+          d="
+            M 60 0
+            C 46 0, 38 12, 38 28
+            C 38 38, 42 46, 50 50
+            C 46 54, 42 60, 40 70
+            C 38 82, 38 96, 40 106
+            C 42 112, 46 116, 52 118
+            C 50 124, 48 132, 48 142
+            C 48 158, 50 174, 54 184
+            C 50 188, 46 196, 44 210
+            C 42 230, 42 252, 44 268
+            C 45 274, 48 276, 52 274
+            C 56 272, 58 266, 58 252
+            C 58 236, 60 220, 64 210
+            C 64 222, 64 240, 62 256
+            C 60 268, 62 274, 66 274
+            C 70 274, 72 268, 72 252
+            C 72 236, 74 218, 76 208
+            C 78 198, 78 188, 76 184
+            C 80 174, 82 158, 82 142
+            C 82 132, 80 124, 78 118
+            C 84 116, 88 112, 90 106
+            C 92 96, 92 82, 90 70
+            C 88 60, 84 54, 80 50
+            C 88 46, 92 38, 92 28
+            C 92 12, 84 0, 70 0
+            C 67 -1, 63 -1, 60 0 Z
+          "
+          opacity="0.92"
+        />
+
+        {/* Lumbar region highlight — oxblood overlay where L4-L5 sits */}
+        <rect x="48" y="112" width="34" height="14" fill={OX} opacity="0.85" />
+        <line x1="82" y1="119" x2="118" y2="119" stroke={OX} strokeWidth="1.2" />
+        <text x="122" y="122" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="600" letterSpacing="1.6" fill={OX}>L4 · L5</text>
+
+        {/* Pelvic floor band — oxblood arc across pelvis */}
+        <path d="M 42 156 Q 65 168 88 156" fill="none" stroke={OX} strokeWidth="3" strokeLinecap="round" />
+        <line x1="42" y1="156" x2="8" y2="156" stroke={OX} strokeWidth="1.2" />
+        <text x="4" y="159" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="600" letterSpacing="1.6" fill={OX} textAnchor="end">FLOOR</text>
+
+        {/* Hip / iliopsoas marker — oxblood dot at hip */}
+        <circle cx="86" cy="148" r="4" fill={OX} />
+        <line x1="90" y1="148" x2="120" y2="148" stroke={OX} strokeWidth="1.2" />
+        <text x="124" y="151" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="600" letterSpacing="1.6" fill={OX}>HIP · ILIOPSOAS</text>
       </g>
 
       {/* Hairline rule */}
@@ -138,37 +330,11 @@ export function WorkSchematic({
             <text x="28" y={m.y + 4} fontFamily="Inter, sans-serif" fontSize="10" fontWeight="600" letterSpacing="2.4" fill={OX}>{m.ref}</text>
             <text x="28" y={m.y + 38} fontFamily="Georgia, serif" fontSize="32" fontStyle="italic" fill={INK}>{m.name}</text>
             <text x="28" y={m.y + 62} fontFamily="Inter, sans-serif" fontSize="11" letterSpacing="1.4" fill={MUTED}>{m.dose}</text>
-            {/* Move silhouette */}
-            <g transform={`translate(320, ${m.y - 10})`}>
-              {i === 0 && (
-                // Curl-up: supine with knee up
-                <g stroke={INK} strokeWidth="2" fill="none" strokeLinecap="round">
-                  <line x1="20" y1="60" x2="140" y2="60" />
-                  <circle cx="20" cy="56" r="6" fill={INK} opacity="0.15" stroke={INK} strokeWidth="1.4" />
-                  <path d="M 90 60 L 110 32 L 130 60" />
-                </g>
-              )}
-              {i === 1 && (
-                // Side bridge: forearm down
-                <g stroke={INK} strokeWidth="2" fill="none" strokeLinecap="round">
-                  <line x1="30" y1="36" x2="100" y2="80" />
-                  <line x1="30" y1="36" x2="36" y2="60" />
-                  <line x1="36" y1="60" x2="60" y2="60" />
-                  <line x1="100" y1="80" x2="140" y2="80" />
-                  <circle cx="26" cy="32" r="6" fill={INK} opacity="0.15" stroke={INK} strokeWidth="1.4" />
-                </g>
-              )}
-              {i === 2 && (
-                // Bird-dog: quadruped opposite arm + leg
-                <g stroke={INK} strokeWidth="2" fill="none" strokeLinecap="round">
-                  <line x1="20" y1="44" x2="120" y2="44" />
-                  <line x1="40" y1="44" x2="40" y2="72" />
-                  <line x1="100" y1="44" x2="100" y2="72" />
-                  <line x1="20" y1="44" x2="0" y2="20" />
-                  <line x1="120" y1="44" x2="146" y2="64" />
-                  <circle cx="18" cy="40" r="5" fill={INK} opacity="0.15" stroke={INK} strokeWidth="1.4" />
-                </g>
-              )}
+            {/* Move silhouette — filled body figure, side profile */}
+            <g transform={`translate(290, ${m.y - 30}) scale(0.42)`}>
+              {i === 0 && <WorkCurlUp />}
+              {i === 1 && <WorkSidePlank />}
+              {i === 2 && <WorkBirdDog />}
             </g>
           </g>
         ))}
