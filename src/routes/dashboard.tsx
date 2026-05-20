@@ -297,21 +297,24 @@ function DistractionTeaser() {
   const d = todaysDistraction();
   const isQuote = d.kind === "quote" || !d.kind;
   return (
-    <div className="border border-border px-6 py-5 flex items-start justify-between gap-6 flex-wrap" style={{ background: "linear-gradient(180deg, oklch(0.95 0.018 78), oklch(0.92 0.022 76))" }}>
+    <div
+      className="border border-border px-6 py-5 flex flex-col md:flex-row md:items-start md:justify-between gap-4 md:gap-6"
+      style={{ background: "linear-gradient(180deg, oklch(0.95 0.018 78), oklch(0.92 0.022 76))" }}
+    >
       <div className="flex-1 min-w-0">
         <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-amber)" }}>
           ◆ Today's distraction · {THEME_LABEL[d.theme]}
         </p>
         <p className="font-serif-display text-xl md:text-2xl italic mt-2 leading-snug">
           {isQuote ? `“${d.text}”` : d.text}{" "}
-          <span className="text-muted-foreground not-italic font-mono-label text-[10px] tracking-[0.22em] uppercase ml-2">
+          <span className="text-muted-foreground not-italic font-mono-label text-[10px] tracking-[0.22em] uppercase block md:inline mt-1 md:mt-0 md:ml-2">
             · {d.attribution} · {d.era}
           </span>
         </p>
       </div>
       <Link
         to="/session"
-        className="font-mono-label text-[10px] tracking-[0.22em] uppercase hover:opacity-80 transition shrink-0 self-end"
+        className="font-mono-label text-[10px] tracking-[0.22em] uppercase hover:opacity-80 transition shrink-0 md:self-end"
         style={{ color: "var(--brand-amber)" }}
       >
         more in the session →

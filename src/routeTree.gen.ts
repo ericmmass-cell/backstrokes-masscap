@@ -21,8 +21,8 @@ import { Route as BedroomRouteImport } from './routes/bedroom'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShareTokenRouteImport } from './routes/share.$token'
-import { Route as BuySuccessRouteImport } from './routes/buy.success'
-import { Route as BuyCancelRouteImport } from './routes/buy.cancel'
+import { Route as BuySuccessRouteImport } from './routes/buy_.success'
+import { Route as BuyCancelRouteImport } from './routes/buy_.cancel'
 
 const SessionRoute = SessionRouteImport.update({
   id: '/session',
@@ -85,21 +85,21 @@ const ShareTokenRoute = ShareTokenRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuySuccessRoute = BuySuccessRouteImport.update({
-  id: '/success',
-  path: '/success',
-  getParentRoute: () => BuyRoute,
+  id: '/buy_/success',
+  path: '/buy/success',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BuyCancelRoute = BuyCancelRouteImport.update({
-  id: '/cancel',
-  path: '/cancel',
-  getParentRoute: () => BuyRoute,
+  id: '/buy_/cancel',
+  path: '/buy/cancel',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/bedroom': typeof BedroomRoute
-  '/buy': typeof BuyRouteWithChildren
+  '/buy': typeof BuyRoute
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
   '/manifesto': typeof ManifestoRoute
@@ -115,7 +115,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/bedroom': typeof BedroomRoute
-  '/buy': typeof BuyRouteWithChildren
+  '/buy': typeof BuyRoute
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
   '/manifesto': typeof ManifestoRoute
@@ -132,7 +132,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/bedroom': typeof BedroomRoute
-  '/buy': typeof BuyRouteWithChildren
+  '/buy': typeof BuyRoute
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
   '/manifesto': typeof ManifestoRoute
@@ -140,8 +140,8 @@ export interface FileRoutesById {
   '/positions': typeof PositionsRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
-  '/buy/cancel': typeof BuyCancelRoute
-  '/buy/success': typeof BuySuccessRoute
+  '/buy_/cancel': typeof BuyCancelRoute
+  '/buy_/success': typeof BuySuccessRoute
   '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRouteTypes {
@@ -190,8 +190,8 @@ export interface FileRouteTypes {
     | '/positions'
     | '/science'
     | '/session'
-    | '/buy/cancel'
-    | '/buy/success'
+    | '/buy_/cancel'
+    | '/buy_/success'
     | '/share/$token'
   fileRoutesById: FileRoutesById
 }
@@ -199,7 +199,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   BedroomRoute: typeof BedroomRoute
-  BuyRoute: typeof BuyRouteWithChildren
+  BuyRoute: typeof BuyRoute
   ConversationRoute: typeof ConversationRoute
   DashboardRoute: typeof DashboardRoute
   ManifestoRoute: typeof ManifestoRoute
@@ -207,6 +207,8 @@ export interface RootRouteChildren {
   PositionsRoute: typeof PositionsRoute
   ScienceRoute: typeof ScienceRoute
   SessionRoute: typeof SessionRoute
+  BuyCancelRoute: typeof BuyCancelRoute
+  BuySuccessRoute: typeof BuySuccessRoute
   ShareTokenRoute: typeof ShareTokenRoute
 }
 
@@ -296,40 +298,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShareTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/buy/success': {
-      id: '/buy/success'
-      path: '/success'
+    '/buy_/success': {
+      id: '/buy_/success'
+      path: '/buy/success'
       fullPath: '/buy/success'
       preLoaderRoute: typeof BuySuccessRouteImport
-      parentRoute: typeof BuyRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/buy/cancel': {
-      id: '/buy/cancel'
-      path: '/cancel'
+    '/buy_/cancel': {
+      id: '/buy_/cancel'
+      path: '/buy/cancel'
       fullPath: '/buy/cancel'
       preLoaderRoute: typeof BuyCancelRouteImport
-      parentRoute: typeof BuyRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
-
-interface BuyRouteChildren {
-  BuyCancelRoute: typeof BuyCancelRoute
-  BuySuccessRoute: typeof BuySuccessRoute
-}
-
-const BuyRouteChildren: BuyRouteChildren = {
-  BuyCancelRoute: BuyCancelRoute,
-  BuySuccessRoute: BuySuccessRoute,
-}
-
-const BuyRouteWithChildren = BuyRoute._addFileChildren(BuyRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BedroomRoute: BedroomRoute,
-  BuyRoute: BuyRouteWithChildren,
+  BuyRoute: BuyRoute,
   ConversationRoute: ConversationRoute,
   DashboardRoute: DashboardRoute,
   ManifestoRoute: ManifestoRoute,
@@ -337,6 +327,8 @@ const rootRouteChildren: RootRouteChildren = {
   PositionsRoute: PositionsRoute,
   ScienceRoute: ScienceRoute,
   SessionRoute: SessionRoute,
+  BuyCancelRoute: BuyCancelRoute,
+  BuySuccessRoute: BuySuccessRoute,
   ShareTokenRoute: ShareTokenRoute,
 }
 export const routeTree = rootRouteImport

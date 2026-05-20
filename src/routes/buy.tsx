@@ -22,7 +22,7 @@ import { createCheckout, type Sku } from "@/lib/stripe-checkout";
  */
 
 const createCheckoutSession = createServerFn({ method: "POST" })
-  .validator((data: { sku: Sku }) => data)
+  .inputValidator((data: { sku: Sku }) => data)
   .handler(async (ctx) => {
     const { sku } = ctx.data;
     return createCheckout(sku);

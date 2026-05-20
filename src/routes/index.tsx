@@ -638,11 +638,15 @@ function Index() {
           </div>
           <div className="flex flex-wrap gap-x-7 gap-y-2 justify-center">
             <Link to="/dashboard" className="hover:opacity-80 transition">Today</Link>
-            <Link to="/session" className="hover:opacity-80 transition">Session</Link>
             <a href="/engine.html" className="hover:opacity-80 transition">Engine</a>
+            <Link to="/positions" className="hover:opacity-80 transition">Positions</Link>
             <Link to="/conversation" className="hover:opacity-80 transition">Scripts</Link>
             <Link to="/partner" className="hover:opacity-80 transition">Partner</Link>
+            <Link to="/bedroom" className="hover:opacity-80 transition">Bedroom</Link>
             <Link to="/science" className="hover:opacity-80 transition">Science</Link>
+            <Link to="/about" className="hover:opacity-80 transition">About</Link>
+            <Link to="/manifesto" className="hover:opacity-80 transition">Manifesto</Link>
+            <Link to="/buy" className="hover:opacity-80 transition" style={{ color: "var(--brand-oxblood)" }}>Buy</Link>
           </div>
           <span>℠ MMXXVI · no candle revenue</span>
         </div>

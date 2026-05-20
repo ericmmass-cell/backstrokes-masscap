@@ -8,7 +8,7 @@ import { SiteHeader } from "@/components/SiteHeader";
  * "are you sure?" pop-up. We just say: the door is still open.
  */
 
-export const Route = createFileRoute("/buy/cancel")({
+export const Route = createFileRoute("/buy_/cancel")({
   component: Cancel,
   validateSearch: (s) =>
     ({ sku: typeof s.sku === "string" ? s.sku : undefined } as { sku?: string }),

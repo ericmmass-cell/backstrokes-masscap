@@ -140,7 +140,7 @@ function PositionsPage() {
             Every position is scored for lumbar load, hip demand, breath access, and partner mobility. Filter by today's Index. If a position exceeds the cap, it drops out quietly. We do not make it a tragedy. We are not magazine editors.
           </p>
           <div
-            className="mt-8 p-5 border-l-2 max-w-2xl flex flex-wrap items-center gap-5"
+            className="mt-8 p-5 border-l-2 max-w-2xl flex flex-col sm:flex-row sm:items-center gap-5"
             style={{ borderColor: "var(--brand-oxblood)", background: "var(--card)" }}
           >
             <div className="flex-1 min-w-0">
@@ -153,7 +153,7 @@ function PositionsPage() {
             </div>
             <a
               href="/engine.html"
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition hover:opacity-90 shrink-0"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition hover:opacity-90 shrink-0 self-start sm:self-auto"
               style={{ background: "var(--brand-oxblood)", color: "var(--brand-paper)" }}
             >
               Open the engine →

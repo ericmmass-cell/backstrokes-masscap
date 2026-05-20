@@ -42,10 +42,15 @@ const OXBLOOD = "var(--brand-oxblood)";
 function Manifesto() {
   return (
     <main style={{ background: PAPER, color: PAPER_INK }} className="min-h-screen">
-      {/* hairline top rule, no nav. one tiny brand mark in the corner. */}
+      {/* One tiny brand mark in the corner. Backdrop-blurred so it does not
+          bleed into body type on mobile scroll. */}
       <div
-        className="fixed top-5 left-5 z-10 font-mono-label text-[10px] tracking-[0.22em] uppercase"
-        style={{ color: PAPER_MUTED }}
+        className="fixed top-3 left-3 z-10 font-mono-label text-[10px] tracking-[0.22em] uppercase backdrop-blur-md rounded-full px-3 py-1.5"
+        style={{
+          color: PAPER_MUTED,
+          background: "oklch(0.94 0.018 78 / 0.82)",
+          border: `1px solid ${RULE}`,
+        }}
       >
         <Link to="/" className="hover:opacity-70 transition">
           Back<span style={{ color: OXBLOOD }}>Stroke</span> · manifesto

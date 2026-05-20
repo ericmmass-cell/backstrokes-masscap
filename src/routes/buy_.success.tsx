@@ -13,7 +13,7 @@ import { SiteHeader } from "@/components/SiteHeader";
  * Supabase can compute the actual spots-remaining number live.
  */
 
-export const Route = createFileRoute("/buy/success")({
+export const Route = createFileRoute("/buy_/success")({
   component: Success,
   validateSearch: (s) =>
     ({
