@@ -196,6 +196,35 @@ export function CheckIn({
       const key = `bs.checkin.${new Date().toISOString().slice(0, 10)}`;
       localStorage.setItem(key, JSON.stringify({ answers, delta, newIndex, t: Date.now() }));
     } catch {}
+    // Append to the event store. The Index engine reads this to compute
+    // a real number from real check-ins instead of the seeded preview.
+    try {
+      // Lazy import so SSR / first paint isn't blocked.
+      import("@/lib/events").then(({ track }) => {
+        // Translate per-question answer codes to 0-10 axis scores the
+        // index-engine expects. Defensive: if a question is unanswered,
+        // we omit it and the engine substitutes a neutral 5.
+        const props: Record<string, unknown> = { answers, delta, newIndex };
+        const a1 = answers.q1?.[0]; // pain
+        const a2 = answers.q2?.[0]; // sleep
+        const a3 = answers.q3?.[0]; // floor
+        const a4 = answers.q4?.[0]; // sex
+        const painMap: Record<string, number> = { quiet: 1, dull: 3, noisy: 5, sharp: 8 };
+        const sleepMap: Record<string, number> = { slept: 8, ok: 6, broken: 3, none: 1 };
+        const floorMap: Record<string, number> = { released: 9, neutral: 5, gripped: 2 };
+        const sexMap: Record<string, number> = { quiet: 8, present: 6, fearful: 3, gone: 1 };
+        if (a1 && painMap[a1] !== undefined) props.pain = painMap[a1];
+        if (a2 && sleepMap[a2] !== undefined) props.sleep = sleepMap[a2];
+        if (a3 && floorMap[a3] !== undefined) props.floor = floorMap[a3];
+        if (a4 && sexMap[a4] !== undefined) props.sex = sexMap[a4];
+        // Q7 red flags become their own event so the index can react hard.
+        const flags = answers.q7 ?? [];
+        if (flags.length > 0 && !flags.includes("none")) {
+          track("flare.flagged", { flags });
+        }
+        track("checkin.submitted", props);
+      });
+    } catch {}
   };
 
   const edit = () => {

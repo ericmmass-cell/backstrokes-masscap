@@ -13,11 +13,16 @@ import { Route as SessionRouteImport } from './routes/session'
 import { Route as ScienceRouteImport } from './routes/science'
 import { Route as PositionsRouteImport } from './routes/positions'
 import { Route as PartnerRouteImport } from './routes/partner'
+import { Route as ManifestoRouteImport } from './routes/manifesto'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConversationRouteImport } from './routes/conversation'
+import { Route as BuyRouteImport } from './routes/buy'
 import { Route as BedroomRouteImport } from './routes/bedroom'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShareTokenRouteImport } from './routes/share.$token'
+import { Route as BuySuccessRouteImport } from './routes/buy.success'
+import { Route as BuyCancelRouteImport } from './routes/buy.cancel'
 
 const SessionRoute = SessionRouteImport.update({
   id: '/session',
@@ -39,6 +44,11 @@ const PartnerRoute = PartnerRouteImport.update({
   path: '/partner',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ManifestoRoute = ManifestoRouteImport.update({
+  id: '/manifesto',
+  path: '/manifesto',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -49,9 +59,19 @@ const ConversationRoute = ConversationRouteImport.update({
   path: '/conversation',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BuyRoute = BuyRouteImport.update({
+  id: '/buy',
+  path: '/buy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BedroomRoute = BedroomRouteImport.update({
   id: '/bedroom',
   path: '/bedroom',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -64,82 +84,125 @@ const ShareTokenRoute = ShareTokenRouteImport.update({
   path: '/share/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BuySuccessRoute = BuySuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => BuyRoute,
+} as any)
+const BuyCancelRoute = BuyCancelRouteImport.update({
+  id: '/cancel',
+  path: '/cancel',
+  getParentRoute: () => BuyRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/bedroom': typeof BedroomRoute
+  '/buy': typeof BuyRouteWithChildren
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
+  '/manifesto': typeof ManifestoRoute
   '/partner': typeof PartnerRoute
   '/positions': typeof PositionsRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
+  '/buy/cancel': typeof BuyCancelRoute
+  '/buy/success': typeof BuySuccessRoute
   '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/bedroom': typeof BedroomRoute
+  '/buy': typeof BuyRouteWithChildren
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
+  '/manifesto': typeof ManifestoRoute
   '/partner': typeof PartnerRoute
   '/positions': typeof PositionsRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
+  '/buy/cancel': typeof BuyCancelRoute
+  '/buy/success': typeof BuySuccessRoute
   '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/bedroom': typeof BedroomRoute
+  '/buy': typeof BuyRouteWithChildren
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
+  '/manifesto': typeof ManifestoRoute
   '/partner': typeof PartnerRoute
   '/positions': typeof PositionsRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
+  '/buy/cancel': typeof BuyCancelRoute
+  '/buy/success': typeof BuySuccessRoute
   '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/bedroom'
+    | '/buy'
     | '/conversation'
     | '/dashboard'
+    | '/manifesto'
     | '/partner'
     | '/positions'
     | '/science'
     | '/session'
+    | '/buy/cancel'
+    | '/buy/success'
     | '/share/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/bedroom'
+    | '/buy'
     | '/conversation'
     | '/dashboard'
+    | '/manifesto'
     | '/partner'
     | '/positions'
     | '/science'
     | '/session'
+    | '/buy/cancel'
+    | '/buy/success'
     | '/share/$token'
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/bedroom'
+    | '/buy'
     | '/conversation'
     | '/dashboard'
+    | '/manifesto'
     | '/partner'
     | '/positions'
     | '/science'
     | '/session'
+    | '/buy/cancel'
+    | '/buy/success'
     | '/share/$token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   BedroomRoute: typeof BedroomRoute
+  BuyRoute: typeof BuyRouteWithChildren
   ConversationRoute: typeof ConversationRoute
   DashboardRoute: typeof DashboardRoute
+  ManifestoRoute: typeof ManifestoRoute
   PartnerRoute: typeof PartnerRoute
   PositionsRoute: typeof PositionsRoute
   ScienceRoute: typeof ScienceRoute
@@ -177,6 +240,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartnerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/manifesto': {
+      id: '/manifesto'
+      path: '/manifesto'
+      fullPath: '/manifesto'
+      preLoaderRoute: typeof ManifestoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -191,11 +261,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConversationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/buy': {
+      id: '/buy'
+      path: '/buy'
+      fullPath: '/buy'
+      preLoaderRoute: typeof BuyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/bedroom': {
       id: '/bedroom'
       path: '/bedroom'
       fullPath: '/bedroom'
       preLoaderRoute: typeof BedroomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -212,14 +296,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShareTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/buy/success': {
+      id: '/buy/success'
+      path: '/success'
+      fullPath: '/buy/success'
+      preLoaderRoute: typeof BuySuccessRouteImport
+      parentRoute: typeof BuyRoute
+    }
+    '/buy/cancel': {
+      id: '/buy/cancel'
+      path: '/cancel'
+      fullPath: '/buy/cancel'
+      preLoaderRoute: typeof BuyCancelRouteImport
+      parentRoute: typeof BuyRoute
+    }
   }
 }
 
+interface BuyRouteChildren {
+  BuyCancelRoute: typeof BuyCancelRoute
+  BuySuccessRoute: typeof BuySuccessRoute
+}
+
+const BuyRouteChildren: BuyRouteChildren = {
+  BuyCancelRoute: BuyCancelRoute,
+  BuySuccessRoute: BuySuccessRoute,
+}
+
+const BuyRouteWithChildren = BuyRoute._addFileChildren(BuyRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   BedroomRoute: BedroomRoute,
+  BuyRoute: BuyRouteWithChildren,
   ConversationRoute: ConversationRoute,
   DashboardRoute: DashboardRoute,
+  ManifestoRoute: ManifestoRoute,
   PartnerRoute: PartnerRoute,
   PositionsRoute: PositionsRoute,
   ScienceRoute: ScienceRoute,

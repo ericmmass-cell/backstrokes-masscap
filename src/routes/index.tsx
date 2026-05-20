@@ -597,7 +597,7 @@ function Index() {
 
           <div className="mt-10 flex items-center justify-center gap-5 flex-wrap">
             <Link
-              to="/dashboard"
+              to="/buy"
               className="inline-flex items-center justify-center gap-2 px-9 py-5 rounded-full text-base font-semibold transition hover:opacity-90"
               style={{
                 background: "var(--brand-oxblood)",

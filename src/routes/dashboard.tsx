@@ -374,8 +374,33 @@ function Dashboard() {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    setState(loadState());
-    setHydrated(true);
+    const loaded = loadState();
+    // If we have enough real events, replace the preview Index numbers
+    // with values computed from the event store. Otherwise the preview
+    // numbers stay so the first-visit experience isn't an empty zero.
+    Promise.all([
+      import("@/lib/events"),
+      import("@/lib/index-engine"),
+    ]).then(([{ track, allEvents }, { computeIndex }]) => {
+      track("app.opened", { route: "/dashboard" });
+      const events = allEvents();
+      // Threshold: only flip to real Index after at least one check-in.
+      const hasRealData = events.some((e) => e.event_name === "checkin.submitted");
+      if (hasRealData) {
+        const reading = computeIndex();
+        setState({
+          ...loaded,
+          index: reading.value,
+          prevIndex: Math.max(0, Math.min(100, reading.value - reading.delta)),
+        });
+      } else {
+        setState(loaded);
+      }
+      setHydrated(true);
+    }).catch(() => {
+      setState(loaded);
+      setHydrated(true);
+    });
   }, []);
 
   const signIn = () => {

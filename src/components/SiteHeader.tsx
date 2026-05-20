@@ -18,6 +18,8 @@ const NAV: NavItem[] = [
   { to: "/partner", label: "Partner" },
   { to: "/bedroom", label: "Bedroom" },
   { to: "/science", label: "Science" },
+  { to: "/about", label: "About" },
+  { to: "/manifesto", label: "Manifesto" },
 ];
 
 export function SiteHeader({ active }: { active?: string }) {
@@ -70,7 +72,7 @@ export function SiteHeader({ active }: { active?: string }) {
         </nav>
 
         <Link
-          to="/dashboard"
+          to="/buy"
           className="text-[12px] tracking-[0.14em] uppercase font-mono-label px-4 py-2 rounded-full hover:opacity-90 transition shrink-0"
           style={{
             background: "var(--brand-oxblood)",
