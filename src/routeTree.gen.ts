@@ -11,12 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SessionRouteImport } from './routes/session'
 import { Route as ScienceRouteImport } from './routes/science'
-import { Route as ProtocolRouteImport } from './routes/protocol'
 import { Route as PositionsRouteImport } from './routes/positions'
-import { Route as PodcastRouteImport } from './routes/podcast'
 import { Route as PartnerRouteImport } from './routes/partner'
 import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as CouncilRouteImport } from './routes/council'
 import { Route as ConversationRouteImport } from './routes/conversation'
 import { Route as BedroomRouteImport } from './routes/bedroom'
 import { Route as IndexRouteImport } from './routes/index'
@@ -32,19 +29,9 @@ const ScienceRoute = ScienceRouteImport.update({
   path: '/science',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProtocolRoute = ProtocolRouteImport.update({
-  id: '/protocol',
-  path: '/protocol',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PositionsRoute = PositionsRouteImport.update({
   id: '/positions',
   path: '/positions',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PodcastRoute = PodcastRouteImport.update({
-  id: '/podcast',
-  path: '/podcast',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PartnerRoute = PartnerRouteImport.update({
@@ -55,11 +42,6 @@ const PartnerRoute = PartnerRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CouncilRoute = CouncilRouteImport.update({
-  id: '/council',
-  path: '/council',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConversationRoute = ConversationRouteImport.update({
@@ -87,12 +69,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bedroom': typeof BedroomRoute
   '/conversation': typeof ConversationRoute
-  '/council': typeof CouncilRoute
   '/dashboard': typeof DashboardRoute
   '/partner': typeof PartnerRoute
-  '/podcast': typeof PodcastRoute
   '/positions': typeof PositionsRoute
-  '/protocol': typeof ProtocolRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
   '/share/$token': typeof ShareTokenRoute
@@ -101,12 +80,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bedroom': typeof BedroomRoute
   '/conversation': typeof ConversationRoute
-  '/council': typeof CouncilRoute
   '/dashboard': typeof DashboardRoute
   '/partner': typeof PartnerRoute
-  '/podcast': typeof PodcastRoute
   '/positions': typeof PositionsRoute
-  '/protocol': typeof ProtocolRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
   '/share/$token': typeof ShareTokenRoute
@@ -116,12 +92,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/bedroom': typeof BedroomRoute
   '/conversation': typeof ConversationRoute
-  '/council': typeof CouncilRoute
   '/dashboard': typeof DashboardRoute
   '/partner': typeof PartnerRoute
-  '/podcast': typeof PodcastRoute
   '/positions': typeof PositionsRoute
-  '/protocol': typeof ProtocolRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
   '/share/$token': typeof ShareTokenRoute
@@ -132,12 +105,9 @@ export interface FileRouteTypes {
     | '/'
     | '/bedroom'
     | '/conversation'
-    | '/council'
     | '/dashboard'
     | '/partner'
-    | '/podcast'
     | '/positions'
-    | '/protocol'
     | '/science'
     | '/session'
     | '/share/$token'
@@ -146,12 +116,9 @@ export interface FileRouteTypes {
     | '/'
     | '/bedroom'
     | '/conversation'
-    | '/council'
     | '/dashboard'
     | '/partner'
-    | '/podcast'
     | '/positions'
-    | '/protocol'
     | '/science'
     | '/session'
     | '/share/$token'
@@ -160,12 +127,9 @@ export interface FileRouteTypes {
     | '/'
     | '/bedroom'
     | '/conversation'
-    | '/council'
     | '/dashboard'
     | '/partner'
-    | '/podcast'
     | '/positions'
-    | '/protocol'
     | '/science'
     | '/session'
     | '/share/$token'
@@ -175,12 +139,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BedroomRoute: typeof BedroomRoute
   ConversationRoute: typeof ConversationRoute
-  CouncilRoute: typeof CouncilRoute
   DashboardRoute: typeof DashboardRoute
   PartnerRoute: typeof PartnerRoute
-  PodcastRoute: typeof PodcastRoute
   PositionsRoute: typeof PositionsRoute
-  ProtocolRoute: typeof ProtocolRoute
   ScienceRoute: typeof ScienceRoute
   SessionRoute: typeof SessionRoute
   ShareTokenRoute: typeof ShareTokenRoute
@@ -202,25 +163,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScienceRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/protocol': {
-      id: '/protocol'
-      path: '/protocol'
-      fullPath: '/protocol'
-      preLoaderRoute: typeof ProtocolRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/positions': {
       id: '/positions'
       path: '/positions'
       fullPath: '/positions'
       preLoaderRoute: typeof PositionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/podcast': {
-      id: '/podcast'
-      path: '/podcast'
-      fullPath: '/podcast'
-      preLoaderRoute: typeof PodcastRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/partner': {
@@ -235,13 +182,6 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/council': {
-      id: '/council'
-      path: '/council'
-      fullPath: '/council'
-      preLoaderRoute: typeof CouncilRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conversation': {
@@ -279,12 +219,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BedroomRoute: BedroomRoute,
   ConversationRoute: ConversationRoute,
-  CouncilRoute: CouncilRoute,
   DashboardRoute: DashboardRoute,
   PartnerRoute: PartnerRoute,
-  PodcastRoute: PodcastRoute,
   PositionsRoute: PositionsRoute,
-  ProtocolRoute: ProtocolRoute,
   ScienceRoute: ScienceRoute,
   SessionRoute: SessionRoute,
   ShareTokenRoute: ShareTokenRoute,

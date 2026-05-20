@@ -204,11 +204,11 @@ function BelowStrip({ state }: { state: SessionState }) {
         </p>
       </div>
       <div className="bg-background p-6">
-        <MonoTag muted>COHORT · LIVE</MonoTag>
+        <MonoTag muted>COHORT · PENDING</MonoTag>
         <p className="font-serif-display text-2xl italic mt-2 leading-tight">
-          142{" "}
+          You.{" "}
           <span className="text-muted-foreground text-base not-italic">
-            of you, before 9am. We see you.
+            The protocol. The chair you did not pick. Cohort metrics return when the cohort exists.
           </span>
         </p>
       </div>
@@ -404,25 +404,6 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
       <SiteHeader active="today" />
-      {hydrated && (
-        <div className="max-w-[1280px] mx-auto px-6 md:px-10 pt-3 flex justify-end">
-          {state.signedIn ? (
-            <button
-              onClick={signOut}
-              className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground hover:text-foreground transition"
-            >
-              Sign out · demo
-            </button>
-          ) : (
-            <button
-              onClick={signIn}
-              className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground hover:text-foreground transition"
-            >
-              Sign in · demo
-            </button>
-          )}
-        </div>
-      )}
 
       <main className="px-6 md:px-10 py-8 md:py-12">
         <div className="max-w-[1280px] mx-auto space-y-8">
@@ -450,7 +431,18 @@ function Dashboard() {
           <span className="font-serif-display italic normal-case tracking-normal text-foreground/70">
             Eight minutes a day. The rent your spine pays.
           </span>
-          <span>℠ MMXXVI</span>
+          <span className="flex items-center gap-4">
+            {hydrated && (
+              <button
+                onClick={state.signedIn ? signOut : signIn}
+                className="opacity-60 hover:opacity-100 transition"
+                title="Demo controls — real auth ships before launch"
+              >
+                {state.signedIn ? "demo · sign out" : "demo · sign in"}
+              </button>
+            )}
+            <span>℠ MMXXVI</span>
+          </span>
         </div>
       </footer>
     </div>

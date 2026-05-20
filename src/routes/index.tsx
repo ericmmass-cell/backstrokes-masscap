@@ -1,9 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
-import portrait from "@/assets/portrait.jpg";
-import sheetGrip from "@/assets/sheet-grip.jpg";
-import mcgillStudy from "@/assets/mcgill-study.jpg";
 import { SiteHeader } from "@/components/SiteHeader";
+import { HeroSchematic, WorkSchematic } from "@/components/Schematic";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -106,17 +104,8 @@ function Index() {
           </div>
 
           <div className="lg:col-span-5 relative">
-            <div className="relative">
-              <img
-                src={portrait}
-                alt=""
-                className="w-full aspect-[4/5] object-cover rounded-sm"
-                style={{ boxShadow: "0 40px 80px -20px oklch(0.18 0.01 40 / 0.35)" }}
-              />
-              <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono-label text-[9px] tracking-[0.22em] uppercase text-white/85">
-                <span>SUBJECT 04 · DAY 42 · L4-L5</span>
-                <span style={{ color: AMBER }}>● PROTOCOL ARMED</span>
-              </div>
+            <div className="relative" style={{ boxShadow: "0 40px 80px -20px oklch(0.18 0.01 40 / 0.18)" }}>
+              <HeroSchematic />
               <span
                 className="absolute -top-6 -right-3 font-script text-3xl rotate-[5deg] hidden md:block"
                 style={{ color: "var(--brand-oxblood)" }}
@@ -134,7 +123,7 @@ function Index() {
           {[
             ["8 min", "a day. Doesn't require a candle."],
             ["1 protocol", "back and bedroom, on the same chart, against the recommendation of two separate industries."],
-            ["4 clinicians", "each with a veto. None of them post."],
+            ["0 fabrications", "every claim cites the public literature. The wellness aisle should try this."],
             ["0 supplements", "0 jade eggs · 0 ashwagandha · 0 things sold in a hemp pouch."],
           ].map(([v, l]) => (
             <div key={String(l)}>
@@ -463,42 +452,31 @@ function Index() {
         <div className="max-w-[1100px] mx-auto grid md:grid-cols-2 gap-6">
           {[
             {
-              src: mcgillStudy,
-              tag: "◆ FOR THE BACK · 8 MIN",
+              variant: "back" as const,
               head: "A quieter lumbar in two weeks.",
               body: "Endurance, not range. The protocol that beat lumbar surgery in head-to-head trials, finally taught at the dose the trials actually used.",
-              color: AMBER,
             },
             {
-              src: sheetGrip,
-              tag: "◆ FOR THE BEDROOM · 7 MIN",
+              variant: "bedroom" as const,
               head: "Reverse kegel before kegel.",
               body: "Erections, lubrication, continence are the floor, not the ceiling. A pelvic floor stuck in the on position is the reason none of it works. It is also the reason the eucalyptus bath salts on a quarterly subscription have not worked. Bath salts have never untensed a single anything.",
-              color: BLUSH,
             },
           ].map((c) => (
             <article
               key={c.head}
-              className="relative overflow-hidden"
-              style={{ boxShadow: "0 30px 60px -20px oklch(0.18 0.01 40 / 0.35)", border: "1px solid oklch(0.86 0.025 70)" }}
+              className="relative overflow-hidden flex flex-col"
+              style={{
+                boxShadow: "0 30px 60px -24px oklch(0.18 0.01 40 / 0.22)",
+                border: "1px solid oklch(0.86 0.025 70)",
+                background: PAPER,
+              }}
             >
-              <div className="relative aspect-[5/6]">
-                <img src={c.src} alt="" className="absolute inset-0 w-full h-full object-cover" />
-                <div
-                  className="absolute inset-0"
-                  style={{ background: "linear-gradient(180deg, transparent 40%, oklch(0.1 0 0 / 0.85) 100%)" }}
-                />
-                <div className="absolute top-5 left-5 right-5 flex items-center justify-between">
-                  <span className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-white/85">
-                    {c.tag}
-                  </span>
-                </div>
-                <div className="absolute bottom-5 left-5 right-5">
-                  <h3 className="font-serif-display text-3xl md:text-4xl italic leading-[1.05]" style={{ color: "white" }}>
-                    {c.head}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-white/85 max-w-sm">{c.body}</p>
-                </div>
+              <WorkSchematic variant={c.variant} />
+              <div className="px-7 py-7 border-t" style={{ borderColor: "oklch(0.86 0.025 70)" }}>
+                <h3 className="font-serif-display text-2xl md:text-3xl italic leading-[1.05]" style={{ color: PAPER_INK }}>
+                  {c.head}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed" style={{ color: PAPER_INK, opacity: 0.78 }}>{c.body}</p>
               </div>
             </article>
           ))}

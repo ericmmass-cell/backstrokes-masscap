@@ -50,50 +50,55 @@ function Score({ v }: { v: number }) {
 }
 
 function PositionRow({ p }: { p: Position }) {
+  const cat = p.category.toUpperCase();
   return (
-    <li className="bg-background p-5 md:p-6">
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground">
-            {p.id} · {p.category}
-          </p>
-          <h3 className="font-serif-display text-xl mt-1 leading-snug">{p.name}</h3>
-        </div>
+    <li className="bg-background p-6 md:p-7 flex flex-col">
+      {/* Eyebrow + ID */}
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="font-mono-label text-[10px] tracking-[0.28em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
+          {p.id.toUpperCase()} · {cat}
+        </span>
+        {p.lumbarLoad <= 2 && (
+          <span className="font-mono-label text-[9px] tracking-[0.18em] uppercase" style={{ color: "var(--brand-oxblood)", opacity: 0.6 }}>
+            acute-day safe
+          </span>
+        )}
       </div>
 
-      <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-[11px]">
-        <div>
-          <p className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground mb-1">
-            Lumbar load
-          </p>
-          <Score v={p.lumbarLoad} />
-        </div>
-        <div>
-          <p className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground mb-1">
-            Hip flexion
-          </p>
-          <Score v={p.hipFlexion} />
-        </div>
-        <div>
-          <p className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground mb-1">
-            Breath access
-          </p>
-          <Score v={p.breathAccess} />
-        </div>
-        <div>
-          <p className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground mb-1">
-            Partner mobility
-          </p>
-          <Score v={p.partnerMobility} />
-        </div>
-      </div>
+      {/* Title — serif italic editorial */}
+      <h3 className="font-serif-display text-2xl md:text-[26px] italic mt-3 leading-tight">
+        {p.name}
+      </h3>
 
-      <p className="mt-4 text-xs text-muted-foreground leading-relaxed italic border-t border-border pt-3">
+      {/* Council note as pull-quote */}
+      <p className="mt-4 text-sm leading-relaxed text-muted-foreground" style={{ borderLeft: "2px solid var(--brand-oxblood)", paddingLeft: 14 }}>
         {p.councilNote}
       </p>
-      <p className="mt-3 text-[10px] uppercase tracking-[0.18em] font-mono-label text-muted-foreground/70">
-        Stop if · sharp back pain · radiating leg symptoms · numbness · pelvic guarding · the feeling that optimism is doing the steering
-      </p>
+
+      {/* Score grid */}
+      <div className="mt-5 grid grid-cols-2 gap-3 text-[11px]">
+        {[
+          ["Lumbar load", p.lumbarLoad],
+          ["Hip flexion", p.hipFlexion],
+          ["Breath access", p.breathAccess],
+          ["Partner mobility", p.partnerMobility],
+        ].map(([label, v]) => (
+          <div key={label as string} className="flex items-center justify-between gap-2">
+            <span className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground">{label}</span>
+            <Score v={v as number} />
+          </div>
+        ))}
+      </div>
+
+      {/* Stop-if rule */}
+      <div className="mt-5 pt-4 border-t border-border">
+        <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase mb-1.5" style={{ color: "var(--brand-oxblood)", opacity: 0.7 }}>
+          Stop rule
+        </p>
+        <p className="text-[11px] italic leading-relaxed text-muted-foreground">
+          Sharp pain. Radiating leg symptoms. Numbness. Pelvic guarding. The feeling that optimism is doing the steering.
+        </p>
+      </div>
     </li>
   );
 }

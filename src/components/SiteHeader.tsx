@@ -16,6 +16,7 @@ const NAV: NavItem[] = [
   { to: "/positions", label: "Positions" },
   { to: "/conversation", label: "Scripts" },
   { to: "/partner", label: "Partner" },
+  { to: "/bedroom", label: "Bedroom" },
   { to: "/science", label: "Science" },
 ];
 

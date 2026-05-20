@@ -6,7 +6,7 @@ import {
   THEME_SOURCES,
   type Distraction,
 } from "@/lib/distractions";
-import { MovementDemo } from "@/components/MovementDemo";
+import { YogaFigure } from "@/components/YogaFigure";
 
 type MoveKey = "curl-up" | "side-plank" | "bird-dog" | "breath" | "reverse-kegel" | "decomp";
 
@@ -137,12 +137,12 @@ function DemoPanel({
     <div className="relative w-full h-full overflow-hidden grid grid-cols-12">
       {/* 3D viewport, takes ~70% on desktop */}
       <div className="col-span-12 md:col-span-8 relative bg-black">
-        <MovementDemo moveKey={move.moveKey} paused={paused} />
+        <YogaFigure moveKey={move.moveKey} paused={paused} />
 
         {/* Top strip — sits over the canvas */}
         <div className="absolute top-4 left-5 right-5 flex items-center justify-between pointer-events-none">
           <span className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-white/85">
-            FIG. 3D · {move.label.toUpperCase()} · LIVE
+            FIG. {move.ref.toUpperCase()} · {move.label.toUpperCase()}
           </span>
           <span className="font-mono-label text-[9px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-amber)" }}>
             ● MOVE {moveIdx + 1} OF {total}
@@ -155,7 +155,7 @@ function DemoPanel({
             {move.label}
           </p>
           <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-white/70 mt-1">
-            {move.dose} · 3d preview · looping rep cycle
+            {move.dose} · breath-paced schematic
           </p>
         </div>
       </div>
@@ -182,10 +182,10 @@ function DemoPanel({
         </ul>
         <div className="mt-auto pt-4 border-t border-border">
           <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground">
-            ◆ Procedural · {paused ? "paused" : "looping"}
+            ◆ Schematic · {paused ? "paused" : "breath-paced"}
           </p>
           <p className="font-serif-display text-xs italic text-muted-foreground mt-2 leading-snug">
-            Production version: rigged body capture, council-supervised. This is the rep rhythm. The form is in the notes.
+            The figure is the rhythm. The form is in the notes on the right. Real video lands when a clinician has reviewed every cue.
           </p>
         </div>
       </aside>
