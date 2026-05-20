@@ -129,18 +129,16 @@ function Index() {
           {[
             ["8 min", "a day. Doesn't require a candle."],
             ["1 protocol", "back and bedroom, on the same chart, against the recommendation of two separate industries."],
-            ["0 fabrications", "every claim cites the public literature. The wellness aisle should try this."],
-            ["0 supplements", "0 jade eggs · 0 ashwagandha · 0 things sold in a hemp pouch."],
+            ["0 fakes", "every claim cites the public literature. The wellness aisle should try this."],
+            ["0 pills", "0 jade eggs · 0 ashwagandha · 0 things sold in a hemp pouch."],
           ].map(([v, l]) => (
-            <div key={String(l)}>
+            <div key={String(l)} className="min-w-0">
               <p
-                className="font-serif-display tracking-tight leading-none"
+                className="font-serif-display tracking-tight leading-[0.95] break-words"
                 style={{
-                  fontSize: "clamp(34px, 4vw, 52px)",
-                  background: "var(--gradient-text)",
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  color: "transparent",
+                  fontSize: "clamp(32px, 3.4vw, 46px)",
+                  color: "var(--brand-oxblood)",
+                  fontStyle: "italic",
                 }}
               >
                 {v}
