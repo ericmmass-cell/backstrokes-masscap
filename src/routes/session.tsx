@@ -135,29 +135,13 @@ function DemoPanel({
 }) {
   return (
     <div className="relative w-full h-full overflow-hidden grid grid-cols-12">
-      {/* 3D viewport, takes ~70% on desktop */}
-      <div className="col-span-12 md:col-span-8 relative bg-black">
+      {/* Plate column. Cream paper background so the engraving sits on
+          its own bed. The figure has its own header (FIG. / title / sub)
+          and cue line at the bottom — no need to overlay them again. We
+          only pin one small "move N of total" chip in the corner so the
+          page knows where it is in the sequence. */}
+      <div className="col-span-12 md:col-span-8 relative" style={{ background: "#F4EFE3" }}>
         <HumanFigure moveKey={move.moveKey} paused={paused} />
-
-        {/* Top strip — sits over the canvas */}
-        <div className="absolute top-4 left-5 right-5 flex items-center justify-between pointer-events-none">
-          <span className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-white/85">
-            FIG. {move.ref.toUpperCase()} · {move.label.toUpperCase()}
-          </span>
-          <span className="font-mono-label text-[9px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-amber)" }}>
-            ● MOVE {moveIdx + 1} OF {total}
-          </span>
-        </div>
-
-        {/* Bottom title — pinned, doesn't overlap the form notes side panel */}
-        <div className="absolute bottom-4 left-5 right-5 pointer-events-none">
-          <p className="font-serif-display text-2xl md:text-3xl italic leading-tight text-white">
-            {move.label}
-          </p>
-          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-white/70 mt-1">
-            {move.dose} · breath-paced schematic
-          </p>
-        </div>
       </div>
 
       {/* Form notes column — separated from the 3D viewport, no overlap */}
