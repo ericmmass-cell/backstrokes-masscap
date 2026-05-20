@@ -74,7 +74,13 @@ function Index() {
               className="mt-9 font-serif-display italic leading-snug max-w-xl"
               style={{ fontSize: "clamp(19px, 1.9vw, 25px)", color: PAPER_INK, opacity: 0.86 }}
             >
-              BackStroke helps keep it out of the room with one short daily protocol and a smarter position plan: spine endurance, pelvic-floor release, breath control, bedroom geometry, and recovery. Three minutes if that is all today has. Eight minutes when it does not. No gummies. No candle. No influencer explaining your pelvis from a ring light.
+              For the back that came home from work loud. For the floor that has been gripping since the second baby. For the couple that stopped trying because the cost of trying kept going up. One daily protocol, a smarter position plan, and the words for the conversation nobody was taught to have.
+            </p>
+            <p
+              className="mt-5 font-serif-display italic leading-snug max-w-xl"
+              style={{ fontSize: "clamp(16px, 1.4vw, 19px)", color: PAPER_INK, opacity: 0.7 }}
+            >
+              Three minutes if that is all today has. Eight when it does not. No gummies. No candle. No influencer explaining your pelvis from a ring light.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -209,61 +215,87 @@ function Index() {
             Open the app to act, not browse. Each module answers a specific question your spine, your floor, your bedroom, or your skepticism has been asking. The default state is action. Education is there when you ask for it.
           </p>
 
-          <ol className="mt-14 grid md:grid-cols-5 gap-px" style={{ background: "oklch(0.86 0.025 70)", border: "1px solid oklch(0.86 0.025 70)" }}>
+          {/* Five modules — typographically dominant, the largest type on the page after the hero */}
+          <ol className="mt-16 divide-y" style={{ borderColor: "oklch(0.86 0.025 70)" }}>
             {[
               {
-                num: "01",
+                num: "I",
                 head: "Today",
                 body: "One number. One session. One small argument with gravity, already scheduled.",
                 value: "You know what to do within five seconds.",
               },
               {
-                num: "02",
+                num: "II",
                 head: "Session",
                 body: "Eight minutes of spine endurance, floor down-training, breath, and recovery. Boring where boring wins.",
                 value: "Repeatable habit, no lifestyle bloat.",
               },
               {
-                num: "03",
-                head: "Positions",
-                body: "Forty pieces of bedroom geometry, filtered by what your lumbar is willing to tolerate without filing paperwork.",
-                value: "A sensitive problem, turned into usable mechanics.",
+                num: "III",
+                head: "Engine",
+                body: "Six taps in. Tonight's plan out. Warm-up, main course, dessert, with escalate / hold / de-escalate at every act.",
+                value: "Bedroom geometry, ranked by your back.",
               },
               {
-                num: "04",
+                num: "IV",
                 head: "Scripts",
-                body: "Adult sentences for the part of sex nobody was taught to say out loud.",
+                body: "Adult sentences for the part of sex nobody was taught to say out loud. Pleasure-led and pain-aware.",
                 value: "Less avoidance. Fewer crossed wires.",
               },
               {
-                num: "05",
+                num: "V",
                 head: "Science",
-                body: "Public literature, internal numbers, and caveats placed where adults can see them.",
+                body: "Public literature, asterisks visible, citations where the wellness aisle put a candle.",
                 value: "Trust without borrowed white coats.",
               },
-            ].map((p) => (
-              <li key={p.num} className="px-6 py-8 md:py-10 flex flex-col" style={{ background: PAPER }}>
-                <p
-                  className="font-serif-display tracking-tight"
-                  style={{
-                    fontSize: "36px",
-                    background: "var(--gradient-text)",
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    color: "transparent",
-                  }}
-                >
-                  {p.num}
-                </p>
-                <h3 className="font-serif-display text-xl mt-2 leading-tight" style={{ color: PAPER_INK }}>
-                  {p.head}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed" style={{ color: PAPER_INK, opacity: 0.78 }}>
-                  {p.body}
-                </p>
-                <p className="mt-4 pt-3 text-xs italic leading-relaxed border-t" style={{ color: "var(--brand-oxblood)", borderColor: "oklch(0.86 0.025 70)" }}>
-                  {p.value}
-                </p>
+            ].map((p, i) => (
+              <li
+                key={p.num}
+                className="grid grid-cols-12 gap-6 md:gap-10 py-10 md:py-14 items-start"
+                style={{ borderColor: "oklch(0.86 0.025 70)", borderTopWidth: i === 0 ? 1 : 0 }}
+              >
+                {/* Roman numeral — large italic serif, the largest type after the hero */}
+                <div className="col-span-2 md:col-span-1">
+                  <span
+                    className="font-serif-display italic block leading-none"
+                    style={{
+                      fontSize: "clamp(40px, 6vw, 84px)",
+                      color: "var(--brand-oxblood)",
+                    }}
+                  >
+                    {p.num}
+                  </span>
+                </div>
+
+                {/* Module name — also editorial, second weight in the hierarchy */}
+                <div className="col-span-10 md:col-span-3">
+                  <h3
+                    className="font-serif-display leading-[0.95] tracking-tight"
+                    style={{ fontSize: "clamp(32px, 4vw, 52px)", color: PAPER_INK }}
+                  >
+                    {p.head}
+                  </h3>
+                </div>
+
+                {/* Body */}
+                <div className="col-span-12 md:col-span-5 md:pt-4">
+                  <p
+                    className="leading-relaxed"
+                    style={{ fontSize: "clamp(15px, 1.3vw, 18px)", color: PAPER_INK, opacity: 0.85 }}
+                  >
+                    {p.body}
+                  </p>
+                </div>
+
+                {/* Value line — small mono, oxblood, far right */}
+                <div className="col-span-12 md:col-span-3 md:pt-5">
+                  <p
+                    className="font-mono-label text-[10px] tracking-[0.22em] uppercase leading-relaxed"
+                    style={{ color: "var(--brand-oxblood)" }}
+                  >
+                    {p.value}
+                  </p>
+                </div>
               </li>
             ))}
           </ol>
@@ -537,9 +569,35 @@ function Index() {
             </span>
           </h2>
           <p className="mt-8 max-w-xl mx-auto text-lg leading-relaxed italic" style={{ color: PAPER_INK, opacity: 0.82 }}>
-            Two weeks free. $24.99 a month after. Cancel any time. Less than one drawer-abandoned supplement. More useful than pretending the third person in bed is part of the arrangement.
+            Two weeks free. $39 a month after, or $399 a year. Cancel any time. Less than one drawer-abandoned supplement. More useful than pretending the third person in bed is part of the arrangement.
           </p>
-          <div className="mt-12 flex items-center justify-center gap-5 flex-wrap">
+
+          {/* Founding-member scarcity block */}
+          <div
+            className="mt-10 mx-auto max-w-xl border px-6 py-5"
+            style={{
+              borderColor: "var(--brand-oxblood)",
+              background: "var(--card)",
+            }}
+          >
+            <p
+              className="font-mono-label text-[10px] tracking-[0.28em] uppercase"
+              style={{ color: "var(--brand-oxblood)" }}
+            >
+              ◆ FOUNDING MEMBERS · 200 SPOTS · 174 LEFT
+            </p>
+            <p
+              className="mt-3 font-serif-display italic leading-snug"
+              style={{ fontSize: "clamp(20px, 2vw, 26px)", color: PAPER_INK }}
+            >
+              $199 once. Forever. Full Position Intelligence Engine, partner pairing, every future module shipped at no extra charge.
+            </p>
+            <p className="mt-3 text-sm leading-relaxed italic" style={{ color: PAPER_MUTED }}>
+              The price exists because the brand survives by being uncheapened, and because the people who buy a serious product on day one deserve to be paid back when it works. After the two hundred, the price returns to $39 a month and stays there.
+            </p>
+          </div>
+
+          <div className="mt-10 flex items-center justify-center gap-5 flex-wrap">
             <Link
               to="/dashboard"
               className="inline-flex items-center justify-center gap-2 px-9 py-5 rounded-full text-base font-semibold transition hover:opacity-90"

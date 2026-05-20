@@ -289,7 +289,7 @@ function S7() {
         </P>
         <PullQuote>Medicine bills by visit. It cannot afford to ask what nobody is paying it to ask.</PullQuote>
         <P>
-          The protocol is built into that gap. Not by replacing either system, but by sitting in the space neither system staffs, with the literature on the same page, a route-to-clinician button that actually fires, and a price point that does not impress the supplement aisle. Eight minutes a day, $24.99 a month. Less than a single supplement that would not have been bought twice.
+          The protocol is built into that gap. Not by replacing either system, but by sitting in the space neither system staffs, with the literature on the same page, a route-to-clinician button that actually fires, and a price point that does not impress the supplement aisle. Eight minutes a day, $39 a month, or $199 once if you are among the first two hundred. Less than a single supplement that would not have been bought twice.
         </P>
       </div>
     </section>
@@ -311,7 +311,7 @@ function Closing() {
         <P>
           If you have arrived from the medical system, having been discharged from physical therapy as 'doing well' while quietly noticing that the second job stopped working around appointment four, this is the part written for you. The discharge was correct on the chart that was open at the time. That chart did not include the second job. The chart on this site does.
         </P>
-        <PullQuote>Eight minutes a day. $24.99 a month. The rest of the page is the citations.</PullQuote>
+        <PullQuote>Eight minutes a day. $39 a month. $199 once, if any of the founding two hundred are still left. The rest of the page is the citations.</PullQuote>
         <div className="mt-10 flex items-center gap-5 flex-wrap">
           <Link
             to="/dashboard"

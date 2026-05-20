@@ -4,7 +4,6 @@ import { Eyebrow, MonoTag } from "@/components/editorial";
 import { SiteHeader } from "@/components/SiteHeader";
 import { todaysDistraction, THEME_LABEL } from "@/lib/distractions";
 import { CheckIn, type CheckInResult } from "@/components/CheckIn";
-import mcgillStudy from "@/assets/mcgill-study.jpg";
 
 /**
  * Dashboard, lean version (no subject chooser).
@@ -93,44 +92,24 @@ function HeroCard({ state }: { state: SessionState }) {
   const letter = letterFor(state);
   const diff = state.index - state.prevIndex;
   const trend = diff > 0 ? "+" + diff : diff < 0 ? String(diff) : "·";
-  const trendColor = diff > 0 ? "var(--brand-amber)" : diff < 0 ? "var(--brand-blush)" : "var(--muted-foreground)";
+  const trendColor = diff > 0 ? "var(--brand-oxblood)" : diff < 0 ? "var(--brand-blush)" : "var(--muted-foreground)";
+  const dayName = new Date().toLocaleDateString("en-US", { weekday: "long" });
 
   return (
-    <article className="relative grid lg:grid-cols-12 border border-border overflow-hidden" style={{ boxShadow: "var(--shadow-lift)" }}>
-      {/* LEFT: editorial photo */}
-      <div className="lg:col-span-6 relative aspect-[4/5] lg:aspect-auto lg:min-h-[560px]">
-        <img src={mcgillStudy} alt="" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, oklch(0.18 0.01 40 / 0.78) 100%)" }} />
-
-        <div className="absolute top-5 left-5 right-5 flex items-center justify-between">
-          <MonoTag>FIG. M-04 · OVERHEAD STUDY · DAY {state.streak + 1}</MonoTag>
-          <span className="font-mono-label text-[9px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-amber)" }}>
-            ● TODAY · {new Date().toLocaleDateString("en-US", { weekday: "short" }).toUpperCase()}
-          </span>
-        </div>
-
-        <div className="absolute bottom-5 left-5 right-5">
-          <p className="font-serif-display text-2xl md:text-3xl italic leading-tight text-white">
-            Today, the body has filed a memo.
-          </p>
-          <p className="font-serif-display text-base italic text-white/85 mt-1 leading-snug">
-            Three minutes if that is all today has. Eight when it does not. The spine does not need creativity. It needs the same boring things done well, like a pension fund with nerve endings.
-          </p>
-        </div>
-      </div>
-
-      {/* RIGHT: Index + letter + CTA */}
-      <div className="lg:col-span-6 px-8 md:px-12 py-10 md:py-14 relative" style={{ background: "linear-gradient(180deg, var(--brand-paper) 0%, oklch(0.92 0.022 76) 100%)", color: "var(--brand-paper-ink)" }}>
-        <div className="flex items-center justify-between">
-          <Eyebrow>Index · {new Date().toLocaleDateString("en-US", { weekday: "long" })}</Eyebrow>
-          <MonoTag muted>Day {state.streak + 1}</MonoTag>
-        </div>
-
-        <div className="mt-5 flex items-baseline gap-4">
+    <article
+      className="relative border border-border overflow-hidden px-7 md:px-12 py-9 md:py-12"
+      style={{
+        boxShadow: "var(--shadow-lift)",
+        background: "linear-gradient(180deg, var(--card) 0%, var(--muted) 100%)",
+      }}
+    >
+      {/* Slim top strip: Index + delta + day */}
+      <div className="flex items-baseline justify-between gap-6 flex-wrap">
+        <div className="flex items-baseline gap-5">
           <p
             className="font-serif-display leading-none tracking-tight"
             style={{
-              fontSize: "clamp(96px, 13vw, 160px)",
+              fontSize: "clamp(64px, 9vw, 110px)",
               background: "var(--gradient-text)",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
@@ -139,40 +118,49 @@ function HeroCard({ state }: { state: SessionState }) {
           >
             {state.index}
           </p>
-          <p className="font-mono-label text-base tracking-[0.18em]" style={{ color: trendColor }}>
-            {trend}
-          </p>
+          <div>
+            <p className="font-mono-label text-sm tracking-[0.18em]" style={{ color: trendColor }}>
+              {trend}
+            </p>
+            <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground mt-1">
+              yest · {state.prevIndex}
+            </p>
+          </div>
         </div>
+        <div className="text-right">
+          <Eyebrow>Index · {dayName}</Eyebrow>
+          <MonoTag muted>Day {state.streak + 1}</MonoTag>
+        </div>
+      </div>
 
-        <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-muted-foreground">
-          yesterday · {state.prevIndex}
-        </p>
+      {/* Single-sentence letter — one line, no P.S., no signer crowding the action */}
+      <p className="mt-7 font-serif-display italic leading-snug max-w-3xl" style={{ fontSize: "clamp(19px, 1.9vw, 25px)" }}>
+        {state.name && <span style={{ color: "var(--brand-oxblood)" }}>{state.name}. </span>}
+        {letter.lede.split(". ")[0]}.
+      </p>
 
-        <p className="mt-7 font-serif-display italic leading-snug" style={{ fontSize: "clamp(20px, 1.9vw, 26px)" }}>
-          {state.name && <span style={{ color: "var(--brand-amber)" }}>{state.name}. </span>}
-          {letter.lede}
-        </p>
+      {/* Begin button: physically dominant */}
+      <Link
+        to="/session"
+        title="log it after, not before · the work is the work"
+        className="mt-9 inline-flex items-center justify-center gap-4 px-12 py-7 rounded-full text-xl font-semibold text-[var(--brand-paper)] hover:opacity-90 transition group"
+        style={{
+          background: "var(--brand-oxblood)",
+          boxShadow: "0 20px 50px -16px oklch(0.32 0.11 22 / 0.45)",
+        }}
+      >
+        <span>◆ Begin</span>
+        <span className="font-mono-label text-xs tracking-[0.22em] uppercase opacity-80">8 min</span>
+        <span className="transition-transform group-hover:translate-x-0.5 text-2xl">→</span>
+      </Link>
 
-        <p className="mt-5 font-serif-display text-base italic leading-snug" style={{ color: "var(--muted-foreground)" }}>
-          {ps()}
-        </p>
-
-        <p className="mt-4 font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-blush)" }}>
+      {/* Footer chips: signer + P.S., demoted, no longer competing */}
+      <div className="mt-8 pt-5 border-t border-border flex items-baseline justify-between gap-6 flex-wrap">
+        <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground">
           {letter.signer} · {letter.role}
         </p>
-
-        <Link
-          to="/session"
-          className="mt-9 inline-flex items-center justify-center gap-3 px-8 py-5 rounded-full text-base font-semibold text-[var(--brand-ink)] hover:opacity-90 transition group"
-          style={{ background: "var(--brand-amber)", boxShadow: "var(--glow-teal)" }}
-        >
-          <span>◆ Begin</span>
-          <span className="font-mono-label text-[10px] tracking-[0.22em] uppercase opacity-80">8 min</span>
-          <span className="transition-transform group-hover:translate-x-0.5">→</span>
-        </Link>
-
-        <p className="mt-5 font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground">
-          ● log it after, not before. The work is the work. The log is paperwork, and paperwork has had quite enough influence on the human body already.
+        <p className="font-serif-display text-sm italic leading-snug text-muted-foreground max-w-md text-right">
+          {ps()}
         </p>
       </div>
     </article>

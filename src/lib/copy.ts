@@ -71,7 +71,7 @@ export const COPY: Record<string, CopyEntry> = {
     key: "trialEnding",
     context: "Free trial has 3 days left.",
     write:
-      "Three days left. After that it is $24.99 a month, which is less than one supplement you would not have bought twice.",
+      "Three days left. After that it is $39 a month, or $199 for life if any founding-member spots are left. Both are less than a single supplement you would not have bought twice.",
     doNotWrite: "Don't lose access. Upgrade now!",
   },
   syncFailed: {

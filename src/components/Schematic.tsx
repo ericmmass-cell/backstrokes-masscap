@@ -36,7 +36,7 @@ export function HeroSchematic({ className }: Props) {
       {/* Top instrument strip */}
       <rect x="0" y="0" width="420" height="44" fill={PAPER} />
       <line x1="0" y1="44" x2="420" y2="44" stroke={RULE} strokeWidth="1" />
-      <text x="18" y="27" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="600" letterSpacing="2.5" fill={OX}>SUBJECT 04 · DAY 42 · L4–L5</text>
+      <text x="18" y="27" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="600" letterSpacing="2.5" fill={OX}>DAY 42 · L4-L5 · FLOOR · GRIPPING</text>
       <circle cx="395" cy="22" r="3" fill={OX} />
       <text x="386" y="27" fontFamily="Inter, sans-serif" fontSize="9" letterSpacing="2.2" fill={OX} textAnchor="end">ARMED</text>
 

@@ -25,6 +25,17 @@ type Topic = {
 
 const TOPICS: Topic[] = [
   {
+    id: "what-you-want",
+    label: "What you actually want, when the back is quiet",
+    blurb:
+      "The line nobody on the council was going to write for you. Pleasure-led, not pain-managed. The back appears nowhere in these three sentences. The back has had its turn.",
+    lines: [
+      "I want a slow evening with you tonight. No agenda except the one we make as we go. The clock is not in the room.",
+      "I have been thinking about your hands on the back of my neck for two days. Not as a build to anything. As the thing itself. I want that first, for a while, before anything else.",
+      "I want to be the person who initiates tonight. I have not been that person in a while and I miss it. Say yes, say later, say something else. I just wanted you to know.",
+    ],
+  },
+  {
     id: "pain-location",
     label: "Where it hurts (and where it doesn't)",
     blurb:
