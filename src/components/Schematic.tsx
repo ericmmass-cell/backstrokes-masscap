@@ -16,56 +16,54 @@ const RULE = "#D9CFB5";
 
 type Props = { className?: string };
 
-// Filled-silhouette exercise figures used inside the work-card SVG.
+// ───── Filled exercise silhouettes for the work-card SVG ─────
+// Built from modular limb segments so joints articulate properly.
 // Drawn at ~480x300 base coords; the parent group scales them down.
-function WorkCurlUp() {
+
+function WorkLimb({ x1, y1, x2, y2, w1, w2 }: { x1: number; y1: number; x2: number; y2: number; w1: number; w2: number }) {
+  const dx = x2 - x1, dy = y2 - y1, len = Math.sqrt(dx * dx + dy * dy);
+  if (!len) return null;
+  const nx = -dy / len, ny = dx / len;
   return (
     <g>
-      {/* Supine torso */}
+      <circle cx={x1} cy={y1} r={w1} fill={INK} />
+      <circle cx={x2} cy={y2} r={w2} fill={INK} />
+      <path fill={INK} d={`M ${x1 + nx * w1} ${y1 + ny * w1} L ${x2 + nx * w2} ${y2 + ny * w2} L ${x2 - nx * w2} ${y2 - ny * w2} L ${x1 - nx * w1} ${y1 - ny * w1} Z`} />
+    </g>
+  );
+}
+
+function WorkMat() {
+  return (
+    <g>
+      <rect x="20" y="248" width="440" height="14" rx="2" fill="rgba(42,38,32,0.06)" stroke="rgba(42,38,32,0.20)" strokeWidth="0.8" />
+      <line x1="20" y1="250" x2="460" y2="250" stroke="rgba(42,38,32,0.36)" strokeWidth="1" />
+    </g>
+  );
+}
+
+function WorkCurlUp() {
+  // Side view: supine, knee bent, chest curled up
+  return (
+    <g>
+      <WorkMat />
+      <ellipse cx="60" cy="252" rx="22" ry="6" fill="rgba(58,52,44,0.18)" stroke="rgba(58,52,44,0.42)" strokeWidth="1" />
+      {/* Straight back leg */}
+      <WorkLimb x1={260} y1={220} x2={400} y2={222} w1={18} w2={14} />
+      <ellipse cx="408" cy="222" rx="20" ry="8" fill={INK} />
+      {/* Torso supine, chest lifted */}
       <path
         fill={INK}
-        d="
-          M 40 178
-          C 30 174, 26 168, 30 158
-          C 34 148, 44 142, 56 140
-          C 70 138, 84 138, 100 136
-          C 100 132, 102 128, 106 124
-          C 110 120, 116 118, 122 118
-          C 130 118, 134 122, 138 128
-          C 142 134, 144 138, 148 140
-          C 174 142, 220 144, 270 146
-          C 310 148, 330 150, 340 152
-          L 340 168
-          C 320 170, 290 172, 250 174
-          C 200 176, 140 180, 90 182
-          C 70 184, 54 184, 46 182
-          C 42 181, 40 180, 40 178 Z
-        "
+        d="M 110 230 Q 80 218 86 200 Q 90 188 110 184 Q 140 184 168 196 Q 200 210 250 218 Q 290 224 270 230 Q 220 236 168 234 Q 130 234 110 230 Z"
       />
-      <circle cx="125" cy="118" r="14" fill={INK} />
-      <path
-        fill={INK}
-        d="
-          M 320 152
-          C 332 150, 348 148, 358 142
-          C 368 136, 374 128, 374 118
-          C 374 110, 370 106, 364 108
-          C 360 110, 358 116, 354 122
-          C 350 130, 344 138, 332 148 Z
-        "
-      />
-      <path
-        fill={INK}
-        d="
-          M 364 116
-          C 370 114, 378 116, 382 124
-          C 386 134, 386 148, 384 162
-          C 382 170, 378 174, 372 174
-          C 368 174, 364 170, 362 162
-          C 360 152, 360 138, 362 126
-          C 362 122, 363 118, 364 116 Z
-        "
-      />
+      {/* Bent knee */}
+      <WorkLimb x1={260} y1={218} x2={304} y2={166} w1={18} w2={15} />
+      <WorkLimb x1={304} y1={166} x2={344} y2={220} w1={15} w2={13} />
+      <ellipse cx="350" cy="222" rx="18" ry="7" fill={INK} />
+      {/* Arm tucked under */}
+      <ellipse cx="200" cy="228" rx="22" ry="5" fill="#2a261f" opacity="0.6" />
+      {/* Head — lifted, chin tucked */}
+      <ellipse cx="108" cy="180" rx="20" ry="22" fill={INK} />
     </g>
   );
 }
@@ -73,43 +71,21 @@ function WorkCurlUp() {
 function WorkSidePlank() {
   return (
     <g>
-      <path
-        fill={INK}
-        d="
-          M 84 78
-          C 80 70, 84 60, 92 56
-          C 100 52, 110 56, 114 62
-          L 144 102
-          C 152 110, 160 118, 170 124
-          L 280 198
-          C 290 204, 302 208, 314 208
-          C 326 208, 334 212, 336 220
-          C 338 230, 334 240, 322 240
-          L 280 240
-          C 268 240, 256 234, 246 228
-          L 162 168
-          C 152 162, 142 152, 132 142
-          L 102 100
-          C 92 92, 84 86, 84 78 Z
-        "
-      />
-      <circle cx="98" cy="62" r="13" fill={INK} />
-      <path
-        fill={INK}
-        d="
-          M 90 76
-          C 86 78, 80 82, 76 90
-          C 72 100, 70 124, 70 156
-          C 70 184, 72 208, 78 218
-          C 82 226, 90 230, 96 226
-          C 102 222, 102 216, 98 208
-          C 92 196, 88 184, 88 168
-          C 88 152, 90 132, 96 110
-          C 100 96, 100 86, 98 82
-          C 96 78, 94 76, 90 76 Z
-        "
-      />
-      <ellipse cx="84" cy="222" rx="22" ry="6" fill={INK} />
+      <WorkMat />
+      {/* Diagonal torso (hip lower-right to shoulder upper-left) */}
+      <WorkLimb x1={140} y1={120} x2={340} y2={216} w1={32} w2={26} />
+      {/* Top arm extended up */}
+      <WorkLimb x1={146} y1={116} x2={146} y2={48} w1={14} w2={11} />
+      <circle cx="146" cy="44" r="10" fill={INK} />
+      {/* Supporting forearm down to floor */}
+      <WorkLimb x1={130} y1={118} x2={92} y2={170} w1={14} w2={13} />
+      <WorkLimb x1={92} y1={170} x2={74} y2={244} w1={13} w2={14} />
+      <ellipse cx="68" cy="248" rx="32" ry="6" fill={INK} />
+      {/* Knees down at hip end */}
+      <WorkLimb x1={340} y1={216} x2={400} y2={246} w1={22} w2={18} />
+      <ellipse cx="410" cy="248" rx="22" ry="6" fill={INK} />
+      {/* Head */}
+      <ellipse cx="166" cy="98" rx="18" ry="20" fill={INK} />
     </g>
   );
 }
@@ -117,73 +93,24 @@ function WorkSidePlank() {
 function WorkBirdDog() {
   return (
     <g>
-      <path
-        fill={INK}
-        d="
-          M 120 130
-          C 110 128, 102 130, 100 138
-          C 98 146, 102 154, 112 156
-          C 130 158, 170 156, 210 154
-          C 250 152, 290 152, 320 154
-          C 332 156, 340 152, 342 144
-          C 344 136, 338 130, 326 128
-          C 290 124, 250 122, 210 124
-          C 180 126, 150 128, 120 130 Z
-        "
-      />
-      <circle cx="116" cy="124" r="13" fill={INK} />
-      <path
-        fill={INK}
-        d="
-          M 132 152
-          C 128 158, 128 178, 130 196
-          C 132 214, 136 230, 144 232
-          C 154 234, 158 226, 156 214
-          C 154 200, 152 184, 152 168
-          C 152 158, 152 152, 146 150
-          C 140 148, 134 150, 132 152 Z
-        "
-      />
-      <ellipse cx="142" cy="234" rx="18" ry="5" fill={INK} />
-      <path
-        fill={INK}
-        d="
-          M 296 154
-          C 292 162, 292 184, 296 204
-          C 300 222, 308 232, 318 232
-          C 326 232, 328 222, 322 204
-          C 316 184, 312 168, 312 158
-          C 312 152, 308 150, 302 150
-          C 298 150, 296 152, 296 154 Z
-        "
-      />
-      <ellipse cx="312" cy="234" rx="20" ry="5" fill={INK} />
-      <path
-        fill={INK}
-        d="
-          M 110 130
-          C 102 124, 92 118, 80 110
-          C 70 102, 60 96, 52 92
-          C 46 88, 44 84, 48 80
-          C 52 76, 60 78, 70 82
-          C 86 88, 100 96, 116 108
-          C 124 114, 128 120, 124 126
-          C 122 130, 116 132, 110 130 Z
-        "
-      />
-      <path
-        fill={INK}
-        d="
-          M 330 148
-          C 340 146, 354 144, 372 142
-          C 388 140, 402 140, 410 142
-          C 416 144, 418 148, 414 152
-          C 410 156, 402 158, 388 158
-          C 372 158, 354 160, 340 162
-          C 332 162, 328 160, 328 156
-          C 328 152, 328 150, 330 148 Z
-        "
-      />
+      <WorkMat />
+      {/* Horizontal back */}
+      <WorkLimb x1={140} y1={160} x2={340} y2={162} w1={30} w2={30} />
+      {/* Supporting arm down */}
+      <WorkLimb x1={160} y1={184} x2={154} y2={244} w1={14} w2={12} />
+      <ellipse cx="150" cy="248" rx="18" ry="6" fill={INK} />
+      {/* Supporting knee down */}
+      <WorkLimb x1={326} y1={186} x2={322} y2={246} w1={22} w2={18} />
+      <ellipse cx="324" cy="248" rx="20" ry="6" fill={INK} />
+      {/* Extended forward arm */}
+      <WorkLimb x1={140} y1={158} x2={70} y2={130} w1={14} w2={12} />
+      <WorkLimb x1={70} y1={130} x2={24} y2={120} w1={12} w2={10} />
+      <circle cx="20" cy="120" r="9" fill={INK} />
+      {/* Extended back leg */}
+      <WorkLimb x1={342} y1={158} x2={410} y2={140} w1={22} w2={18} />
+      <ellipse cx="416" cy="138" rx="18" ry="8" fill={INK} />
+      {/* Head — looking forward */}
+      <ellipse cx="130" cy="146" rx="16" ry="18" fill={INK} />
     </g>
   );
 }
@@ -212,56 +139,90 @@ export function HeroSchematic({ className }: Props) {
       <circle cx="395" cy="22" r="3" fill={OX} />
       <text x="386" y="27" fontFamily="Inter, sans-serif" fontSize="9" letterSpacing="2.2" fill={OX} textAnchor="end">ARMED</text>
 
-      {/* Anatomical side-view human figure with clinical annotations */}
-      <g transform="translate(150, 60)">
-        {/* Full body silhouette — side profile, standing */}
+      {/* Anatomical side-view human figure — textbook quality */}
+      <defs>
+        <linearGradient id="hero-body-grad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#4a4338" />
+          <stop offset="50%" stopColor={INK} />
+          <stop offset="100%" stopColor="#2a261f" />
+        </linearGradient>
+      </defs>
+      <g transform="translate(140, 50)">
+        {/* HEAD — egg-shaped with subtle chin line */}
+        <ellipse cx="70" cy="22" rx="20" ry="22" fill="url(#hero-body-grad)" />
+        <path d="M 56 30 Q 70 44 84 30" fill="none" stroke="#2a261f" strokeWidth="0.8" opacity="0.5" />
+
+        {/* NECK — narrow connector */}
         <path
-          fill={INK}
-          d="
-            M 60 0
-            C 46 0, 38 12, 38 28
-            C 38 38, 42 46, 50 50
-            C 46 54, 42 60, 40 70
-            C 38 82, 38 96, 40 106
-            C 42 112, 46 116, 52 118
-            C 50 124, 48 132, 48 142
-            C 48 158, 50 174, 54 184
-            C 50 188, 46 196, 44 210
-            C 42 230, 42 252, 44 268
-            C 45 274, 48 276, 52 274
-            C 56 272, 58 266, 58 252
-            C 58 236, 60 220, 64 210
-            C 64 222, 64 240, 62 256
-            C 60 268, 62 274, 66 274
-            C 70 274, 72 268, 72 252
-            C 72 236, 74 218, 76 208
-            C 78 198, 78 188, 76 184
-            C 80 174, 82 158, 82 142
-            C 82 132, 80 124, 78 118
-            C 84 116, 88 112, 90 106
-            C 92 96, 92 82, 90 70
-            C 88 60, 84 54, 80 50
-            C 88 46, 92 38, 92 28
-            C 92 12, 84 0, 70 0
-            C 67 -1, 63 -1, 60 0 Z
-          "
-          opacity="0.92"
+          d="M 60 42 Q 62 50 64 56 L 76 56 Q 78 50 80 42 Z"
+          fill="url(#hero-body-grad)"
         />
 
-        {/* Lumbar region highlight — oxblood overlay where L4-L5 sits */}
-        <rect x="48" y="112" width="34" height="14" fill={OX} opacity="0.85" />
-        <line x1="82" y1="119" x2="118" y2="119" stroke={OX} strokeWidth="1.2" />
-        <text x="122" y="122" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="600" letterSpacing="1.6" fill={OX}>L4 · L5</text>
+        {/* SHOULDERS — sloping yoke */}
+        <path
+          d="M 36 60 Q 70 50 104 60 L 100 68 Q 70 60 40 68 Z"
+          fill="url(#hero-body-grad)"
+        />
 
-        {/* Pelvic floor band — oxblood arc across pelvis */}
-        <path d="M 42 156 Q 65 168 88 156" fill="none" stroke={OX} strokeWidth="3" strokeLinecap="round" />
-        <line x1="42" y1="156" x2="8" y2="156" stroke={OX} strokeWidth="1.2" />
-        <text x="4" y="159" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="600" letterSpacing="1.6" fill={OX} textAnchor="end">FLOOR</text>
+        {/* TORSO — chest narrow at top, ribcage flare, waist tuck, hip flare */}
+        <path
+          d="
+            M 38 64
+            Q 30 80, 28 100
+            Q 26 116, 32 130
+            Q 36 140, 40 150
+            Q 38 162, 40 174
+            Q 44 184, 56 188
+            Q 70 192, 84 188
+            Q 96 184, 100 174
+            Q 102 162, 100 150
+            Q 104 140, 108 130
+            Q 114 116, 112 100
+            Q 110 80, 102 64
+            Q 86 70, 70 70
+            Q 54 70, 38 64
+            Z
+          "
+          fill="url(#hero-body-grad)"
+        />
 
-        {/* Hip / iliopsoas marker — oxblood dot at hip */}
-        <circle cx="86" cy="148" r="4" fill={OX} />
-        <line x1="90" y1="148" x2="120" y2="148" stroke={OX} strokeWidth="1.2" />
-        <text x="124" y="151" fontFamily="Inter, sans-serif" fontSize="10" fontWeight="600" letterSpacing="1.6" fill={OX}>HIP · ILIOPSOAS</text>
+        {/* SPINE — visible as a slightly darker vertical line */}
+        <path d="M 70 60 Q 70 100, 70 150 Q 70 170, 70 184" stroke="#2a261f" strokeWidth="1.5" opacity="0.6" fill="none" strokeDasharray="3 4" />
+
+        {/* PELVIS — connector to thighs */}
+        <path
+          d="M 46 188 Q 70 198 94 188 Q 96 206 70 210 Q 44 206 46 188 Z"
+          fill="#2a261f"
+        />
+
+        {/* THIGHS — two parallel muscle masses, side by side */}
+        <path
+          d="M 50 206 Q 46 240 48 270 Q 52 282 60 282 Q 66 282 66 270 Q 66 240 64 206 Z"
+          fill="url(#hero-body-grad)"
+        />
+        <path
+          d="M 76 206 Q 74 240 76 270 Q 80 282 86 282 Q 92 282 92 270 Q 92 240 90 206 Z"
+          fill="url(#hero-body-grad)"
+        />
+
+        {/* L4-L5 marker — clinical highlight + label */}
+        <rect x="56" y="148" width="28" height="14" rx="2" fill={OX} opacity="0.92" />
+        <rect x="56" y="148" width="28" height="14" rx="2" fill="none" stroke={OX} strokeWidth="1.5" />
+        <line x1="84" y1="155" x2="124" y2="155" stroke={OX} strokeWidth="1.2" />
+        <line x1="124" y1="155" x2="128" y2="155" stroke={OX} strokeWidth="2" />
+        <text x="132" y="158" fontFamily="Inter, sans-serif" fontSize="11" fontWeight="700" letterSpacing="1.8" fill={OX}>L4 · L5</text>
+
+        {/* Pelvic floor band — oxblood arc across the base of pelvis */}
+        <path d="M 46 198 Q 70 212 94 198" fill="none" stroke={OX} strokeWidth="3.5" strokeLinecap="round" />
+        <circle cx="70" cy="207" r="2.5" fill={OX} />
+        <line x1="46" y1="200" x2="4" y2="200" stroke={OX} strokeWidth="1.2" />
+        <text x="0" y="203" fontFamily="Inter, sans-serif" fontSize="11" fontWeight="700" letterSpacing="1.8" fill={OX} textAnchor="end">FLOOR</text>
+
+        {/* Hip / iliopsoas marker */}
+        <circle cx="96" cy="188" r="5" fill={OX} stroke="#2a261f" strokeWidth="0.8" />
+        <circle cx="96" cy="188" r="2" fill="#fff" opacity="0.4" />
+        <line x1="101" y1="188" x2="126" y2="188" stroke={OX} strokeWidth="1.2" />
+        <text x="130" y="191" fontFamily="Inter, sans-serif" fontSize="11" fontWeight="700" letterSpacing="1.8" fill={OX}>HIP · PSOAS</text>
       </g>
 
       {/* Hairline rule */}
