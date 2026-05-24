@@ -12,10 +12,4 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
-  vite: {
-    server: {
-      // Reached through Caddy reverse proxy on the tailnet; trust the forwarded Host.
-      allowedHosts: true,
-    },
-  },
 });
