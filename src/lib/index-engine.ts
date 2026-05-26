@@ -60,23 +60,22 @@ function decayWeight(d: number): number {
 
 /**
  * Score one event. Most events use a fixed value; check-in submissions
- * compute from the user's own pain/sleep/floor answers.
+ * compute from the user's own pain/sleep/sex answers. The floor axis
+ * was removed in May 2026 to narrow the product to back pain → sex.
  */
 function scoreEvent(e: BSEvent): number {
   if (e.event_name === "checkin.submitted") {
     const p = e.props as Record<string, number | undefined>;
-    // Each component is 0–10. Higher pain/lower sleep = worse. Floor and
-    // sex are also 0–10 with higher = better. Map to ±12 contribution.
+    // Each component is 0–10. Higher pain = worse, higher sleep/sex = better.
+    // Weights re-balanced after removing the floor axis: pain gets more
+    // weight, sex gets more weight, sleep stays the same.
     const pain = typeof p.pain === "number" ? p.pain : 5;
     const sleep = typeof p.sleep === "number" ? p.sleep : 5;
-    const floor = typeof p.floor === "number" ? p.floor : 5;
     const sex = typeof p.sex === "number" ? p.sex : 5;
-    // Pain inverted; high pain = negative.
-    const painComp = (5 - pain) * 1.6;
+    const painComp = (5 - pain) * 2.0;
     const sleepComp = (sleep - 5) * 1.2;
-    const floorComp = (floor - 5) * 1.4;
-    const sexComp = (sex - 5) * 0.8;
-    return painComp + sleepComp + floorComp + sexComp;
+    const sexComp = (sex - 5) * 1.4;
+    return painComp + sleepComp + sexComp;
   }
   return CONTRIBUTIONS[e.event_name] ?? 0;
 }

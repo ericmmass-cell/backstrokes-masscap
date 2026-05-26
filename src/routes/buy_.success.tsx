@@ -107,7 +107,7 @@ function Success() {
             </li>
             <li>
               <b style={{ color: OXBLOOD }}>02.</b> Run the Engine for
-              tonight. Six taps. Get a plan.
+              tonight. Five taps. Get a plan.
             </li>
             <li>
               <b style={{ color: OXBLOOD }}>03.</b> Print the nightstand

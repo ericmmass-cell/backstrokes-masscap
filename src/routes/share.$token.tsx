@@ -26,9 +26,9 @@ type SharedItem = {
 
 const FALLBACK: SharedItem = {
   kind: "concept",
-  topicLabel: "Reverse kegel, in one paragraph",
+  topicLabel: "The 30/3 rule, in one paragraph",
   line:
-    "It is the opposite of the kegel everyone has heard of. Instead of contracting the pelvic floor, you let it drop on the inhale. A chronically gripping floor is why arousal stalls, why penetration hurts, and why the $9.99 app you tried for two months made it worse. Down-train first, always.",
+    "For every thirty minutes you sit, stand and move for three. Walk if you can. Hinge at the hips if you cannot. The disc rehydrates under load variation and dries out under steady load. The chair the office gave you in 2019 is the steady load. The 30/3 rule is the variation. It is not wellness. It is the smallest intervention that compounds.",
   t: Date.now(),
   token: "demo",
 };

@@ -114,11 +114,10 @@ function HeroBlock() {
           {[
             ["§1", "The thesis"],
             ["§2", "The lumbar"],
-            ["§3", "The pelvic floor"],
-            ["§4", "The loop"],
-            ["§5", "The chair"],
-            ["§6", "The boundary"],
-            ["§7", "Why this has never been one chart"],
+            ["§3", "The loop"],
+            ["§4", "The chair"],
+            ["§5", "The boundary"],
+            ["§6", "Why this has never been one chart"],
           ].map(([n, t]) => (
             <a key={n} href={`#${n.toLowerCase().replace("§", "s")}`} className="flex gap-3 py-1 hover:opacity-80 transition">
               <span style={{ color: OXBLOOD }}>{n}</span>
@@ -136,16 +135,16 @@ function S1() {
     <section id="s1" className="px-6 md:px-10 py-12 md:py-20" style={{ background: PAPER_2, borderTop: `1px solid ${RULE}`, borderBottom: `1px solid ${RULE}` }}>
       <div className="max-w-[820px] mx-auto">
         <Eyebrow>§1 · The thesis</Eyebrow>
-        <H2>One pelvis, two jobs, never on the same chart.</H2>
+        <H2>The back is the silent variable in adult sex, and nobody is paid to admit it.</H2>
         <P>
-          The thesis is anatomical and it is unromantic. The eight muscles that hold the lumbar spine upright and the eight muscles that organise sexual function in the pelvis are largely the same eight muscles, with overlap in the multifidus, the transversus abdominis, the iliopsoas, the obturator internus, the levator ani, and the deep stabilisers that nobody outside a textbook calls by name. They share innervation pathways (sacral plexus, lumbar plexus). They share a respiratory rhythm; the diaphragm and the pelvic floor move together, mechanically not metaphorically (Hodges 2007). They share an autonomic regulator; the sympathetic and parasympathetic branches decide whether the body is running from a tiger or about to have an evening.
+          The thesis is anatomical and it is unromantic. The lumbar spine, the iliopsoas, the hip joint, and the thoracolumbar fascia carry essentially every load involved in adult sex. When any of those four structures is compromised, sex is compromised. The published cohort data on chronic low back pain shows that between half and two thirds of adults with chronic low back pain report that pain regularly interferes with sex (Bahouq 2013, Sidorkewicz and McGill 2014). The same cohort data shows that fewer than one in ten of those adults has ever raised the topic with the clinician treating their back. The number is consistent across countries, surgeons, and decades. Nobody asks. The patient does not volunteer.
         </P>
         <P>
-          These eight muscles do two jobs. The first job is structural: keep the spine vertical against gravity, against the chair, against the chronic micro-loads of a typical week. The second job is sexual: regulate erection, lubrication, orgasm, continence, and the fine motor control of intimate contact. The clinics that treat the first job are spine clinics. The clinics that treat the second job are pelvic-health clinics. They are usually in different buildings. Their notes do not cross. Their billing codes do not cross. The patient walks out of the first appointment with a discharge note that says 'doing well' and walks into the second appointment, eighteen months later, after the second job has stopped working, because nobody in the first building was paid to ask.
+          The spine clinic treats the back. The urology and gynecology clinics treat sex. The two systems are mechanically and autonomically connected. Their billing codes are not. Their notes do not cross. The patient walks out of the spine appointment with a discharge note that says 'doing well' and walks into a separate appointment, eighteen months later, after sex has become something they audit instead of something they do, because nobody in the first building was paid to ask the second question.
         </P>
         <PullQuote>Medicine declines to ask. Wellness sells you whatever the asking would have revealed. The protocol is the third option.</PullQuote>
         <P>
-          The protocol is a single chart that holds the eight muscles, the two jobs, and the daily dose that keeps both jobs working. The chart is not new in the published literature. It has been sitting there in pieces, in journals nobody outside two specialties reads. What is new is putting it on a screen that a person can actually read at home in eight minutes.
+          The protocol is a single chart that holds the lumbar, the hip, the breath, the position, and the daily dose that keeps the back quiet enough that sex stops being a negotiation. The chart is not new in the published literature. It has been sitting there in pieces, in journals nobody outside one specialty reads. What is new is putting it on a screen that a person can actually read at home in eight minutes.
         </P>
       </div>
     </section>
@@ -176,44 +175,20 @@ function S2() {
   );
 }
 
-function S3() {
+function S4() {
   return (
     <section id="s3" className="px-6 md:px-10 py-16 md:py-24" style={{ background: PAPER_2, borderTop: `1px solid ${RULE}`, borderBottom: `1px solid ${RULE}` }}>
       <div className="max-w-[820px] mx-auto">
-        <Eyebrow>§3 · The pelvic floor</Eyebrow>
-        <H2>Why kegel apps got eight million pelvic floors wrong, and how to fix one.</H2>
+        <Eyebrow>§3 · The loop</Eyebrow>
+        <H2>How a back injury becomes a sex problem, and the cascade that explains the rest.</H2>
         <P>
-          The pelvic floor is a sling of muscle that runs from the pubic bone to the coccyx and from one ischial tuberosity to the other, forming the muscular floor of the abdominal cavity. Its job is to hold the pelvic organs up against gravity, to coordinate continence, and to participate in the mechanics of erection, lubrication, orgasm, and ejaculatory control. It is, structurally, a hammock that has to do four jobs at once, while breathing. It is, functionally, an over-tonic muscle in a large fraction of adult humans, especially adult humans who sit at desks, who have given birth, who have had pelvic surgery, who have lived with chronic anxiety, or who have ever been told to 'engage their core' by a Pilates instructor with a follower count and no certification in pelvic-health physiotherapy.
+          Back pain and sexual dysfunction are linked in two directions, and the published literature is consistent that neither direction is well-served by treating the systems in isolation (Bahouq et al 2013 on the prevalence of sexual disturbance in chronic low back pain; Sidorkewicz and McGill 2014 on coital spine motion; Smith et al, Spine 2015 on chronic low back pain and ED prevalence). The first direction is mechanical: when the back hurts, sex is uncomfortable, sex becomes infrequent, infrequency becomes a pattern, and the pattern outlives the original injury. The second direction is autonomic, less articulable, and doing the heavier lifting in the data.
         </P>
         <P>
-          Kegel exercises were described by Arnold Kegel in 1948 in the American Journal of Obstetrics and Gynecology. The original prescription was specific: progressive resistance exercise of the perineal muscles, prescribed for women with stress incontinence, performed under clinical supervision with a perineometer to measure contraction strength. Seventy-six years later, the protocol has been compressed onto a phone app that asks the user to squeeze on a timer. Three problems. First, the original Kegel population was women with under-active floors; the modern population presenting to pelvic-health clinics is largely the inverse, with over-tonic floors that already grip continuously. Second, eccentric control (the lengthening phase, the release) is the actual functional metric for sexual response and arousal, and the apps do not measure it. Third, the prompt to 'do your kegels' applied to an over-tonic floor strengthens the dysfunction, the way deadlifting a back that is already in spasm strengthens the spasm.
+          Arousal is parasympathetic. A back in chronic guarding is sympathetic. They cannot both be in the room. The patient is told 'just relax' by their partner, by their therapist, by their last podcast, and the patient cannot relax, because their nervous system has been in sympathetic dominance for six weeks because their back has been guarding for six weeks. Guarding is sympathetic. Erection and lubrication require parasympathetic. The patient does not have a desire problem. The patient has an autonomic-tone problem that is being mistaken, in the bedroom, for a desire problem, and in the relationship, for a fundamental incompatibility.
         </P>
         <P>
-          The answer broadly agreed across the modern pelvic-health literature (Carrière 2006, Bø 2007, Lee 2011, NIH NIDDK 2023) is down-train first. The over-tonic floor must learn to release before it is asked to contract. Release is taught through diaphragmatic breath, where the inhale lengthens the floor downward and the exhale allows it to return to rest. The metric is not how strongly the floor can contract. The metric is whether the floor can let go on cue, the way any other muscle in the body can.
-        </P>
-        <PullQuote>A pelvic floor stuck in the on position is the reason none of it works, and the reason the $9.99 app tried for two months made it worse.</PullQuote>
-        <P>
-          The protocol's pelvic-floor work covers external perineal release, breath-led down-training, and eccentric kegel control once the floor has learned to release. It does not cover internal trigger-point release, dilator therapy, or post-surgical rehabilitation. Those require an in-person pelvic-health physiotherapist, a category of care a website cannot deliver. At the point where that care is needed, the protocol routes to it.
-        </P>
-      </div>
-    </section>
-  );
-}
-
-function S4() {
-  return (
-    <section id="s4" className="px-6 md:px-10 py-16 md:py-24">
-      <div className="max-w-[820px] mx-auto">
-        <Eyebrow>§4 · The loop</Eyebrow>
-        <H2>How each system breaks the other, and the cascade that explains the rest.</H2>
-        <P>
-          Back pain and sexual dysfunction are linked in two directions, and the published literature is consistent that neither direction is well-served by treating the systems in isolation (Rosen et al, ISSWSH consensus 2016; Hatzichristou et al, AUA guideline updates 2018; Smith et al, Spine 2015 on chronic low back pain and ED prevalence). The first direction is mechanical: when the back hurts, sex is uncomfortable, sex becomes infrequent, infrequency becomes a pattern, and the pattern outlives the original injury. The second direction is autonomic, less articulable, and doing the heavier lifting in the data.
-        </P>
-        <P>
-          Arousal is parasympathetic. The pelvic floor stuck on is sympathetic. They cannot both be in the room. The patient is told 'just relax' by their partner, by their therapist, by their last podcast, and the patient cannot relax, because their nervous system has been in sympathetic dominance for six weeks because their back has been guarding for six weeks. Guarding is sympathetic. Erection and lubrication require parasympathetic. The patient does not have a desire problem. The patient has an autonomic-tone problem that is being mistaken, in the bedroom, for a desire problem, and in the relationship, for a fundamental incompatibility.
-        </P>
-        <P>
-          The cascade in plain language: pain leads to guarding; guarding holds the pelvic floor in tonic contraction; tonic floor activity blocks the autonomic shift required for arousal; failed arousal becomes anticipatory anxiety; anticipatory anxiety produces sympathetic activation in advance of intimacy; advance sympathetic activation tightens the floor before any pain has occurred; tightened floor tissue produces dyspareunia in women and erectile failure or premature ejaculation in men; dyspareunia and erectile failure produce avoidance; avoidance produces relationship distance; relationship distance produces a story two partners tell themselves about each other that has nothing to do with the eight muscles and is doing none of the work of fixing them.
+          The cascade in plain language: pain leads to guarding; guarding maintains sympathetic dominance; sympathetic dominance blocks the autonomic shift required for arousal; failed arousal becomes anticipatory anxiety; anticipatory anxiety produces sympathetic activation in advance of intimacy; advance sympathetic activation tightens the lumbar paraspinals before any sex has occurred; the tightened paraspinals produce pain on the first movement of the act; pain produces avoidance; avoidance produces relationship distance; relationship distance produces a story two partners tell themselves about each other that has nothing to do with a disc and is doing none of the work of fixing it.
         </P>
         <PullQuote>Pain becomes guarding. Guarding becomes avoidance. Avoidance becomes a story two people tell themselves about each other.</PullQuote>
         <P>
@@ -249,16 +224,13 @@ function S6() {
   return (
     <section id="s6" className="px-6 md:px-10 py-16 md:py-24">
       <div className="max-w-[820px] mx-auto">
-        <Eyebrow>§6 · The boundary</Eyebrow>
+        <Eyebrow>§5 · The boundary</Eyebrow>
         <H2>When the protocol stops being the right tool, and where to go instead.</H2>
         <P>
-          The most consequential decision in the product is not what the protocol teaches. It is when the protocol stops teaching and routes to a clinician. The criteria built into the assessment flow, the daily check-in, and the in-session pain reporting are not novel. They are the published red-flag criteria from the spine and pelvic-health guideline literature, copied into the code without invention. The list below is drawn from those guidelines. The exact phrasing in the app is editorial; the substance is everyone's who has ever published on the relevant question.
+          The most consequential decision in the product is not what the protocol teaches. It is when the protocol stops teaching and routes to a clinician. The criteria built into the assessment flow, the daily check-in, and the in-session pain reporting are not novel. They are the published red-flag criteria from the spine guideline literature, copied into the code without invention. The list below is drawn from those guidelines. The exact phrasing in the app is editorial; the substance is everyone's who has ever published on the relevant question.
         </P>
         <P>
           <strong style={{ color: OXBLOOD }}>Spine red flags</strong> that route immediately (from the JOSPT clinical practice guideline series and the NICE NG59 update on low back pain and sciatica): cauda equina symptoms (saddle anaesthesia, bladder or bowel changes, progressive bilateral leg weakness), new neurological deficits, fever with back pain, unexplained weight loss, history of cancer with new back pain, recent significant trauma. These are spine emergencies. The product asks about each of them in the baseline. The product surfaces a 'see a doctor today' card if any appear during a session. The card has no dismiss button. It is the only screen in the product without a path forward inside the product.
-        </P>
-        <P>
-          <strong style={{ color: OXBLOOD }}>Pelvic-health red flags</strong> that route to in-person care (from the ICS terminology standards and the AUGS clinical guidelines on pelvic floor disorders): pain with intercourse present for more than three months, post-surgical rehabilitation (post-prostatectomy, post-hysterectomy, post-perineal repair), postpartum within the first 18 weeks before clearance, internal trigger-point work, dilator therapy that was clinician-prescribed, suspected vulvodynia or vestibulodynia, recurrent UTI presentations, pelvic organ prolapse symptoms. These are conditions a website can support around the edges but cannot treat. The product says so, on the relevant card, in writing.
         </P>
         <P>
           <strong style={{ color: OXBLOOD }}>Sexual-function red flags</strong> that route to a urologist, gynecologist, or sex therapist (from the AUA Erectile Dysfunction Guideline and the ISSWSH consensus papers): erectile dysfunction with cardiovascular risk factors, ejaculatory dysfunction that is new and unexplained, loss of libido with mood symptoms, any sexual symptom in a relationship where coercion or harm is present. The product is not a substitute for a doctor, a therapist, or a witness, and it does not pretend to be.
@@ -273,16 +245,16 @@ function S7() {
   return (
     <section id="s7" className="px-6 md:px-10 py-16 md:py-24" style={{ background: PAPER_2, borderTop: `1px solid ${RULE}`, borderBottom: `1px solid ${RULE}` }}>
       <div className="max-w-[820px] mx-auto">
-        <Eyebrow>§7 · Why this has never been one chart</Eyebrow>
+        <Eyebrow>§6 · Why this has never been one chart</Eyebrow>
         <H2>The structural reasons two industries did not collaborate, and what was waiting in the gap.</H2>
         <P>
           The most common question from a clinician hearing the pitch is some version of 'why hasn't this been done already?' It is a reasonable question. The answer is structural, not conspiratorial.
         </P>
         <P>
-          <strong style={{ color: OXBLOOD }}>First: insurance billing codes.</strong> CPT codes for spine work and CPT codes for sexual dysfunction are billed in different specialties, by different licences, at different rates, under different documentation requirements. A spine PT cannot bill for a sexual-function consultation without an additional credential. A urologist cannot bill for a sitting-posture intervention without a different additional credential. The patient pays twice, or the patient pays once and gets half. The American billing system does not recognise the pelvis as a single object. It recognises the spine and the genitourinary system as two adjacent objects, and the boundary between them is paid only when the patient walks across it themselves, twice.
+          <strong style={{ color: OXBLOOD }}>First: insurance billing codes.</strong> CPT codes for spine work and CPT codes for sexual dysfunction are billed in different specialties, by different licences, at different rates, under different documentation requirements. A spine PT cannot bill for a sexual-function consultation without an additional credential. A urologist cannot bill for a sitting-posture intervention without a different additional credential. The patient pays twice, or the patient pays once and gets half. The American billing system does not recognise the lower back and the bedroom as the same problem. It recognises them as two adjacent objects, and the boundary between them is paid only when the patient walks across it themselves, twice.
         </P>
         <P>
-          <strong style={{ color: OXBLOOD }}>Second: training pipelines.</strong> A spine PT receives roughly four to twelve hours of pelvic-floor content in their doctorate, depending on the programme; pelvic-health is a post-graduate specialisation requiring a separate APTA credential, often pursued years after entry to practice. A urologist receives roughly zero hours of lumbar biomechanics. A sex therapist receives roughly zero hours of either. Each professional spends a career deepening one corner of the same room. Nobody is trained to integrate the room.
+          <strong style={{ color: OXBLOOD }}>Second: training pipelines.</strong> A spine PT receives roughly zero formal hours on the intersection of chronic low back pain and adult sex in their doctorate, even though the published prevalence data has been on the table since the 1980s. A urologist receives roughly zero hours of lumbar biomechanics. A sex therapist receives roughly zero hours of either. Each professional spends a career deepening one corner of the same room. Nobody is trained to integrate the room.
         </P>
         <P>
           <strong style={{ color: OXBLOOD }}>Third: the wellness industry filled the gap with margin.</strong> The structural absence of integrated care produced a commercial vacuum that ashwagandha tinctures, jade eggs, and infrared mats have filled at $1.8 trillion globally per annum (Global Wellness Institute 2023). The peer-reviewed share of that catalogue is, by the Institute's own classification, statistically indistinguishable from zero. The patient is left to choose between a healthcare system that does not have the time to ask the question and a wellness system that has the time to sell the answer regardless of whether the answer is real.
@@ -303,10 +275,10 @@ function Closing() {
         <Eyebrow>Closing</Eyebrow>
         <H2>The protocol is not magic.</H2>
         <P>
-          The protocol is endurance training for the lumbar, down-training for the pelvic floor, breath work to bridge the two, ergonomic auditing for the hours not spent exercising, and a conversation framework for the relational layer the muscular work alone cannot solve. Every element is in the published literature, with the citations below. The novelty is that someone put them on the same chart.
+          The protocol is endurance training for the lumbar, breath work to down-regulate sympathetic guarding, position selection that respects what the disc can tolerate, ergonomic auditing for the hours not spent exercising, and a conversation framework for the relational layer the muscular work alone cannot solve. Every element is in the published literature, with the citations below. The novelty is that someone put them on the same chart.
         </P>
         <P>
-          If you have arrived from the wellness aisle, having tried the supplements, the cleanses, the breath-work app, and the kegel app, this is the part written for you. Nothing on the aisle was going to work. The aisle is not regulated, not credentialed, and not interested in being either. The Goop categorisation of these conditions is approximately as informative as the Vatican categorisation of mental illness in the twelfth century. The reasons the protocol does not look like the aisle are listed above, with citations.
+          If you have arrived from the wellness aisle, having tried the supplements, the cleanses, the breath-work app, and the back-cracker on YouTube, this is the part written for you. Nothing on the aisle was going to work. The aisle is not regulated, not credentialed, and not interested in being either. The Goop categorisation of these conditions is approximately as informative as the Vatican categorisation of mental illness in the twelfth century. The reasons the protocol does not look like the aisle are listed above, with citations.
         </P>
         <P>
           If you have arrived from the medical system, having been discharged from physical therapy as 'doing well' while quietly noticing that the second job stopped working around appointment four, this is the part written for you. The discharge was correct on the chart that was open at the time. That chart did not include the second job. The chart on this site does.
@@ -348,16 +320,12 @@ function Citations() {
       ],
     },
     {
-      head: "Pelvic floor function and dysfunction",
+      head: "Spine motion during sex and clinical recommendations",
       items: [
-        "Kegel AH. Progressive resistance exercise in the functional restoration of the perineal muscles. American Journal of Obstetrics and Gynecology, 1948.",
-        "Carrière B. The Pelvic Floor. Thieme, 2006.",
-        "Bø K. Pelvic floor muscle training is effective in treatment of female stress urinary incontinence. International Urogynecology Journal, 2007.",
-        "Lee D. The Pelvic Girdle: An Integration of Clinical Expertise and Research. Churchill Livingstone, 2011.",
-        "Sapsford R, Hodges PW. Contraction of the pelvic floor muscles during abdominal maneuvers. Archives of Physical Medicine and Rehabilitation, 2001.",
-        "Hodges PW, Sapsford R, Pengel LH. Postural and respiratory functions of the pelvic floor muscles. Neurourology and Urodynamics, 2007.",
-        "NIH NIDDK. Pelvic floor disorders: research and clinical update, 2023.",
-        "Haylen BT et al. International Continence Society (ICS) terminology for pelvic floor dysfunction. Neurourology and Urodynamics, multiple updates.",
+        "Sidorkewicz N, McGill SM. Documenting female spine motion during coitus with a commentary on the implications for the low back pain patient. European Spine Journal, 2014.",
+        "Sidorkewicz N, McGill SM. Male spine motion during coitus: implications for the low back pain patient. Spine, 2014.",
+        "Bahouq H et al. Profile of sexuality in Moroccan chronic low back pain patients. BMC Musculoskeletal Disorders, 2013.",
+        "Maigne JY, Chatellier G. Comparison of three manual coccyx treatments. Spine, 2001.",
       ],
     },
     {
@@ -419,7 +387,7 @@ function Citations() {
         </div>
 
         <p className="mt-12 text-xs italic leading-relaxed" style={{ color: PAPER_MUTED }}>
-          Nothing on this page constitutes medical advice. If your back is screaming, see a PT. If sex hurts, see a pelvic-health PT, a gynecologist, or a urologist.
+          Nothing on this page constitutes medical advice. If your back is screaming, see a PT. If sex hurts, see a sports-medicine doctor, a gynecologist, or a urologist.
         </p>
       </div>
     </section>
@@ -447,7 +415,6 @@ function Science() {
       <HeroBlock />
       <S1 />
       <S2 />
-      <S3 />
       <S4 />
       <S5 />
       <S6 />

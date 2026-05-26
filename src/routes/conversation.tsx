@@ -43,7 +43,7 @@ const TOPICS: Topic[] = [
     lines: [
       "My L4-L5 has been doing the talking this week. Left side, when I shift weight. The right side is fine. If you notice me flinching it's that, not anything you're doing.",
       "The back has been speaking up on the lower-left, especially when I'm side-lying with my top knee unsupported. Pillow between the knees and we're back in business.",
-      "Lumbar is the loud one today. Hips and the floor itself are quiet. I'd like to try something that lets the lower back stay neutral and see how that lands.",
+      "Lumbar is the loud one today. Hips are quiet and the legs are fine. I'd like to try something that lets the lower back stay neutral and see how that lands.",
     ],
   },
   {
@@ -58,14 +58,14 @@ const TOPICS: Topic[] = [
     ],
   },
   {
-    id: "dilator",
-    label: "Dilator use (clinical, on schedule)",
+    id: "aftercare",
+    label: "The five minutes after",
     blurb:
-      "Dilator work is clinician-prescribed. The script frames it as the assignment it is, not a confession.",
+      "Aftercare is the cheapest single thing you can do to keep tomorrow's back from billing you for tonight. Frame it as a practice, not an apology.",
     lines: [
-      "I'm working on dilator progressions with my pelvic-health PT. Twice a week, paired with breath work. I want you to know what it is in case you see it on the nightstand. It's not a workaround. It's the work.",
-      "The PT has me on a dilator series for the next eight weeks. The plan is to combine it with diaphragmatic breath, not force. It will probably make tonight easier, not harder.",
-      "Tonight I'd like to do twenty minutes of the dilator protocol first. It's part of the rehab plan, and the rest of the evening is friendlier when I've done it.",
+      "Could we do five minutes of supine breath after? Not because anything was bad. Because the next morning is materially better when the paraspinals are not allowed to cool in a shortened state.",
+      "I have a small post-sex routine I want to try tonight. Two minutes of side-lying, two minutes of knees-over-pillow, then we are done. It is for the back, and it is short.",
+      "Aftercare for me is decompression, not cuddling. The cuddling can happen during the decompression. The decompression has to happen.",
     ],
   },
   {

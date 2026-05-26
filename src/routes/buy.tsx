@@ -202,10 +202,10 @@ function Buy() {
             style={{ fontSize: "18px", color: PAPER_INK }}
           >
             <li>The Index. Your back, scored daily, in one number.</li>
-            <li>The Engine. Three-act plan for tonight, in six taps.</li>
+            <li>The Engine. Three-act plan for tonight, in five taps.</li>
             <li>The 8-minute protocol. Three moves. Bench-tested.</li>
             <li>Forty positions. Scored by spine load, not by influencer.</li>
-            <li>Down-train when the floor is loud, not just up-train.</li>
+            <li>Decompression for flare days, not just endurance for good ones.</li>
             <li>Partner scripts you can read without flinching.</li>
             <li>The full library of recovery moves for flare days.</li>
             <li>Export your data. Delete your account. Both work the first time.</li>

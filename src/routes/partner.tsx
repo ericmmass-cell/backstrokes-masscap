@@ -110,7 +110,7 @@ function Partner() {
               },
               {
                 head: "The partner-first filter, four taps",
-                body: "When you are initiating tonight and want to know what is possible before bringing it up. Four taps, not six. The two it removes are the ones that require their interoception: pelvic-floor state and precise pain vector. Those stay theirs to report. You see aggregates only.",
+                body: "When you are initiating tonight and want to know what is possible before bringing it up. Four taps, not six. The two it removes are the ones that require their interoception: hip mobility and precise pain vector. Those stay theirs to report. You see aggregates only.",
               },
             ].map((f) => (
               <div key={f.head} className="border-l-2 pl-6" style={{ borderColor: OXBLOOD }}>
@@ -151,7 +151,7 @@ function Partner() {
             Push notifications about intimate content on a phone that may not be your sole device, on a phone that may be on a kitchen counter or in a meeting or in a car with a child in the back seat, is a customer-service incident waiting to happen. We have written this category as containing exactly zero acceptable notifications. In-app surfacing only. No badge counts on the app icon either.
           </p>
           <p className="mt-5 text-lg leading-relaxed" style={{ color: PAPER_INK, opacity: 0.85 }}>
-            Your partner can revoke your access at any time without notifying you. This is a safety feature, not a politeness feature. It exists because relationships change, and the product must not become a surveillance vector. Pelvic-floor state, mental-health context, and any body-scan assessment are private by default and stay private until they change that.
+            Your partner can revoke your access at any time without notifying you. This is a safety feature, not a politeness feature. It exists because relationships change, and the product must not become a surveillance vector. Mental-health context and any body-scan assessment are private by default and stay private until they change that.
           </p>
         </div>
       </section>
@@ -191,7 +191,7 @@ function Partner() {
             </Link>
           </div>
           <p className="mt-12 text-xs italic max-w-md mx-auto leading-relaxed" style={{ color: PAPER_MUTED }}>
-            Education and coaching, not diagnosis or therapy. We do not gamify your orgasms. We do not push notify your bedroom. We do not put your floor on a leaderboard.
+            Education and coaching, not diagnosis or therapy. We do not gamify your orgasms. We do not push notify your bedroom. We do not put your back on a leaderboard.
           </p>
         </div>
       </section>

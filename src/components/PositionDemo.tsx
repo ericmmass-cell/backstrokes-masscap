@@ -12,10 +12,18 @@ type PositionVisualKey =
   | "supine-support"
   | "side-facing"
   | "seated-upright"
+  | "cowgirl-upright"
+  | "reverse-cowgirl"
+  | "stirrup-missionary"
+  | "side-leg-held"
   | "quadruped-support"
   | "edge-bed"
   | "standing-support"
+  | "standing-wall"
   | "prone-pillow"
+  | "cradle-sitting"
+  | "squat-over"
+  | "solo-side"
   | "solo-supine";
 
 type PositionVisualSpec = {
@@ -36,6 +44,7 @@ const INK = "#1A1714";
 const MUTED = "#655C4F";
 const OX = "#722B2B";
 const RULE = "#D9CFB5";
+const FRAME_COUNT = 8;
 
 const POSITION_VISUALS: Record<PositionVisualKey, PositionVisualSpec> = {
   "side-spoon": {
@@ -86,8 +95,56 @@ const POSITION_VISUALS: Record<PositionVisualKey, PositionVisualSpec> = {
     videoMp4: "/demos/positions/seated-upright.mp4",
     videoWebm: "/demos/positions/seated-upright.webm",
   },
-  "quadruped-support": {
+  "cowgirl-upright": {
     fig: "P.05",
+    title: "Cowgirl Upright",
+    role: "Receiving partner controls depth; torso stacked",
+    frameHold: "recline / straddle / stack / hold",
+    cycleSeconds: 2.55,
+    sprite: "/demos/positions/cowgirl-upright.jpg",
+    spriteSmall: "/demos/positions/cowgirl-upright-sm.jpg",
+    poster: "/demos/positions/cowgirl-upright.jpg",
+    videoMp4: "/demos/positions/cowgirl-upright.mp4",
+    videoWebm: "/demos/positions/cowgirl-upright.webm",
+  },
+  "reverse-cowgirl": {
+    fig: "P.06",
+    title: "Reverse Cowgirl Reclined",
+    role: "Backward lean; partner support; lumbar quiet",
+    frameHold: "recline / reverse / lean / hold",
+    cycleSeconds: 2.55,
+    sprite: "/demos/positions/reverse-cowgirl.jpg",
+    spriteSmall: "/demos/positions/reverse-cowgirl-sm.jpg",
+    poster: "/demos/positions/reverse-cowgirl.jpg",
+    videoMp4: "/demos/positions/reverse-cowgirl.mp4",
+    videoWebm: "/demos/positions/reverse-cowgirl.webm",
+  },
+  "stirrup-missionary": {
+    fig: "P.07",
+    title: "Knees-High Missionary",
+    role: "Knees supported; depth controlled by range",
+    frameHold: "setup / lift / support / hold",
+    cycleSeconds: 2.7,
+    sprite: "/demos/positions/stirrup-missionary.jpg",
+    spriteSmall: "/demos/positions/stirrup-missionary-sm.jpg",
+    poster: "/demos/positions/stirrup-missionary.jpg",
+    videoMp4: "/demos/positions/stirrup-missionary.mp4",
+    videoWebm: "/demos/positions/stirrup-missionary.webm",
+  },
+  "side-leg-held": {
+    fig: "P.08",
+    title: "Side-Lying Leg Held",
+    role: "Top leg supported; hips close; rotation limited",
+    frameHold: "side / align / support / hold",
+    cycleSeconds: 2.75,
+    sprite: "/demos/positions/side-leg-held.jpg",
+    spriteSmall: "/demos/positions/side-leg-held-sm.jpg",
+    poster: "/demos/positions/side-leg-held.jpg",
+    videoMp4: "/demos/positions/side-leg-held.mp4",
+    videoWebm: "/demos/positions/side-leg-held.webm",
+  },
+  "quadruped-support": {
+    fig: "P.09",
     title: "Supported Rear Entry",
     role: "Forearms down; support reduces lumbar work",
     frameHold: "hands / forearms / bolster / hold",
@@ -99,7 +156,7 @@ const POSITION_VISUALS: Record<PositionVisualKey, PositionVisualSpec> = {
     videoWebm: "/demos/positions/quadruped-support.webm",
   },
   "edge-bed": {
-    fig: "P.06",
+    fig: "P.10",
     title: "Edge-Of-Bed Missionary",
     role: "Hips at edge; partner close; support takes load",
     frameHold: "setup / support / align / hold",
@@ -111,7 +168,7 @@ const POSITION_VISUALS: Record<PositionVisualKey, PositionVisualSpec> = {
     videoWebm: "/demos/positions/edge-bed.webm",
   },
   "standing-support": {
-    fig: "P.07",
+    fig: "P.11",
     title: "Standing Supported Rear",
     role: "Hands high; hip hinge; spine stays long",
     frameHold: "stand / hands / hinge / hold",
@@ -122,8 +179,20 @@ const POSITION_VISUALS: Record<PositionVisualKey, PositionVisualSpec> = {
     videoMp4: "/demos/positions/standing-support.mp4",
     videoWebm: "/demos/positions/standing-support.webm",
   },
+  "standing-wall": {
+    fig: "P.12",
+    title: "Standing Face-To-Face",
+    role: "Wall support; staggered feet; low thrust range",
+    frameHold: "stand / brace / close / hold",
+    cycleSeconds: 2.6,
+    sprite: "/demos/positions/standing-wall.jpg",
+    spriteSmall: "/demos/positions/standing-wall-sm.jpg",
+    poster: "/demos/positions/standing-wall.jpg",
+    videoMp4: "/demos/positions/standing-wall.mp4",
+    videoWebm: "/demos/positions/standing-wall.webm",
+  },
   "prone-pillow": {
-    fig: "P.08",
+    fig: "P.13",
     title: "Prone Pillow Support",
     role: "Pillow under hips softens extension load",
     frameHold: "prone / pillow / neutral / hold",
@@ -134,8 +203,44 @@ const POSITION_VISUALS: Record<PositionVisualKey, PositionVisualSpec> = {
     videoMp4: "/demos/positions/prone-pillow.mp4",
     videoWebm: "/demos/positions/prone-pillow.webm",
   },
+  "cradle-sitting": {
+    fig: "P.14",
+    title: "Cradle Sitting",
+    role: "Facing close; legs wrapped; breath-led",
+    frameHold: "sit / wrap / close / hold",
+    cycleSeconds: 2.8,
+    sprite: "/demos/positions/cradle-sitting.jpg",
+    spriteSmall: "/demos/positions/cradle-sitting-sm.jpg",
+    poster: "/demos/positions/cradle-sitting.jpg",
+    videoMp4: "/demos/positions/cradle-sitting.mp4",
+    videoWebm: "/demos/positions/cradle-sitting.webm",
+  },
+  "squat-over": {
+    fig: "P.15",
+    title: "Supported Squat",
+    role: "High demand; hands braced; short range only",
+    frameHold: "setup / brace / squat / hold",
+    cycleSeconds: 2.45,
+    sprite: "/demos/positions/squat-over.jpg",
+    spriteSmall: "/demos/positions/squat-over-sm.jpg",
+    poster: "/demos/positions/squat-over.jpg",
+    videoMp4: "/demos/positions/squat-over.mp4",
+    videoWebm: "/demos/positions/squat-over.webm",
+  },
+  "solo-side": {
+    fig: "P.16",
+    title: "Solo Side-Lying Breath",
+    role: "Pillow between knees; breath before arousal",
+    frameHold: "side / pillow / hand / breath",
+    cycleSeconds: 3,
+    sprite: "/demos/positions/solo-side.jpg",
+    spriteSmall: "/demos/positions/solo-side-sm.jpg",
+    poster: "/demos/positions/solo-side.jpg",
+    videoMp4: "/demos/positions/solo-side.mp4",
+    videoWebm: "/demos/positions/solo-side.webm",
+  },
   "solo-supine": {
-    fig: "P.09",
+    fig: "P.17",
     title: "Solo Supine Breath",
     role: "Supported knees; breath leads arousal",
     frameHold: "setup / support / inhale / settle",
@@ -159,23 +264,23 @@ const POSITION_VISUAL_BY_ID: Record<string, PositionVisualKey> = {
   p08: "standing-support",
   p09: "quadruped-support",
   p10: "quadruped-support",
-  p11: "seated-upright",
-  p12: "seated-upright",
-  p13: "edge-bed",
+  p11: "reverse-cowgirl",
+  p12: "cowgirl-upright",
+  p13: "stirrup-missionary",
   p14: "side-facing",
-  p15: "standing-support",
+  p15: "standing-wall",
   p16: "edge-bed",
   p17: "seated-upright",
-  p18: "side-facing",
+  p18: "side-leg-held",
   p19: "quadruped-support",
   p20: "solo-supine",
-  p21: "solo-supine",
+  p21: "solo-side",
   p22: "supine-support",
-  p23: "side-facing",
-  p24: "standing-support",
-  p25: "edge-bed",
+  p23: "side-leg-held",
+  p24: "squat-over",
+  p25: "stirrup-missionary",
   p26: "edge-bed",
-  p27: "seated-upright",
+  p27: "reverse-cowgirl",
   p28: "side-spoon",
   p29: "supine-support",
   p30: "quadruped-support",
@@ -183,11 +288,11 @@ const POSITION_VISUAL_BY_ID: Record<string, PositionVisualKey> = {
   p32: "standing-support",
   p33: "prone-pillow",
   p34: "supine-support",
-  p35: "seated-upright",
-  p36: "side-facing",
-  p37: "seated-upright",
-  p38: "supine-support",
-  p39: "standing-support",
+  p35: "cradle-sitting",
+  p36: "side-leg-held",
+  p37: "squat-over",
+  p38: "stirrup-missionary",
+  p39: "standing-wall",
   p40: "solo-supine",
 };
 
@@ -253,31 +358,17 @@ const CSS = `
   position: absolute;
   inset: 0;
   background-image: var(--sprite-lg);
-  background-size: 400% 100%;
+  background-size: var(--sprite-width) 100%;
   background-repeat: no-repeat;
   opacity: 0;
   transform: translateZ(0);
   animation-duration: var(--cycle);
+  animation-delay: var(--frame-delay);
+  animation-fill-mode: both;
+  animation-name: bsPositionFrameCycle;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   will-change: opacity, transform;
-}
-.bs-position-demo__frame--0 {
-  background-position: 0% 50%;
-  animation-name: bsPositionFrame0;
-  opacity: 1;
-}
-.bs-position-demo__frame--1 {
-  background-position: 33.333% 50%;
-  animation-name: bsPositionFrame1;
-}
-.bs-position-demo__frame--2 {
-  background-position: 66.667% 50%;
-  animation-name: bsPositionFrame2;
-}
-.bs-position-demo__frame--3 {
-  background-position: 100% 50%;
-  animation-name: bsPositionFrame3;
 }
 .bs-position-demo[data-paused="true"] .bs-position-demo__sprite,
 .bs-position-demo[data-paused="true"] .bs-position-demo__frame {
@@ -342,30 +433,12 @@ const CSS = `
 }
 @keyframes bsPositionBody {
   0%, 100% { transform: translateY(0) scale(1); }
-  30%, 68% { transform: translateY(-5px) scale(1.016); }
-  84% { transform: translateY(2px) scale(1.006); }
+  28%, 64% { transform: translateY(-4px) scale(1.012); }
+  84% { transform: translateY(2px) scale(1.004); }
 }
-@keyframes bsPositionFrame0 {
-  0%, 8% { opacity: 1; transform: scale(1); }
-  16%, 84% { opacity: 0; transform: translateY(-1px) scale(1.006); }
-  94%, 100% { opacity: 1; transform: scale(1); }
-}
-@keyframes bsPositionFrame1 {
-  0%, 8% { opacity: 0; transform: scale(1); }
-  16%, 26% { opacity: 1; transform: translateY(-2px) scale(1.01); }
-  36%, 70% { opacity: 0; transform: translateY(-4px) scale(1.016); }
-  78%, 86% { opacity: 1; transform: translateY(1px) scale(1.008); }
-  96%, 100% { opacity: 0; transform: scale(1); }
-}
-@keyframes bsPositionFrame2 {
-  0%, 25% { opacity: 0; transform: translateY(-2px) scale(1.01); }
-  34%, 70% { opacity: 1; transform: translateY(-5px) scale(1.02); }
-  79%, 100% { opacity: 0; transform: translateY(1px) scale(1.008); }
-}
-@keyframes bsPositionFrame3 {
-  0%, 68% { opacity: 0; transform: translateY(-3px) scale(1.012); }
-  80%, 88% { opacity: 1; transform: translateY(2px) scale(1.006); }
-  98%, 100% { opacity: 0; transform: scale(1); }
+@keyframes bsPositionFrameCycle {
+  0%, 10% { opacity: 1; transform: translateY(-2px) scale(1.01); }
+  16%, 100% { opacity: 0; transform: translateY(2px) scale(1.004); }
 }
 @media (max-width: 760px) {
   .bs-position-demo {
@@ -401,7 +474,7 @@ const CSS = `
   .bs-position-demo__frame {
     animation: none;
   }
-  .bs-position-demo__frame--0 {
+  .bs-position-demo__frame:first-child {
     opacity: 1;
   }
 }
@@ -487,14 +560,23 @@ function SpriteLayer({ spec }: { spec: PositionVisualSpec }) {
           "--cycle": `${spec.cycleSeconds}s`,
           "--sprite-lg": `url("${spec.sprite}")`,
           "--sprite-sm": `url("${spec.spriteSmall}")`,
+          "--sprite-width": `${FRAME_COUNT * 100}%`,
         } as CSSProperties
       }
       aria-hidden
     >
-      <div className="bs-position-demo__frame bs-position-demo__frame--0" />
-      <div className="bs-position-demo__frame bs-position-demo__frame--1" />
-      <div className="bs-position-demo__frame bs-position-demo__frame--2" />
-      <div className="bs-position-demo__frame bs-position-demo__frame--3" />
+      {Array.from({ length: FRAME_COUNT }, (_, index) => (
+        <div
+          key={index}
+          className="bs-position-demo__frame"
+          style={
+            {
+              "--frame-delay": `${(index * spec.cycleSeconds) / FRAME_COUNT}s`,
+              backgroundPosition: `${(index / (FRAME_COUNT - 1)) * 100}% 50%`,
+            } as CSSProperties
+          }
+        />
+      ))}
     </div>
   );
 }
@@ -506,7 +588,7 @@ export function positionVisualKeyForId(positionId: string): PositionVisualKey {
 export function PositionDemo({ positionId, paused = false, className, style }: PositionDemoProps) {
   const spec = POSITION_VISUALS[positionVisualKeyForId(positionId)];
   const hasVideo = useVideoAvailability(spec);
-  const mode = hasVideo ? "video loop" : "motion study";
+  const mode = hasVideo ? "video loop" : "8-frame motion";
 
   return (
     <figure

@@ -94,9 +94,9 @@ function Manifesto() {
         <Beat n="ii.">
           <p>
             Nobody tells you this part. The orthopedic surgeon does not tell
-            you. The physical therapist does not tell you. The pelvic floor
-            specialist sometimes tells you, sideways, after the third
-            appointment.
+            you. The physical therapist does not tell you. The sports medicine
+            doctor tells you, sideways, after the third appointment, and only
+            if you bring it up first.
           </p>
           <p>
             The internet tells you to try the spoon position. The internet has
@@ -217,7 +217,7 @@ function Manifesto() {
           <p>
             If we do this right, in five years there will be an entire
             category of software that takes the rest of adult life as
-            seriously as it takes step counts. Pelvic floors. Sleep posture.
+            seriously as it takes step counts. Hip mobility. Sleep posture.
             The conversation a long-married couple has at 10:47pm about
             whether tonight is the night.
           </p>

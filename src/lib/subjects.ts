@@ -56,7 +56,7 @@ export const SUBJECTS: Subject[] = [
     name: "June",
     age: 38,
     bio: "Postpartum return. Doesn't care about the streak.",
-    detail: "Down-train week 6. The reverse kegel finally clicked on a Tuesday she didn't expect it to.",
+    detail: "Decompression week 6. The supine breath finally clicked on a Tuesday she didn't expect it to.",
     image: juneImg,
     moves: { curlUp: juneImg, sidePlank: juneImg, birdDog: juneImg },
     accent: "blush",

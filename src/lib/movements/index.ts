@@ -24,7 +24,6 @@ export const MOVEMENTS: Record<string, Movement> = {
   "side-plank": SIDE_PLANK,
   "bird-dog": BIRD_DOG,
   "breath": SUPINE_BREATH,
-  "reverse-kegel": SUPINE_BREATH,
   "decomp": SUPINE_BREATH,
 };
 

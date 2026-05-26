@@ -1,7 +1,7 @@
 import { deg, type Movement, type SubjectPose } from "@/lib/pose";
 
 /**
- * Supine breath / decomp / reverse kegel. Same posture, gentle breath cycle.
+ * Supine breath / decompression. Same posture, gentle breath cycle.
  * 8-second cycle matches the 4-7-8 breath plus a beat for the diaphragm drop.
  */
 

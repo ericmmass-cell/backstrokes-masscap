@@ -5,7 +5,6 @@ export type MoveKey =
   | "side-plank"
   | "bird-dog"
   | "breath"
-  | "reverse-kegel"
   | "decomp";
 
 type MovementDemoProps = {
@@ -89,19 +88,6 @@ const MOVES: Record<MoveKey, MoveSpec> = {
     poster: "/demos/workout/breath.jpg",
     videoMp4: "/demos/workout/breath.mp4",
     videoWebm: "/demos/workout/breath.webm",
-  },
-  "reverse-kegel": {
-    fig: "F.01B",
-    title: "Reverse Kegel",
-    role: "Pelvic floor release; not a contraction",
-    cycleSeconds: 3.45,
-    cadence: "breath",
-    frameHold: "rest / inhale / release / return",
-    sprite: "/demos/workout/reverse-kegel.jpg",
-    spriteSmall: "/demos/workout/reverse-kegel-sm.jpg",
-    poster: "/demos/workout/reverse-kegel.jpg",
-    videoMp4: "/demos/workout/reverse-kegel.mp4",
-    videoWebm: "/demos/workout/reverse-kegel.webm",
   },
   decomp: {
     fig: "F.01C",

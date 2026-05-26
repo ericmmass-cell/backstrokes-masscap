@@ -46,19 +46,6 @@ const QUESTIONS: Question[] = [
     ],
   },
   {
-    id: "floor",
-    prompt: "How does the pelvic floor feel today?",
-    hint: "The floor does not lie. We mostly mistranslate.",
-    options: [
-      { value: "unnoticed", label: "Unnoticed", delta: +3 },
-      { value: "relaxed", label: "Relaxed", delta: +4 },
-      { value: "gripping", label: "Gripping", delta: -3 },
-      { value: "leaky", label: "Leaky", delta: -2 },
-      { value: "painful", label: "Painful", delta: -4 },
-      { value: "unsure", label: "No idea, which is data", delta: 0 },
-    ],
-  },
-  {
     id: "sex",
     prompt: "Sex in the past week?",
     hint: "Pain in the act, mostly. We do not ask why, with whom, or whether furniture was involved.",
@@ -120,7 +107,6 @@ const QUESTIONS: Question[] = [
       { value: "fever", label: "Fever with back pain", delta: -8 },
       { value: "weight", label: "Unexplained weight loss", delta: -8 },
       { value: "bladder", label: "Loss of bladder or bowel control", delta: -8 },
-      { value: "pelvic", label: "Severe pelvic pain", delta: -8 },
       { value: "surgery", label: "Recent surgery", delta: -8 },
     ],
   },
@@ -207,18 +193,15 @@ export function CheckIn({
         const props: Record<string, unknown> = { answers, delta, newIndex };
         const a1 = answers.q1?.[0]; // pain
         const a2 = answers.q2?.[0]; // sleep
-        const a3 = answers.q3?.[0]; // floor
-        const a4 = answers.q4?.[0]; // sex
+        const a3 = answers.q3?.[0]; // sex (after dropping the floor question, sex shifts up)
         const painMap: Record<string, number> = { quiet: 1, dull: 3, noisy: 5, sharp: 8 };
         const sleepMap: Record<string, number> = { slept: 8, ok: 6, broken: 3, none: 1 };
-        const floorMap: Record<string, number> = { released: 9, neutral: 5, gripped: 2 };
         const sexMap: Record<string, number> = { quiet: 8, present: 6, fearful: 3, gone: 1 };
         if (a1 && painMap[a1] !== undefined) props.pain = painMap[a1];
         if (a2 && sleepMap[a2] !== undefined) props.sleep = sleepMap[a2];
-        if (a3 && floorMap[a3] !== undefined) props.floor = floorMap[a3];
-        if (a4 && sexMap[a4] !== undefined) props.sex = sexMap[a4];
-        // Q7 red flags become their own event so the index can react hard.
-        const flags = answers.q7 ?? [];
+        if (a3 && sexMap[a3] !== undefined) props.sex = sexMap[a3];
+        // Red flags become their own event so the index can react hard.
+        const flags = answers.q6 ?? [];
         if (flags.length > 0 && !flags.includes("none")) {
           track("flare.flagged", { flags });
         }
@@ -245,7 +228,7 @@ export function CheckIn({
             We'd rather know <span style={{ color: "var(--brand-amber)" }}>than guess.</span>
           </h2>
           <p className="text-sm text-muted-foreground mt-3 leading-relaxed max-w-xl italic">
-            Six taps, no follow-up questions. The Index moves on what you log. We do not ask twice and we do not grade you for the stomach answer, which is in the data anyway.
+            Six taps, no follow-up questions. The Index moves on what you log. We do not ask twice and we do not grade you for the stomach-sleeper answer, which is in the data anyway.
           </p>
         </div>
         <div className="text-right">

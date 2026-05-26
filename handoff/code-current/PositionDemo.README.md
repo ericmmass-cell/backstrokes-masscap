@@ -4,16 +4,24 @@
 
 ## Why this approach
 
-The position library has forty scored entries, but most share a smaller set of bedroom geometries. The renderer maps each position ID to one of nine non-explicit visual archetypes:
+The position library has forty scored entries, but most share a smaller set of bedroom geometries. The renderer maps each position ID to one of seventeen non-explicit visual archetypes:
 
 - `side-spoon`
 - `supine-support`
 - `side-facing`
 - `seated-upright`
+- `cowgirl-upright`
+- `reverse-cowgirl`
+- `stirrup-missionary`
+- `side-leg-held`
 - `quadruped-support`
 - `edge-bed`
 - `standing-support`
+- `standing-wall`
 - `prone-pillow`
+- `cradle-sitting`
+- `squat-over`
+- `solo-side`
 - `solo-supine`
 
 That keeps the visuals lifelike without requiring forty bespoke shoots or animations. The demos are intentionally clothed and non-explicit, but they should read as actual sexual positions. The visual job is to show pelvis/torso geometry, support props, and spine load without showing nudity or genital detail.
@@ -27,7 +35,7 @@ public/demos/positions/<visual-key>.jpg
 public/demos/positions/<visual-key>-sm.jpg
 ```
 
-Each sheet is four equal panels. Desktop sheets are `1920x640`; mobile sheets are `960x320`. All current assets are under 500 KB each.
+Each sheet is eight equal panels. The shipped sheets are generated from four primary poses plus four blended in-between frames, which makes the loop read less like a slide carousel while staying small enough for mobile. Desktop sheets are `3840x640`; mobile sheets are `1920x320`. All current assets are under 500 KB each.
 
 The current assets were generated with Codex's built-in image generation tool from project-specific prompts. They are not copied from third-party libraries, stock photography, Lottie, Mixamo, or public-domain plates. No external asset license applies. Treat them as production visual drafts until a clinician reviews the exact body mechanics.
 

@@ -191,7 +191,7 @@ function S1() {
           The host has, of course, no back pain. The host has, in fact, very rarely had any of the conditions his protocol claims to address. The protocols are sold to an audience that does have them, by a host who is paid not to. The supplement company that sponsors the show has, on its board, the host's brother. The brother has been on the board since 2019. In 187 episodes, the 'objective product review' segment has not, even once, recommended a product the host does not have equity in. This is not a coincidence. This is a casino with a microphone.
         </P>
         <P>
-          The fourth industry is the influencer physical therapist. The TikTok account with 4.2 million followers. The Instagram pelvic-floor coach who diagnoses your floor from a photograph of your couch. The corrective exercise that did not appear in any peer-reviewed journal because no journal would publish it. The video is filmed in a kitchen. The kitchen is, in this economy, a clinic. The clinic is, in many states, no longer required to be a clinic. The 26 states that did require it to be a clinic stopped requiring it during the pandemic and did not, afterward, get around to requiring it again. The kitchen is now permanent.
+          The fourth industry is the influencer physical therapist. The TikTok account with 4.2 million followers. The Instagram back-pain coach who diagnoses your disc from a photograph of your couch. The corrective exercise that did not appear in any peer-reviewed journal because no journal would publish it. The video is filmed in a kitchen. The kitchen is, in this economy, a clinic. The clinic is, in many states, no longer required to be a clinic. The 26 states that did require it to be a clinic stopped requiring it during the pandemic and did not, afterward, get around to requiring it again. The kitchen is now permanent.
         </P>
         <P>
           The fifth industry is the personal-brand chiropractor. Chiropractic was invented in 1895 by a Canadian magnetic healer named D.D. Palmer, who had a vision in which a deceased doctor named Dr. Jim Atkinson appeared to him in person and explained how to crack spines. This is the historical record. The American Chiropractic Association does not dispute the account, because the alternative is admitting that the founder of the discipline was, in modern clinical terms, having a psychotic episode he then trademarked. The contemporary descendant of Dr. Palmer's ghost-vision is a man in a strip mall in Texas with a ring light and 1.2 million TikTok followers. The cracking sound, anatomically, is cavitation in synovial fluid. The cracking sound, financially, is the sound of insurance dollars being aerosolised at a rate of approximately one spine every 47 seconds. The strip mall is always in Texas. The ghost has not commented.
@@ -217,7 +217,7 @@ function S2() {
           Most male readers came here for one specific question, and they would like us to please stop circling it. The question is: can I finish the way I used to finish, given that the body that used to finish that way now flares at thrust patterns I had previously regarded as the rhythm of the universe. The answer is yes. In a slightly different geometry, at a slightly different cadence, with eight minutes of post-sex work. The eight minutes have no opinions about the prior thirty. The rest of the document is the longer answer.
         </P>
         <P>
-          Most female readers came here for the parallel question. Can sex stop being painful. Can arousal come back online. Can entry happen without bracing for the moment two years of accumulated dread finally pays out. The answer is yes, in a sequence, with breath, once the floor has learned to release before being asked to contract. The kegel app cannot teach this. The kegel app has been responsible, in this demographic, for more pelvic-floor dysfunction than childbirth. The app received a Webby. Childbirth has not received a Webby. This is not the only injustice in the system, but it is an unusually clean one.
+          Most female readers came here for the parallel question. Can sex stop being painful. Can arousal come back online. Can entry happen without bracing for the moment two years of accumulated dread finally pays out. The answer is yes, in a sequence, with breath, once the back has been quieted by load-management before the act, not just during it. The wellness aisle cannot teach this. The wellness aisle has been selling, in this demographic, more candle than competence for thirty years. The candle received a Webby. Spine endurance has not received a Webby. This is not the only injustice in the system, but it is an unusually clean one.
         </P>
         <P>
           Readers who fit neither template, who are post-prostatectomy, postpartum, post-perineal repair, post-hysterectomy, or in active dilator therapy, are reading because the standard answers do not apply. This page is not a substitute for the clinician managing your case. It is also not a substitute for the people who love you, who you have been pretending are not noticing. They are noticing.
@@ -244,13 +244,13 @@ function S3() {
           caption="Standing baseline on the left, sex on the right. The bar at 410% is the one Cosmo did not draw."
         />
         <P>
-          In a sex context, the Nachemson and Wilke findings mean that any position in which the spine is curled forward while bearing partner-load is the worst position for a flexion-intolerant lumbar. The classic example, written into a thousand listicles as 'safe,' is the receiving partner pulled into the giving partner's chest with the knees up. This is, in the McGill load tables, near the top of the flexion-load chart for an uninjured population, and at the very top for an injured one. The yoga community calls this position 'spooned child's pose' and recommends it for grounding. The disc is not grounded. The disc is on the floor.
+          In a sex context, the Nachemson and Wilke findings mean that any position in which the spine is curled forward while bearing partner-load is the worst position for a flexion-intolerant lumbar. The classic example, written into a thousand listicles as 'safe,' is the receiving partner pulled into the giving partner's chest with the knees up. This is, in the McGill load tables, near the top of the flexion-load chart for an uninjured population, and at the very top for an injured one. The yoga community calls this position 'spooned child's pose' and recommends it for grounding. The disc is not grounded. The disc is loaded.
         </P>
         <P>
           The SI joint is loaded most aggressively under asymmetric load. It moves approximately 2 to 4 millimetres in any direction, which is also the distance between 'walking normally' and 'limping for a week.' It was first described in 1543 by Andreas Vesalius, who would have had thoughts about the modern application. A position in which one leg is planted while the other is elevated, one hip externally rotated while the other is neutral, one half of the pelvis driving in one plane while the other absorbs in another, is the position in which the SI joint complains loudest. The scissor position is, in this clinical sense, an SI provocation test that the patient did not consent to. The scissor position was named, in the sexual literature, by a man whose own SI joint was, at the time, fine.
         </P>
         <P>
-          The pelvic floor is loaded continuously throughout sex regardless of position, but its tonic state at the start of sex predicts a large share of the outcome. A floor that arrives over-tonic produces dyspareunia in women and erectile failure or premature ejaculation in men. A floor that has had four to six minutes of pre-sex diaphragmatic breath-led down-training arrives at sex measurably less tonic, and tolerates the same act with materially less symptom production. The literature is consistent enough that pre-sex down-training is, in published pelvic-health practice, a routine prescription. The kegel app paid 1.4 billion dollars in marketing in 2023. The pelvic-floor physiotherapy specialty paid, across 8,000 practitioners worldwide, less than that. The pelvic floor is, anatomically, the only part of the human body that has been successfully disrupted by the consumer-internet economy.
+          The thoracolumbar fascia, the broad sheet of connective tissue that wraps the lower back, transmits force between the lats above and the glutes below. In a healthy adult it slides cleanly across the lumbar paraspinals. In an adult with chronic low-back guarding it adheres, in places, to the paraspinals it should be sliding over. Under sex-relevant motion this adhesion produces the sharp, surprising, mid-act 'something just pulled' that sends a patient to urgent care for an MRI that comes back unremarkable. The MRI does not see fascia. The 1.5T MRI was not built to. The 3T sometimes catches it. The patient is rarely scheduled for a 3T. The 3T costs three times as much. The insurance company knows this, and approves accordingly.
         </P>
         <P>
           The iliopsoas, the deep hip flexor that originates on the lumbar spine and attaches to the femur, is the single muscle most quietly responsible for back-pain-during-sex events. A chronically shortened iliopsoas, the standard finding in any adult who has sat more than four hours a day for more than two years, is a tether between the lumbar spine and the femur. When the femur is driven into hip extension under load, the lumbar is pulled into anterior tilt and the disc is pre-loaded in flexion before any partner-load is added. The 'why does my back hurt every time after' question traces, in the majority of practical cases, to a tight iliopsoas applying a chronic pre-load. The iliopsoas is, anatomically, the only muscle that directly connects the parts of you that work to the parts of you that hurt. It has been holding a grudge against the chair you accepted in 2019 ever since you accepted it.
@@ -307,7 +307,7 @@ function S5() {
           The cultural difficulty with this prescription is that the existing sex-education curriculum was written, in nearly every published case, by men in their early twenties who were paid by the minute. The aesthetic those men produced is the aesthetic the rest of the culture inherited. Faster is more. Faster is better. Faster is the man in charge. Faster is also, biomechanically, the cadence the disc cannot handle, the cadence that pulls the iliopsoas into spasm, and the cadence that produces tomorrow morning's flare. The unlicensed sex-education curriculum the United States imports from a single Canadian-owned subscription website did not consult the McGill load tables. The McGill load tables would have charged scale.
         </P>
         <P>
-          A practical translation, from the McGill load-rate work and the pelvic-floor literature: half the speed; double the breath; allow the motion to reach the end of each phase before reversing; breathe with the partner, not against. Paired breathing during sex is associated, across the published cohort data, with lower autonomic stress in both partners and measurably reduced pelvic-floor tonic activity in the receiving partner. The wellness aisle calls this 'tantra' and charges $4,800. The published version is free, in Bø 2007 and several subsequent papers, in journals that are free to access in any university library, and free anywhere else if you have the patience for a paywall and a Russian mirror site that may also be installing keyloggers.
+          A practical translation, from the McGill load-rate work and the broader chronic-back literature: half the speed; double the breath; allow the motion to reach the end of each phase before reversing; breathe with the partner, not against. Paired breathing during sex is associated, across the published cohort data, with lower autonomic stress in both partners and measurably reduced spinal guarding in the partner with chronic low-back pain. The wellness aisle calls this 'tantra' and charges $4,800. The published version is free, in several Annals of Behavioral Medicine papers from the 2010s, in journals that are free to access in any university library, and free anywhere else if you have the patience for a paywall and a Russian mirror site that may also be installing keyloggers.
         </P>
       </div>
     </section>
@@ -327,10 +327,6 @@ function S6() {
     {
       head: "SI joint instability",
       body: "The structure flares under asymmetric load. Avoid: the scissor position; deep one-sided leg-over positions; one hip in deep external rotation while the other is neutral. Prefer: symmetric loading. Spooning. Missionary with both legs in the same plane. Receiving partner on top with both knees in the same plane. The SI joint tolerates symmetric load well past the point where it tolerates asymmetric load at all. The scissor position was, again, named by a man whose own SI joint was, at the time, fine.",
-    },
-    {
-      head: "Pelvic-floor over-tonic",
-      body: "The most common female-pattern presentation, also present in men with pelvic-pattern erectile dysfunction. The structure flares when entry happens before the floor has released. Avoid: positions in which depth or angle is not under the receiving partner's control during entry; positions in which the receiving partner cannot easily retreat mid-motion if a yellow light fires; positions in which the breath is constrained by partner load on the chest. Prefer: receiving partner on top, with full control over depth and pace. Side-lying with shallow entry. Any position in which the breath cycle is unobstructed. The highest-yield intervention for this presentation is pre-sex down-training; position is downstream. The kegel app, despite its $1.4 billion in annual marketing, has never produced a single recommendation that addresses any of this. The kegel app was not built for this. The kegel app was built to retain users.",
     },
     {
       head: "Hip-pattern pain, including labral or impingement presentations",
@@ -404,10 +400,10 @@ function S8() {
         <Eyebrow>§8 · Aftercare</Eyebrow>
         <H2>The five to seven minutes after, which the wellness industry slathered in beeswax and resold.</H2>
         <P>
-          Aftercare is a term the wellness industry stole and slathered in beeswax. The protocol uses the word anyway, because there is not a better one and reclaiming language from the people who ruined it is a small act of public hygiene. What we mean is the five to seven minutes immediately following the act, during which the spine, the floor, and the autonomic nervous system are still in the state the act produced.
+          Aftercare is a term the wellness industry stole and slathered in beeswax. The protocol uses the word anyway, because there is not a better one and reclaiming language from the people who ruined it is a small act of public hygiene. What we mean is the five to seven minutes immediately following the act, during which the spine and the autonomic nervous system are still in the state the act produced.
         </P>
         <P>
-          The basic anatomy of post-sex flare risk: the lumbar paraspinals have been firing in support of the act; the iliopsoas has been in repeated concentric and eccentric loading; the pelvic floor has been cycling between tonic and phasic states; the autonomic nervous system has been in sympathetic-then-parasympathetic transition, often abruptly. Without intervention, the paraspinals cool in a shortened state, the iliopsoas re-tightens, and the floor returns to its baseline tonic state. The next morning, the patient wakes with structural shortening compounded against eight hours of low-level guarding during sleep, and the morning is materially worse than the previous evening. The candle did not prevent any of this. The candle never claimed to. The candle is in the drawer, where the rest of the receipts are kept.
+          The basic anatomy of post-sex flare risk: the lumbar paraspinals have been firing in support of the act; the iliopsoas has been in repeated concentric and eccentric loading; the autonomic nervous system has been in sympathetic-then-parasympathetic transition, often abruptly. Without intervention, the paraspinals cool in a shortened state and the iliopsoas re-tightens. The next morning, the patient wakes with structural shortening compounded against eight hours of low-level guarding during sleep, and the morning is materially worse than the previous evening. The candle did not prevent any of this. The candle never claimed to. The candle is in the drawer, where the rest of the receipts are kept.
         </P>
         <P>
           The aftercare intervention is short, anatomical, and unromantic. Five minutes of supine breath-led down-training, knees supported by a pillow. Two minutes of supine hip-flexor stretch, one leg at a time, both legs equally. One minute of cat-cow at small amplitude, slow. This is not foreplay-in-reverse. This is dosage management.
@@ -435,9 +431,6 @@ function S9() {
         </P>
         <P>
           <strong style={{ color: OXBLOOD }}>Spine red flags</strong> routing immediately to medical care: cauda equina symptoms, new neurological deficits, fever with back pain, unexplained weight loss, history of cancer with new back pain, recent significant trauma.
-        </P>
-        <P>
-          <strong style={{ color: OXBLOOD }}>Pelvic-health red flags</strong> routing to in-person care: pain with intercourse for more than three months, post-surgical rehabilitation, postpartum within the first 18 weeks before clearance, internal trigger-point work, dilator therapy that was clinician-prescribed, suspected vulvodynia or vestibulodynia, recurrent UTI presentations, pelvic organ prolapse symptoms.
         </P>
         <P>
           <strong style={{ color: OXBLOOD }}>Sexual-function red flags</strong> routing to a urologist, gynecologist, or sex therapist: erectile dysfunction with cardiovascular risk factors, ejaculatory dysfunction that is new and unexplained, loss of libido with mood symptoms, any sexual symptom in a relationship where coercion or harm is present.
@@ -501,13 +494,11 @@ function Citations() {
       ],
     },
     {
-      head: "Pelvic floor function, sexual response, and breath-led down-training",
+      head: "Sex and chronic low back pain — clinical and biomechanical",
       items: [
-        "Kegel AH. Progressive resistance exercise in the functional restoration of the perineal muscles. American Journal of Obstetrics and Gynecology, 1948.",
-        "Bø K. Pelvic floor muscle training is effective in treatment of female stress urinary incontinence. International Urogynecology Journal, 2007.",
-        "Carrière B. The Pelvic Floor. Thieme, 2006.",
-        "Hodges PW, Sapsford R, Pengel LH. Postural and respiratory functions of the pelvic floor muscles. Neurourology and Urodynamics, 2007.",
-        "Padoa A, Rosenbaum TY (eds). The Overactive Pelvic Floor. Springer, 2016.",
+        "Sidorkewicz N, McGill SM. Documenting female spine motion during coitus with a commentary on the implications for the low back pain patient. European Spine Journal, 2014.",
+        "Sidorkewicz N, McGill SM. Male spine motion during coitus: implications for the low back pain patient. Spine, 2014.",
+        "Maigne JY, Chatellier G. Comparison of three manual coccyx treatments. Spine, 2001.",
       ],
     },
     {
@@ -569,7 +560,7 @@ function Citations() {
 
         <div className="mt-12 space-y-3 text-xs italic leading-relaxed" style={{ color: PAPER_MUTED }}>
           <p>
-            Nothing on this page constitutes medical advice. If your back is screaming, see a PT. If sex hurts, see a pelvic-health PT, a gynecologist, or a urologist.
+            Nothing on this page constitutes medical advice. If your back is screaming, see a PT. If sex hurts, see a sports-medicine doctor, a gynecologist, or a urologist.
           </p>
           <p>
             The historical claim regarding D.D. Palmer's 1895 origination of chiropractic via reported communication with the spirit of Dr. Jim Atkinson is documented in Palmer's own writings, including The Chiropractor's Adjuster (1910). It is not contested by the discipline.

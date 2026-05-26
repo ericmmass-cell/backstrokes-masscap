@@ -56,9 +56,9 @@ function ps(): string {
     "P.S. Still no candle revenue. Three weeks in. The lumbar has not requested one.",
     "P.S. The hotel-room chair in your office. We see it. Your spine sees it. You did not pick it. Someone in 2007 picked it.",
     "P.S. Your standing desk is plugged in, not engaged. We can tell by the curve.",
-    "P.S. The kegel app went quiet last Tuesday. So did the floor it spent four years drilling.",
+    "P.S. The supplement that promised your back relief is, on closer inspection, ashwagandha with a logo.",
     "P.S. Nobody on the council owns a ring light. This is on purpose. We checked.",
-    "P.S. The Pilates instructor on TikTok is statistically wrong about your floor. The statistics are not on her side. The lighting is.",
+    "P.S. The Pilates instructor on TikTok was not vetted by the disc that has to live with the advice.",
     "P.S. The fascia influencer is a graphic designer with a foam roller and twelve scarves.",
     "P.S. The brand whose name is a misspelled adjective is not a clinician. Worth confirming, occasionally.",
   ];
@@ -69,21 +69,21 @@ function letterFor(state: SessionState): { lede: string; signer: string; role: s
   const dow = new Date().getDay();
   if (state.flareSwapped) {
     return {
-      lede: "Flare day. We move to down-train. The streak is unaffected because the streak was never the point. Pain is loud today. Loud is not the same as in charge.",
-      signer: "Floor desk",
-      role: "down-train protocol",
+      lede: "Flare day. We move to decompression. The streak is unaffected because the streak was never the point. Pain is loud today. Loud is not the same as in charge.",
+      signer: "Spine desk",
+      role: "decompression protocol",
     };
   }
   const map: Record<number, string> = {
     0: "The rest day is a myth with excellent packaging. The lumbar adapts to micro-doses of movement. Remove them for 36 hours and Monday becomes a small courtroom drama. Eight minutes. Then go be alive.",
     1: "Monday. The lumbar has opened negotiations in better faith than expected. Do not reward that by sitting like a shrimp in an expensive chair for nine hours. Eight minutes below. Same dose. Same boring answer. Boring answers are usually the ones that survive discovery.",
     2: "Tuesday. The disc's litigation day. This is consistent with the data, not a personal grudge. If you are down, it is probably the chair, the sleep position, or the recreational optimism. We do the eight minutes anyway. Cumulative load is the only thing that moves this number.",
-    3: "Wednesday. Floor day. Inhale, let the pelvic floor drop. Exhale, return to rest. If you are squeezing, congratulations, you have recreated the mistake eight million downloads agreed on. Stop that. Release first. Strength later.",
+    3: "Wednesday. Decompression day. Lie down, knees over a pillow, breathe slowly for two minutes before the main set. This is not yoga. This is a brief armistice between you and gravity. Take it.",
     4: "Thursday. The 30/3 rule is the intervention. Stand three minutes every thirty. Walk if possible. Hinge if trapped. We are not adding wellness. We are removing time spent at the angle where office furniture quietly became a public health problem.",
     5: "Friday. Run the protocol before the social part of the evening, not afterward when your lumbar has joined the conversation as an uninvited consultant. The weekend version is identical. The disc does not respect brunch.",
     6: "The rest day is a myth with excellent packaging. The lumbar adapts to micro-doses of movement. Remove them for 36 hours and Monday becomes a small courtroom drama. Eight minutes. Then go be alive.",
   };
-  return { lede: map[dow], signer: dow === 3 ? "Floor desk" : "Spine desk", role: dow === 3 ? "down-train protocol" : "endurance protocol" };
+  return { lede: map[dow], signer: "Spine desk", role: "endurance protocol" };
 }
 
 /* ───────── Hero card ───────── */
@@ -234,7 +234,7 @@ function EngineCard({ state }: { state: SessionState }) {
           style={{ fontSize: "clamp(28px, 3vw, 40px)" }}
         >
           Build tonight's plan{" "}
-          <span style={{ color: "var(--brand-oxblood)" }}>in six taps.</span>
+          <span style={{ color: "var(--brand-oxblood)" }}>in five taps.</span>
         </h3>
         <p className="mt-4 text-base leading-relaxed text-foreground/85 max-w-xl">
           {bandCopy[indexBand]} Tell the engine where the pain is, how the floor feels, what the evening is for. It returns a warm-up, a main course, and a dessert option, with escalate / hold / de-escalate at every act.
@@ -327,7 +327,7 @@ function DistractionTeaser() {
 
 function Shelf() {
   const items = [
-    { label: "Engine", sub: "build tonight's plan, six taps", to: "/engine.html", external: true },
+    { label: "Engine", sub: "build tonight's plan, five taps", to: "/engine.html", external: true },
     { label: "Positions", sub: "scored by spine", to: "/positions" },
     { label: "Scripts", sub: "ready-to-copy adult sentences", to: "/conversation" },
     { label: "Partner", sub: "the second user, addressed", to: "/partner" },

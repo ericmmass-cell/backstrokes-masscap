@@ -8,7 +8,7 @@ import {
 } from "@/lib/distractions";
 import { HumanFigure } from "@/components/HumanFigure";
 
-type MoveKey = "curl-up" | "side-plank" | "bird-dog" | "breath" | "reverse-kegel" | "decomp";
+type MoveKey = "curl-up" | "side-plank" | "bird-dog" | "breath" | "decomp";
 
 export const Route = createFileRoute("/session")({
   component: SessionPlayer,
@@ -44,7 +44,7 @@ const PROTOCOL: Move[] = [
     ref: "B.01b",
     label: "Side plank",
     dose: "4 reps · 8 sec hold each side",
-    cue: "Side bridge. Ribs stacked. Hips quiet. The floor is not an enemy. It is a witness.",
+    cue: "Side bridge. Ribs stacked. Hips quiet. The mat is not an enemy. It is a witness.",
     secs: 180,
     moveKey: "side-plank",
     formNotes: [
@@ -75,28 +75,14 @@ const DOWN_TRAIN: Move[] = [
     ref: "F.01a",
     label: "Diaphragmatic breath",
     dose: "10 slow breaths",
-    cue: "Inhale. Lower abdomen rises and the pelvic floor descends. Exhale. Everything returns to rest. Thrillingly, no one sells a subscription for this.",
+    cue: "Inhale. Lower ribs widen, lower abdomen rises. Exhale. Everything returns to rest. The cheapest down-regulator the autonomic nervous system has, and nobody sells a subscription for it.",
     secs: 150,
     moveKey: "breath",
     formNotes: [
       "One hand on lower ribs · one on lower abdomen",
       "Inhale ~3 sec · lower abdomen rises",
-      "Pelvic floor descends on inhale",
-      "Exhale ~3 sec · floor returns to rest",
-    ],
-  },
-  {
-    ref: "F.01b",
-    label: "Reverse kegel + diaphragm drop",
-    dose: "10 slow breaths",
-    cue: "Inhale. Let the floor drop. Exhale. Let it return. If you are trying hard, you are doing the wrong assignment with admirable intensity.",
-    secs: 120,
-    moveKey: "reverse-kegel",
-    formNotes: [
-      "The drop is the rep · not the lift",
-      "Belly rises on the inhale",
-      "Floor lengthens · do not contract",
-      "Passive return on exhale · don't push",
+      "Ribs widen laterally · not just upward",
+      "Exhale ~3 sec · slow as you can stand",
     ],
   },
   {

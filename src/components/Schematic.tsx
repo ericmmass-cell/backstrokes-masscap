@@ -7,16 +7,21 @@
  * in his orthopedist's waiting room: vintage anatomy textbook plates.
  * Hatched shading, italic serif labels with hairline callouts, ink on paper.
  *
+ * Scope note (2026 narrowing): pelvic-floor anatomy was removed as a
+ * product axis. The hero plate now labels lumbar + sacrum + psoas only;
+ * the bedroom work plate now shows hip + sacrum geometry, not a floor
+ * sling.
+ *
  * Two exports preserved for the rest of the app:
  *
- *   <HeroSchematic />            — sagittal lumbar spine + pelvic floor.
+ *   <HeroSchematic />            — sagittal lumbar spine + sacrum + psoas.
  *                                  Used on /dashboard and homepage hero.
  *   <WorkSchematic variant=… />  — exercise-specific anatomical diagram.
  *                                  "back"    → lumbar spine in protective
  *                                              endurance position with load
  *                                              vectors.
- *                                  "bedroom" → pelvis cross-section with
- *                                              pelvic floor sling labeled.
+ *                                  "bedroom" → hip + sacrum cross-section
+ *                                              with safe-load vectors.
  *
  * No human figures. No heads. No limbs. Just anatomy.
  */
@@ -242,7 +247,7 @@ export function HeroSchematic({ className }: Props) {
       width="100%"
       className={className}
       role="img"
-      aria-label="Anatomical plate: lumbar spine in sagittal section, with the L4–L5 disc highlighted and the pelvic floor sling labeled"
+      aria-label="Anatomical plate: lumbar spine in sagittal section, with the L4–L5 disc highlighted and the iliopsoas attachment line shown"
       style={{ display: "block", maxWidth: 480 }}
     >
       <EngravingDefs id="hero" />
@@ -255,7 +260,7 @@ export function HeroSchematic({ className }: Props) {
 
       {/* Plate header */}
       <text x={W / 2} y="36" fontFamily="JetBrains Mono, monospace" fontSize="9" letterSpacing="0.32em" fill={OX} textAnchor="middle">
-        PLATE I &middot; LUMBAR &amp; PELVIC FLOOR
+        PLATE I &middot; LUMBAR &amp; ILIOPSOAS
       </text>
       <text x={W / 2} y="56" fontFamily="Spectral, Georgia, serif" fontStyle="italic" fontSize="14" fill={INK} textAnchor="middle">
         Sagittal section, right lateral aspect
@@ -310,36 +315,8 @@ export function HeroSchematic({ className }: Props) {
         />
       ))}
 
-      {/* Pelvic floor sling — drawn as hammock from pubis (right of sacrum) to coccyx */}
-      <g>
-        <path
-          d={`M ${sx + 60} ${startY + 5 * vSpacing + 30} Q ${sx + 30} ${startY + 5 * vSpacing + 78} ${sx + 4} ${startY + 5 * vSpacing + 88}`}
-          fill="none"
-          stroke={INK}
-          strokeWidth="1.6"
-          strokeLinecap="round"
-        />
-        {/* Fiber texture for the muscle sling */}
-        {Array.from({ length: 6 }).map((_, i) => {
-          const t = (i + 1) / 7;
-          const px = sx + 60 - t * 56 + Math.sin(t * Math.PI) * 6;
-          const py = startY + 5 * vSpacing + 30 + t * 58 + Math.sin(t * Math.PI) * 8;
-          return (
-            <line
-              key={i}
-              x1={px - 3}
-              y1={py - 1}
-              x2={px + 3}
-              y2={py + 1}
-              stroke={INK}
-              strokeWidth="0.5"
-              opacity="0.55"
-            />
-          );
-        })}
-        {/* Pubic bone stub */}
-        <ellipse cx={sx + 64} cy={startY + 5 * vSpacing + 28} rx="6" ry="3" fill={PAPER_2} stroke={INK} strokeWidth="1" />
-      </g>
+      {/* Pubic bone stub — kept for hip-girdle context */}
+      <ellipse cx={sx + 64} cy={startY + 5 * vSpacing + 28} rx="6" ry="3" fill={PAPER_2} stroke={INK} strokeWidth="1" />
 
       {/* Psoas attachment line — runs anterior from T12 down to lesser trochanter */}
       <g>
@@ -368,8 +345,8 @@ export function HeroSchematic({ className }: Props) {
         y1={startY + 5 * vSpacing + 60}
         x2={W - 44}
         y2={startY + 5 * vSpacing + 70}
-        label="pelvic floor"
-        sub="levator ani sling"
+        label="hip girdle"
+        sub="acetabulum + sacrum interface"
         anchor="end"
       />
       <Callout
@@ -401,9 +378,9 @@ export function HeroSchematic({ className }: Props) {
    WORK SCHEMATIC — exercise / anatomy diagrams for homepage cards
    variant="back"     → spine + pelvis in supine endurance position
                         with load vectors and "30/3" annotation.
-   variant="bedroom"  → pelvic ring cross-section with floor sling
-                        labeled, plus a "release" arrow inverted from
-                        a typical kegel diagram.
+   variant="bedroom"  → lumbar-load-by-position chart (three small
+                        disc icons + gauge bars), drawn in the
+                        Sidorkewicz / McGill 2014 spirit.
    ============================================================ */
 
 type WorkVariant = "back" | "bedroom";
@@ -561,7 +538,7 @@ function BedroomPlate({ className }: Props) {
       width="100%"
       className={className}
       role="img"
-      aria-label="Anatomical diagram of the pelvic ring viewed from above with the pelvic floor sling labeled and a release vector"
+      aria-label="Anatomical chart showing relative lumbar disc load by sex position, in the manner of the McGill / Sidorkewicz 2014 load tables"
       style={{ display: "block" }}
     >
       <EngravingDefs id="bed" />
@@ -570,99 +547,57 @@ function BedroomPlate({ className }: Props) {
 
       {/* Header */}
       <text x="24" y="32" fontFamily="JetBrains Mono, monospace" fontSize="9" letterSpacing="0.28em" fill={OX}>
-        PLATE III &middot; PELVIC FLOOR
+        PLATE III &middot; LUMBAR LOAD BY POSITION
       </text>
       <text x="24" y="50" fontFamily="Spectral, Georgia, serif" fontStyle="italic" fontSize="13" fill={INK}>
-        Inferior view, levator ani in repose
+        Sagittal section, partner-load chart (Sidorkewicz / McGill 2014)
       </text>
       <line x1="24" y1="60" x2={W - 24} y2="60" stroke={INK} strokeWidth="0.5" opacity="0.4" />
 
-      {/* Pelvic ring — drawn as oval bone outline from below */}
-      <g>
-        {/* Outer ring (pubic arch + ischium + ilium suggestion) */}
-        <path
-          d={`M ${cx - 90} ${cy - 50}
-              Q ${cx - 110} ${cy} ${cx - 80} ${cy + 60}
-              Q ${cx - 30} ${cy + 80} ${cx} ${cy + 76}
-              Q ${cx + 30} ${cy + 80} ${cx + 80} ${cy + 60}
-              Q ${cx + 110} ${cy} ${cx + 90} ${cy - 50}
-              Q ${cx + 40} ${cy - 70} ${cx} ${cy - 66}
-              Q ${cx - 40} ${cy - 70} ${cx - 90} ${cy - 50} Z`}
-          fill={PAPER_2}
-          stroke={INK}
-          strokeWidth="1.4"
-        />
-        {/* Bone hatching on outer ring */}
-        <path
-          d={`M ${cx - 90} ${cy - 50}
-              Q ${cx - 110} ${cy} ${cx - 80} ${cy + 60}
-              Q ${cx - 30} ${cy + 80} ${cx} ${cy + 76}
-              Q ${cx + 30} ${cy + 80} ${cx + 80} ${cy + 60}
-              Q ${cx + 110} ${cy} ${cx + 90} ${cy - 50}
-              Q ${cx + 40} ${cy - 70} ${cx} ${cy - 66}
-              Q ${cx - 40} ${cy - 70} ${cx - 90} ${cy - 50} Z`}
-          fill="url(#hatch-sparse-bed)"
-          opacity="0.35"
-        />
-        {/* Pubic symphysis (front, top) */}
-        <ellipse cx={cx} cy={cy - 64} rx="8" ry="4" fill={INK} opacity="0.7" />
-        {/* Coccyx (back, bottom) */}
-        <ellipse cx={cx} cy={cy + 78} rx="6" ry="3" fill={INK} opacity="0.7" />
-      </g>
+      {/* Three lumbar-disc icons in a column, each with a load gauge */}
+      {[
+        { y: 110, label: "Spoon",        sub: "lateral · low spinal load",            level: 0.22, tone: "green" as const },
+        { y: 200, label: "Missionary",   sub: "supine receiver · moderate load",       level: 0.55, tone: "amber" as const },
+        { y: 290, label: "Cowgirl back-leaning", sub: "extension · highest disc load", level: 0.92, tone: "red"   as const },
+      ].map((row) => (
+        <g key={row.label} transform={`translate(0, ${row.y})`}>
+          {/* Mini-disc icon: oval annulus + nucleus dot */}
+          <ellipse cx="60" cy="0" rx="22" ry="9" fill={PAPER_2} stroke={INK} strokeWidth="1.2" />
+          <ellipse cx="60" cy="0" rx="22" ry="9" fill="url(#hatch-sparse-bed)" opacity="0.4" />
+          <ellipse cx="60" cy="0" rx="8" ry="3.5" fill={INK} opacity="0.55" />
+          {/* Vertebrae above + below for context */}
+          <rect x="42" y="-22" width="36" height="10" rx="2" fill={PAPER_2} stroke={INK} strokeWidth="1" />
+          <rect x="42" y="12" width="36" height="10" rx="2" fill={PAPER_2} stroke={INK} strokeWidth="1" />
 
-      {/* Levator ani sling — drawn as fibrous mesh inside the ring */}
-      <g>
-        {/* Sling outline */}
-        <path
-          d={`M ${cx - 72} ${cy - 36}
-              Q ${cx - 50} ${cy + 30} ${cx} ${cy + 60}
-              Q ${cx + 50} ${cy + 30} ${cx + 72} ${cy - 36}
-              Q ${cx} ${cy - 20} ${cx - 72} ${cy - 36} Z`}
-          fill="none"
-          stroke={INK}
-          strokeWidth="1.1"
-        />
-        {/* Muscle fibers — radial */}
-        {Array.from({ length: 9 }).map((_, i) => {
-          const a = (-Math.PI / 2) + (i - 4) * 0.18;
-          const x1 = cx + Math.cos(a) * 64;
-          const y1 = cy + Math.sin(a) * 50;
-          const x2 = cx + Math.cos(a) * 14;
-          const y2 = cy + Math.sin(a) * 30;
-          return (
-            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={INK} strokeWidth="0.7" opacity="0.55" />
-          );
-        })}
-        {/* Central tendinous hub */}
-        <ellipse cx={cx} cy={cy + 6} rx="6" ry="3" fill={INK} opacity="0.45" />
-      </g>
+          {/* Label */}
+          <text x="100" y="-4" fontFamily="Spectral, Georgia, serif" fontStyle="italic" fontSize="15" fill={INK}>
+            {row.label}
+          </text>
+          <text x="100" y="14" fontFamily="JetBrains Mono, monospace" fontSize="8" letterSpacing="0.18em" fill={MUTED}>
+            {row.sub.toUpperCase()}
+          </text>
 
-      {/* Release vector — arrow pointing DOWN (opposite of kegel up-and-in) */}
-      <g>
-        <line x1={cx} y1={cy - 4} x2={cx} y2={cy + 40} stroke={OX} strokeWidth="2" />
-        <path d={`M ${cx - 5} ${cy + 36} L ${cx} ${cy + 46} L ${cx + 5} ${cy + 36} Z`} fill={OX} />
-        <text x={cx + 12} y={cy + 24} fontFamily="JetBrains Mono, monospace" fontSize="8" letterSpacing="0.18em" fill={OX}>
-          RELEASE
-        </text>
-        <text x={cx + 12} y={cy + 38} fontFamily="Spectral, Georgia, serif" fontStyle="italic" fontSize="10" fill={MUTED}>
-          (down · out)
-        </text>
-      </g>
-
-      {/* Callouts */}
-      <Callout x1={cx} y1={cy - 64} x2={W - 30} y2={cy - 70} label="pubic symphysis" sub="anterior" anchor="end" />
-      <Callout x1={cx + 60} y1={cy + 10} x2={W - 30} y2={cy} label="levator ani" sub="puborectalis, iliococcygeus" anchor="end" />
-      <Callout x1={cx} y1={cy + 78} x2={W - 30} y2={cy + 80} label="coccyx" sub="posterior" anchor="end" />
+          {/* Load gauge bar */}
+          <rect x="100" y="22" width="180" height="6" fill={PAPER_2} stroke={INK} strokeWidth="0.6" />
+          <rect
+            x="100"
+            y="22"
+            width={180 * row.level}
+            height="6"
+            fill={row.tone === "green" ? "#5a7a3a" : row.tone === "amber" ? "#b08a3a" : OX}
+          />
+        </g>
+      ))}
 
       {/* Bottom note */}
       <text x="24" y={H - 32} fontFamily="Spectral, Georgia, serif" fontStyle="italic" fontSize="12" fill={INK}>
-        Reverse kegel <tspan fill={MUTED}>before kegel.</tspan>
+        The position your spine <tspan fill={OX} fontStyle="italic">can actually hold.</tspan>
       </text>
       <text x="24" y={H - 16} fontFamily="JetBrains Mono, monospace" fontSize="8" letterSpacing="0.22em" fill={MUTED}>
-        A FLOOR STUCK ON IS THE REASON NONE OF IT WORKS
+        FORTY POSITIONS RANKED. THE INDEX SETS THE LOAD CAP.
       </text>
 
-      <PlateCaption fig="III" label="release vector &middot; opposite of the wellness app" w={W} h={H} />
+      <PlateCaption fig="III" label="lumbar load by sex position &middot; Sidorkewicz / McGill" w={W} h={H} />
     </svg>
   );
 }

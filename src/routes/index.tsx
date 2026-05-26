@@ -74,7 +74,7 @@ function Index() {
               className="mt-9 font-serif-display italic leading-snug max-w-xl"
               style={{ fontSize: "clamp(19px, 1.9vw, 25px)", color: PAPER_INK, opacity: 0.86 }}
             >
-              For the back that came home from work loud. For the floor that has been gripping since the second baby. For the couple that stopped trying because the cost of trying kept going up. One daily protocol, a smarter position plan, and the words for the conversation nobody was taught to have.
+              For the back that came home from work loud. For the hip flexor that has been rehearsing the same complaint since the second move. For the couple that stopped trying because the cost of trying kept going up. One daily protocol, a smarter position plan, and the words for the conversation nobody was taught to have.
             </p>
             <p
               className="mt-5 font-serif-display italic leading-snug max-w-xl"
@@ -191,7 +191,7 @@ function Index() {
               PRODUCT ANSWER
             </p>
             <p className="font-serif-display text-xl md:text-2xl italic leading-snug" style={{ color: PAPER_INK }}>
-              BackStroke puts the two charts together. Spine load. Pelvic-floor tone. Breath. Bedroom geometry. Recovery. One daily protocol, small enough to do and sharp enough to matter.
+              BackStroke puts the two charts together. Spine load. Sleep posture. Breath. Bedroom geometry. Recovery. One daily protocol, small enough to do and sharp enough to matter.
             </p>
           </div>
         </div>
@@ -210,7 +210,7 @@ function Index() {
             Five modules. One private control panel.
           </h2>
           <p className="mt-8 max-w-2xl leading-relaxed text-lg italic" style={{ color: PAPER_INK, opacity: 0.78 }}>
-            Open the app to act, not browse. Each module answers a specific question your spine, your floor, your bedroom, or your skepticism has been asking. The default state is action. Education is there when you ask for it.
+            Open the app to act, not browse. Each module answers a specific question your spine, your bedroom, or your skepticism has been asking. The default state is action. Education is there when you ask for it.
           </p>
 
           {/* Five modules — typographically dominant, the largest type on the page after the hero */}
@@ -225,13 +225,13 @@ function Index() {
               {
                 num: "II",
                 head: "Session",
-                body: "Eight minutes of spine endurance, floor down-training, breath, and recovery. Boring where boring wins.",
+                body: "Eight minutes of spine endurance, breath, and recovery. Boring where boring wins.",
                 value: "Repeatable habit, no lifestyle bloat.",
               },
               {
                 num: "III",
                 head: "Engine",
-                body: "Six taps in. Tonight's plan out. Warm-up, main course, dessert, with escalate / hold / de-escalate at every act.",
+                body: "Five taps in. Tonight's plan out. Warm-up, main course, dessert, with escalate / hold / de-escalate at every act.",
                 value: "Bedroom geometry, ranked by your back.",
               },
               {
@@ -317,7 +317,7 @@ function Index() {
                 className="font-serif-display mt-6 leading-[0.98] tracking-[-0.025em]"
                 style={{ fontSize: "clamp(40px, 5.6vw, 72px)", color: PAPER_INK }}
               >
-                Six taps in.{" "}
+                Five taps in.{" "}
                 <span className="italic" style={{ color: "var(--brand-oxblood)" }}>
                   Tonight's plan
                 </span>
@@ -325,7 +325,7 @@ function Index() {
                 out.
               </h2>
               <p className="mt-8 leading-relaxed" style={{ fontSize: "clamp(18px, 1.6vw, 22px)", color: PAPER_INK, opacity: 0.88 }}>
-                The engine asks where the pain lives, how the floor feels, what you have time for, and what kind of evening this is supposed to be. It returns a three-act plan: a warm-up, a main course, and a dessert option, ranked by lumbar load, hip demand, and breath access. You decide escalate, hold, or de-escalate at every act. The plan reroutes around what your back said, not what the magazine intern guessed.
+                The engine asks where the pain lives, how the hips feel, what you have time for, and what kind of evening this is supposed to be. It returns a three-act plan: a warm-up, a main course, and a dessert option, ranked by lumbar load, hip demand, and breath access. You decide escalate, hold, or de-escalate at every act. The plan reroutes around what your back said, not what the magazine intern guessed.
               </p>
 
               {/* HOW IT WORKS — three steps */}
@@ -335,8 +335,8 @@ function Index() {
                 </p>
                 <ol className="mt-5 space-y-5">
                   {[
-                    ["1", "You answer six questions.", "Where the pain is. What makes it worse. How the floor feels. Today's Index. What the evening is for. How much time you have. No diary. No diagnosis. No moral scoring."],
-                    ["2", "The engine matches your inputs against 18+ scored positions.", "Each carries a hidden scorecard (flexion / extension / rotation / thrust / hip / floor) and visible badges. Your pain vector triggers mechanical exclusions, the Index sets a load cap, the goal shapes the dessert. Magic on the surface, transparent if tapped."],
+                    ["1", "You answer five questions.", "Where the pain is. What makes it worse. Today's Index. What the evening is for. How much time you have. No diary. No diagnosis. No moral scoring."],
+                    ["2", "The engine matches your inputs against 18+ scored positions.", "Each carries a hidden scorecard (flexion / extension / rotation / thrust / hip / spine) and visible badges. Your pain vector triggers mechanical exclusions, the Index sets a load cap, the goal shapes the dessert. Magic on the surface, transparent if tapped."],
                     ["3", "You see a warm-up, a main course, a dessert.", "Each act has a yoga-silhouette figure, a one-line geometry instruction, a partner-line drawer, and three buttons: escalate, hold, de-escalate. The next act re-routes from your choice. No forced crescendo. Recovery is a successful close."],
                   ].map(([n, h, b]) => (
                     <li key={n} className="flex gap-5">
@@ -372,7 +372,7 @@ function Index() {
                   Build tonight's plan <ArrowUpRight className="w-5 h-5" />
                 </a>
                 <span className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: PAPER_MUTED }}>
-                  Six taps · No sign-up required
+                  Five taps · No sign-up required
                 </span>
               </div>
             </div>
@@ -392,7 +392,7 @@ function Index() {
                     EXAMPLE · TONIGHT'S PLAN
                   </p>
                   <p className="font-mono-label text-[9px] tracking-[0.18em] uppercase mt-2" style={{ color: PAPER_MUTED }}>
-                    Inputs · right sciatica · gripping floor · amber · penetrative · 20 min
+                    Inputs · right sciatica · tight hips · amber · penetrative · 20 min
                   </p>
                 </div>
 
@@ -400,7 +400,7 @@ function Index() {
                   {
                     label: "WARM-UP · 2 MIN",
                     name: "Side-lying breath, knees stacked",
-                    geom: "Pillow between knees. One hand on lower ribs, one on lower abdomen. Inhale, let the floor drop. Exhale, return to rest. No squeezing.",
+                    geom: "Pillow between knees. One hand on lower ribs, one on lower abdomen. Inhale, let the lower ribs widen. Exhale, return to rest. No bracing.",
                     badges: ["low load", "low thrust", "release-first"],
                   },
                   {
@@ -488,8 +488,8 @@ function Index() {
             },
             {
               variant: "bedroom" as const,
-              head: "Reverse kegel before kegel.",
-              body: "Erections, lubrication, continence are the floor, not the ceiling. A pelvic floor stuck in the on position is the reason none of it works. It is also the reason the eucalyptus bath salts on a quarterly subscription have not worked. Bath salts have never untensed a single anything.",
+              head: "The position your spine can actually hold.",
+              body: "Forty positions scored against your back, your sleep, your time, and your evening. The engine rules out what the disc can't tolerate before you have to find out the way nobody likes finding out. No yoga lighting. No influencer in the half lotus. No supplement at the end.",
             },
           ].map((c) => (
             <article
@@ -526,11 +526,11 @@ function Index() {
             Built from the public record. Caveats on the page, not under it.
           </h2>
           <p className="mt-7 max-w-2xl leading-relaxed text-lg italic" style={{ color: PAPER_INK, opacity: 0.78 }}>
-            The biomechanics aren't ours. They're Nachemson 1966, Wilke 1999, McGill across three decades, Kegel 1948, the pelvic-health literature since, and a handful of cohort papers nobody outside two specialties reads. We do not borrow a clinician's white coat. We do not invent a council. We organize what is already there, in a register adults can read, with the asterisks visible.
+            The biomechanics aren't ours. They're Nachemson 1966, Wilke 1999, McGill across three decades, the chronic-back-pain rehabilitation literature, and a handful of cohort papers nobody outside one specialty reads. We do not borrow a clinician's white coat. We do not invent a council. We organize what is already there, in a register adults can read, with the asterisks visible.
           </p>
           <div className="mt-10 grid sm:grid-cols-3 gap-px" style={{ background: "oklch(0.86 0.025 70)", border: "1px solid oklch(0.86 0.025 70)" }}>
             {[
-              ["Public literature", "Lumbar load, endurance, pelvic-floor down-training, breath and floor coupling. Each claim: source, what it supports, what it does not prove."],
+              ["Public literature", "Lumbar load, spine endurance, breath mechanics, position load on the disc. Each claim: source, what it supports, what it does not prove."],
               ["Cohort data, when we have it", "If and when there are numbers to report, they will be self-reported, uncontrolled, and not peer-reviewed. The caveat will be on the page, not under it."],
               ["The boundary", "The website is useful until it is the wrong tool. Knowing that is part of the product, not an apology for it."],
             ].map(([h, b]) => (
@@ -619,7 +619,7 @@ function Index() {
             className="mt-16 text-xs max-w-xl mx-auto leading-relaxed italic font-serif-display"
             style={{ color: PAPER_MUTED }}
           >
-            BackStroke is education and coaching, not diagnosis, treatment, sex therapy, or a substitute for individualized care. New, severe, neurological, pelvic, surgical, coercive, infectious, or frightening symptoms belong with the relevant professional. The website is useful until it is the wrong tool. Knowing that is part of the product.
+            BackStroke is education and coaching, not diagnosis, treatment, sex therapy, or a substitute for individualized care. New, severe, neurological, surgical, coercive, infectious, or frightening symptoms belong with the relevant professional. The website is useful until it is the wrong tool. Knowing that is part of the product.
           </p>
         </div>
       </section>
@@ -652,7 +652,7 @@ function Index() {
         </div>
         <div className="max-w-[1180px] mx-auto mt-8 pt-6 border-t" style={{ borderColor: "oklch(0.86 0.025 70)" }}>
           <p className="font-serif-display italic text-sm text-center leading-relaxed" style={{ color: PAPER_MUTED }}>
-            We will not gamify your orgasms. We will not push notify your bedroom. We will not put your floor on a leaderboard.
+            We will not gamify your orgasms. We will not push notify your bedroom. We will not put your back on a leaderboard.
           </p>
         </div>
       </footer>

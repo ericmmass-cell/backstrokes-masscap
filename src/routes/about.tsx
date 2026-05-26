@@ -106,15 +106,15 @@ function About() {
           <P>
             Over the next eight years I saw three surgeons, four PTs, two
             chiropractors, one acupuncturist who was excellent, one
-            functional medicine doctor who was not, and one pelvic floor
-            specialist who, in a single forty minute appointment, told me
-            more useful information about the muscle group that runs the
-            second half of adult life than every other provider combined.
+            functional medicine doctor who was not, and one sports medicine
+            doctor who, in a single forty minute appointment, told me more
+            useful information about how a back actually behaves under load
+            than every other provider combined.
           </P>
           <P>
             None of them, ever, asked the question I most needed somebody to
             ask. Not the surgeon. Not the PT. Not the chiropractor. The
-            pelvic floor specialist asked it sideways, in the middle of
+            sports medicine doctor asked it sideways, in the middle of
             something else, and I almost cried in her office.
           </P>
         </Section>
@@ -130,10 +130,11 @@ function About() {
             I went looking for the resource. The book, the app, the
             substack, the subreddit, the closed Facebook group, the
             something. I read everything in the National Library of
-            Medicine database that touched the overlap. I read the AASECT
-            literature. I read the pelvic floor PT textbooks. I read the
-            chronic pain self help books, which are mostly about
-            mindfulness, which is fine, which is not the question.
+            Medicine database that touched the overlap of chronic low back
+            pain and adult sex. I read the AASECT literature. I read the
+            McGill volumes cover to cover. I read the chronic pain self
+            help books, which are mostly about mindfulness, which is fine,
+            which is not the question.
           </P>
           <P>
             What exists is a thousand articles on what positions to avoid,
@@ -149,8 +150,8 @@ function About() {
             I am not a clinician. I am a person who spent a decade trying
             and failing to find this resource and finally accepted that the
             resource was not going to build itself. I assembled a small
-            advisory bench: a board certified pelvic floor PT, a sports
-            medicine doc, a sex therapist, and a movement coach who has
+            advisory bench: a sports medicine doctor, a board-certified
+            orthopedic PT, a sex therapist, and a movement coach who has
             worked with back pain populations for twenty years. I wrote a
             first draft of the methodology. They tore it apart. I rewrote
             it. They tore it apart again. We did this for nine months.

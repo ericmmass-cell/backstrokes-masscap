@@ -153,7 +153,7 @@ function PositionsPage() {
                 Looking for a plan, not a list?
               </p>
               <p className="font-serif-display italic text-lg leading-snug">
-                Six taps in the Position Intelligence Engine returns a warm-up, a main course, and a dessert option ranked for tonight's body.
+                Five taps in the Position Intelligence Engine returns a warm-up, a main course, and a dessert option ranked for tonight's body.
               </p>
             </div>
             <a
