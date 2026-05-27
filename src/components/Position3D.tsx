@@ -450,16 +450,24 @@ export function Position3D({
     loadModel()
       .then((sourceScene) => {
         if (cancelled) return;
+        // MeshPhysicalMaterial with sheen — gives the figures a
+        // soft fabric-like roll of light along the silhouette edge
+        // that reads as skin-on-cream-paper rather than flat clay.
         const tint = (clone: THREE.Object3D, color: string) => {
           clone.traverse((o) => {
             const mesh = o as THREE.Mesh;
             if (mesh.isMesh || (o as THREE.SkinnedMesh).isSkinnedMesh) {
               mesh.castShadow = true;
               mesh.receiveShadow = true;
-              mesh.material = new THREE.MeshStandardMaterial({
+              mesh.material = new THREE.MeshPhysicalMaterial({
                 color,
-                roughness: 0.92,
+                roughness: 0.65,
                 metalness: 0.02,
+                sheen: 0.6,
+                sheenColor: new THREE.Color("#e8b88c"),
+                sheenRoughness: 0.55,
+                clearcoat: 0.1,
+                clearcoatRoughness: 0.5,
               });
             }
           });

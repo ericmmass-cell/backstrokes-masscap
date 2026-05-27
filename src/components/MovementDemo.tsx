@@ -449,15 +449,23 @@ export function MovementDemo({
       .then((sourceScene) => {
         if (cancelled) return;
         const clone = SkeletonUtils.clone(sourceScene);
+        // MeshPhysicalMaterial with sheen for a softer fabric/skin
+        // light roll along the silhouette edge — keeps the figure
+        // from reading as flat clay against the cream paper.
         clone.traverse((o) => {
           const mesh = o as THREE.Mesh;
           if (mesh.isMesh || (o as THREE.SkinnedMesh).isSkinnedMesh) {
             mesh.castShadow = true;
             mesh.receiveShadow = true;
-            mesh.material = new THREE.MeshStandardMaterial({
+            mesh.material = new THREE.MeshPhysicalMaterial({
               color: FIGURE,
-              roughness: 0.92,
+              roughness: 0.65,
               metalness: 0.02,
+              sheen: 0.6,
+              sheenColor: new THREE.Color("#e8b88c"),
+              sheenRoughness: 0.55,
+              clearcoat: 0.1,
+              clearcoatRoughness: 0.5,
             });
           }
         });
