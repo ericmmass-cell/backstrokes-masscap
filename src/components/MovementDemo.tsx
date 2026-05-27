@@ -93,115 +93,133 @@ type PoseSpec = {
 
 function poseFor(moveKey: MoveKey): PoseSpec {
   if (moveKey === "curl-up") {
+    // SUPINE: soldier rig faces -Z in bind, so +PI/2 around X tips
+    // backward onto the back (chest faces +Y / up).
     return {
-      rootPosition: [0, 0.22, 0],
-      rootRotation: [0, 0, -Math.PI / 2],
+      rootPosition: [0, 0.1, 0],
+      rootRotation: [Math.PI / 2, 0, 0],
       bones: {
-        spine: [-0.02, 0, 0],
-        spine1: [0.12, 0, 0],
-        spine2: [0.2, 0, 0],
-        neck: [0.16, 0, 0],
-        head: [0.12, 0, 0],
-        leftArm: [0.1, 0.1, -1.18],
-        leftForeArm: [0, -0.75, 0],
-        rightArm: [0.08, -0.08, 1.18],
-        rightForeArm: [0, 0.75, 0],
-        rightUpLeg: [-1.18, 0, 0],
-        rightLeg: [1.52, 0, 0],
-        rightFoot: [-0.24, 0, 0],
-        leftUpLeg: [0.08, 0, 0],
-        leftLeg: [0.02, 0, 0],
+        // Head-and-upper-thoracic lift only. Lumbar STAYS NEUTRAL.
+        spine: [0, 0, 0],
+        spine1: [-0.15, 0, 0],
+        spine2: [-0.2, 0, 0],
+        neck: [-0.25, 0, 0],
+        head: [-0.15, 0, 0],
+        // Arms down at sides, hands tucked behind lumbar (palms up)
+        leftArm: [0, 0, 0.05],
+        leftForeArm: [0, -0.1, 0],
+        rightArm: [0, 0, -0.05],
+        rightForeArm: [0, 0.1, 0],
+        // Right knee bent up — hip flex + knee flex
+        rightUpLeg: [-1.5, 0, 0],
+        rightLeg: [1.6, 0, 0],
+        // Left leg long
+        leftUpLeg: [0, 0, 0],
+        leftLeg: [0, 0, 0],
       },
-      camera: { position: [2.45, 1.15, 1.85], target: [0, 0.34, 0], fov: 33 },
+      // Side view: head at +Z (right of camera), feet at origin.
+      // Camera at +X looking back toward the body's midline.
+      camera: { position: [3.2, 1.2, 0.8], target: [0, 0.2, 0.8], fov: 32 },
     };
   }
   if (moveKey === "side-plank") {
+    // Side-lying on RIGHT side, hips lifted, supported on right forearm.
+    // Rotate -PI/2 around Z = tip standing figure onto her right side.
+    // (Soldier faces -Z, so Z-axis rotation tips sideways.)
     return {
-      rootPosition: [0, 0.34, 0],
+      rootPosition: [0, 0.55, 0],
       rootRotation: [0, 0, -Math.PI / 2],
       bones: {
-        spine: [0.02, 0, 0],
-        spine1: [0.03, 0, 0],
-        spine2: [0.02, 0, 0],
-        neck: [0.02, 0, 0],
-        head: [0.02, 0, 0],
-        rightShoulder: [0, 0, 0.18],
-        rightArm: [0, 0, -1.32],
-        rightForeArm: [0, 0.08, -0.22],
-        leftArm: [0, 0, 0.9],
-        leftForeArm: [0, -0.25, 0],
-        rightUpLeg: [-0.92, 0, 0],
-        rightLeg: [1.15, 0, 0],
-        leftUpLeg: [-0.9, 0, 0.08],
-        leftLeg: [1.08, 0, 0],
-        leftFoot: [0.1, 0, 0],
-        rightFoot: [0.08, 0, 0],
+        spine: [0, 0, 0],
+        spine1: [0, 0, 0],
+        spine2: [0, 0, 0],
+        // Right (bottom) arm folded under shoulder as forearm support
+        rightArm: [0, 0, 1.2],
+        rightForeArm: [0, -1.5, 0],
+        // Left (top) arm resting on hip
+        leftArm: [0, 0, -0.6],
+        leftForeArm: [0, 0.6, 0],
+        // Both legs knees-bent for the easier variant
+        rightUpLeg: [-0.4, 0, 0],
+        rightLeg: [0.9, 0, 0],
+        leftUpLeg: [-0.4, 0, 0],
+        leftLeg: [0.9, 0, 0],
       },
-      camera: { position: [2.35, 0.92, 1.48], target: [0, 0.46, 0], fov: 34 },
+      camera: { position: [3.2, 1.0, 0.6], target: [0, 0.5, 0.6], fov: 32 },
     };
   }
   if (moveKey === "bird-dog") {
+    // Quadruped. Rotate -PI/2 around X to tip the standing figure
+    // forward to hands-and-knees. (Standing → prone-ish → on all fours.)
+    // The contralateral arm/leg extension is handled in applyPose.
     return {
-      rootPosition: [0, 0.02, 0.04],
-      rootRotation: [0, 0, 0],
+      rootPosition: [0, 0.6, 0],
+      rootRotation: [-Math.PI / 2, 0, 0],
       bones: {
-        spine: [1.42, 0, 0],
-        spine1: [-0.06, 0, 0],
-        spine2: [-0.02, 0, 0],
-        neck: [0.04, 0, 0],
-        head: [0.02, 0, 0],
-        leftArm: [-1.45, 0, 0],
-        leftForeArm: [0.08, 0, 0],
-        rightArm: [-1.45, 0, 0],
-        rightForeArm: [0.08, 0, 0],
-        leftUpLeg: [1.68, 0, 0],
-        leftLeg: [-1.4, 0, 0],
-        leftFoot: [0.22, 0, 0],
-        rightUpLeg: [1.68, 0, 0],
-        rightLeg: [-1.4, 0, 0],
-        rightFoot: [0.22, 0, 0],
+        spine: [0, 0, 0],
+        spine1: [0, 0, 0],
+        spine2: [0, 0, 0],
+        neck: [-0.3, 0, 0],
+        head: [-0.15, 0, 0],
+        // Both arms forward to floor (90° at shoulder)
+        leftArm: [0, 0, -1.55],
+        rightArm: [0, 0, 1.55],
+        // Both knees bent 90° (kneeling)
+        leftUpLeg: [-1.55, 0, 0],
+        leftLeg: [1.55, 0, 0],
+        rightUpLeg: [-1.55, 0, 0],
+        rightLeg: [1.55, 0, 0],
       },
-      camera: { position: [2.22, 1.04, 1.62], target: [0, 0.62, 0], fov: 34 },
+      camera: { position: [3.0, 1.5, 1.6], target: [0, 0.6, 0], fov: 34 },
     };
   }
   if (moveKey === "decomp") {
+    // Same supine setup as curl-up but knees bent OVER a bolster,
+    // arms relaxed at sides, head flat. Whole body neutral.
     return {
-      rootPosition: [0, 0.2, 0],
-      rootRotation: [0, 0, -Math.PI / 2],
+      rootPosition: [0, 0.1, 0],
+      rootRotation: [Math.PI / 2, 0, 0],
       bones: {
-        neck: [0.03, 0, 0],
-        head: [0.02, 0, 0],
-        leftArm: [0.06, 0.02, -0.26],
-        leftForeArm: [0.06, -0.12, 0],
-        rightArm: [0.06, -0.02, 0.26],
-        rightForeArm: [0.06, 0.12, 0],
-        leftUpLeg: [-1.08, 0, 0],
-        leftLeg: [1.36, 0, 0],
-        rightUpLeg: [-1.08, 0, 0],
-        rightLeg: [1.36, 0, 0],
+        spine: [0, 0, 0],
+        spine1: [0, 0, 0],
+        spine2: [0, 0, 0],
+        neck: [0, 0, 0],
+        head: [0, 0, 0],
+        leftArm: [0, 0, 0.15],
+        leftForeArm: [0, -0.05, 0],
+        rightArm: [0, 0, -0.15],
+        rightForeArm: [0, 0.05, 0],
+        // Both knees bent up over a bolster
+        leftUpLeg: [-1.1, 0, 0],
+        leftLeg: [1.1, 0, 0],
+        rightUpLeg: [-1.1, 0, 0],
+        rightLeg: [1.1, 0, 0],
       },
-      camera: { position: [2.4, 1.08, 1.8], target: [0, 0.32, 0], fov: 33 },
+      camera: { position: [3.2, 1.2, 0.8], target: [0, 0.2, 0.8], fov: 32 },
     };
   }
-  // breath
+  // breath: supine, knees bent, feet flat, hands on ribs/abdomen
   return {
-    rootPosition: [0, 0.2, 0],
-    rootRotation: [0, 0, -Math.PI / 2],
+    rootPosition: [0, 0.1, 0],
+    rootRotation: [Math.PI / 2, 0, 0],
     bones: {
-      spine1: [0.02, 0, 0],
-      spine2: [0.02, 0, 0],
-      neck: [0.04, 0, 0],
-      head: [0.02, 0, 0],
-      leftArm: [0.12, 0.1, -0.92],
-      leftForeArm: [0.1, -0.62, 0],
-      rightArm: [0.12, -0.08, 0.86],
-      rightForeArm: [0.08, 0.58, 0],
-      leftUpLeg: [-1.02, 0, 0],
-      leftLeg: [1.28, 0, 0],
-      rightUpLeg: [-1.02, 0, 0],
-      rightLeg: [1.28, 0, 0],
+      spine: [0, 0, 0],
+      spine1: [0, 0, 0],
+      spine2: [0, 0, 0],
+      neck: [0, 0, 0],
+      head: [0, 0, 0],
+      // Hands brought up onto the body (one on ribs, one on abdomen)
+      leftArm: [0, 0, -0.9],
+      leftForeArm: [0, -1.2, 0],
+      rightArm: [0, 0, 0.9],
+      rightForeArm: [0, 1.2, 0],
+      // Both knees bent up, feet flat (decomp pose)
+      leftUpLeg: [-1.2, 0, 0],
+      leftLeg: [1.4, 0, 0],
+      rightUpLeg: [-1.2, 0, 0],
+      rightLeg: [1.4, 0, 0],
     },
-    camera: { position: [2.38, 1.08, 1.82], target: [0, 0.34, 0], fov: 33 },
+    camera: { position: [3.2, 1.2, 0.8], target: [0, 0.2, 0.8], fov: 32 },
   };
 }
 

@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
-import { HeroSchematic, WorkSchematic } from "@/components/Schematic";
+import { WorkSchematic } from "@/components/Schematic";
+import { Position3D } from "@/components/Position3D";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -110,8 +111,15 @@ function Index() {
           </div>
 
           <div className="lg:col-span-5 relative">
-            <div className="relative" style={{ boxShadow: "0 40px 80px -20px oklch(0.18 0.01 40 / 0.18)" }}>
-              <HeroSchematic />
+            <div
+              className="relative"
+              style={{
+                boxShadow: "0 40px 80px -20px oklch(0.18 0.01 40 / 0.18)",
+                aspectRatio: "4 / 5",
+                minHeight: 480,
+              }}
+            >
+              <Position3D positionKey="spoon" />
               <span
                 className="absolute -top-6 -right-3 font-script text-3xl rotate-[5deg] hidden md:block"
                 style={{ color: "var(--brand-oxblood)" }}
