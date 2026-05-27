@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
   POSITIONS,
   matchToTodaysBack,
@@ -7,6 +7,7 @@ import {
   type Position,
 } from "@/lib/position-library";
 import { PositionDemo } from "@/components/PositionDemo";
+import { Position3D, type PositionKey } from "@/components/Position3D";
 import { SiteHeader } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/positions")({
@@ -108,6 +109,92 @@ function PositionRow({ p }: { p: Position }) {
   );
 }
 
+/* ───────── 3D position showcase (top of page) ───────── */
+// Picker over the 4 calibrated Position3D positions. The library
+// below this is still sprite-based for the full 30+ entries. The
+// 3D system extends one position at a time; as more get calibrated
+// they get added to PICKABLE.
+
+type Pickable = { key: PositionKey; label: string; sub: string };
+const PICKABLE: Pickable[] = [
+  { key: "spoon", label: "Spoon", sub: "Lateral · low spinal load" },
+  { key: "supine-knees-up", label: "Modified missionary", sub: "Receiver supine · knees over bolster" },
+  { key: "side-T", label: "Side-lying T", sub: "Side-lying · partner kneeling perpendicular" },
+  { key: "edge-bed", label: "Edge of bed", sub: "Receiver supine at edge · partner kneeling" },
+];
+
+function PositionShowcase() {
+  const [pick, setPick] = useState<Pickable>(PICKABLE[0]);
+  return (
+    <section
+      className="px-6 md:px-10 py-12 border-b"
+      style={{ borderColor: "oklch(0.86 0.025 70)" }}
+    >
+      <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-8 items-start">
+        <div className="lg:col-span-7">
+          <div style={{ aspectRatio: "4 / 3", minHeight: 360 }}>
+            <Position3D positionKey={pick.key} />
+          </div>
+        </div>
+        <div className="lg:col-span-5 flex flex-col">
+          <p
+            className="font-mono-label text-[10px] tracking-[0.22em] uppercase"
+            style={{ color: "var(--brand-oxblood)" }}
+          >
+            Calibrated · {PICKABLE.length} of 40
+          </p>
+          <h2
+            className="font-serif-display italic mt-3 leading-[1.0] tracking-[-0.02em]"
+            style={{ fontSize: "clamp(28px, 3.4vw, 44px)" }}
+          >
+            {pick.label}.
+          </h2>
+          <p
+            className="font-mono-label text-[10px] tracking-[0.22em] uppercase mt-3"
+            style={{ color: "oklch(0.45 0.02 40)" }}
+          >
+            {pick.sub}
+          </p>
+          <div className="mt-6 flex flex-col gap-2">
+            {PICKABLE.map((p) => (
+              <button
+                key={p.key}
+                onClick={() => setPick(p)}
+                className="text-left px-4 py-3 transition hover:bg-card/60"
+                style={{
+                  border: `1px solid ${pick.key === p.key ? "var(--brand-oxblood)" : "oklch(0.86 0.025 70)"}`,
+                  background: pick.key === p.key ? "oklch(0.96 0.012 80)" : "transparent",
+                }}
+              >
+                <div
+                  className="font-serif-display italic text-lg"
+                  style={{ color: pick.key === p.key ? "var(--brand-oxblood)" : "var(--brand-paper-ink)" }}
+                >
+                  {p.label}
+                </div>
+                <div
+                  className="font-mono-label text-[9px] tracking-[0.22em] uppercase mt-1"
+                  style={{ color: "oklch(0.45 0.02 40)" }}
+                >
+                  {p.sub}
+                </div>
+              </button>
+            ))}
+          </div>
+          <p
+            className="mt-6 text-xs italic leading-relaxed"
+            style={{ color: "oklch(0.45 0.02 40)" }}
+          >
+            The remaining 36 positions render below as scored library
+            entries. Each will get its own calibrated 3D pose in the
+            same system over the next two weeks.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function PositionsPage() {
   const [index, setIndex] = useState(67);
   const [category, setCategory] = useState<(typeof CATEGORIES)[number]>("all");
@@ -132,6 +219,8 @@ function PositionsPage() {
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
       <SiteHeader active="positions" />
+
+      <PositionShowcase />
 
       <section className="px-6 md:px-10 py-16 md:py-20 border-b border-border">
         <div className="max-w-[1280px] mx-auto">
