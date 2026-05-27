@@ -124,6 +124,7 @@ const PICKABLE: Pickable[] = [
   { key: "cowgirl-upright", label: "Receiver on top, upright", sub: "Straddling · partner supine · highest receiver agency" },
   { key: "doggy-supported", label: "Supported rear-entry", sub: "Quadruped chest-down · forearms supported" },
   { key: "scissor", label: "Side-lying scissor", sub: "Perpendicular · both partners side-lying" },
+  { key: "seated-lap", label: "Seated lap embrace", sub: "Both upright · face to face · stacked spines" },
   { key: "supine-bolster", label: "Solo supine with bolster", sub: "Acute-day default · hips elevated, knees up" },
 ];
 

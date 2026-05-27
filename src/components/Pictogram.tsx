@@ -39,6 +39,7 @@ export type PictogramKey =
   | "cowgirl-upright"
   | "doggy-supported"
   | "scissor"
+  | "seated-lap"
   | "supine-bolster"
   // Exercises (hand-authored SVG)
   | "curl-up"
@@ -63,6 +64,7 @@ const POSITION_TITLES: Partial<Record<PictogramKey, { title: string; sub: string
   "cowgirl-upright":   { title: "Receiver on top",      sub: "Straddling · Partner supine" },
   "doggy-supported":   { title: "Supported rear-entry", sub: "Quadruped chest-down · Forearms supported" },
   scissor:             { title: "Side-lying scissor",   sub: "Perpendicular · Both partners side-lying" },
+  "seated-lap":        { title: "Seated lap embrace",   sub: "Both upright · Face to face · Stacked spines" },
   "supine-bolster":    { title: "Solo supine",          sub: "Hips elevated · Knees up · Acute-day default" },
 };
 
@@ -294,6 +296,7 @@ const SEX_POSITION_KEYS: PictogramKey[] = [
   "cowgirl-upright",
   "doggy-supported",
   "scissor",
+  "seated-lap",
 ];
 
 export function Pictogram({ positionKey, className, style }: PictogramProps) {
