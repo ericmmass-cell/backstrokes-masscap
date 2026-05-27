@@ -95,34 +95,41 @@ function subjectPoseFor(
 ): SubjectPose {
   if (positionKey === "spoon") {
     // Both partners on their RIGHT sides (lying along X axis).
-    // Subject A = back partner (slightly behind on Z, body curls
-    // around B). Subject B = front partner (slightly forward, body
-    // forms the inner curve). Rotate -PI/2 around Z to put figure on
-    // her right side (soldier faces -Z in bind; Z-axis rotation tips
-    // sideways).
+    // Soldier faces -Z in bind, so both partners face -Z after Z
+    // rotation. "Behind" the front partner = +Z (further from -Z).
+    // So: back partner at +Z, front partner at -Z. Body thickness
+    // is ~0.15m so put them ~0.16m apart, surfaces touching.
+    //
+    // Pose asymmetry: front partner is more relaxed (legs slightly
+    // bent, body open). Back partner is more curled (legs pulled
+    // up against front partner's bottom, arm draped over).
     const back = subject === "a";
     return {
-      rootPosition: [0, 0.5, back ? -0.16 : 0.16],
+      rootPosition: [0, 0.45, back ? 0.16 : -0.04],
       rootRotation: [0, 0, -Math.PI / 2],
       bones: {
         spine: [0, 0, 0],
-        spine1: [back ? 0.15 : 0.08, 0, 0],
-        spine2: [back ? 0.1 : 0.05, 0, 0],
-        neck: [back ? 0.05 : -0.05, 0, 0],
+        spine1: [back ? 0.2 : 0.05, 0, 0],
+        spine2: [back ? 0.15 : 0.02, 0, 0],
+        neck: [back ? 0.1 : 0, 0, 0],
         head: [0, 0, 0],
-        // Bottom (right) arm tucks up under the head
-        rightArm: [0, 0, 0.4],
-        rightForeArm: [0, -1.0, 0],
-        // Top (left) arm drapes forward over partner (back partner
-        // reaches further; front partner's arm rests on her own side)
-        leftArm: [0, 0, back ? -1.3 : -0.5],
-        leftForeArm: [0, -0.5, 0],
-        // Bottom (right) leg straighter — the "down" leg
-        rightUpLeg: [-0.5, 0, 0],
-        rightLeg: [0.7, 0, 0],
-        // Top (left) leg pulled up more — knees toward chest
-        leftUpLeg: [back ? -0.95 : -0.7, 0, 0],
-        leftLeg: [back ? 1.3 : 1.0, 0, 0],
+        // Bottom (right) arm folded as a pillow under the head
+        rightArm: [0, 0, 0.7],
+        rightForeArm: [0, -1.4, 0],
+        // Top (left) arm: drapes naturally down along the body.
+        // Tried more dramatic "reach over partner" rotations but they
+        // produced a salute-shape in world space because the Mixamo
+        // left-arm bone local frame doesn't map straightforwardly
+        // after the Z-axis body rotation. Simple low arm reads cleaner.
+        leftArm: [0, 0, -0.3],
+        leftForeArm: [0, -0.2, 0],
+        // Bottom (right) leg: bent at ~30° knee, the "down" leg
+        rightUpLeg: [-0.3, 0, 0],
+        rightLeg: [0.6, 0, 0],
+        // Top (left) leg: back partner curls knee high; front
+        // partner has knee bent moderately.
+        leftUpLeg: [back ? -1.1 : -0.55, 0, 0],
+        leftLeg: [back ? 1.5 : 0.9, 0, 0],
       },
     };
   }
@@ -138,7 +145,10 @@ function cameraFor(positionKey: PositionKey): CameraSpec {
     // Spoon body axis is +X (feet at X=0, heads at X≈+1.7) at Y≈0.5.
     // Camera pulled well back, slightly elevated, slightly toward
     // foot-end, looking at body mid-length so both full bodies fit.
-    return { position: [1.0, 1.0, 3.4], target: [0.9, 0.55, 0], fov: 36 };
+    // 3/4 angle from the foot-end side, slightly elevated. Looks
+    // back along the body axis toward the heads, showing both
+    // bodies nested. Body axis = +X (feet at X≈0, heads at X≈+1.7).
+    return { position: [-1.5, 1.4, 2.6], target: [0.7, 0.5, 0], fov: 36 };
   }
   return { position: [3, 1.5, 3], target: [0, 0.5, 0], fov: 36 };
 }
