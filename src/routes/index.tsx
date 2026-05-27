@@ -110,13 +110,12 @@ function Index() {
             </p>
           </div>
 
-          <div className="lg:col-span-5 relative">
+          <div className="lg:col-span-5 relative min-w-0">
             <div
-              className="relative"
+              className="relative w-full"
               style={{
                 boxShadow: "0 40px 80px -20px oklch(0.18 0.01 40 / 0.18)",
                 aspectRatio: "4 / 5",
-                minHeight: 480,
               }}
             >
               <Pictogram positionKey="spoon" />
