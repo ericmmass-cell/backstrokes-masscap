@@ -452,13 +452,30 @@ function setBoneEuler(
   bone.quaternion.copy(bind).multiply(TMP_QUAT);
 }
 
-function applySubjectPose(refs: BoneRefs, pose: SubjectPose) {
+function applySubjectPose(
+  refs: BoneRefs,
+  pose: SubjectPose,
+  breathPhase = 0,
+) {
   refs.root.position.set(...pose.rootPosition);
   refs.root.rotation.set(...pose.rootRotation);
+
+  // Subtle breathing: tiny chest expansion via spine1/spine2 overlay.
+  // breathPhase in [0,1]. Magnitudes well below any pose value so it
+  // reads as ambient motion, not a movement.
+  const breath = breathPhase * 0.04;
+  const bones: Partial<Record<BoneKey, [number, number, number]>> = {
+    ...pose.bones,
+  };
+  if (breath !== 0) {
+    bones.spine1 = [(bones.spine1?.[0] ?? 0) + breath, 0, 0];
+    bones.spine2 = [(bones.spine2?.[0] ?? 0) + breath * 0.7, 0, 0];
+  }
+
   (Object.keys(BONES) as BoneKey[]).forEach((key) => {
     const bone = refs.byKey[key];
     const bind = refs.bind[key];
-    const euler = pose.bones[key];
+    const euler = bones[key];
     if (!bone || !bind || !euler) return;
     setBoneEuler(bone, bind, euler);
   });
@@ -671,8 +688,13 @@ export function Position3D({
       }
       controls.update();
 
-      if (refsA) applySubjectPose(refsA, subjectPoseFor(pk, "a"));
-      if (refsB) applySubjectPose(refsB, subjectPoseFor(pk, "b"));
+      // 6-second breath cycle, slight phase offset between partners
+      // so they don't breathe in lockstep (more natural).
+      const tNow = now / 1000;
+      const breathA = (Math.sin((tNow / 6) * Math.PI * 2 - Math.PI / 2) + 1) / 2;
+      const breathB = (Math.sin(((tNow + 1.2) / 6) * Math.PI * 2 - Math.PI / 2) + 1) / 2;
+      if (refsA) applySubjectPose(refsA, subjectPoseFor(pk, "a"), breathA);
+      if (refsB) applySubjectPose(refsB, subjectPoseFor(pk, "b"), breathB);
 
       renderer.render(scene, camera);
       raf = requestAnimationFrame(tick);
