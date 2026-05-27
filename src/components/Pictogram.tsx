@@ -31,6 +31,7 @@ const OXBLOOD = "#722B2B";
 const PAPER = "#F4EFE3";
 const BED = "#e8dcc1";
 const RULE = "#c8b89f";
+const MUTED = "#8d806a";
 
 export type PictogramKey =
   | "spoon"
@@ -57,97 +58,211 @@ type PictogramProps = {
 /* ───────── individual position pictograms ───────── */
 
 function Spoon() {
-  // Side view. Both figures lying on right side, head end at LEFT.
-  // Back figure (ink) cradles front figure (oxblood).
+  /* Side view from the foot of the bed.
+   *
+   * Two figures lying on their RIGHT sides, heads on a pillow at the
+   * LEFT. Back partner (deep ink) nests around the front partner
+   * (oxblood). Drawn as properly articulated bodies — head with
+   * face profile + hair, shoulder, upper arm + elbow + forearm +
+   * hand, torso with hip curve, upper leg + knee + lower leg + foot.
+   *
+   * Each figure is built from outlined filled paths with thin
+   * inner accent lines for anatomy (shoulder/hip/elbow seam, ankle).
+   * Brand: oxblood for the front partner is the reader's first
+   * eye-stop; ink for back partner is the cradle around her.
+   */
+  const skinLight = "#d8a989";  // front partner's skin (lighter)
+  const skinDark = "#7d5a47";   // back partner's skin (darker)
+
   return (
-    <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Spoon position pictogram">
+    <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Spoon position">
       <rect width="480" height="360" fill={PAPER} />
 
-      {/* Bed silhouette */}
-      <rect x="40" y="220" width="400" height="100" rx="10" fill={BED} />
-      <line x1="40" y1="225" x2="440" y2="225" stroke={RULE} strokeWidth="1.2" />
+      {/* Bed slab */}
+      <path d="M 30 290 Q 30 220 70 220 L 460 220 L 460 290 Z" fill={BED} />
+      <line x1="30" y1="290" x2="460" y2="290" stroke={RULE} strokeWidth="1.2" />
 
-      {/* Back partner — deep ink. Larger, behind, curls around */}
-      {/* Body: a curving bean shape from butt to shoulder */}
-      <g fill={INK}>
-        {/* Head — circle */}
-        <circle cx="135" cy="178" r="22" />
-        {/* Neck connector */}
-        <path d="M 130 198 Q 140 205 150 200" stroke={INK} strokeWidth="14" strokeLinecap="round" fill="none" />
-        {/* Torso — slightly curled forward */}
+      {/* Pillow */}
+      <path d="M 50 220 Q 45 196 75 196 Q 110 196 145 196 Q 175 196 175 220 Z" fill="#f0e6cf" stroke={RULE} strokeWidth="1" />
+
+      {/* ───────── BACK PARTNER (deep ink contour, ink fill) ─────────
+          Drawn FIRST so the front partner overlays. */}
+      <g>
+        {/* Head + hair + profile */}
         <path
-          d="M 160 198
-             C 180 188, 230 188, 270 195
-             C 305 200, 335 215, 350 230
-             C 360 240, 358 250, 345 250
-             C 305 250, 250 240, 200 232
-             C 175 230, 160 218, 160 198 Z"
-        />
-        {/* Top arm draped forward over front partner */}
-        <path
-          d="M 200 212
-             C 260 200, 310 205, 355 215"
+          d="M 152 168
+             Q 140 158 142 145
+             Q 144 130 162 128
+             Q 178 128 184 144
+             Q 187 158 178 168
+             Q 175 174 168 178
+             L 168 196
+             Q 158 196 152 192 Z"
+          fill={skinDark}
           stroke={INK}
-          strokeWidth="22"
-          strokeLinecap="round"
-          fill="none"
+          strokeWidth="2"
         />
-        {/* Hand at end of arm */}
-        <circle cx="358" cy="217" r="11" />
-        {/* Upper leg — bent forward at hip, knee in mid-air */}
+        {/* Hair sweep behind head */}
         <path
-          d="M 320 240
-             C 350 235, 380 225, 405 215"
-          stroke={INK}
-          strokeWidth="32"
-          strokeLinecap="round"
-          fill="none"
+          d="M 142 145 Q 130 142 125 158 Q 122 175 134 178 L 138 168 Q 140 158 142 148 Z"
+          fill={INK}
         />
-        {/* Lower leg — bent at knee, foot back toward bed */}
+        {/* Subtle profile: nose bump */}
+        <path d="M 178 152 Q 184 154 184 158 Q 182 162 178 162" fill="none" stroke={INK} strokeWidth="1.5" />
+        {/* Chin shadow */}
+        <path d="M 170 178 Q 172 184 168 186" fill="none" stroke={INK} strokeWidth="1.2" />
+
+        {/* Torso — curling around front partner. Shoulder at left
+            (near pillow), hip at center-right. Body drapes forward. */}
         <path
-          d="M 400 218
-             C 405 240, 395 260, 365 265"
+          d="M 158 198
+             C 180 192, 220 192, 260 198
+             C 305 206, 340 222, 348 244
+             C 350 252, 343 256, 330 254
+             C 296 248, 245 238, 200 232
+             C 175 228, 158 218, 158 198 Z"
+          fill={skinDark}
           stroke={INK}
-          strokeWidth="26"
-          strokeLinecap="round"
-          fill="none"
+          strokeWidth="2"
         />
+        {/* Shoulder seam */}
+        <path d="M 175 200 Q 188 196 200 200" fill="none" stroke={INK} strokeWidth="1.2" />
+        {/* Hip line */}
+        <path d="M 305 238 Q 320 244 332 252" fill="none" stroke={INK} strokeWidth="1.2" />
+
+        {/* Top arm draped forward over front partner's hip — upper arm */}
+        <path
+          d="M 215 208
+             C 245 206, 285 212, 320 218
+             L 320 236
+             C 285 230, 245 224, 215 226 Z"
+          fill={skinDark}
+          stroke={INK}
+          strokeWidth="2"
+        />
+        {/* Elbow bend at end */}
+        <path d="M 320 218 Q 332 220 340 232" fill="none" stroke={INK} strokeWidth="1.2" />
+        {/* Forearm drops down toward front partner's waist */}
+        <path
+          d="M 320 220
+             C 340 226, 358 240, 360 260
+             L 348 264
+             C 344 246, 330 232, 312 228 Z"
+          fill={skinDark}
+          stroke={INK}
+          strokeWidth="2"
+        />
+        {/* Hand — knuckle indication */}
+        <ellipse cx="354" cy="262" rx="10" ry="6" fill={skinDark} stroke={INK} strokeWidth="1.5" />
+        <path d="M 350 258 L 358 258 M 350 263 L 358 263" stroke={INK} strokeWidth="1" />
+
+        {/* Top leg: thigh bent forward at hip, knee at center, shin tucks back */}
+        <path
+          d="M 320 248
+             C 350 244, 385 236, 415 232
+             L 415 262
+             C 385 264, 350 268, 322 268 Z"
+          fill={skinDark}
+          stroke={INK}
+          strokeWidth="2"
+        />
+        {/* Knee crease */}
+        <path d="M 405 232 Q 418 238 418 250" fill="none" stroke={INK} strokeWidth="1.2" />
+        {/* Shin folds back behind front partner's leg */}
+        <path
+          d="M 410 240
+             C 418 250, 420 262, 408 274
+             L 388 270
+             C 396 260, 402 250, 405 244 Z"
+          fill={skinDark}
+          stroke={INK}
+          strokeWidth="2"
+        />
+        {/* Foot — heel + arch */}
+        <path d="M 388 270 Q 380 278 388 282 Q 400 280 402 274 Z" fill={skinDark} stroke={INK} strokeWidth="1.5" />
       </g>
 
-      {/* Front partner — oxblood. In front, lying on side, knees gently bent */}
-      <g fill={OXBLOOD}>
-        {/* Head */}
-        <circle cx="120" cy="220" r="20" />
-        {/* Neck */}
-        <path d="M 118 238 Q 130 244 142 240" stroke={OXBLOOD} strokeWidth="13" strokeLinecap="round" fill="none" />
-        {/* Torso — slightly curled */}
+      {/* ───────── FRONT PARTNER (oxblood contour, light skin) ─────── */}
+      <g>
+        {/* Head + face profile + hair tucked */}
         <path
-          d="M 150 238
-             C 175 232, 220 232, 260 238
-             C 295 242, 320 252, 332 262
-             C 340 270, 338 278, 326 278
-             C 290 278, 240 270, 200 262
-             C 175 258, 150 248, 150 238 Z"
-        />
-        {/* Upper leg — bent forward */}
-        <path
-          d="M 305 270
-             C 330 270, 360 265, 385 258"
+          d="M 132 210
+             Q 118 200 120 188
+             Q 122 174 138 172
+             Q 154 172 160 188
+             Q 162 200 154 210
+             Q 152 216 144 220
+             L 144 238
+             Q 134 238 132 232 Z"
+          fill={skinLight}
           stroke={OXBLOOD}
-          strokeWidth="30"
-          strokeLinecap="round"
-          fill="none"
+          strokeWidth="2"
         />
-        {/* Lower leg — bent at knee, foot back toward bed */}
+        {/* Hair (short pulled-up sweep) */}
+        <path d="M 120 188 Q 110 184 108 198 Q 110 212 122 215 L 124 200 Q 122 192 120 188 Z" fill={OXBLOOD} />
+        {/* Nose */}
+        <path d="M 154 196 Q 160 198 160 202 Q 158 206 154 206" fill="none" stroke={OXBLOOD} strokeWidth="1.5" />
+        {/* Chin */}
+        <path d="M 146 220 Q 148 226 144 228" fill="none" stroke={OXBLOOD} strokeWidth="1.2" />
+
+        {/* Torso — long horizontal, hip at center-right */}
         <path
-          d="M 382 260
-             C 388 280, 380 298, 350 305"
+          d="M 140 240
+             C 175 232, 235 232, 280 240
+             C 315 246, 340 258, 348 274
+             C 350 282, 342 286, 328 284
+             C 290 278, 230 270, 180 264
+             C 150 260, 140 252, 140 240 Z"
+          fill={skinLight}
           stroke={OXBLOOD}
-          strokeWidth="24"
-          strokeLinecap="round"
-          fill="none"
+          strokeWidth="2"
         />
+        {/* Shoulder seam (under back partner's arm) */}
+        <path d="M 158 240 Q 170 236 184 240" fill="none" stroke={OXBLOOD} strokeWidth="1.2" />
+        {/* Hip curve */}
+        <path d="M 300 270 Q 320 278 335 282" fill="none" stroke={OXBLOOD} strokeWidth="1.2" />
+
+        {/* Bottom arm extends along body (tucked under, partially visible) */}
+        <path
+          d="M 158 244
+             C 175 250, 195 256, 215 260
+             L 218 270
+             C 195 270, 172 264, 156 258 Z"
+          fill={skinLight}
+          stroke={OXBLOOD}
+          strokeWidth="2"
+        />
+
+        {/* Top leg: thigh forward, knee at center, lower leg back */}
+        <path
+          d="M 305 278
+             C 340 272, 380 268, 405 264
+             L 405 290
+             C 378 292, 340 295, 308 295 Z"
+          fill={skinLight}
+          stroke={OXBLOOD}
+          strokeWidth="2"
+        />
+        {/* Knee crease */}
+        <path d="M 395 264 Q 408 270 408 282" fill="none" stroke={OXBLOOD} strokeWidth="1.2" />
+        {/* Shin folds back */}
+        <path
+          d="M 398 274
+             C 408 286, 405 298, 388 305
+             L 372 298
+             C 384 290, 392 282, 395 278 Z"
+          fill={skinLight}
+          stroke={OXBLOOD}
+          strokeWidth="2"
+        />
+        {/* Foot */}
+        <path d="M 372 298 Q 364 305 372 309 Q 384 308 388 302 Z" fill={skinLight} stroke={OXBLOOD} strokeWidth="1.5" />
       </g>
+
+      {/* Eyebrow label, magazine-bottom-edge style */}
+      <text x="40" y="338" fontFamily="JetBrains Mono, monospace" fontSize="10" letterSpacing="3" fill={MUTED}>
+        SPOON  ·  LATERAL  ·  LOW SPINAL LOAD
+      </text>
     </svg>
   );
 }
