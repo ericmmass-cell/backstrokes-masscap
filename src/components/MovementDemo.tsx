@@ -25,7 +25,7 @@
 
 import { useEffect, useRef, type CSSProperties } from "react";
 import * as THREE from "three";
-import { GLTFLoader, SkeletonUtils } from "three-stdlib";
+import { GLTFLoader, OrbitControls, SkeletonUtils } from "three-stdlib";
 
 export type MoveKey =
   | "curl-up"
@@ -383,6 +383,22 @@ export function MovementDemo({
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
+    // OrbitControls: lets the user drag to spin around the figure to
+    // check form from any angle. Polar angle clamped above the floor.
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.enablePan = false;
+    controls.minPolarAngle = Math.PI / 6;
+    controls.maxPolarAngle = Math.PI / 2 - 0.05;
+    controls.minDistance = 1.2;
+    controls.maxDistance = 6;
+    let userInteracting = false;
+    let lastMoveKey: MoveKey | null = null;
+    controls.addEventListener("start", () => {
+      userInteracting = true;
+    });
+
     // Lights
     scene.add(new THREE.AmbientLight(0xfff3df, 1.1));
     const key = new THREE.DirectionalLight(0xfff1dc, 1.5);
@@ -499,17 +515,24 @@ export function MovementDemo({
       if (!pausedRef.current) t += dt;
 
       const mk = moveKeyRef.current;
+      // Reset user-interaction lock on move change so the camera
+      // returns to the per-move intended angle.
+      if (mk !== lastMoveKey) {
+        userInteracting = false;
+        lastMoveKey = mk;
+      }
       setBolsterVisible(mk);
       const pose = poseFor(mk);
 
-      // Lerp camera toward the per-move target
-      camPos.set(...pose.camera.position);
-      // Smooth approach (15%/frame at 60fps)
-      camera.position.lerp(camPos, 1 - Math.pow(0.85, dt * 60));
-      camera.fov = pose.camera.fov;
-      camera.updateProjectionMatrix();
-      camTarget.set(...pose.camera.target);
-      camera.lookAt(camTarget);
+      if (!userInteracting) {
+        camPos.set(...pose.camera.position);
+        camera.position.lerp(camPos, 1 - Math.pow(0.85, dt * 60));
+        camera.fov = pose.camera.fov;
+        camera.updateProjectionMatrix();
+        camTarget.set(...pose.camera.target);
+        controls.target.copy(camTarget);
+      }
+      controls.update();
 
       if (refs) applyPose(refs, mk, t);
 
@@ -522,6 +545,7 @@ export function MovementDemo({
       cancelled = true;
       cancelAnimationFrame(raf);
       ro.disconnect();
+      controls.dispose();
       renderer.dispose();
       if (renderer.domElement.parentNode === container) {
         container.removeChild(renderer.domElement);
