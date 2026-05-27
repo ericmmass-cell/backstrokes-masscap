@@ -7,7 +7,7 @@ import {
   type Position,
 } from "@/lib/position-library";
 import { PositionDemo } from "@/components/PositionDemo";
-import { Position3D, type PositionKey } from "@/components/Position3D";
+import { Pictogram, type PictogramKey } from "@/components/Pictogram";
 import { SiteHeader } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/positions")({
@@ -115,7 +115,7 @@ function PositionRow({ p }: { p: Position }) {
 // 3D system extends one position at a time; as more get calibrated
 // they get added to PICKABLE.
 
-type Pickable = { key: PositionKey; label: string; sub: string };
+type Pickable = { key: PictogramKey; label: string; sub: string };
 const PICKABLE: Pickable[] = [
   { key: "spoon", label: "Spoon", sub: "Lateral · low spinal load" },
   { key: "supine-knees-up", label: "Modified missionary", sub: "Receiver supine · knees over bolster" },
@@ -137,7 +137,7 @@ function PositionShowcase() {
       <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-8 items-start">
         <div className="lg:col-span-7">
           <div style={{ aspectRatio: "4 / 3", minHeight: 360 }}>
-            <Position3D positionKey={pick.key} />
+            <Pictogram positionKey={pick.key} />
           </div>
         </div>
         <div className="lg:col-span-5 flex flex-col">
@@ -145,7 +145,7 @@ function PositionShowcase() {
             className="font-mono-label text-[10px] tracking-[0.22em] uppercase"
             style={{ color: "var(--brand-oxblood)" }}
           >
-            Calibrated · {PICKABLE.length} of 40 · drag the figure to rotate
+            Drawn · {PICKABLE.length} of 40
           </p>
           <h2
             className="font-serif-display italic mt-3 leading-[1.0] tracking-[-0.02em]"
