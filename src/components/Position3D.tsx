@@ -27,7 +27,7 @@
 
 import { useEffect, useRef, type CSSProperties } from "react";
 import * as THREE from "three";
-import { GLTFLoader, SkeletonUtils } from "three-stdlib";
+import { GLTFLoader, OrbitControls, SkeletonUtils } from "three-stdlib";
 
 export type PositionKey =
   | "spoon"
@@ -386,6 +386,18 @@ export function Position3D({
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
+    // OrbitControls — let the user drag to rotate, scroll to zoom.
+    // Constrained: no panning, polar angle limited to keep the
+    // camera from going under the floor.
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.enablePan = false;
+    controls.minPolarAngle = Math.PI / 6; // ~30° from top
+    controls.maxPolarAngle = Math.PI / 2 - 0.05; // just above horizon
+    controls.minDistance = 1.5;
+    controls.maxDistance = 6;
+
     // Lights
     scene.add(new THREE.AmbientLight(0xfff3df, 1.1));
     const key = new THREE.DirectionalLight(0xfff1dc, 1.5);
@@ -495,6 +507,16 @@ export function Position3D({
     });
     ro.observe(container);
 
+    // When the user interacts with OrbitControls, stop fighting them
+    // with the per-position camera lerp. The lerp re-engages on the
+    // next position change so each position gets its "intended" camera
+    // as the starting frame, but the user can take over after.
+    let userInteracting = false;
+    let lastPositionKey: PositionKey | null = null;
+    controls.addEventListener("start", () => {
+      userInteracting = true;
+    });
+
     // Loop
     let raf = 0;
     let last = performance.now();
@@ -505,13 +527,23 @@ export function Position3D({
       last = now;
 
       const pk = positionKeyRef.current;
+      // Reset interaction lock when the position changes so the
+      // camera flies to the new pose's intended angle.
+      if (pk !== lastPositionKey) {
+        userInteracting = false;
+        lastPositionKey = pk;
+      }
+
       const cam = cameraFor(pk);
-      camPos.set(...cam.position);
-      camera.position.lerp(camPos, 1 - Math.pow(0.85, dt * 60));
-      camera.fov = cam.fov;
-      camera.updateProjectionMatrix();
-      camTarget.set(...cam.target);
-      camera.lookAt(camTarget);
+      if (!userInteracting) {
+        camPos.set(...cam.position);
+        camera.position.lerp(camPos, 1 - Math.pow(0.85, dt * 60));
+        camera.fov = cam.fov;
+        camera.updateProjectionMatrix();
+        camTarget.set(...cam.target);
+        controls.target.copy(camTarget);
+      }
+      controls.update();
 
       if (refsA) applySubjectPose(refsA, subjectPoseFor(pk, "a"));
       if (refsB) applySubjectPose(refsB, subjectPoseFor(pk, "b"));
@@ -525,6 +557,7 @@ export function Position3D({
       cancelled = true;
       cancelAnimationFrame(raf);
       ro.disconnect();
+      controls.dispose();
       renderer.dispose();
       if (renderer.domElement.parentNode === container) {
         container.removeChild(renderer.domElement);
@@ -543,9 +576,9 @@ export function Position3D({
 
   return (
     <div
-      ref={containerRef}
       className={className}
       style={{
+        position: "relative",
         width: "100%",
         height: "100%",
         minHeight: 400,
@@ -555,7 +588,24 @@ export function Position3D({
         overflow: "hidden",
         ...style,
       }}
-    />
+    >
+      <div ref={containerRef} style={{ width: "100%", height: "100%" }} />
+      <div
+        style={{
+          position: "absolute",
+          bottom: 14,
+          right: 14,
+          fontFamily: "JetBrains Mono, monospace",
+          fontSize: 9,
+          letterSpacing: "0.22em",
+          textTransform: "uppercase",
+          color: "rgba(106, 91, 70, 0.62)",
+          pointerEvents: "none",
+        }}
+      >
+        ◆ drag · rotate · scroll · zoom
+      </div>
+    </div>
   );
 }
 
