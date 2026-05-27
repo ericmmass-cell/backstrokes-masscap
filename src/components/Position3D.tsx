@@ -30,10 +30,14 @@ import * as THREE from "three";
 import { GLTFLoader, OrbitControls, SkeletonUtils } from "three-stdlib";
 
 export type PositionKey =
-  | "spoon"
-  | "supine-knees-up" // modified missionary, receiver supine with knees over bolster
-  | "side-T"          // side-lying T: receiver on side, partner facing perpendicular
-  | "edge-bed";       // receiver supine at bed edge, partner kneeling on floor
+  | "spoon"             // lateral nesting
+  | "supine-knees-up"   // modified missionary, receiver supine, knees over bolster
+  | "side-T"            // receiver side-lying, partner kneeling perpendicular
+  | "edge-bed"          // receiver supine at bed edge, partner kneeling on floor
+  | "cowgirl-upright"   // receiver on top, upright, partner supine
+  | "doggy-supported"   // quadruped chest-down, partner kneeling behind
+  | "scissor"           // side-lying scissor, both partners perpendicular
+  | "supine-bolster";   // supine, hips elevated on a bolster, receiver only
 
 type Position3DProps = {
   positionKey: PositionKey;
@@ -222,6 +226,116 @@ function subjectPoseFor(
       },
     };
   }
+  if (positionKey === "cowgirl-upright") {
+    // Receiver on top, upright (straddling); partner supine below.
+    if (subject === "a") {
+      return {
+        rootPosition: [0, 0.1, 0],
+        rootRotation: [Math.PI / 2, 0, 0],
+        bones: {
+          leftArm: [0, 0, 0.2],
+          rightArm: [0, 0, -0.2],
+          leftUpLeg: [-0.4, 0, 0],
+          leftLeg: [0.5, 0, 0],
+          rightUpLeg: [-0.4, 0, 0],
+          rightLeg: [0.5, 0, 0],
+        },
+      };
+    }
+    return {
+      rootPosition: [0, 0.65, 0],
+      rootRotation: [0, Math.PI, 0],
+      bones: {
+        leftUpLeg: [-1.7, 0, 0],
+        leftLeg: [1.7, 0, 0],
+        rightUpLeg: [-1.7, 0, 0],
+        rightLeg: [1.7, 0, 0],
+        leftArm: [0, 0, -0.6],
+        rightArm: [0, 0, 0.6],
+      },
+    };
+  }
+  if (positionKey === "doggy-supported") {
+    if (subject === "a") {
+      return {
+        rootPosition: [0, 0.55, 0],
+        rootRotation: [-Math.PI / 2, 0, 0],
+        bones: {
+          neck: [-0.2, 0, 0],
+          leftArm: [0, 0, -1.55],
+          leftForeArm: [1.0, 0, 0],
+          rightArm: [0, 0, 1.55],
+          rightForeArm: [1.0, 0, 0],
+          leftUpLeg: [-1.55, 0, 0],
+          leftLeg: [1.55, 0, 0],
+          rightUpLeg: [-1.55, 0, 0],
+          rightLeg: [1.55, 0, 0],
+        },
+      };
+    }
+    return {
+      rootPosition: [-0.5, 0.55, 0],
+      rootRotation: [0, 0, 0],
+      bones: {
+        leftUpLeg: [-1.55, 0, 0],
+        leftLeg: [1.55, 0, 0],
+        rightUpLeg: [-1.55, 0, 0],
+        rightLeg: [1.55, 0, 0],
+        leftArm: [0, 0, -0.4],
+        rightArm: [0, 0, 0.4],
+      },
+    };
+  }
+  if (positionKey === "scissor") {
+    if (subject === "a") {
+      return {
+        rootPosition: [0, 0.45, 0],
+        rootRotation: [0, 0, -Math.PI / 2],
+        bones: {
+          rightArm: [0, 0, 0.5],
+          rightForeArm: [0, -1.0, 0],
+          leftArm: [-0.8, 0, 0],
+          leftForeArm: [0, -0.3, 0],
+          rightUpLeg: [-0.3, 0, 0],
+          rightLeg: [0.4, 0, 0],
+          leftUpLeg: [-0.3, 0, 0],
+          leftLeg: [0.4, 0, 0],
+        },
+      };
+    }
+    return {
+      rootPosition: [0, 0.45, 0.4],
+      rootRotation: [-Math.PI / 2, 0, -Math.PI / 2],
+      bones: {
+        rightArm: [0, 0, 0.5],
+        rightForeArm: [0, -1.0, 0],
+        leftArm: [-0.8, 0, 0],
+        leftForeArm: [0, -0.3, 0],
+        rightUpLeg: [-0.3, 0, 0],
+        rightLeg: [0.4, 0, 0],
+        leftUpLeg: [-0.3, 0, 0],
+        leftLeg: [0.4, 0, 0],
+      },
+    };
+  }
+  if (positionKey === "supine-bolster") {
+    if (subject === "b") {
+      // No second subject for solo — hide off-screen
+      return { rootPosition: [0, -10, 0], rootRotation: [0, 0, 0], bones: {} };
+    }
+    return {
+      rootPosition: [0, 0.25, 0],
+      rootRotation: [Math.PI / 2, 0, 0],
+      bones: {
+        leftArm: [0, 0, 0.15],
+        rightArm: [0, 0, -0.15],
+        leftUpLeg: [-1.3, 0, 0],
+        leftLeg: [1.4, 0, 0],
+        rightUpLeg: [-1.3, 0, 0],
+        rightLeg: [1.4, 0, 0],
+      },
+    };
+  }
   if (positionKey === "edge-bed") {
     // Receiver supine at edge of bed; partner kneeling on floor
     // facing the bed. Receiver's lumbar fully supported on the bed.
@@ -283,6 +397,18 @@ function cameraFor(positionKey: PositionKey): CameraSpec {
   }
   if (positionKey === "edge-bed") {
     return { position: [3.0, 1.0, 2.4], target: [0, 0.2, 0], fov: 38 };
+  }
+  if (positionKey === "cowgirl-upright") {
+    return { position: [3.2, 1.6, 2.2], target: [0, 0.5, 0], fov: 36 };
+  }
+  if (positionKey === "doggy-supported") {
+    return { position: [3.0, 1.3, 2.6], target: [-0.2, 0.55, 0], fov: 36 };
+  }
+  if (positionKey === "scissor") {
+    return { position: [3.0, 2.2, 2.6], target: [0.5, 0.4, 0.2], fov: 38 };
+  }
+  if (positionKey === "supine-bolster") {
+    return { position: [2.8, 1.2, 2.6], target: [0, 0.3, 0], fov: 36 };
   }
   return { position: [3, 1.5, 3], target: [0, 0.5, 0], fov: 36 };
 }

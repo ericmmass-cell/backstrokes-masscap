@@ -121,6 +121,10 @@ const PICKABLE: Pickable[] = [
   { key: "supine-knees-up", label: "Modified missionary", sub: "Receiver supine · knees over bolster" },
   { key: "side-T", label: "Side-lying T", sub: "Side-lying · partner kneeling perpendicular" },
   { key: "edge-bed", label: "Edge of bed", sub: "Receiver supine at edge · partner kneeling" },
+  { key: "cowgirl-upright", label: "Receiver on top, upright", sub: "Straddling · partner supine · highest receiver agency" },
+  { key: "doggy-supported", label: "Supported rear-entry", sub: "Quadruped chest-down · forearms supported" },
+  { key: "scissor", label: "Side-lying scissor", sub: "Perpendicular · both partners side-lying" },
+  { key: "supine-bolster", label: "Solo supine with bolster", sub: "Acute-day default · hips elevated, knees up" },
 ];
 
 function PositionShowcase() {
@@ -141,7 +145,7 @@ function PositionShowcase() {
             className="font-mono-label text-[10px] tracking-[0.22em] uppercase"
             style={{ color: "var(--brand-oxblood)" }}
           >
-            Calibrated · {PICKABLE.length} of 40
+            Calibrated · {PICKABLE.length} of 40 · drag the figure to rotate
           </p>
           <h2
             className="font-serif-display italic mt-3 leading-[1.0] tracking-[-0.02em]"
