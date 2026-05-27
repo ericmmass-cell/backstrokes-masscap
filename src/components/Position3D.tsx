@@ -29,7 +29,11 @@ import { useEffect, useRef, type CSSProperties } from "react";
 import * as THREE from "three";
 import { GLTFLoader, SkeletonUtils } from "three-stdlib";
 
-export type PositionKey = "spoon";
+export type PositionKey =
+  | "spoon"
+  | "supine-knees-up" // modified missionary, receiver supine with knees over bolster
+  | "side-T"          // side-lying T: receiver on side, partner facing perpendicular
+  | "edge-bed";       // receiver supine at bed edge, partner kneeling on floor
 
 type Position3DProps = {
   positionKey: PositionKey;
@@ -133,6 +137,127 @@ function subjectPoseFor(
       },
     };
   }
+  if (positionKey === "supine-knees-up") {
+    // Receiver supine, knees bent over bolster (the McGill-safe
+    // missionary). Partner above in plank-over, weight on forearms.
+    const below = subject === "a"; // receiver
+    if (below) {
+      return {
+        rootPosition: [0, 0.1, 0],
+        rootRotation: [Math.PI / 2, 0, 0],
+        bones: {
+          spine: [0, 0, 0],
+          spine1: [0, 0, 0],
+          spine2: [0, 0, 0],
+          leftArm: [0, 0, 0.15],
+          rightArm: [0, 0, -0.15],
+          // Both knees bent up — feet off floor, bolster under
+          leftUpLeg: [-1.4, 0, 0],
+          leftLeg: [1.5, 0, 0],
+          rightUpLeg: [-1.4, 0, 0],
+          rightLeg: [1.5, 0, 0],
+        },
+      };
+    }
+    // Partner above: plank-over, weight on forearms, hovering over
+    // receiver's hips. Translated up so they don't interpenetrate.
+    return {
+      rootPosition: [0.4, 0.8, 0],
+      rootRotation: [Math.PI / 2, 0, 0],
+      bones: {
+        spine: [0, 0, 0],
+        spine1: [0, 0, 0],
+        // Forearms down, plank position
+        leftArm: [0, 0, -0.9],
+        leftForeArm: [0, -1.2, 0],
+        rightArm: [0, 0, 0.9],
+        rightForeArm: [0, 1.2, 0],
+        // Legs back, weight forward
+        leftUpLeg: [0.3, 0, 0],
+        leftLeg: [-0.4, 0, 0],
+        rightUpLeg: [0.3, 0, 0],
+        rightLeg: [-0.4, 0, 0],
+      },
+    };
+  }
+  if (positionKey === "side-T") {
+    // Side-lying T: receiver on right side; partner kneeling
+    // facing her, perpendicular. Low spine load on the receiver.
+    if (subject === "a") {
+      // Receiver: side-lying on right side
+      return {
+        rootPosition: [0, 0.45, 0],
+        rootRotation: [0, 0, -Math.PI / 2],
+        bones: {
+          spine: [0, 0, 0],
+          spine1: [0.05, 0, 0],
+          rightArm: [0, 0, 0.5],
+          rightForeArm: [0, -1.0, 0],
+          leftArm: [0, 0, -0.3],
+          leftForeArm: [0, -0.2, 0],
+          rightUpLeg: [-0.3, 0, 0],
+          rightLeg: [0.5, 0, 0],
+          // Top leg slightly raised
+          leftUpLeg: [-0.6, 0, 0],
+          leftLeg: [0.4, 0, 0],
+        },
+      };
+    }
+    // Partner: kneeling facing receiver
+    return {
+      rootPosition: [0.55, 0.55, 0],
+      rootRotation: [0, -Math.PI / 2, 0],
+      bones: {
+        spine: [0, 0, 0],
+        // Both legs in kneel
+        leftUpLeg: [-1.4, 0, 0],
+        leftLeg: [1.5, 0, 0],
+        rightUpLeg: [-1.4, 0, 0],
+        rightLeg: [1.5, 0, 0],
+        // Arms forward / hands on receiver's thigh
+        leftArm: [0, 0, -0.6],
+        leftForeArm: [0, -0.4, 0],
+        rightArm: [0, 0, 0.6],
+        rightForeArm: [0, 0.4, 0],
+      },
+    };
+  }
+  if (positionKey === "edge-bed") {
+    // Receiver supine at edge of bed; partner kneeling on floor
+    // facing the bed. Receiver's lumbar fully supported on the bed.
+    if (subject === "a") {
+      // Receiver: supine, hips at edge (X near +1.4 ≈ bed edge)
+      return {
+        rootPosition: [-0.5, 0.1, 0],
+        rootRotation: [Math.PI / 2, 0, 0],
+        bones: {
+          leftArm: [0, 0, 0.2],
+          rightArm: [0, 0, -0.2],
+          // Knees bent up over the edge — feet hanging
+          leftUpLeg: [-1.5, 0, 0],
+          leftLeg: [1.4, 0, 0],
+          rightUpLeg: [-1.5, 0, 0],
+          rightLeg: [1.4, 0, 0],
+        },
+      };
+    }
+    // Partner: kneeling on the floor at the bed edge
+    return {
+      rootPosition: [0.7, -0.7, 0],
+      rootRotation: [0, Math.PI, 0],
+      bones: {
+        spine: [0.2, 0, 0],
+        spine1: [0.1, 0, 0],
+        // Kneeling
+        leftUpLeg: [-1.5, 0, 0],
+        leftLeg: [1.55, 0, 0],
+        rightUpLeg: [-1.5, 0, 0],
+        rightLeg: [1.55, 0, 0],
+        leftArm: [0, 0, -0.4],
+        rightArm: [0, 0, 0.4],
+      },
+    };
+  }
   return {
     rootPosition: [0, 0, 0],
     rootRotation: [0, 0, 0],
@@ -149,6 +274,15 @@ function cameraFor(positionKey: PositionKey): CameraSpec {
     // back along the body axis toward the heads, showing both
     // bodies nested. Body axis = +X (feet at X≈0, heads at X≈+1.7).
     return { position: [-1.5, 1.4, 2.6], target: [0.7, 0.5, 0], fov: 36 };
+  }
+  if (positionKey === "supine-knees-up") {
+    return { position: [3.0, 1.6, 2.4], target: [0, 0.5, 0], fov: 36 };
+  }
+  if (positionKey === "side-T") {
+    return { position: [2.6, 1.4, 2.8], target: [0.3, 0.5, 0], fov: 36 };
+  }
+  if (positionKey === "edge-bed") {
+    return { position: [3.0, 1.0, 2.4], target: [0, 0.2, 0], fov: 38 };
   }
   return { position: [3, 1.5, 3], target: [0, 0.5, 0], fov: 36 };
 }
