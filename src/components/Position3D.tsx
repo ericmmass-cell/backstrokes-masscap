@@ -49,8 +49,8 @@ const MODEL_URL = "/3d/soldier.glb";
 const CREAM = "#F4EFE3";
 const PAPER = "#EFE7D2";
 const OXBLOOD = "#722B2B";
-const FIGURE_A = "#6f5648"; // warm walnut — back partner
-const FIGURE_B = "#8a6a55"; // slightly lighter — front partner
+const FIGURE_A = "#2a2620"; // deep ink — back partner
+const FIGURE_B = "#722B2B"; // oxblood — front partner (brand accent)
 
 const BONES = {
   hips: "mixamorigHips",
@@ -605,24 +605,22 @@ export function Position3D({
     loadModel()
       .then((sourceScene) => {
         if (cancelled) return;
-        // MeshPhysicalMaterial with sheen — gives the figures a
-        // soft fabric-like roll of light along the silhouette edge
-        // that reads as skin-on-cream-paper rather than flat clay.
+        // Pure silhouette rendering. Flat MeshBasicMaterial, no
+        // lighting interaction, no surface detail visible. The
+        // soldier's gear (helmet, vest, pockets) disappears into
+        // the outline — what reads is the body's contour against
+        // cream paper. Apple-iPod-ad approach: the shape carries
+        // the meaning. Two figures get slightly different inks so
+        // they're distinguishable when overlapping.
         const tint = (clone: THREE.Object3D, color: string) => {
           clone.traverse((o) => {
             const mesh = o as THREE.Mesh;
             if (mesh.isMesh || (o as THREE.SkinnedMesh).isSkinnedMesh) {
               mesh.castShadow = true;
-              mesh.receiveShadow = true;
-              mesh.material = new THREE.MeshPhysicalMaterial({
+              mesh.receiveShadow = false;
+              mesh.material = new THREE.MeshBasicMaterial({
                 color,
-                roughness: 0.65,
-                metalness: 0.02,
-                sheen: 0.6,
-                sheenColor: new THREE.Color("#e8b88c"),
-                sheenRoughness: 0.55,
-                clearcoat: 0.1,
-                clearcoatRoughness: 0.5,
+                fog: false,
               });
             }
           });
