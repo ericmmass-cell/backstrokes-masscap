@@ -120,13 +120,13 @@ function subjectPoseFor(
         // Bottom (right) arm folded as a pillow under the head
         rightArm: [0, 0, 0.7],
         rightForeArm: [0, -1.4, 0],
-        // Top (left) arm: minimal offset. Tried both signs of Z
-        // rotation — both produced arm-shoots-up. Bone local axes
-        // after body rotation require interactive in-browser
-        // calibration to nail. For now, a tiny offset keeps the
-        // arm close to neutral T-pose-on-side rather than dramatic.
-        leftArm: [0, 0, 0],
-        leftForeArm: [0, 0, 0],
+        // Top (left) arm: try X-axis rotation to swing it forward
+        // and down along the body axis (rather than up to the sky).
+        // Both Z signs put it skyward; X rotation rotates around
+        // the bone's perpendicular axis which should bring it
+        // toward the body.
+        leftArm: [-1.0, 0, 0],
+        leftForeArm: [-0.5, 0, 0],
         // Bottom (right) leg: bent at ~30° knee, the "down" leg
         rightUpLeg: [-0.3, 0, 0],
         rightLeg: [0.6, 0, 0],
