@@ -102,6 +102,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="data:," />
         <HeadContent />
       </head>
       <body>

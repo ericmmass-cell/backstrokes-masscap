@@ -8,7 +8,7 @@ import {
 } from "@/lib/distractions";
 import { HumanFigure } from "@/components/HumanFigure";
 
-type MoveKey = "curl-up" | "side-plank" | "bird-dog" | "breath" | "decomp";
+type MoveKey = "curl-up" | "side-plank" | "bird-dog" | "breath" | "reverse-kegel" | "decomp";
 
 export const Route = createFileRoute("/session")({
   component: SessionPlayer,
@@ -83,6 +83,20 @@ const DOWN_TRAIN: Move[] = [
       "Inhale ~3 sec · lower abdomen rises",
       "Ribs widen laterally · not just upward",
       "Exhale ~3 sec · slow as you can stand",
+    ],
+  },
+  {
+    ref: "F.01b",
+    label: "Reverse kegel",
+    dose: "10 slow breaths",
+    cue: "Inhale. Let the floor drop. Exhale. Let it return. If you are trying hard, you are doing the wrong assignment with admirable intensity.",
+    secs: 120,
+    moveKey: "reverse-kegel",
+    formNotes: [
+      "The drop is the rep · not the lift",
+      "Lower abdomen rises on inhale",
+      "Floor lengthens · do not contract",
+      "Passive return on exhale · don't push",
     ],
   },
   {

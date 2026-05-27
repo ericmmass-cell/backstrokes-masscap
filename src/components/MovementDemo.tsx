@@ -1,4 +1,31 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+/**
+ * MovementDemo — clinical pose system, RAW three.js edition.
+ *
+ * Background: Perplexity recommended option (f) — a real Mixamo soldier
+ * rig, posed not animated, with calibrated bone offsets per move and a
+ * restrained loop layer for breath-driven moves. The recommended
+ * implementation used @react-three/fiber.
+ *
+ * However: R3F's <Canvas> component does NOT render in this TanStack
+ * Start + Cloudflare Workers setup. The <canvas> element mounts to the
+ * DOM, the WebGL context initializes, but the render loop never starts
+ * (verified by readPixels returning [0,0,0,0] indefinitely on a scene
+ * with mesh primitives). Raw three.js with the same scene contents
+ * renders correctly. So we use raw three.js — verbose but actually
+ * working — to drive the GLB, the bones, the lights, and the camera.
+ *
+ * Reuses the existing /public/3d/soldier.glb.
+ *
+ * Adding a new move:
+ *   1. Add the key to MoveKey
+ *   2. Add a new branch in poseFor(moveKey) with rootPosition,
+ *      rootRotation, bones, camera
+ *   3. If it benefits from a loop, add a rule in tickPose
+ */
+
+import { useEffect, useRef, type CSSProperties } from "react";
+import * as THREE from "three";
+import { GLTFLoader, SkeletonUtils } from "three-stdlib";
 
 export type MoveKey =
   | "curl-up"
@@ -14,522 +41,493 @@ type MovementDemoProps = {
   style?: CSSProperties;
 };
 
-type Cadence = "strength" | "breath" | "settle";
+const MODEL_URL = "/3d/soldier.glb";
+const CREAM = "#F4EFE3";
+const PAPER = "#EFE7D2";
+const OXBLOOD = "#722B2B";
+const FIGURE = "#6f5648"; // warm walnut editorial silhouette
 
-type MoveSpec = {
-  fig: string;
-  title: string;
-  role: string;
-  cycleSeconds: number;
-  cadence: Cadence;
-  frameHold: string;
-  sprite: string;
-  spriteSmall: string;
-  poster: string;
-  videoMp4: string;
-  videoWebm: string;
+const BONES = {
+  hips: "mixamorigHips",
+  spine: "mixamorigSpine",
+  spine1: "mixamorigSpine1",
+  spine2: "mixamorigSpine2",
+  neck: "mixamorigNeck",
+  head: "mixamorigHead",
+  leftShoulder: "mixamorigLeftShoulder",
+  leftArm: "mixamorigLeftArm",
+  leftForeArm: "mixamorigLeftForeArm",
+  leftHand: "mixamorigLeftHand",
+  rightShoulder: "mixamorigRightShoulder",
+  rightArm: "mixamorigRightArm",
+  rightForeArm: "mixamorigRightForeArm",
+  rightHand: "mixamorigRightHand",
+  leftUpLeg: "mixamorigLeftUpLeg",
+  leftLeg: "mixamorigLeftLeg",
+  leftFoot: "mixamorigLeftFoot",
+  rightUpLeg: "mixamorigRightUpLeg",
+  rightLeg: "mixamorigRightLeg",
+  rightFoot: "mixamorigRightFoot",
+} as const;
+
+type BoneKey = keyof typeof BONES;
+
+type BoneRefs = {
+  byKey: Partial<Record<BoneKey, THREE.Object3D>>;
+  bind: Partial<Record<BoneKey, THREE.Quaternion>>;
+  root: THREE.Object3D;
 };
 
-const PAPER = "#F4EFE3";
-const INK = "#1A1714";
-const MUTED = "#655C4F";
-const OX = "#722B2B";
-const RULE = "#D9CFB5";
-
-const MOVES: Record<MoveKey, MoveSpec> = {
-  "curl-up": {
-    fig: "B.01A",
-    title: "McGill Curl-Up",
-    role: "Head and shoulder blades lift together; lumbar curve preserved",
-    cycleSeconds: 2.45,
-    cadence: "strength",
-    frameHold: "setup / lift / hold / return",
-    sprite: "/demos/workout/curl-up.jpg",
-    spriteSmall: "/demos/workout/curl-up-sm.jpg",
-    poster: "/demos/workout/curl-up.jpg",
-    videoMp4: "/demos/workout/curl-up.mp4",
-    videoWebm: "/demos/workout/curl-up.webm",
-  },
-  "side-plank": {
-    fig: "B.01B",
-    title: "Side Bridge",
-    role: "Forearm support; shoulder-to-knee line",
-    cycleSeconds: 2.65,
-    cadence: "strength",
-    frameHold: "setup / lift / hold / lower",
-    sprite: "/demos/workout/side-plank.jpg",
-    spriteSmall: "/demos/workout/side-plank-sm.jpg",
-    poster: "/demos/workout/side-plank.jpg",
-    videoMp4: "/demos/workout/side-plank.mp4",
-    videoWebm: "/demos/workout/side-plank.webm",
-  },
-  "bird-dog": {
-    fig: "B.01C",
-    title: "Bird-Dog",
-    role: "Contralateral reach; spine stays quiet",
-    cycleSeconds: 2.65,
-    cadence: "strength",
-    frameHold: "setup / reach / hold / return",
-    sprite: "/demos/workout/bird-dog.jpg",
-    spriteSmall: "/demos/workout/bird-dog-sm.jpg",
-    poster: "/demos/workout/bird-dog.jpg",
-    videoMp4: "/demos/workout/bird-dog.mp4",
-    videoWebm: "/demos/workout/bird-dog.webm",
-  },
-  breath: {
-    fig: "F.01A",
-    title: "Diaphragmatic Breath",
-    role: "Lower ribs and abdomen track the breath",
-    cycleSeconds: 3.45,
-    cadence: "breath",
-    frameHold: "rest / inhale / full inhale / exhale",
-    sprite: "/demos/workout/breath.jpg",
-    spriteSmall: "/demos/workout/breath-sm.jpg",
-    poster: "/demos/workout/breath.jpg",
-    videoMp4: "/demos/workout/breath.mp4",
-    videoWebm: "/demos/workout/breath.webm",
-  },
-  decomp: {
-    fig: "F.01C",
-    title: "Supported Decompression",
-    role: "Knees supported; body neutral; breath only",
-    cycleSeconds: 3.85,
-    cadence: "settle",
-    frameHold: "rest / inhale / settle / exhale",
-    sprite: "/demos/workout/decomp.jpg",
-    spriteSmall: "/demos/workout/decomp-sm.jpg",
-    poster: "/demos/workout/decomp.jpg",
-    videoMp4: "/demos/workout/decomp.mp4",
-    videoWebm: "/demos/workout/decomp.webm",
-  },
+type PoseSpec = {
+  rootPosition: [number, number, number];
+  rootRotation: [number, number, number];
+  bones: Partial<Record<BoneKey, [number, number, number]>>;
+  camera: {
+    position: [number, number, number];
+    target: [number, number, number];
+    fov: number;
+  };
 };
 
-const CSS = `
-.bs-live-demo {
-  isolation: isolate;
-}
-.bs-live-demo * {
-  box-sizing: border-box;
-}
-.bs-live-demo__plate {
-  position: absolute;
-  inset: 10px;
-  border: 1px solid ${RULE};
-  background:
-    linear-gradient(180deg, rgba(244,239,227,0.92), rgba(239,231,210,0.72)),
-    radial-gradient(circle at 18% 16%, rgba(26,23,20,0.06), transparent 24%),
-    ${PAPER};
-}
-.bs-live-demo__media-shell {
-  position: absolute;
-  inset: 54px 22px 58px;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  background: rgba(244,239,227,0.62);
-}
-.bs-live-demo__video,
-.bs-live-demo__sprite {
-  height: min(100%, 560px);
-  max-width: 100%;
-  aspect-ratio: 3 / 4;
-  border: 1px solid rgba(26,23,20,0.18);
-  box-shadow: 0 18px 42px -28px rgba(26,23,20,0.5);
-  background-color: ${PAPER};
-}
-.bs-live-demo__video {
-  display: block;
-  position: absolute;
-  object-fit: contain;
-  opacity: 0;
-  transition: opacity 240ms ease;
-  z-index: 2;
-}
-.bs-live-demo__video[data-ready="true"] {
-  opacity: 1;
-}
-.bs-live-demo__sprite {
-  position: relative;
-  overflow: hidden;
-  transform-origin: 50% 74%;
-  animation-duration: var(--cycle);
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-.bs-live-demo__sprite--strength {
-  animation-name: bsStrengthBody;
-}
-.bs-live-demo__sprite--breath,
-.bs-live-demo__sprite--settle {
-  animation-name: bsBreathBody;
-}
-.bs-live-demo__frame {
-  position: absolute;
-  inset: 0;
-  background-image: var(--sprite-lg);
-  background-size: 400% 100%;
-  background-repeat: no-repeat;
-  opacity: 0;
-  transform: translateZ(0);
-  animation-duration: var(--cycle);
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  will-change: opacity, transform;
-}
-.bs-live-demo__frame--0 {
-  background-position: 0% 50%;
-  opacity: 1;
-}
-.bs-live-demo__frame--1 {
-  background-position: 33.333% 50%;
-}
-.bs-live-demo__frame--2 {
-  background-position: 66.667% 50%;
-}
-.bs-live-demo__frame--3 {
-  background-position: 100% 50%;
-}
-.bs-live-demo__sprite--strength .bs-live-demo__frame--0 { animation-name: bsStrengthFrame0; }
-.bs-live-demo__sprite--strength .bs-live-demo__frame--1 { animation-name: bsStrengthFrame1; }
-.bs-live-demo__sprite--strength .bs-live-demo__frame--2 { animation-name: bsStrengthFrame2; }
-.bs-live-demo__sprite--strength .bs-live-demo__frame--3 { animation-name: bsStrengthFrame3; }
-.bs-live-demo__sprite--breath .bs-live-demo__frame--0,
-.bs-live-demo__sprite--settle .bs-live-demo__frame--0 { animation-name: bsBreathFrame0; }
-.bs-live-demo__sprite--breath .bs-live-demo__frame--1,
-.bs-live-demo__sprite--settle .bs-live-demo__frame--1 { animation-name: bsBreathFrame1; }
-.bs-live-demo__sprite--breath .bs-live-demo__frame--2,
-.bs-live-demo__sprite--settle .bs-live-demo__frame--2 { animation-name: bsBreathFrame2; }
-.bs-live-demo__sprite--breath .bs-live-demo__frame--3,
-.bs-live-demo__sprite--settle .bs-live-demo__frame--3 { animation-name: bsBreathFrame3; }
-.bs-live-demo__sprite--settle {
-  opacity: 0.98;
-}
-.bs-live-demo[data-paused="true"] .bs-live-demo__sprite {
-  animation-play-state: paused;
-}
-.bs-live-demo[data-paused="true"] .bs-live-demo__frame {
-  animation-play-state: paused;
-}
-.bs-live-demo__chrome {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  color: ${INK};
-}
-.bs-live-demo__label {
-  position: absolute;
-  left: 28px;
-  top: 24px;
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  max-width: calc(100% - 56px);
-}
-.bs-live-demo__fig,
-.bs-live-demo__mode,
-.bs-live-demo__frames {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 9px;
-  line-height: 1;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-.bs-live-demo__fig {
-  color: ${OX};
-}
-.bs-live-demo__title {
-  font-family: "Fraunces", Georgia, serif;
-  font-size: clamp(17px, 1.75vw, 24px);
-  font-style: italic;
-  line-height: 1;
-  white-space: nowrap;
-}
-.bs-live-demo__mode {
-  position: absolute;
-  right: 28px;
-  top: 26px;
-  color: ${MUTED};
-}
-.bs-live-demo__frames {
-  position: absolute;
-  left: 28px;
-  bottom: 25px;
-  color: ${MUTED};
-}
-.bs-live-demo__role {
-  position: absolute;
-  right: 28px;
-  bottom: 22px;
-  max-width: 48%;
-  font-family: "Fraunces", Georgia, serif;
-  font-size: clamp(12px, 1.2vw, 16px);
-  font-style: italic;
-  line-height: 1.15;
-  text-align: right;
-  color: ${INK};
-}
-.bs-live-demo__missing {
-  height: min(100%, 560px);
-  max-width: 100%;
-  aspect-ratio: 3 / 4;
-  display: grid;
-  place-items: center;
-  padding: 28px;
-  border: 1px solid rgba(114,43,43,0.35);
-  background: rgba(244,239,227,0.86);
-  color: ${OX};
-  text-align: center;
-  font-family: "Fraunces", Georgia, serif;
-  font-style: italic;
-  font-size: 18px;
-  line-height: 1.2;
-}
-@keyframes bsStrengthBody {
-  0%, 100% { transform: translateY(0) scale(1); }
-  30%, 68% { transform: translateY(-5px) scale(1.018); }
-  84% { transform: translateY(2px) scale(1.006); }
-}
-@keyframes bsBreathBody {
-  0%, 100% { transform: translateY(0) scale(1); }
-  46% { transform: translateY(-3px) scale(1.012); }
-  72% { transform: translateY(1px) scale(1.004); }
-}
-@keyframes bsStrengthFrame0 {
-  0%, 8% { opacity: 1; transform: scale(1); }
-  16%, 84% { opacity: 0; transform: translateY(-1px) scale(1.006); }
-  94%, 100% { opacity: 1; transform: scale(1); }
-}
-@keyframes bsStrengthFrame1 {
-  0%, 8% { opacity: 0; transform: scale(1); }
-  16%, 25% { opacity: 1; transform: translateY(-2px) scale(1.01); }
-  34%, 70% { opacity: 0; transform: translateY(-4px) scale(1.016); }
-  78%, 86% { opacity: 1; transform: translateY(1px) scale(1.008); }
-  96%, 100% { opacity: 0; transform: scale(1); }
-}
-@keyframes bsStrengthFrame2 {
-  0%, 25% { opacity: 0; transform: translateY(-2px) scale(1.01); }
-  34%, 70% { opacity: 1; transform: translateY(-5px) scale(1.02); }
-  79%, 100% { opacity: 0; transform: translateY(1px) scale(1.008); }
-}
-@keyframes bsStrengthFrame3 {
-  0%, 68% { opacity: 0; transform: translateY(-3px) scale(1.012); }
-  80%, 88% { opacity: 1; transform: translateY(2px) scale(1.006); }
-  98%, 100% { opacity: 0; transform: scale(1); }
-}
-@keyframes bsBreathFrame0 {
-  0%, 10% { opacity: 1; transform: scale(1); }
-  22%, 88% { opacity: 0; transform: translateY(-1px) scale(1.004); }
-  98%, 100% { opacity: 1; transform: scale(1); }
-}
-@keyframes bsBreathFrame1 {
-  0%, 10% { opacity: 0; transform: scale(1); }
-  24%, 38% { opacity: 1; transform: translateY(-2px) scale(1.006); }
-  50%, 100% { opacity: 0; transform: translateY(-3px) scale(1.008); }
-}
-@keyframes bsBreathFrame2 {
-  0%, 36% { opacity: 0; transform: translateY(-2px) scale(1.006); }
-  50%, 62% { opacity: 1; transform: translateY(-4px) scale(1.012); }
-  74%, 100% { opacity: 0; transform: translateY(1px) scale(1.006); }
-}
-@keyframes bsBreathFrame3 {
-  0%, 58% { opacity: 0; transform: translateY(-2px) scale(1.006); }
-  74%, 88% { opacity: 1; transform: translateY(1px) scale(1.004); }
-  100% { opacity: 0; transform: scale(1); }
-}
-@media (max-width: 760px) {
-  .bs-live-demo__media-shell {
-    inset: 58px 14px 70px;
-  }
-  .bs-live-demo__label {
-    left: 18px;
-    gap: 8px;
-  }
-  .bs-live-demo__mode {
-    display: none;
-  }
-  .bs-live-demo__frames {
-    left: 18px;
-    bottom: 42px;
-  }
-  .bs-live-demo__role {
-    left: 18px;
-    right: 18px;
-    bottom: 16px;
-    max-width: none;
-    text-align: left;
-  }
-  .bs-live-demo__frame {
-    background-image: var(--sprite-sm);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .bs-live-demo__sprite {
-    animation: none;
-  }
-  .bs-live-demo__frame {
-    animation: none;
-  }
-  .bs-live-demo__frame--0 {
-    opacity: 1;
-  }
-}
-`;
+/* ---------- per-move calibrated poses ---------- */
 
-const videoProbeCache = new Map<string, boolean>();
-
-function useVideoAvailability(spec: MoveSpec) {
-  const cacheKey = `${spec.videoMp4}|${spec.videoWebm}`;
-  const [hasVideo, setHasVideo] = useState(() => videoProbeCache.get(cacheKey) ?? false);
-
-  useEffect(() => {
-    const cached = videoProbeCache.get(cacheKey);
-    if (cached !== undefined) {
-      setHasVideo(cached);
-      return;
-    }
-
-    const controller = new AbortController();
-
-    async function probe() {
-      for (const url of [spec.videoMp4, spec.videoWebm]) {
-        try {
-          const response = await fetch(url, { method: "HEAD", signal: controller.signal });
-          if (response.ok) {
-            videoProbeCache.set(cacheKey, true);
-            setHasVideo(true);
-            return;
-          }
-        } catch {
-          if (controller.signal.aborted) return;
-        }
-      }
-      videoProbeCache.set(cacheKey, false);
-      setHasVideo(false);
-    }
-
-    void probe();
-
-    return () => {
-      controller.abort();
+function poseFor(moveKey: MoveKey): PoseSpec {
+  if (moveKey === "curl-up") {
+    return {
+      rootPosition: [0, 0.22, 0],
+      rootRotation: [0, 0, -Math.PI / 2],
+      bones: {
+        spine: [-0.02, 0, 0],
+        spine1: [0.12, 0, 0],
+        spine2: [0.2, 0, 0],
+        neck: [0.16, 0, 0],
+        head: [0.12, 0, 0],
+        leftArm: [0.1, 0.1, -1.18],
+        leftForeArm: [0, -0.75, 0],
+        rightArm: [0.08, -0.08, 1.18],
+        rightForeArm: [0, 0.75, 0],
+        rightUpLeg: [-1.18, 0, 0],
+        rightLeg: [1.52, 0, 0],
+        rightFoot: [-0.24, 0, 0],
+        leftUpLeg: [0.08, 0, 0],
+        leftLeg: [0.02, 0, 0],
+      },
+      camera: { position: [2.45, 1.15, 1.85], target: [0, 0.34, 0], fov: 33 },
     };
-  }, [cacheKey, spec.videoMp4, spec.videoWebm]);
-
-  return hasVideo;
+  }
+  if (moveKey === "side-plank") {
+    return {
+      rootPosition: [0, 0.34, 0],
+      rootRotation: [0, 0, -Math.PI / 2],
+      bones: {
+        spine: [0.02, 0, 0],
+        spine1: [0.03, 0, 0],
+        spine2: [0.02, 0, 0],
+        neck: [0.02, 0, 0],
+        head: [0.02, 0, 0],
+        rightShoulder: [0, 0, 0.18],
+        rightArm: [0, 0, -1.32],
+        rightForeArm: [0, 0.08, -0.22],
+        leftArm: [0, 0, 0.9],
+        leftForeArm: [0, -0.25, 0],
+        rightUpLeg: [-0.92, 0, 0],
+        rightLeg: [1.15, 0, 0],
+        leftUpLeg: [-0.9, 0, 0.08],
+        leftLeg: [1.08, 0, 0],
+        leftFoot: [0.1, 0, 0],
+        rightFoot: [0.08, 0, 0],
+      },
+      camera: { position: [2.35, 0.92, 1.48], target: [0, 0.46, 0], fov: 34 },
+    };
+  }
+  if (moveKey === "bird-dog") {
+    return {
+      rootPosition: [0, 0.02, 0.04],
+      rootRotation: [0, 0, 0],
+      bones: {
+        spine: [1.42, 0, 0],
+        spine1: [-0.06, 0, 0],
+        spine2: [-0.02, 0, 0],
+        neck: [0.04, 0, 0],
+        head: [0.02, 0, 0],
+        leftArm: [-1.45, 0, 0],
+        leftForeArm: [0.08, 0, 0],
+        rightArm: [-1.45, 0, 0],
+        rightForeArm: [0.08, 0, 0],
+        leftUpLeg: [1.68, 0, 0],
+        leftLeg: [-1.4, 0, 0],
+        leftFoot: [0.22, 0, 0],
+        rightUpLeg: [1.68, 0, 0],
+        rightLeg: [-1.4, 0, 0],
+        rightFoot: [0.22, 0, 0],
+      },
+      camera: { position: [2.22, 1.04, 1.62], target: [0, 0.62, 0], fov: 34 },
+    };
+  }
+  if (moveKey === "decomp") {
+    return {
+      rootPosition: [0, 0.2, 0],
+      rootRotation: [0, 0, -Math.PI / 2],
+      bones: {
+        neck: [0.03, 0, 0],
+        head: [0.02, 0, 0],
+        leftArm: [0.06, 0.02, -0.26],
+        leftForeArm: [0.06, -0.12, 0],
+        rightArm: [0.06, -0.02, 0.26],
+        rightForeArm: [0.06, 0.12, 0],
+        leftUpLeg: [-1.08, 0, 0],
+        leftLeg: [1.36, 0, 0],
+        rightUpLeg: [-1.08, 0, 0],
+        rightLeg: [1.36, 0, 0],
+      },
+      camera: { position: [2.4, 1.08, 1.8], target: [0, 0.32, 0], fov: 33 },
+    };
+  }
+  // breath
+  return {
+    rootPosition: [0, 0.2, 0],
+    rootRotation: [0, 0, -Math.PI / 2],
+    bones: {
+      spine1: [0.02, 0, 0],
+      spine2: [0.02, 0, 0],
+      neck: [0.04, 0, 0],
+      head: [0.02, 0, 0],
+      leftArm: [0.12, 0.1, -0.92],
+      leftForeArm: [0.1, -0.62, 0],
+      rightArm: [0.12, -0.08, 0.86],
+      rightForeArm: [0.08, 0.58, 0],
+      leftUpLeg: [-1.02, 0, 0],
+      leftLeg: [1.28, 0, 0],
+      rightUpLeg: [-1.02, 0, 0],
+      rightLeg: [1.28, 0, 0],
+    },
+    camera: { position: [2.38, 1.08, 1.82], target: [0, 0.34, 0], fov: 33 },
+  };
 }
 
-function VideoLoop({
-  spec,
-  paused,
-  ready,
-  onReady,
-}: {
-  spec: MoveSpec;
-  paused: boolean;
-  ready: boolean;
-  onReady: () => void;
-}) {
-  const ref = useRef<HTMLVideoElement | null>(null);
+/* ---------- per-frame application ---------- */
 
-  useEffect(() => {
-    const video = ref.current;
-    if (!video) return;
-    if (paused) {
-      video.pause();
-      return;
+const TMP_EULER = new THREE.Euler();
+const TMP_QUAT = new THREE.Quaternion();
+
+function setBoneEuler(
+  bone: THREE.Object3D,
+  bind: THREE.Quaternion,
+  euler: [number, number, number],
+) {
+  TMP_EULER.set(euler[0], euler[1], euler[2], "XYZ");
+  TMP_QUAT.setFromEuler(TMP_EULER);
+  bone.quaternion.copy(bind).multiply(TMP_QUAT);
+}
+
+function applyPose(refs: BoneRefs, moveKey: MoveKey, t: number) {
+  const pose = poseFor(moveKey);
+
+  refs.root.position.set(...pose.rootPosition);
+  refs.root.rotation.set(...pose.rootRotation);
+
+  const bones: Partial<Record<BoneKey, [number, number, number]>> = {
+    ...pose.bones,
+  };
+
+  // bird-dog: alternating contralateral extension
+  if (moveKey === "bird-dog") {
+    const phase = Math.sin(t * (Math.PI / 8));
+    const rightReach = phase >= 0;
+    if (rightReach) {
+      bones.rightArm = [-2.72, 0.02, 0];
+      bones.rightForeArm = [0.05, 0, 0];
+      bones.leftUpLeg = [2.24, 0, 0];
+      bones.leftLeg = [-1.02, 0, 0];
+      bones.leftFoot = [0.12, 0, 0];
+      bones.leftArm = [-1.38, 0, 0];
+      bones.rightUpLeg = [1.62, 0, 0];
+      bones.rightLeg = [-1.36, 0, 0];
+    } else {
+      bones.leftArm = [-2.72, 0.02, 0];
+      bones.leftForeArm = [0.05, 0, 0];
+      bones.rightUpLeg = [2.24, 0, 0];
+      bones.rightLeg = [-1.02, 0, 0];
+      bones.rightFoot = [0.12, 0, 0];
+      bones.rightArm = [-1.38, 0, 0];
+      bones.leftUpLeg = [1.62, 0, 0];
+      bones.leftLeg = [-1.36, 0, 0];
     }
-    void video.play().catch(() => {});
+  }
+
+  // breath / decomp: subtle thoracic lift cycle
+  if (moveKey === "breath" || moveKey === "decomp") {
+    const cycle = (Math.sin((t / 6) * Math.PI * 2 - Math.PI / 2) + 1) / 2;
+    const chestLift = 0.035 * cycle;
+    bones.spine1 = [(bones.spine1?.[0] ?? 0) + chestLift, 0, 0];
+    bones.spine2 = [(bones.spine2?.[0] ?? 0) + chestLift * 0.8, 0, 0];
+    refs.root.position.set(
+      pose.rootPosition[0],
+      pose.rootPosition[1] + cycle * 0.01,
+      pose.rootPosition[2],
+    );
+  }
+
+  (Object.keys(BONES) as BoneKey[]).forEach((key) => {
+    const bone = refs.byKey[key];
+    const bind = refs.bind[key];
+    const euler = bones[key];
+    if (!bone || !bind || !euler) return;
+    setBoneEuler(bone, bind, euler);
+  });
+}
+
+/* ---------- bone discovery on a loaded GLB ---------- */
+
+function findBone(root: THREE.Object3D, target: string): THREE.Object3D | null {
+  let found: THREE.Object3D | null = null;
+  const want = target.replace(/^mixamorig:?/i, "");
+  root.traverse((o) => {
+    if (found) return;
+    const name = o.name.replace(/^mixamorig:?/i, "");
+    if (name === want) found = o;
+  });
+  return found;
+}
+
+function captureBones(scene: THREE.Object3D, rootGroup: THREE.Object3D): BoneRefs {
+  const byKey: Partial<Record<BoneKey, THREE.Object3D>> = {};
+  const bind: Partial<Record<BoneKey, THREE.Quaternion>> = {};
+  (Object.entries(BONES) as [BoneKey, string][]).forEach(([key, name]) => {
+    const b = findBone(scene, name);
+    if (b) {
+      byKey[key] = b;
+      bind[key] = b.quaternion.clone();
+    }
+  });
+  return { byKey, bind, root: rootGroup };
+}
+
+/* ---------- module-level model cache ---------- */
+
+let cachedGLB: Promise<THREE.Object3D> | null = null;
+function loadModel(): Promise<THREE.Object3D> {
+  if (cachedGLB) return cachedGLB;
+  cachedGLB = new Promise((resolve, reject) => {
+    const loader = new GLTFLoader();
+    loader.load(
+      MODEL_URL,
+      (gltf) => resolve(gltf.scene),
+      undefined,
+      (err) => reject(err),
+    );
+  });
+  return cachedGLB;
+}
+
+/* ---------- React component ---------- */
+
+export function MovementDemo({
+  moveKey,
+  paused = false,
+  className,
+  style,
+}: MovementDemoProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  // Hold the latest props in refs so the long-lived render loop sees them
+  // without restart on every prop change.
+  const moveKeyRef = useRef(moveKey);
+  const pausedRef = useRef(paused);
+  useEffect(() => {
+    moveKeyRef.current = moveKey;
+  }, [moveKey]);
+  useEffect(() => {
+    pausedRef.current = paused;
   }, [paused]);
 
-  return (
-    <video
-      ref={ref}
-      className="bs-live-demo__video"
-      data-ready={ready ? "true" : "false"}
-      poster={spec.poster}
-      autoPlay={!paused}
-      muted
-      loop
-      playsInline
-      preload="metadata"
-      onCanPlay={onReady}
-      onLoadedData={onReady}
-    >
-      <source src={spec.videoMp4} type="video/mp4" />
-      <source src={spec.videoWebm} type="video/webm" />
-    </video>
-  );
-}
-
-function SpriteLoop({ spec }: { spec: MoveSpec }) {
-  return (
-    <div
-      className={`bs-live-demo__sprite bs-live-demo__sprite--${spec.cadence}`}
-      style={
-        {
-          "--sprite-lg": `url(${spec.sprite})`,
-          "--sprite-sm": `url(${spec.spriteSmall})`,
-          "--cycle": `${spec.cycleSeconds}s`,
-        } as CSSProperties
-      }
-      role="img"
-      aria-label={`${spec.title}: ${spec.role}`}
-    >
-      <div className="bs-live-demo__frame bs-live-demo__frame--0" />
-      <div className="bs-live-demo__frame bs-live-demo__frame--1" />
-      <div className="bs-live-demo__frame bs-live-demo__frame--2" />
-      <div className="bs-live-demo__frame bs-live-demo__frame--3" />
-    </div>
-  );
-}
-
-export function MovementDemo({ moveKey, paused = false, className, style }: MovementDemoProps) {
-  const spec = MOVES[moveKey];
-  const hasVideo = useVideoAvailability(spec);
-  const [videoReady, setVideoReady] = useState(false);
-
   useEffect(() => {
-    setVideoReady(false);
-  }, [moveKey]);
+    const container = containerRef.current;
+    if (!container) return;
 
-  const displayMode = videoReady ? "video loop" : "motion study";
+    const width = container.clientWidth || 480;
+    const height = container.clientHeight || 360;
+
+    // Scene
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(CREAM);
+    scene.fog = new THREE.Fog(CREAM, 5.5, 10);
+
+    // Camera
+    const camera = new THREE.PerspectiveCamera(34, width / height, 0.1, 100);
+    camera.position.set(2.4, 1.1, 1.8);
+    camera.lookAt(0, 0.5, 0);
+
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+    renderer.setSize(width, height);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    container.appendChild(renderer.domElement);
+
+    // Lights
+    scene.add(new THREE.AmbientLight(0xfff3df, 1.1));
+    const key = new THREE.DirectionalLight(0xfff1dc, 1.5);
+    key.position.set(2.8, 4.8, 2.6);
+    key.castShadow = true;
+    key.shadow.mapSize.set(1024, 1024);
+    key.shadow.bias = -0.0003;
+    key.shadow.camera.left = -3;
+    key.shadow.camera.right = 3;
+    key.shadow.camera.top = 3;
+    key.shadow.camera.bottom = -3;
+    scene.add(key);
+    const fill = new THREE.DirectionalLight(0xb88d7a, 0.42);
+    fill.position.set(-2.2, 2.2, -1.4);
+    scene.add(fill);
+
+    // Paper floor
+    const floor = new THREE.Mesh(
+      new THREE.PlaneGeometry(8, 6),
+      new THREE.MeshStandardMaterial({ color: PAPER, roughness: 1, metalness: 0 }),
+    );
+    floor.rotation.x = -Math.PI / 2;
+    floor.receiveShadow = true;
+    scene.add(floor);
+
+    // Oxblood mat ring
+    const mat = new THREE.Mesh(
+      new THREE.RingGeometry(0.78, 1.5, 80),
+      new THREE.MeshBasicMaterial({
+        color: OXBLOOD,
+        transparent: true,
+        opacity: 0.08,
+      }),
+    );
+    mat.rotation.x = -Math.PI / 2;
+    mat.position.y = 0.002;
+    scene.add(mat);
+
+    // Optional bolster prop for supine moves
+    const bolster = new THREE.Mesh(
+      new THREE.BoxGeometry(0.48, 0.16, 0.3),
+      new THREE.MeshStandardMaterial({ color: "#d8cfbe", roughness: 1, metalness: 0 }),
+    );
+    bolster.position.set(0.52, 0.085, -0.22);
+    bolster.rotation.z = 0.06;
+    bolster.castShadow = true;
+    bolster.receiveShadow = true;
+    scene.add(bolster);
+
+    const setBolsterVisible = (mk: MoveKey) => {
+      bolster.visible = mk === "decomp" || mk === "curl-up" || mk === "breath";
+    };
+    setBolsterVisible(moveKeyRef.current);
+
+    // Figure group + GLB load
+    const figureGroup = new THREE.Group();
+    figureGroup.scale.setScalar(1.02);
+    scene.add(figureGroup);
+
+    let refs: BoneRefs | null = null;
+    let cancelled = false;
+
+    loadModel()
+      .then((sourceScene) => {
+        if (cancelled) return;
+        const clone = SkeletonUtils.clone(sourceScene);
+        clone.traverse((o) => {
+          const mesh = o as THREE.Mesh;
+          if (mesh.isMesh || (o as THREE.SkinnedMesh).isSkinnedMesh) {
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            mesh.material = new THREE.MeshStandardMaterial({
+              color: FIGURE,
+              roughness: 0.92,
+              metalness: 0.02,
+            });
+          }
+        });
+        figureGroup.add(clone);
+        refs = captureBones(clone, figureGroup);
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error("[MovementDemo] GLB load failed", err);
+      });
+
+    // Resize observer — keep canvas matching the container
+    const ro = new ResizeObserver(() => {
+      const w = container.clientWidth || 480;
+      const h = container.clientHeight || 360;
+      renderer.setSize(w, h);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    });
+    ro.observe(container);
+
+    // Animation loop
+    let t = 0;
+    let last = performance.now();
+    let raf = 0;
+    const camTarget = new THREE.Vector3(0, 0.5, 0);
+    const camPos = new THREE.Vector3();
+    const tick = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      if (!pausedRef.current) t += dt;
+
+      const mk = moveKeyRef.current;
+      setBolsterVisible(mk);
+      const pose = poseFor(mk);
+
+      // Lerp camera toward the per-move target
+      camPos.set(...pose.camera.position);
+      // Smooth approach (15%/frame at 60fps)
+      camera.position.lerp(camPos, 1 - Math.pow(0.85, dt * 60));
+      camera.fov = pose.camera.fov;
+      camera.updateProjectionMatrix();
+      camTarget.set(...pose.camera.target);
+      camera.lookAt(camTarget);
+
+      if (refs) applyPose(refs, mk, t);
+
+      renderer.render(scene, camera);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      renderer.dispose();
+      if (renderer.domElement.parentNode === container) {
+        container.removeChild(renderer.domElement);
+      }
+      // Best-effort scene teardown
+      scene.traverse((o) => {
+        const mesh = o as THREE.Mesh;
+        if (mesh.geometry) mesh.geometry.dispose();
+        const mat = mesh.material as THREE.Material | THREE.Material[] | undefined;
+        if (mat) {
+          if (Array.isArray(mat)) mat.forEach((m) => m.dispose());
+          else mat.dispose();
+        }
+      });
+    };
+  }, []);
 
   return (
     <div
-      className={["bs-live-demo", className].filter(Boolean).join(" ")}
-      data-paused={paused ? "true" : "false"}
+      ref={containerRef}
+      className={className}
       style={{
-        position: "relative",
         width: "100%",
         height: "100%",
-        minHeight: 360,
+        minHeight: 280,
+        background:
+          "radial-gradient(ellipse 90% 62% at 50% 28%, #F4EFE3 0%, #EFE7D2 62%, #E6DCC7 100%)",
+        borderRadius: 24,
         overflow: "hidden",
-        background: PAPER,
         ...style,
       }}
-    >
-      <style>{CSS}</style>
-      <div className="bs-live-demo__plate" />
-      <div className="bs-live-demo__media-shell">
-        <SpriteLoop spec={spec} />
-        {hasVideo && (
-          <VideoLoop
-            spec={spec}
-            paused={paused}
-            ready={videoReady}
-            onReady={() => setVideoReady(true)}
-          />
-        )}
-      </div>
-      <div className="bs-live-demo__chrome" aria-hidden>
-        <div className="bs-live-demo__label">
-          <span className="bs-live-demo__fig">{spec.fig}</span>
-          <span className="bs-live-demo__title">{spec.title}</span>
-        </div>
-        <div className="bs-live-demo__mode">{paused ? "paused" : displayMode}</div>
-        <div className="bs-live-demo__frames">{spec.frameHold}</div>
-        <div className="bs-live-demo__role">{spec.role}</div>
-      </div>
-    </div>
+    />
   );
 }
 

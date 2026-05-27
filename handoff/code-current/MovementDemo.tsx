@@ -36,6 +36,7 @@ const INK = "#1A1714";
 const MUTED = "#655C4F";
 const OX = "#722B2B";
 const RULE = "#D9CFB5";
+const WORKOUT_FRAME_COUNT = 4;
 
 const MOVES: Record<MoveKey, MoveSpec> = {
   "curl-up": {
@@ -166,62 +167,27 @@ const CSS = `
   position: relative;
   overflow: hidden;
   transform-origin: 50% 74%;
-  animation-duration: var(--cycle);
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  background-image: var(--sprite-lg);
+  background-size: var(--sprite-width) 100%;
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  animation-duration: var(--cycle), var(--cycle);
+  animation-timing-function: step-end, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+  animation-name: bsLiveSpriteTrack, bsStrengthBody;
+  will-change: background-position, transform;
 }
 .bs-live-demo__sprite--strength {
-  animation-name: bsStrengthBody;
+  animation-name: bsLiveSpriteTrack, bsStrengthBody;
 }
 .bs-live-demo__sprite--breath,
 .bs-live-demo__sprite--settle {
-  animation-name: bsBreathBody;
+  animation-name: bsLiveSpriteTrack, bsBreathBody;
 }
-.bs-live-demo__frame {
-  position: absolute;
-  inset: 0;
-  background-image: var(--sprite-lg);
-  background-size: 400% 100%;
-  background-repeat: no-repeat;
-  opacity: 0;
-  transform: translateZ(0);
-  animation-duration: var(--cycle);
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  will-change: opacity, transform;
-}
-.bs-live-demo__frame--0 {
-  background-position: 0% 50%;
-  opacity: 1;
-}
-.bs-live-demo__frame--1 {
-  background-position: 33.333% 50%;
-}
-.bs-live-demo__frame--2 {
-  background-position: 66.667% 50%;
-}
-.bs-live-demo__frame--3 {
-  background-position: 100% 50%;
-}
-.bs-live-demo__sprite--strength .bs-live-demo__frame--0 { animation-name: bsStrengthFrame0; }
-.bs-live-demo__sprite--strength .bs-live-demo__frame--1 { animation-name: bsStrengthFrame1; }
-.bs-live-demo__sprite--strength .bs-live-demo__frame--2 { animation-name: bsStrengthFrame2; }
-.bs-live-demo__sprite--strength .bs-live-demo__frame--3 { animation-name: bsStrengthFrame3; }
-.bs-live-demo__sprite--breath .bs-live-demo__frame--0,
-.bs-live-demo__sprite--settle .bs-live-demo__frame--0 { animation-name: bsBreathFrame0; }
-.bs-live-demo__sprite--breath .bs-live-demo__frame--1,
-.bs-live-demo__sprite--settle .bs-live-demo__frame--1 { animation-name: bsBreathFrame1; }
-.bs-live-demo__sprite--breath .bs-live-demo__frame--2,
-.bs-live-demo__sprite--settle .bs-live-demo__frame--2 { animation-name: bsBreathFrame2; }
-.bs-live-demo__sprite--breath .bs-live-demo__frame--3,
-.bs-live-demo__sprite--settle .bs-live-demo__frame--3 { animation-name: bsBreathFrame3; }
 .bs-live-demo__sprite--settle {
   opacity: 0.98;
 }
 .bs-live-demo[data-paused="true"] .bs-live-demo__sprite {
-  animation-play-state: paused;
-}
-.bs-live-demo[data-paused="true"] .bs-live-demo__frame {
   animation-play-state: paused;
 }
 .bs-live-demo__chrome {
@@ -308,47 +274,11 @@ const CSS = `
   46% { transform: translateY(-3px) scale(1.012); }
   72% { transform: translateY(1px) scale(1.004); }
 }
-@keyframes bsStrengthFrame0 {
-  0%, 8% { opacity: 1; transform: scale(1); }
-  16%, 84% { opacity: 0; transform: translateY(-1px) scale(1.006); }
-  94%, 100% { opacity: 1; transform: scale(1); }
-}
-@keyframes bsStrengthFrame1 {
-  0%, 8% { opacity: 0; transform: scale(1); }
-  16%, 25% { opacity: 1; transform: translateY(-2px) scale(1.01); }
-  34%, 70% { opacity: 0; transform: translateY(-4px) scale(1.016); }
-  78%, 86% { opacity: 1; transform: translateY(1px) scale(1.008); }
-  96%, 100% { opacity: 0; transform: scale(1); }
-}
-@keyframes bsStrengthFrame2 {
-  0%, 25% { opacity: 0; transform: translateY(-2px) scale(1.01); }
-  34%, 70% { opacity: 1; transform: translateY(-5px) scale(1.02); }
-  79%, 100% { opacity: 0; transform: translateY(1px) scale(1.008); }
-}
-@keyframes bsStrengthFrame3 {
-  0%, 68% { opacity: 0; transform: translateY(-3px) scale(1.012); }
-  80%, 88% { opacity: 1; transform: translateY(2px) scale(1.006); }
-  98%, 100% { opacity: 0; transform: scale(1); }
-}
-@keyframes bsBreathFrame0 {
-  0%, 10% { opacity: 1; transform: scale(1); }
-  22%, 88% { opacity: 0; transform: translateY(-1px) scale(1.004); }
-  98%, 100% { opacity: 1; transform: scale(1); }
-}
-@keyframes bsBreathFrame1 {
-  0%, 10% { opacity: 0; transform: scale(1); }
-  24%, 38% { opacity: 1; transform: translateY(-2px) scale(1.006); }
-  50%, 100% { opacity: 0; transform: translateY(-3px) scale(1.008); }
-}
-@keyframes bsBreathFrame2 {
-  0%, 36% { opacity: 0; transform: translateY(-2px) scale(1.006); }
-  50%, 62% { opacity: 1; transform: translateY(-4px) scale(1.012); }
-  74%, 100% { opacity: 0; transform: translateY(1px) scale(1.006); }
-}
-@keyframes bsBreathFrame3 {
-  0%, 58% { opacity: 0; transform: translateY(-2px) scale(1.006); }
-  74%, 88% { opacity: 1; transform: translateY(1px) scale(1.004); }
-  100% { opacity: 0; transform: scale(1); }
+@keyframes bsLiveSpriteTrack {
+  0%, 23% { background-position: 0% 50%; }
+  25%, 48% { background-position: 33.333333% 50%; }
+  50%, 73% { background-position: 66.666667% 50%; }
+  75%, 100% { background-position: 100% 50%; }
 }
 @media (max-width: 760px) {
   .bs-live-demo__media-shell {
@@ -372,23 +302,19 @@ const CSS = `
     max-width: none;
     text-align: left;
   }
-  .bs-live-demo__frame {
+  .bs-live-demo__sprite {
     background-image: var(--sprite-sm);
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .bs-live-demo__sprite {
     animation: none;
-  }
-  .bs-live-demo__frame {
-    animation: none;
-  }
-  .bs-live-demo__frame--0 {
-    opacity: 1;
+    background-position: 0% 50%;
   }
 }
 `;
 
+const ENABLE_VIDEO_PROBES = false;
 const videoProbeCache = new Map<string, boolean>();
 
 function useVideoAvailability(spec: MoveSpec) {
@@ -396,6 +322,11 @@ function useVideoAvailability(spec: MoveSpec) {
   const [hasVideo, setHasVideo] = useState(() => videoProbeCache.get(cacheKey) ?? false);
 
   useEffect(() => {
+    if (!ENABLE_VIDEO_PROBES) {
+      setHasVideo(false);
+      return;
+    }
+
     const cached = videoProbeCache.get(cacheKey);
     if (cached !== undefined) {
       setHasVideo(cached);
@@ -428,7 +359,7 @@ function useVideoAvailability(spec: MoveSpec) {
     };
   }, [cacheKey, spec.videoMp4, spec.videoWebm]);
 
-  return hasVideo;
+  return ENABLE_VIDEO_PROBES && hasVideo;
 }
 
 function VideoLoop({
@@ -482,17 +413,13 @@ function SpriteLoop({ spec }: { spec: MoveSpec }) {
         {
           "--sprite-lg": `url(${spec.sprite})`,
           "--sprite-sm": `url(${spec.spriteSmall})`,
+          "--sprite-width": `${WORKOUT_FRAME_COUNT * 100}%`,
           "--cycle": `${spec.cycleSeconds}s`,
         } as CSSProperties
       }
       role="img"
       aria-label={`${spec.title}: ${spec.role}`}
-    >
-      <div className="bs-live-demo__frame bs-live-demo__frame--0" />
-      <div className="bs-live-demo__frame bs-live-demo__frame--1" />
-      <div className="bs-live-demo__frame bs-live-demo__frame--2" />
-      <div className="bs-live-demo__frame bs-live-demo__frame--3" />
-    </div>
+    />
   );
 }
 

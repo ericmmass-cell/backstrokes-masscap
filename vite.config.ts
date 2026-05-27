@@ -17,5 +17,17 @@ export default defineConfig({
       // Reached through Caddy reverse proxy on the tailnet; trust the forwarded Host.
       allowedHosts: true,
     },
+    // Pre-bundle the R3F + three-stdlib chain. Without these in optimizeDeps
+    // the TanStack route-split chunk for any page that imports MovementDemo
+    // fails to evaluate with "Failed to fetch dynamically imported module"
+    // because drei lazily reaches into three-stdlib's GLTFLoader.
+    optimizeDeps: {
+      include: [
+        "three",
+        "three-stdlib",
+        "@react-three/fiber",
+        "@react-three/drei",
+      ],
+    },
   },
 });

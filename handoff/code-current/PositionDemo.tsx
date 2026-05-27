@@ -352,26 +352,16 @@ const CSS = `
   position: relative;
   overflow: hidden;
   transform-origin: 50% 68%;
-  animation: bsPositionBody var(--cycle) ease-in-out infinite;
-}
-.bs-position-demo__frame {
-  position: absolute;
-  inset: 0;
   background-image: var(--sprite-lg);
   background-size: var(--sprite-width) 100%;
+  background-position: 0% 50%;
   background-repeat: no-repeat;
-  opacity: 0;
-  transform: translateZ(0);
-  animation-duration: var(--cycle);
-  animation-delay: var(--frame-delay);
-  animation-fill-mode: both;
-  animation-name: bsPositionFrameCycle;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  will-change: opacity, transform;
+  animation:
+    bsPositionSpriteTrack var(--cycle) step-end infinite,
+    bsPositionBody var(--cycle) ease-in-out infinite;
+  will-change: background-position, transform;
 }
-.bs-position-demo[data-paused="true"] .bs-position-demo__sprite,
-.bs-position-demo[data-paused="true"] .bs-position-demo__frame {
+.bs-position-demo[data-paused="true"] .bs-position-demo__sprite {
   animation-play-state: paused;
 }
 .bs-position-demo__chrome {
@@ -436,9 +426,15 @@ const CSS = `
   28%, 64% { transform: translateY(-4px) scale(1.012); }
   84% { transform: translateY(2px) scale(1.004); }
 }
-@keyframes bsPositionFrameCycle {
-  0%, 10% { opacity: 1; transform: translateY(-2px) scale(1.01); }
-  16%, 100% { opacity: 0; transform: translateY(2px) scale(1.004); }
+@keyframes bsPositionSpriteTrack {
+  0%, 11% { background-position: 0% 50%; }
+  12.5%, 23.5% { background-position: 14.285714% 50%; }
+  25%, 36% { background-position: 28.571429% 50%; }
+  37.5%, 48.5% { background-position: 42.857143% 50%; }
+  50%, 61% { background-position: 57.142857% 50%; }
+  62.5%, 73.5% { background-position: 71.428571% 50%; }
+  75%, 86% { background-position: 85.714286% 50%; }
+  87.5%, 100% { background-position: 100% 50%; }
 }
 @media (max-width: 760px) {
   .bs-position-demo {
@@ -465,21 +461,19 @@ const CSS = `
     max-width: none;
     text-align: left;
   }
-  .bs-position-demo__frame {
+  .bs-position-demo__sprite {
     background-image: var(--sprite-sm);
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bs-position-demo__sprite,
-  .bs-position-demo__frame {
+  .bs-position-demo__sprite {
     animation: none;
-  }
-  .bs-position-demo__frame:first-child {
-    opacity: 1;
+    background-position: 0% 50%;
   }
 }
 `;
 
+const ENABLE_VIDEO_PROBES = false;
 const videoProbeCache = new Map<string, boolean>();
 const videoProbePromiseCache = new Map<string, Promise<boolean>>();
 
@@ -488,6 +482,11 @@ function useVideoAvailability(spec: PositionVisualSpec) {
   const [hasVideo, setHasVideo] = useState(() => videoProbeCache.get(cacheKey) ?? false);
 
   useEffect(() => {
+    if (!ENABLE_VIDEO_PROBES) {
+      setHasVideo(false);
+      return;
+    }
+
     const cached = videoProbeCache.get(cacheKey);
     if (cached !== undefined) {
       setHasVideo(cached);
@@ -523,7 +522,7 @@ function useVideoAvailability(spec: PositionVisualSpec) {
     };
   }, [cacheKey, spec.videoMp4, spec.videoWebm]);
 
-  return hasVideo;
+  return ENABLE_VIDEO_PROBES && hasVideo;
 }
 
 function StyleTag() {
@@ -564,20 +563,7 @@ function SpriteLayer({ spec }: { spec: PositionVisualSpec }) {
         } as CSSProperties
       }
       aria-hidden
-    >
-      {Array.from({ length: FRAME_COUNT }, (_, index) => (
-        <div
-          key={index}
-          className="bs-position-demo__frame"
-          style={
-            {
-              "--frame-delay": `${(index * spec.cycleSeconds) / FRAME_COUNT}s`,
-              backgroundPosition: `${(index / (FRAME_COUNT - 1)) * 100}% 50%`,
-            } as CSSProperties
-          }
-        />
-      ))}
-    </div>
+    />
   );
 }
 

@@ -259,13 +259,14 @@ section.plan.active { display: block; animation: fadeUp 540ms cubic-bezier(.2,.7
   border-radius: 14px; aspect-ratio: 16/10;
   display: flex; align-items: center; justify-content: center;
   padding: 0; border: 1px solid var(--rule);
-  position: relative; cursor: zoom-in; overflow: hidden;
+  position: relative; cursor: default; overflow: hidden;
   transition: transform 320ms cubic-bezier(.2,.7,.2,1), border-color 320ms ease;
 }
-.act-card .visual:hover { border-color: var(--rule-strong); transform: scale(1.012); }
+.act-card .visual:hover { border-color: var(--rule-strong); }
 .act-card .visual svg { width: 100%; height: 100%; display: block; }
 .act-card .visual .zoom-hint { position: absolute; bottom: 10px; right: 14px; z-index: 5; font-family: var(--sans); font-size: 9px; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; opacity: 0.62; transition: opacity 240ms ease; text-shadow: 0 1px 8px rgba(244,239,227,0.85); }
 .act-card .visual:hover .zoom-hint { opacity: 1; }
+.act-card .visual .zoom-hint { display: none; }
 
 .engine-demo {
   position: relative;
@@ -305,27 +306,16 @@ section.plan.active { display: block; animation: fadeUp 540ms cubic-bezier(.2,.7
   background-color: var(--cream);
   box-shadow: 0 18px 42px -30px rgba(42,38,32,0.58);
   transform-origin: 50% 68%;
-  animation: engineDemoBody var(--cycle) ease-in-out infinite;
-}
-.engine-demo__frame {
-  position: absolute;
-  inset: 0;
   background-image: var(--sprite-lg);
   background-size: var(--sprite-width) 100%;
+  background-position: 0% 50%;
   background-repeat: no-repeat;
-  opacity: 0;
-  transform: translateZ(0);
-  animation-duration: var(--cycle);
-  animation-delay: var(--frame-delay);
-  animation-fill-mode: both;
-  animation-name: engineDemoFrame;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  will-change: opacity, transform;
+  animation:
+    engineSpriteTrack var(--cycle) step-end infinite,
+    engineDemoBody var(--cycle) ease-in-out infinite;
+  will-change: background-position, transform;
 }
-.engine-demo__frame:first-child { opacity: 1; }
-.engine-demo[data-paused="true"] .engine-demo__sprite,
-.engine-demo[data-paused="true"] .engine-demo__frame {
+.engine-demo[data-paused="true"] .engine-demo__sprite {
   animation-play-state: paused;
 }
 .engine-demo__chrome {
@@ -413,9 +403,15 @@ section.plan.active { display: block; animation: fadeUp 540ms cubic-bezier(.2,.7
   28%, 64% { transform: translateY(-4px) scale(1.012); }
   84% { transform: translateY(2px) scale(1.004); }
 }
-@keyframes engineDemoFrame {
-  0%, 14% { opacity: 1; transform: translateY(-2px) scale(1.01); }
-  22%, 100% { opacity: 0; transform: translateY(2px) scale(1.004); }
+@keyframes engineSpriteTrack {
+  0%, 11% { background-position: 0% 50%; }
+  12.5%, 23.5% { background-position: 14.285714% 50%; }
+  25%, 36% { background-position: 28.571429% 50%; }
+  37.5%, 48.5% { background-position: 42.857143% 50%; }
+  50%, 61% { background-position: 57.142857% 50%; }
+  62.5%, 73.5% { background-position: 71.428571% 50%; }
+  75%, 86% { background-position: 85.714286% 50%; }
+  87.5%, 100% { background-position: 100% 50%; }
 }
 @media (max-width: 760px) {
   .engine-demo { min-height: 330px; }
@@ -430,12 +426,13 @@ section.plan.active { display: block; animation: fadeUp 540ms cubic-bezier(.2,.7
     max-width: none;
     text-align: left;
   }
-  .engine-demo__frame { background-image: var(--sprite-sm); }
+  .engine-demo__sprite { background-image: var(--sprite-sm); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .engine-demo__sprite,
-  .engine-demo__frame { animation: none; }
-  .engine-demo__frame:first-child { opacity: 1; }
+  .engine-demo__sprite {
+    animation: none;
+    background-position: 0% 50%;
+  }
 }
 
 .act-card .copy { position: relative; z-index: 1; }
@@ -600,10 +597,10 @@ footer.foot {
 @media (max-width: 580px) { .lib-grid { grid-template-columns: 1fr; } }
 .lib-card {
   background: var(--bg-elev-2); border: 1px solid var(--rule);
-  border-radius: 12px; padding: 16px; cursor: pointer;
+  border-radius: 12px; padding: 16px; cursor: default;
   transition: all 240ms ease; position: relative; overflow: hidden;
 }
-.lib-card:hover { border-color: var(--rule-strong); transform: translateY(-2px); }
+.lib-card:hover { border-color: var(--rule-strong); }
 .lib-card .thumb {
   aspect-ratio: 16/10;
   background: radial-gradient(ellipse at 30% 25%, rgba(138,101,32,0.14) 0%, transparent 55%),
@@ -742,7 +739,7 @@ svg .receiver.has-breathe { animation: breathe 4.2s ease-in-out infinite; transf
   <header class="hero">
     <div class="eyebrow">BackStroke · Position Intelligence Engine · v6</div>
     <h1 class="title">Your back should not be<br><em>the third person in bed.</em></h1>
-    <p class="tagline">Five taps. A plan that reads tonight's body. Human motion studies so you can actually see what the position is.</p>
+    <p class="tagline">Six taps. A plan that reads tonight's body. Human motion studies so you can actually see what the position is.</p>
   </header>
 
   <section class="gate" id="gate">
@@ -753,7 +750,7 @@ svg .receiver.has-breathe { animation: breathe 4.2s ease-in-out infinite; transf
       <div class="flag-list" id="flagList">
         <div class="flag" data-flag="cauda"><div class="box"></div><div class="text">Numbness in the saddle area, or any new loss of bladder or bowel control.</div></div>
         <div class="flag" data-flag="weakness"><div class="box"></div><div class="text">Progressive weakness or numbness moving down a leg, getting worse over hours or days.</div></div>
-        <div class="flag" data-flag="surgery"><div class="box"></div><div class="text">Recent back, hip, or abdominal surgery without clearance from your clinician for sexual activity.</div></div>
+        <div class="flag" data-flag="surgery"><div class="box"></div><div class="text">Recent back, pelvic, or abdominal surgery without clearance from your clinician for sexual activity.</div></div>
         <div class="flag" data-flag="systemic"><div class="box"></div><div class="text">Fever, chills, night sweats, or unexplained weight loss alongside the back pain.</div></div>
         <div class="flag" data-flag="severe"><div class="box"></div><div class="text">Severe, unrelenting pain that does not change at all with position or rest.</div></div>
         <div class="flag" data-flag="pregnancy"><div class="box"></div><div class="text">Pregnancy with bleeding, severe pain, or any complication your OB has flagged.</div></div>
@@ -878,9 +875,9 @@ bsTrack('engine.opened', { url: location.pathname });
 // =================================================================
 const positions = [
   { id:'breath_side', name:'Side-lying breath, knees stacked', role:'warm', stick:'single_side', load:0, flex:0, ext:0, rot:0, thrust:0, hip:0, floor:0, climax:false,
-    geometry:'Side-lying with a pillow between knees. One hand on lower ribs, one on lower abdomen. Inhale and let the lower ribs widen. Exhale and return to rest. No bracing — bracing is what the wrong app taught you.',
-    why:'Down-regulates the nervous system. Tells the back it does not need to guard. The best opening when the lumbar is loud, the day was long, or the back has not been asked for an opinion yet.',
-    contra:[], partnerLine:'Two minutes of breath first. I want this — I just need my back to stop holding a board meeting.' },
+    geometry:'Side-lying with a pillow between knees. One hand on lower ribs, one on lower abdomen. Inhale and let the floor drop. Exhale and return to rest. No squeezing — squeezing is what the wrong app taught you.',
+    why:'Down-trains the floor and the nervous system. Tells the body it does not need to guard. The best opening when the floor is gripping, unclear, or simply unread.',
+    contra:[], partnerLine:'Two minutes of breath first. I want this — I just need my floor to stop holding a board meeting.' },
   { id:'spoon_hold', name:'Spoon embrace, clothes optional', role:'warm', stick:'spoon_still', load:0, flex:0, ext:0, rot:0, thrust:0, hip:0, floor:0, climax:false,
     geometry:'Partner behind, knees stacked, pelvis neutral. Contact only. Slow breath together. No goal yet.',
     why:'Co-regulation. Two nervous systems syncing before either body has to organise anything mechanical.',
@@ -899,7 +896,7 @@ const positions = [
     contra:[], partnerLine:'Small. Slow. If my back starts speaking we stop and re-route.' },
   { id:'spoon_pen', name:'Spooning penetration, supported', role:'main', stick:'spoon_motion', load:1, flex:0, ext:0, rot:0, thrust:1, hip:0, floor:0, climax:true,
     geometry:'Spoon position with shallow entry. Partner controls amplitude. Pillow between knees, neutral spine.',
-    why:'Low-everything. Works for sciatica, SI irritation, low arousal, post-load fatigue, the back that survived a flight.',
+    why:'Low-everything. Works for sciatica, SI irritation, gripping floor, low arousal, post-load fatigue, the back that survived a flight.',
     contra:[], partnerLine:'Stay shallow. Stay slow. The point is not the meters covered.' },
   { id:'scissor', name:'Side-by-side scissor', role:'main', stick:'scissor', load:1, flex:0, ext:0, rot:0, thrust:1, hip:1, floor:1, climax:true,
     geometry:'Both partners on side, legs scissored. Pelvises angle toward each other with one cushion of support beneath.',
@@ -923,7 +920,7 @@ const positions = [
     contra:['extension','si_joint'], partnerLine:'Chest down. The pillows are doing my arching for me.' },
   { id:'cowgirl_up', name:'Receiver-on-top, upright', role:'dessert', stick:'on_top', load:3, flex:1, ext:1, rot:1, thrust:2, hip:1, floor:3, climax:true,
     geometry:'Receiver sits upright over partner, spine stacked, hands on partner\'s chest or thighs for support. Receiver controls rhythm and depth.',
-    why:'Highest agency position. Best when the receiver wants to drive and the lumbar is quiet enough to sit upright through it.',
+    why:'Highest agency position. Best when the receiver wants to drive and the floor is responsive enough to participate.',
     contra:['flexion','si_joint','painful_floor'], partnerLine:'I am driving. If I slow down it means slow down.' },
   { id:'rev_cowgirl', name:'Reverse receiver-on-top, supported', role:'dessert', stick:'on_top_rev', load:3, flex:1, ext:1, rot:1, thrust:2, hip:1, floor:3, climax:true,
     geometry:'Receiver on top facing away, leaning slightly forward with hands on partner\'s shins. Partner stays still.',
@@ -948,15 +945,17 @@ const positions = [
 ];
 
 const QUESTIONS = [
-  { key:'painVector', eyebrow:'Question 1 of 5', q:'Where is the <em>pain</em> tonight?', help:'Where it lives, where it travels.',
+  { key:'painVector', eyebrow:'Question 1 of 6', q:'Where is the <em>pain</em> tonight?', help:'Where it lives, where it travels.',
     options:[['right_sciatica','Right sciatica'],['left_sciatica','Left sciatica'],['central_lumbar','Central lumbar'],['si_joint','SI joint'],['hip_flexor','Hip flexor'],['piriformis','Piriformis'],['flare','Flare day'],['none','Nothing today']]},
-  { key:'painBehavior', eyebrow:'Question 2 of 5', q:'What <em>makes it worse</em>?', help:'The action your back will resist most tonight.',
+  { key:'painBehavior', eyebrow:'Question 2 of 6', q:'What <em>makes it worse</em>?', help:'The action your back will resist most tonight.',
     options:[['sitting','Sitting'],['standing','Standing'],['flexion','Bending forward'],['extension','Arching back'],['rotation','Twisting'],['unclear','Hard to tell']]},
-  { key:'index', eyebrow:'Question 3 of 5', q:'Today\'s <em>Index</em>?', help:'The load cap your back will tolerate before it joins the conversation.',
+  { key:'floorState', eyebrow:'Question 3 of 6', q:'How is the <em>pelvic floor</em>?', help:'Honest beats accurate. The floor will not be graded.',
+    options:[['gripping','Gripping'],['relaxed','Relaxed'],['leaky','Leaky'],['painful','Painful'],['unclear','Unclear']]},
+  { key:'index', eyebrow:'Question 4 of 6', q:'Today\'s <em>Index</em>?', help:'The load cap your back will tolerate before it joins the conversation.',
     options:[['green','Green'],['amber','Amber'],['red','Red'],['flare','Flare']]},
-  { key:'goal', eyebrow:'Question 4 of 5', q:'What is the <em>evening</em> for?', help:'Not a directive. A route.',
+  { key:'goal', eyebrow:'Question 5 of 6', q:'What is the <em>evening</em> for?', help:'Not a directive. A route.',
     options:[['penetrative','Penetrative'],['climax','Climax-focused'],['closeness','Closeness'],['solo','Solo'],['recovery','Recovery only']]},
-  { key:'time', eyebrow:'Question 5 of 5', q:'How much <em>time</em>?', help:'Honest about what you have, not what you wish you had.',
+  { key:'time', eyebrow:'Question 6 of 6', q:'How much <em>time</em>?', help:'Honest about what you have, not what you wish you had.',
     options:[['short','Under 10 min'],['medium','10–20 min'],['long','20–40 min'],['extended','40+ min']]}
 ];
 
@@ -1075,14 +1074,6 @@ function engineVisualKey(pos) {
   return ENGINE_VISUAL_BY_ID[pos.id] || 'supine-support';
 }
 
-function frameLayersFor(spec) {
-  return Array.from({ length: ENGINE_FRAME_COUNT }, (_, index) => {
-    const delay = (index * spec.cycleSeconds) / ENGINE_FRAME_COUNT;
-    const x = (index / (ENGINE_FRAME_COUNT - 1)) * 100;
-    return `<div class="engine-demo__frame" style="--frame-delay:${delay}s; background-position:${x}% 50%;"></div>`;
-  }).join('');
-}
-
 function demoFor(pos, variant='card') {
   const key = engineVisualKey(pos);
   const spec = ENGINE_VISUALS[key];
@@ -1095,9 +1086,7 @@ function demoFor(pos, variant='card') {
       style="--cycle:${spec.cycleSeconds}s; --sprite-lg:url('${spec.sprite}'); --sprite-sm:url('${spec.spriteSmall}'); --sprite-width:${ENGINE_FRAME_COUNT * 100}%;">
       <div class="engine-demo__plate"></div>
       <div class="engine-demo__media-shell">
-        <div class="engine-demo__sprite" aria-hidden="true">
-          ${frameLayersFor(spec)}
-        </div>
+        <div class="engine-demo__sprite" aria-hidden="true"></div>
       </div>
       <figcaption class="engine-demo__chrome">
         <div class="engine-demo__label">
@@ -1584,6 +1573,9 @@ function exclude(pos, f) {
   if (f.painBehavior === 'flexion' && pos.flex > 1) reasons.push('flexion-worsened back avoids deep flexion');
   if (f.painBehavior === 'extension' && pos.ext > 1) reasons.push('extension-worsened back avoids prone arching');
   if (f.painBehavior === 'rotation' && pos.rot > 0) reasons.push('rotation reproduces pain');
+  if (f.floorState === 'painful' && pos.floor > 0) reasons.push('painful floor needs release-first');
+  if (f.floorState === 'leaky' && pos.thrust > 1) reasons.push('amplitude unwise with a leaky floor today');
+  if (pos.contra.includes('painful_floor') && f.floorState === 'painful') reasons.push('contra-indicated for a painful floor');
   if (pos.contra.includes('sitting') && f.painBehavior === 'sitting') reasons.push('today\'s sitting load has already proved aggravating');
   if (pos.contra.includes('flexion') && f.painBehavior === 'flexion') reasons.push('flexion-worsened back avoids this geometry');
   if (pos.contra.includes('extension') && f.painBehavior === 'extension') reasons.push('extension-worsened back avoids this geometry');
@@ -1595,9 +1587,10 @@ function scorePos(pos, f, targetLoad) {
   let s = 10 - Math.abs(pos.load - targetLoad) * 4;
   if (f.goal === 'climax' && pos.climax) s += 4;
   if (f.goal === 'closeness' && pos.load <= 1) s += 3;
-  if (f.goal === 'solo' && pos.hip === 0) s += 2;
+  if (f.goal === 'solo' && pos.hip + pos.floor === 0) s += 2;
   if (f.goal === 'recovery' && pos.role === 'recovery') s += 8;
   if (f.goal === 'penetrative' && pos.thrust > 0 && pos.role === 'main') s += 3;
+  if (f.floorState === 'gripping' && pos.role === 'warm') s += 2;
   return s;
 }
 function freshVisualPool(candidates, excludeIds) {
@@ -1625,6 +1618,7 @@ function pickPosition(role, f, targetLoad, excludeIds=[]) {
 function suggestedDecision(actNum, f) {
   if (f.index === 'flare' || f.index === 'red') return 'hold';
   if (f.painVector === 'flare') return 'hold';
+  if (f.floorState === 'painful') return 'de';
   if (actNum === 1) return 'up';
   if (actNum === 2) return (f.index === 'green' && f.goal !== 'closeness') ? 'up' : 'hold';
   return 'hold';
@@ -1639,7 +1633,10 @@ function generatePlanSummary(f) {
   else if (f.painVector === 'hip_flexor') { ins.push('hip flexion stays small'); ins.push('no extension load on the front of the hip'); }
   else if (f.painVector === 'piriformis') { ins.push('avoid rotation'); ins.push('keep the affected hip quiet'); }
   else if (f.painVector === 'flare') { ins.push('contact only tonight'); ins.push('penetration is off the menu, not the relationship'); }
-  else { ins.push('the spine stays loose, the breath stays slow'); }
+  else { ins.push('the spine stays loose, the floor stays soft'); }
+  if (['gripping','painful','unclear'].includes(f.floorState)) ins.push('start with down-training');
+  else if (f.floorState === 'leaky') ins.push('low amplitude throughout');
+  else if (f.floorState === 'relaxed') ins.push('the warm-up can be brief');
   if (f.goal === 'climax') ins.push('the dessert is the climax, not the geometry');
   else if (f.goal === 'closeness') ins.push('the main course is closeness, not throughput');
   else if (f.goal === 'solo') ins.push('no partner choreography required');
@@ -1652,7 +1649,9 @@ function generatePlanSummary(f) {
   else if (f.painVector === 'hip_flexor' && f.painBehavior === 'sitting') closer = 'Your hip flexor has been sitting in chair traffic all day. Treat it accordingly.';
   else if (f.painVector === 'piriformis') closer = 'Your piriformis is one rotation away from drafting a strongly worded letter.';
   else if (f.painVector === 'flare' || f.index === 'flare') closer = 'The flare is management. Do not negotiate with management.';
-  else if (f.index === 'amber') closer = 'Amber Index. The plan keeps amplitude small and breath long. Trust the routing.';
+  else if (f.floorState === 'gripping') closer = 'Your floor is holding a board meeting. End the meeting before anyone has to vote.';
+  else if (f.floorState === 'painful') closer = 'A painful floor is not a moral failing. It is a stop sign with feelings.';
+  else if (f.floorState === 'leaky') closer = 'A leaky floor today means small amplitude. Trust the routing.';
   else if (f.index === 'green' && f.goal === 'climax') closer = 'Green Index says yes. The dessert is the point.';
   else if (f.index === 'green') closer = 'Green Index says yes. The spine still does not want to be a third party.';
   else if (f.index === 'red') closer = 'Red Index. Release-first is not a punishment. It is the product refusing to let optimism drive without insurance.';
@@ -1660,6 +1659,7 @@ function generatePlanSummary(f) {
 }
 function pleasureModule(actNum, f) {
   if (actNum === 1) {
+    if (['gripping','painful','unclear'].includes(f.floorState)) return 'Breath-first';
     if (f.goal === 'closeness') return 'Touch-first';
     if (['right_sciatica','left_sciatica','si_joint','hip_flexor','piriformis','central_lumbar'].includes(f.painVector)) return 'Angle-first';
     return 'Breath-first';
@@ -1910,11 +1910,6 @@ function bindBackButtons(scope) {
 function bindZoom(scope) {
   (scope || document).querySelectorAll('.visual:not([data-zoom-bound])').forEach(el => {
     el.setAttribute('data-zoom-bound','1');
-    el.addEventListener('click', () => {
-      const id = el.dataset.zoomPos;
-      const pos = positions.find(p => p.id === id);
-      if (pos) openZoom(pos);
-    });
   });
 }
 
@@ -2097,12 +2092,7 @@ function renderLibrary(tab) {
       <h4>${pos.name}</h4>
       <div class="lib-meta">${roleLabel[pos.role]} · load ${loadName(pos.load)}</div>
     </div>`).join('');
-  grid.querySelectorAll('.lib-card').forEach(el => {
-    el.addEventListener('click', () => {
-      const pos = positions.find(p => p.id === el.dataset.zoomPos);
-      if (pos) openZoom(pos);
-    });
-  });
+  grid.querySelectorAll('.lib-card').forEach(el => el.setAttribute('data-zoom-bound','1'));
 }
 function closeZoom() { $('#zoomBg').classList.remove('active'); }
 

@@ -34,7 +34,7 @@ const PROTOCOL: Move[] = [
     secs: 120,
     moveKey: "curl-up",
     formNotes: [
-      "20° only · chin tucks, lumbar stays flat",
+      "Small lift · neck long · shoulder blades lighten",
       "Hands beneath the lumbar arch",
       "One knee bent · other leg long",
       "Exhale on the hold · 8 sec",
@@ -44,7 +44,7 @@ const PROTOCOL: Move[] = [
     ref: "B.01b",
     label: "Side plank",
     dose: "4 reps · 8 sec hold each side",
-    cue: "Side bridge. Ribs stacked. Hips quiet. The floor is not an enemy. It is a witness.",
+    cue: "Side bridge. Ribs stacked. Hips quiet. The mat is not an enemy. It is a witness.",
     secs: 180,
     moveKey: "side-plank",
     formNotes: [
@@ -73,28 +73,28 @@ const PROTOCOL: Move[] = [
 const DOWN_TRAIN: Move[] = [
   {
     ref: "F.01a",
-    label: "4-7-8 breath",
-    dose: "4 cycles",
-    cue: "Inhale 4, hold 7, exhale 8. If you can't hold 7, scale to 4-4-4. The parasympathetic switch.",
+    label: "Diaphragmatic breath",
+    dose: "10 slow breaths",
+    cue: "Inhale. Lower ribs widen, lower abdomen rises. Exhale. Everything returns to rest. The cheapest down-regulator the autonomic nervous system has, and nobody sells a subscription for it.",
     secs: 150,
     moveKey: "breath",
     formNotes: [
-      "Spine long · jaw soft",
-      "Inhale nose · 4 sec",
-      "Hold · 7 sec · don't strain",
-      "Exhale mouth · 8 sec · audible if it helps",
+      "One hand on lower ribs · one on lower abdomen",
+      "Inhale ~3 sec · lower abdomen rises",
+      "Ribs widen laterally · not just upward",
+      "Exhale ~3 sec · slow as you can stand",
     ],
   },
   {
     ref: "F.01b",
-    label: "Reverse kegel + diaphragm drop",
+    label: "Reverse kegel",
     dose: "10 slow breaths",
     cue: "Inhale. Let the floor drop. Exhale. Let it return. If you are trying hard, you are doing the wrong assignment with admirable intensity.",
     secs: 120,
     moveKey: "reverse-kegel",
     formNotes: [
       "The drop is the rep · not the lift",
-      "Belly rises on the inhale",
+      "Lower abdomen rises on inhale",
       "Floor lengthens · do not contract",
       "Passive return on exhale · don't push",
     ],
@@ -103,12 +103,12 @@ const DOWN_TRAIN: Move[] = [
     ref: "B.04m",
     label: "Supported decompression",
     dose: "Hold, breathe through it",
-    cue: "Pillow under the knees. Arms overhead, palms up. No mat sold separately.",
+    cue: "Pillow or rolled towel under the knees. Arms relaxed at sides. No mat sold separately.",
     secs: 90,
     moveKey: "decomp",
     formNotes: [
-      "Arms overhead · palms up · no shrug",
-      "Pillow under the knees",
+      "Arms relaxed at sides · palms easy",
+      "Pillow or roll under the knees",
       "Lumbar floats · don't flatten it",
       "Breathe through the position · 90 sec",
     ],
@@ -120,7 +120,7 @@ const mmss = (s: number) =>
 
 const QUOTE_INTERVAL = 18;
 
-/* ───────── 3D demo panel with form notes alongside ───────── */
+/* ───────── Workout demo panel with form notes alongside ───────── */
 
 function DemoPanel({
   move,
@@ -135,11 +135,6 @@ function DemoPanel({
 }) {
   return (
     <div className="relative w-full h-full overflow-hidden grid grid-cols-12">
-      {/* Plate column. Cream paper background so the engraving sits on
-          its own bed. The figure has its own header (FIG. / title / sub)
-          and cue line at the bottom — no need to overlay them again. We
-          only pin one small "move N of total" chip in the corner so the
-          page knows where it is in the sequence. */}
       <div className="col-span-12 md:col-span-8 relative" style={{ background: "#F4EFE3" }}>
         <HumanFigure moveKey={move.moveKey} paused={paused} />
       </div>
@@ -166,10 +161,10 @@ function DemoPanel({
         </ul>
         <div className="mt-auto pt-4 border-t border-border">
           <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground">
-            ◆ Schematic · {paused ? "paused" : "breath-paced"}
+            ◆ Demo · {paused ? "paused" : "looping"}
           </p>
           <p className="font-serif-display text-xs italic text-muted-foreground mt-2 leading-snug">
-            The figure is the rhythm. The form is in the notes on the right. Real video lands when a clinician has reviewed every cue.
+            The movement is shown on the left. The form checkpoints stay here so the body gets to be the body.
           </p>
         </div>
       </aside>
