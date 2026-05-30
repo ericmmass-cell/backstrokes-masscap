@@ -74,14 +74,103 @@ export function maxLoadForIndex(index: number): number {
   return 5;
 }
 
-/**
- * Surface the three positions safest for the current Index.
- * Ranks by: lumbar load ascending, then breath access descending.
+/* ───────── Role-aware lumbar load ─────────
+ *
+ * The same position loads the two partners' backs very differently. In
+ * supine missionary the receiving partner lies supported while the
+ * penetrating partner's lumbar does the thrusting; cowgirl flips it; a
+ * standing squat punishes both. So "whose back is working" depends on
+ * your role tonight.
+ *
+ * LOAD_BEARER[id] names whose lumbar carries the headline load (the
+ * catalogued `lumbarLoad`). The other role gets the easier side.
+ * "shared" means both carry it (stacked-spine or both-standing geometry)
+ * and neither gets a discount. Classified by body geometry from each
+ * position's name.
  */
-export function matchToTodaysBack(index: number, count = 3): Position[] {
+export type Role = "penetrator" | "receiver" | "either";
+
+const LOAD_BEARER: Record<string, "penetrator" | "receiver" | "shared"> = {
+  p01: "shared",     // side-lying spoons — both side-lying, both quiet
+  p02: "penetrator", // supine wedge — receiver supported
+  p03: "penetrator", // supine missionary — receiver supine
+  p04: "penetrator", // side-lying T — partner kneeling does the work
+  p05: "shared",     // seated lap, both upright
+  p06: "penetrator", // supine on bolster — receiver supported
+  p07: "shared",     // side-by-side facing
+  p08: "receiver",   // standing, receiver bent over support
+  p09: "receiver",   // quadruped, forearms down
+  p10: "receiver",   // quadruped, chest on bolster
+  p11: "receiver",   // reverse cowgirl — receiver on top
+  p12: "receiver",   // cowgirl upright — receiver on top
+  p13: "penetrator", // modified missionary, stirrups — receiver supine
+  p14: "shared",     // side-lying scissor
+  p15: "shared",     // standing, both upright, wall
+  p16: "penetrator", // edge-of-bed, receiver supine
+  p17: "shared",     // lap-sitting, both upright
+  p18: "penetrator", // side-lying stirrup — receiver side-lying quiet
+  p19: "receiver",   // doggy on the bed — receiver in quadruped
+  p22: "penetrator", // supine double-pillow — receiver supported
+  p23: "shared",     // side-lying, receiver wedge — both side-lying
+  p24: "shared",     // standing supported squat — both work
+  p25: "receiver",   // supine knees-to-chest — receiver's deep flexion
+  p26: "penetrator", // edge-of-bed, receiver standing, partner kneels
+  p27: "receiver",   // cowgirl leaning back — receiver on top
+  p28: "shared",     // side-by-side spooning
+  p29: "penetrator", // supine legs straight — receiver supine
+  p30: "receiver",   // quadruped, hands on headboard
+  p31: "penetrator", // couch edge, receiver reclined
+  p32: "receiver",   // standing, receiver bent over counter
+  p33: "receiver",   // prone, pillow under hips — receiver prone
+  p34: "penetrator", // supine, partner kneeling — receiver does nothing
+  p35: "shared",     // cradle-sitting, both wrapped
+  p36: "shared",     // side-lying, top leg back
+  p37: "receiver",   // squatting over partner — receiver on top
+  p38: "penetrator", // supine one knee bent — receiver supine
+  p39: "shared",     // standing face-to-face, low squat
+};
+
+export function loadBearerFor(p: Position): "penetrator" | "receiver" | "shared" {
+  return LOAD_BEARER[p.id] ?? "shared";
+}
+
+/** Lumbar load for a given role. "either" (depends on the day) returns
+ *  the cautious headline load so nothing unsafe slips through. */
+export function roleLoad(p: Position, role: Role): number {
+  if (role === "either") return p.lumbarLoad;
+  const bearer = loadBearerFor(p);
+  if (bearer === "shared") return p.lumbarLoad;
+  const youBearIt =
+    (role === "penetrator" && bearer === "penetrator") ||
+    (role === "receiver" && bearer === "receiver");
+  return youBearIt ? p.lumbarLoad : Math.max(1, p.lumbarLoad - 2);
+}
+
+/** One-line, role-aware read on whose back is working. */
+export function roleLoadNote(p: Position, role: Role): string {
+  const bearer = loadBearerFor(p);
+  if (bearer === "shared") return "Shared load. both spines work here.";
+  if (role === "either") {
+    return bearer === "penetrator"
+      ? "The penetrating partner's back carries this one."
+      : "The receiving partner's back carries this one.";
+  }
+  const youBearIt =
+    (role === "penetrator" && bearer === "penetrator") ||
+    (role === "receiver" && bearer === "receiver");
+  return youBearIt
+    ? "Your back is the one working here. mind the cap."
+    : "Your back gets the easier side here.";
+}
+
+/**
+ * Surface the three positions safest for the current Index and role.
+ * Ranks by: role-aware lumbar load ascending, then breath access descending.
+ */
+export function matchToTodaysBack(index: number, count = 3, role: Role = "either"): Position[] {
   const cap = maxLoadForIndex(index);
   return [...POSITIONS]
-    .filter((p) => p.lumbarLoad <= cap)
-    .sort((a, b) => a.lumbarLoad - b.lumbarLoad || b.breathAccess - a.breathAccess)
+    .filter((p) => roleLoad(p, role) <= cap)
+    .sort((a, b) => roleLoad(a, role) - roleLoad(b, role) || b.breathAccess - a.breathAccess)
     .slice(0, count);
 }
