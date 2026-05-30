@@ -8,7 +8,7 @@ import {
 } from "@/lib/distractions";
 import { HumanFigure } from "@/components/HumanFigure";
 
-type MoveKey = "curl-up" | "side-plank" | "bird-dog" | "breath" | "reverse-kegel" | "decomp";
+type MoveKey = "curl-up" | "side-plank" | "bird-dog" | "breath" | "decomp";
 
 export const Route = createFileRoute("/session")({
   component: SessionPlayer,
@@ -70,47 +70,38 @@ const PROTOCOL: Move[] = [
   },
 ];
 
+/* Spine-neutral core + posterior chain. moveKey stays breath/decomp
+ * (the Pictogram art keys); the displayed moves are Dead bug and Glute
+ * bridge — McGill-family back-rehab moves with clean matching
+ * illustrations. The old reverse-kegel down-train move was removed
+ * with the pelvic-floor scope cut. */
 const DOWN_TRAIN: Move[] = [
   {
     ref: "F.01a",
-    label: "Diaphragmatic breath",
-    dose: "10 slow breaths",
-    cue: "Inhale. Lower ribs widen, lower abdomen rises. Exhale. Everything returns to rest. The cheapest down-regulator the autonomic nervous system has, and nobody sells a subscription for it.",
+    label: "Dead bug",
+    dose: "6 reps · alternating",
+    cue: "Supine, knees stacked over the hips. Lower one heel and the opposite hand toward the floor, slowly. The lower back stays pinned the whole time. Spine moves a millimetre and you stop the rep.",
     secs: 150,
     moveKey: "breath",
     formNotes: [
-      "One hand on lower ribs · one on lower abdomen",
-      "Inhale ~3 sec · lower abdomen rises",
-      "Ribs widen laterally · not just upward",
-      "Exhale ~3 sec · slow as you can stand",
+      "Lower back glued to the floor",
+      "Opposite arm and leg · slowly",
+      "Exhale as the limbs lower",
+      "Stop the rep before the back arches",
     ],
   },
   {
     ref: "F.01b",
-    label: "Reverse kegel",
-    dose: "10 slow breaths",
-    cue: "Inhale. Let the floor drop. Exhale. Let it return. If you are trying hard, you are doing the wrong assignment with admirable intensity.",
+    label: "Glute bridge",
+    dose: "8 reps · 5 sec hold",
+    cue: "Knees bent, feet flat. Drive through the heels and lift the hips until shoulder, hip, and knee stack in a line. Squeeze at the top, then lower one vertebra at a time.",
     secs: 120,
-    moveKey: "reverse-kegel",
-    formNotes: [
-      "The drop is the rep · not the lift",
-      "Lower abdomen rises on inhale",
-      "Floor lengthens · do not contract",
-      "Passive return on exhale · don't push",
-    ],
-  },
-  {
-    ref: "B.04m",
-    label: "Supported decompression",
-    dose: "Hold, breathe through it",
-    cue: "Pillow or rolled towel under the knees. Arms relaxed at sides. No mat sold separately.",
-    secs: 90,
     moveKey: "decomp",
     formNotes: [
-      "Arms relaxed at sides · palms easy",
-      "Pillow or roll under the knees",
-      "Lumbar floats · don't flatten it",
-      "Breathe through the position · 90 sec",
+      "Push through the heels · not the toes",
+      "Lift from the glutes · not the lower back",
+      "Ribs stay down · no arching at the top",
+      "Lower slow · one vertebra at a time",
     ],
   },
 ];
