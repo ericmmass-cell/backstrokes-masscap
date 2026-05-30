@@ -59,11 +59,33 @@ function Score({ v }: { v: number }) {
   );
 }
 
+/**
+ * Map a library position to one of the real Seedfeeder illustrations
+ * by keyword. The library has ~50 entries; we have 8 illustrations, so
+ * several positions share the closest-matching figure. Better a correct
+ * family match than a broken/empty card.
+ */
+function illustrationFor(p: Position): PictogramKey {
+  const n = p.name.toLowerCase();
+  if (p.category === "solo") return "supine-bolster";
+  if (/scissor/.test(n)) return "scissor";
+  if (/edge|edge-of-bed|bed edge/.test(n)) return "edge-bed";
+  if (/cowgirl|on top|on-top|straddl|riding|astride/.test(n)) return "cowgirl-upright";
+  if (/doggy|rear|quadruped|all fours|all-fours|from behind|kneeling behind/.test(n)) return "doggy-supported";
+  if (/seated|lap|chair|sitting|straddle.*seated/.test(n)) return "seated-lap";
+  if (/t-position|t-shape|perpendicular|right angle/.test(n)) return "side-T";
+  if (/spoon|side-lying|side lying|side-by-side|lateral/.test(n)) return "spoon";
+  if (/missionary|supine|wedge|back|bolster|knees|reclin|flat/.test(n)) return "supine-knees-up";
+  return "supine-knees-up";
+}
+
 function PositionRow({ p }: { p: Position }) {
   const cat = p.category.toUpperCase();
   return (
-    <li className="bg-background flex flex-col">
-      <PositionDemo positionId={p.id} />
+    <li className="bg-background flex flex-col overflow-hidden rounded-2xl border border-border">
+      <div style={{ aspectRatio: "4 / 3" }}>
+        <Pictogram positionKey={illustrationFor(p)} />
+      </div>
 
       <div className="p-6 md:p-7 flex flex-col">
         {/* Eyebrow + ID */}
