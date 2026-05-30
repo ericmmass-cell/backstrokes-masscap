@@ -518,18 +518,11 @@ export function Pictogram({
       </div>
     );
   }
-  // Exercises
-  const ExerciseComp =
-    positionKey === "curl-up" ? CurlUp :
-    positionKey === "side-plank" ? SidePlank :
-    positionKey === "bird-dog" ? BirdDog :
-    positionKey === "breath" ? Breath :
-    positionKey === "decomp" ? Decomp :
-    null;
-  if (ExerciseComp) {
+  // Exercises — real recolored illustrations
+  if (EXERCISE_META[positionKey]) {
     return (
       <div className={className} style={{ width: "100%", height: "100%", ...style }}>
-        <ExerciseComp />
+        <IllustratedExercise exerciseKey={positionKey} />
       </div>
     );
   }
