@@ -60,23 +60,82 @@ function Score({ v }: { v: number }) {
 }
 
 /**
- * Map a library position to one of the real Seedfeeder illustrations
- * by keyword. The library has ~50 entries; we have 8 illustrations, so
- * several positions share the closest-matching figure. Better a correct
- * family match than a broken/empty card.
+ * Explicit position → illustration map, hand-assigned by id.
+ *
+ * We have 8 real Seedfeeder illustrations (plus one hand-drawn solo
+ * figure) for 40 catalogued positions, so each illustration stands in
+ * for its whole geometric FAMILY. Keyword matching was misfiring badly
+ * ("Supine with wEDGE" matched /edge/ and drew the edge-of-bed couple),
+ * so every entry is now assigned by hand to the figure that actually
+ * shows its body geometry: who is supine vs. side-lying vs. on top vs.
+ * on hands-and-knees, and where the spine load sits.
+ *
+ * Where a position has no true match in the set (standing, prone), it
+ * borrows the nearest readable geometry and the card's name + scores +
+ * note carry the specifics.
  */
+const ILLUSTRATION_BY_ID: Record<string, PictogramKey> = {
+  // Side-lying / spooning (one partner behind, both on their sides)
+  p01: "spoon",          // Side-lying spoons, top knee supported
+  p23: "spoon",          // Side-lying, receiver supported by wedge
+  p28: "spoon",          // Side-by-side, facing same direction, spooning
+  p36: "spoon",          // Side-lying, top leg straight back
+
+  // Supine on the back (missionary family, knees up, wedges, bolsters)
+  p02: "supine-knees-up", // Supine with wedge under pelvis
+  p03: "supine-knees-up", // Supine, knees over pillow, missionary
+  p06: "supine-knees-up", // Supine, hips elevated on bolster
+  p13: "supine-knees-up", // Modified missionary, legs in stirrups
+  p22: "supine-knees-up", // Supine, double-pillow lumbar support
+  p25: "supine-knees-up", // Supine, both knees pulled to chest
+  p29: "supine-knees-up", // Supine, legs straight, ankles together
+  p33: "supine-knees-up", // Lying on stomach, pillow under hips (nearest lying-flat)
+  p34: "supine-knees-up", // Supine, partner kneeling, no lumbar load
+  p38: "supine-knees-up", // Supine, one knee bent and externally rotated
+
+  // Side-lying T / lifted-leg geometry
+  p04: "side-T",          // Side-lying, T-position
+  p18: "side-T",          // Side-lying, top leg in handheld stirrup
+
+  // Side-lying scissor / interlocked legs, perpendicular
+  p07: "scissor",         // Side-by-side, facing, knees interlocked
+  p14: "scissor",         // Side-lying, scissor
+
+  // Receiver on top (cowgirl / reverse / squat-over)
+  p11: "cowgirl-upright", // Reverse cowgirl, receiving partner reclining
+  p12: "cowgirl-upright", // Cowgirl, upright
+  p27: "cowgirl-upright", // Cowgirl, leaning back on partner's thighs
+  p37: "cowgirl-upright", // Squatting over partner
+
+  // Quadruped / rear-entry (hands-and-knees, bent over support)
+  p08: "doggy-supported", // Standing, receiving partner bent over support
+  p09: "doggy-supported", // Quadruped, forearms down
+  p10: "doggy-supported", // Quadruped, chest on bolster
+  p19: "doggy-supported", // Doggy on the bed, knees on pillow
+  p30: "doggy-supported", // Quadruped, hands on headboard
+  p32: "doggy-supported", // Standing, hands on counter, partner behind
+
+  // Edge-of-bed / reclined-at-edge
+  p16: "edge-bed",        // Edge-of-bed, receiving partner supine
+  p26: "edge-bed",        // Edge-of-bed, receiver standing, partner kneeling
+  p31: "edge-bed",        // Couch edge, receiving partner reclined
+
+  // Seated / upright face-to-face (lap, cradle, standing-upright)
+  p05: "seated-lap",      // Seated, partner on lap, both upright
+  p15: "seated-lap",      // Standing, both upright, back to wall
+  p17: "seated-lap",      // Lap-sitting, facing, both upright
+  p24: "seated-lap",      // Standing, supported squat with partner
+  p35: "seated-lap",      // Cradle-sitting, facing, both legs wrapped
+  p39: "seated-lap",      // Standing, both face-to-face, low partner squat
+
+  // Solo (hand-drawn supine figure)
+  p20: "supine-bolster",  // Solo, supine, knees over pillow
+  p21: "supine-bolster",  // Solo, side-lying with pillow between knees
+  p40: "supine-bolster",  // Solo, supine, breath-led arousal
+};
+
 function illustrationFor(p: Position): PictogramKey {
-  const n = p.name.toLowerCase();
-  if (p.category === "solo") return "supine-bolster";
-  if (/scissor/.test(n)) return "scissor";
-  if (/edge|edge-of-bed|bed edge/.test(n)) return "edge-bed";
-  if (/cowgirl|on top|on-top|straddl|riding|astride/.test(n)) return "cowgirl-upright";
-  if (/doggy|rear|quadruped|all fours|all-fours|from behind|kneeling behind/.test(n)) return "doggy-supported";
-  if (/seated|lap|chair|sitting|straddle.*seated/.test(n)) return "seated-lap";
-  if (/t-position|t-shape|perpendicular|right angle/.test(n)) return "side-T";
-  if (/spoon|side-lying|side lying|side-by-side|lateral/.test(n)) return "spoon";
-  if (/missionary|supine|wedge|back|bolster|knees|reclin|flat/.test(n)) return "supine-knees-up";
-  return "supine-knees-up";
+  return ILLUSTRATION_BY_ID[p.id] ?? (p.category === "solo" ? "supine-bolster" : "supine-knees-up");
 }
 
 function PositionRow({ p }: { p: Position }) {
@@ -84,7 +143,7 @@ function PositionRow({ p }: { p: Position }) {
   return (
     <li className="bg-background flex flex-col overflow-hidden rounded-2xl border border-border">
       <div style={{ aspectRatio: "4 / 3" }}>
-        <Pictogram positionKey={illustrationFor(p)} />
+        <Pictogram positionKey={illustrationFor(p)} showCaption={false} />
       </div>
 
       <div className="p-6 md:p-7 flex flex-col">

@@ -251,10 +251,12 @@ function IllustratedPosition({
   positionKey,
   loading = "lazy",
   fetchPriority = "auto",
+  showCaption = true,
 }: {
   positionKey: PictogramKey;
   loading?: ImgHTMLAttributes<HTMLImageElement>["loading"];
   fetchPriority?: "high" | "low" | "auto";
+  showCaption?: boolean;
 }) {
   const meta = POSITION_TITLES[positionKey];
   const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
@@ -266,7 +268,7 @@ function IllustratedPosition({
   const altText = `Illustration of the ${meta.title.toLowerCase()} position: ${meta.sub.toLowerCase()}.`;
 
   return (
-    <PictogramFrame caption={caption} attribution="Illus. Seedfeeder · CC-BY-SA 3.0">
+    <PictogramFrame caption={showCaption ? caption : undefined} attribution="Illus. Seedfeeder · CC-BY-SA 3.0">
       {state === "loading" && <Skeleton />}
       <img
         src={`/positions/${positionKey}.png`}
@@ -385,6 +387,7 @@ export function Pictogram({
   style,
   loading = "lazy",
   fetchPriority = "auto",
+  showCaption = true,
 }: PictogramProps) {
   const wrap = (child: React.ReactNode) => (
     <div className={className} style={{ width: "100%", height: "100%", ...style }}>
@@ -398,6 +401,7 @@ export function Pictogram({
         positionKey={positionKey}
         loading={loading}
         fetchPriority={fetchPriority}
+        showCaption={showCaption}
       />,
     );
   }
