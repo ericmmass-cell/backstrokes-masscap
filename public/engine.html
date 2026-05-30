@@ -875,9 +875,9 @@ bsTrack('engine.opened', { url: location.pathname });
 // =================================================================
 const positions = [
   { id:'breath_side', name:'Side-lying breath, knees stacked', role:'warm', stick:'single_side', load:0, flex:0, ext:0, rot:0, thrust:0, hip:0, floor:0, climax:false,
-    geometry:'Side-lying with a pillow between knees. One hand on lower ribs, one on lower abdomen. Inhale and let the floor drop. Exhale and return to rest. No squeezing — squeezing is what the wrong app taught you.',
-    why:'Down-trains the floor and the nervous system. Tells the body it does not need to guard. The best opening when the floor is gripping, unclear, or simply unread.',
-    contra:[], partnerLine:'Two minutes of breath first. I want this — I just need my floor to stop holding a board meeting.' },
+    geometry:'Side-lying with a pillow between knees. One hand on the lower ribs, one on the lower abdomen. Inhale and let the lower ribs widen. Exhale and let the breath go long. No bracing.',
+    why:'Settles the nervous system before anything is asked of the back. Tells the body it does not need to guard. The best opening when the back is loud, unclear, or simply unread.',
+    contra:[], partnerLine:'Two minutes of breath first. I want this. I just need my back to stop running the meeting.' },
   { id:'spoon_hold', name:'Spoon embrace, clothes optional', role:'warm', stick:'spoon_still', load:0, flex:0, ext:0, rot:0, thrust:0, hip:0, floor:0, climax:false,
     geometry:'Partner behind, knees stacked, pelvis neutral. Contact only. Slow breath together. No goal yet.',
     why:'Co-regulation. Two nervous systems syncing before either body has to organise anything mechanical.',
@@ -896,7 +896,7 @@ const positions = [
     contra:[], partnerLine:'Small. Slow. If my back starts speaking we stop and re-route.' },
   { id:'spoon_pen', name:'Spooning penetration, supported', role:'main', stick:'spoon_motion', load:1, flex:0, ext:0, rot:0, thrust:1, hip:0, floor:0, climax:true,
     geometry:'Spoon position with shallow entry. Partner controls amplitude. Pillow between knees, neutral spine.',
-    why:'Low-everything. Works for sciatica, SI irritation, gripping floor, low arousal, post-load fatigue, the back that survived a flight.',
+    why:'Low-everything. Works for sciatica, SI irritation, a loud lumbar, post-load fatigue, the back that survived a flight.',
     contra:[], partnerLine:'Stay shallow. Stay slow. The point is not the meters covered.' },
   { id:'scissor', name:'Side-by-side scissor', role:'main', stick:'scissor', load:1, flex:0, ext:0, rot:0, thrust:1, hip:1, floor:1, climax:true,
     geometry:'Both partners on side, legs scissored. Pelvises angle toward each other with one cushion of support beneath.',
@@ -920,8 +920,8 @@ const positions = [
     contra:['extension','si_joint'], partnerLine:'Chest down. The pillows are doing my arching for me.' },
   { id:'cowgirl_up', name:'Receiver-on-top, upright', role:'dessert', stick:'on_top', load:3, flex:1, ext:1, rot:1, thrust:2, hip:1, floor:3, climax:true,
     geometry:'Receiver sits upright over partner, spine stacked, hands on partner\'s chest or thighs for support. Receiver controls rhythm and depth.',
-    why:'Highest agency position. Best when the receiver wants to drive and the floor is responsive enough to participate.',
-    contra:['flexion','si_joint','painful_floor'], partnerLine:'I am driving. If I slow down it means slow down.' },
+    why:'Highest agency position. Best when the receiver wants to drive and the back is quiet enough to sit tall.',
+    contra:['flexion','si_joint'], partnerLine:'I am driving. If I slow down it means slow down.' },
   { id:'rev_cowgirl', name:'Reverse receiver-on-top, supported', role:'dessert', stick:'on_top_rev', load:3, flex:1, ext:1, rot:1, thrust:2, hip:1, floor:3, climax:true,
     geometry:'Receiver on top facing away, leaning slightly forward with hands on partner\'s shins. Partner stays still.',
     why:'An angle variation when the standard upright creates rotation pain or when the receiver wants more visual privacy.',
@@ -945,17 +945,15 @@ const positions = [
 ];
 
 const QUESTIONS = [
-  { key:'painVector', eyebrow:'Question 1 of 6', q:'Where is the <em>pain</em> tonight?', help:'Where it lives, where it travels.',
+  { key:'painVector', eyebrow:'Question 1 of 5', q:'Where is the <em>pain</em> tonight?', help:'Where it lives, where it travels.',
     options:[['right_sciatica','Right sciatica'],['left_sciatica','Left sciatica'],['central_lumbar','Central lumbar'],['si_joint','SI joint'],['hip_flexor','Hip flexor'],['piriformis','Piriformis'],['flare','Flare day'],['none','Nothing today']]},
-  { key:'painBehavior', eyebrow:'Question 2 of 6', q:'What <em>makes it worse</em>?', help:'The action your back will resist most tonight.',
+  { key:'painBehavior', eyebrow:'Question 2 of 5', q:'What <em>makes it worse</em>?', help:'The action your back will resist most tonight.',
     options:[['sitting','Sitting'],['standing','Standing'],['flexion','Bending forward'],['extension','Arching back'],['rotation','Twisting'],['unclear','Hard to tell']]},
-  { key:'floorState', eyebrow:'Question 3 of 6', q:'How is the <em>pelvic floor</em>?', help:'Honest beats accurate. The floor will not be graded.',
-    options:[['gripping','Gripping'],['relaxed','Relaxed'],['leaky','Leaky'],['painful','Painful'],['unclear','Unclear']]},
-  { key:'index', eyebrow:'Question 4 of 6', q:'Today\'s <em>Index</em>?', help:'The load cap your back will tolerate before it joins the conversation.',
+  { key:'index', eyebrow:'Question 3 of 5', q:'Today\'s <em>Index</em>?', help:'The load cap your back will tolerate before it joins the conversation.',
     options:[['green','Green'],['amber','Amber'],['red','Red'],['flare','Flare']]},
-  { key:'goal', eyebrow:'Question 5 of 6', q:'What is the <em>evening</em> for?', help:'Not a directive. A route.',
+  { key:'goal', eyebrow:'Question 4 of 5', q:'What is the <em>evening</em> for?', help:'Not a directive. A route.',
     options:[['penetrative','Penetrative'],['climax','Climax-focused'],['closeness','Closeness'],['solo','Solo'],['recovery','Recovery only']]},
-  { key:'time', eyebrow:'Question 6 of 6', q:'How much <em>time</em>?', help:'Honest about what you have, not what you wish you had.',
+  { key:'time', eyebrow:'Question 5 of 5', q:'How much <em>time</em>?', help:'Honest about what you have, not what you wish you had.',
     options:[['short','Under 10 min'],['medium','10–20 min'],['long','20–40 min'],['extended','40+ min']]}
 ];
 
@@ -1039,12 +1037,12 @@ const ENGINE_VISUALS = {
     sprite:'/demos/positions/squat-over.jpg', spriteSmall:'/demos/positions/squat-over-sm.jpg'
   },
   'solo-side': {
-    fig:'P.16', title:'Solo Side-Lying Breath', role:'Pillow between knees; breath before arousal',
+    fig:'P.16', title:'Solo, Side-Lying', role:'Pillow between knees; back stays neutral',
     frameHold:'side / pillow / hand / breath', cycleSeconds:2.85,
     sprite:'/demos/positions/solo-side.jpg', spriteSmall:'/demos/positions/solo-side-sm.jpg'
   },
   'solo-supine': {
-    fig:'P.17', title:'Solo Supine Breath', role:'Supported knees; breath leads arousal',
+    fig:'P.17', title:'Solo, Supine', role:'Supported knees; lumbar quiet',
     frameHold:'setup / support / inhale / settle', cycleSeconds:2.9,
     sprite:'/demos/positions/solo-supine.jpg', spriteSmall:'/demos/positions/solo-supine-sm.jpg'
   }
@@ -1573,9 +1571,6 @@ function exclude(pos, f) {
   if (f.painBehavior === 'flexion' && pos.flex > 1) reasons.push('flexion-worsened back avoids deep flexion');
   if (f.painBehavior === 'extension' && pos.ext > 1) reasons.push('extension-worsened back avoids prone arching');
   if (f.painBehavior === 'rotation' && pos.rot > 0) reasons.push('rotation reproduces pain');
-  if (f.floorState === 'painful' && pos.floor > 0) reasons.push('painful floor needs release-first');
-  if (f.floorState === 'leaky' && pos.thrust > 1) reasons.push('amplitude unwise with a leaky floor today');
-  if (pos.contra.includes('painful_floor') && f.floorState === 'painful') reasons.push('contra-indicated for a painful floor');
   if (pos.contra.includes('sitting') && f.painBehavior === 'sitting') reasons.push('today\'s sitting load has already proved aggravating');
   if (pos.contra.includes('flexion') && f.painBehavior === 'flexion') reasons.push('flexion-worsened back avoids this geometry');
   if (pos.contra.includes('extension') && f.painBehavior === 'extension') reasons.push('extension-worsened back avoids this geometry');
@@ -1587,10 +1582,9 @@ function scorePos(pos, f, targetLoad) {
   let s = 10 - Math.abs(pos.load - targetLoad) * 4;
   if (f.goal === 'climax' && pos.climax) s += 4;
   if (f.goal === 'closeness' && pos.load <= 1) s += 3;
-  if (f.goal === 'solo' && pos.hip + pos.floor === 0) s += 2;
+  if (f.goal === 'solo' && pos.hip === 0) s += 2;
   if (f.goal === 'recovery' && pos.role === 'recovery') s += 8;
   if (f.goal === 'penetrative' && pos.thrust > 0 && pos.role === 'main') s += 3;
-  if (f.floorState === 'gripping' && pos.role === 'warm') s += 2;
   return s;
 }
 function freshVisualPool(candidates, excludeIds) {
@@ -1618,7 +1612,6 @@ function pickPosition(role, f, targetLoad, excludeIds=[]) {
 function suggestedDecision(actNum, f) {
   if (f.index === 'flare' || f.index === 'red') return 'hold';
   if (f.painVector === 'flare') return 'hold';
-  if (f.floorState === 'painful') return 'de';
   if (actNum === 1) return 'up';
   if (actNum === 2) return (f.index === 'green' && f.goal !== 'closeness') ? 'up' : 'hold';
   return 'hold';
@@ -1633,10 +1626,9 @@ function generatePlanSummary(f) {
   else if (f.painVector === 'hip_flexor') { ins.push('hip flexion stays small'); ins.push('no extension load on the front of the hip'); }
   else if (f.painVector === 'piriformis') { ins.push('avoid rotation'); ins.push('keep the affected hip quiet'); }
   else if (f.painVector === 'flare') { ins.push('contact only tonight'); ins.push('penetration is off the menu, not the relationship'); }
-  else { ins.push('the spine stays loose, the floor stays soft'); }
-  if (['gripping','painful','unclear'].includes(f.floorState)) ins.push('start with down-training');
-  else if (f.floorState === 'leaky') ins.push('low amplitude throughout');
-  else if (f.floorState === 'relaxed') ins.push('the warm-up can be brief');
+  else { ins.push('the spine stays loose, the breath stays long'); }
+  if (f.painBehavior === 'flexion') ins.push('nothing that folds the lumbar');
+  else if (f.painBehavior === 'extension') ins.push('nothing that arches the lumbar');
   if (f.goal === 'climax') ins.push('the dessert is the climax, not the geometry');
   else if (f.goal === 'closeness') ins.push('the main course is closeness, not throughput');
   else if (f.goal === 'solo') ins.push('no partner choreography required');
@@ -1649,9 +1641,6 @@ function generatePlanSummary(f) {
   else if (f.painVector === 'hip_flexor' && f.painBehavior === 'sitting') closer = 'Your hip flexor has been sitting in chair traffic all day. Treat it accordingly.';
   else if (f.painVector === 'piriformis') closer = 'Your piriformis is one rotation away from drafting a strongly worded letter.';
   else if (f.painVector === 'flare' || f.index === 'flare') closer = 'The flare is management. Do not negotiate with management.';
-  else if (f.floorState === 'gripping') closer = 'Your floor is holding a board meeting. End the meeting before anyone has to vote.';
-  else if (f.floorState === 'painful') closer = 'A painful floor is not a moral failing. It is a stop sign with feelings.';
-  else if (f.floorState === 'leaky') closer = 'A leaky floor today means small amplitude. Trust the routing.';
   else if (f.index === 'green' && f.goal === 'climax') closer = 'Green Index says yes. The dessert is the point.';
   else if (f.index === 'green') closer = 'Green Index says yes. The spine still does not want to be a third party.';
   else if (f.index === 'red') closer = 'Red Index. Release-first is not a punishment. It is the product refusing to let optimism drive without insurance.';
@@ -1659,7 +1648,7 @@ function generatePlanSummary(f) {
 }
 function pleasureModule(actNum, f) {
   if (actNum === 1) {
-    if (['gripping','painful','unclear'].includes(f.floorState)) return 'Breath-first';
+    if (f.index === 'red' || f.index === 'flare' || f.painVector === 'flare') return 'Breath-first';
     if (f.goal === 'closeness') return 'Touch-first';
     if (['right_sciatica','left_sciatica','si_joint','hip_flexor','piriformis','central_lumbar'].includes(f.painVector)) return 'Angle-first';
     return 'Breath-first';

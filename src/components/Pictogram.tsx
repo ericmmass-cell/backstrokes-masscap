@@ -1,25 +1,24 @@
 /**
- * Pictogram — sex position + exercise visualization.
+ * Pictogram — sex-position + exercise visualization.
  *
- * Sex positions: real CC-BY-SA illustrations from Wikimedia Commons
- * (User:Seedfeeder), treated with CSS filters to push the colors
- * toward the BackStroke cream-paper register. Each file lives at
- * /public/positions/<key>.png. Attribution required by the license
- * is rendered in the corner of every position image.
+ * Sex positions: real CC-BY-SA 3.0 illustrations by User:Seedfeeder
+ * (Wikimedia Commons), shown clean on a cream card. Files at
+ * /public/positions/<key>.png.
  *
- * Exercises: still hand-authored SVG pictograms (PT-handout style).
- * Seedfeeder didn't draw McGill curl-up or bird-dog.
+ * Exercises: real CC-BY-SA 4.0 line-art illustrations by Pk0001
+ * (Wikimedia Commons), recolored to BackStroke's cream mat + brand
+ * ink. Files at /public/exercises/<File>.svg.
  *
- * Adding a new sex position:
- *   1. Find the Seedfeeder file on Commons
- *   2. Download to /public/positions/<position-key>.png
- *   3. Add the key to PictogramKey union
- *   4. Add an entry to POSITION_TITLES
+ * Solo position (supine-bolster): one hand-authored SVG — the set has
+ * no rest-pose illustration.
  *
- * Why this not SVG hand-drawing: Claude's hand-drawn SVG figures
- * read as blobs, not people. Seedfeeder's illustrations are real
- * anatomically-articulated humans. The user (Eric) explicitly
- * approved this register on the homepage hero.
+ * Both image families render through the same <PictogramFrame> chrome
+ * with loading skeleton + typographic error fallback, so no broken-
+ * image icon ever ships and the caption never shifts between states.
+ *
+ * History note: earlier hand-drawn SVG figures read as blobs and were
+ * rejected. Real public-domain/CC illustrations of actual humans are
+ * what demonstrate the move/position. Eric approved this register.
  */
 
 import { useState, type CSSProperties, type ImgHTMLAttributes } from "react";
@@ -40,8 +39,9 @@ export type PictogramKey =
   | "doggy-supported"
   | "scissor"
   | "seated-lap"
+  // Solo position (hand-authored SVG)
   | "supine-bolster"
-  // Exercises (hand-authored SVG)
+  // Exercises (Pk0001 SVG)
   | "curl-up"
   | "side-plank"
   | "bird-dog"
@@ -52,35 +52,13 @@ type PictogramProps = {
   positionKey: PictogramKey;
   className?: string;
   style?: CSSProperties;
-  /**
-   * "eager" for above-the-fold (homepage hero), "lazy" otherwise.
-   * Maps to the native HTMLImageElement loading attribute. Default: "lazy".
-   */
+  /** "eager" for above-the-fold (hero). Default "lazy". */
   loading?: ImgHTMLAttributes<HTMLImageElement>["loading"];
-  /**
-   * "high" for the hero image, "auto" or "low" otherwise. Hints to the
-   * browser's resource scheduler. Default: "auto".
-   */
+  /** "high" for the hero image. Default "auto". */
   fetchPriority?: "high" | "low" | "auto";
 };
 
-/* ───────── public meta accessors (used by /positions picker, alt text) ───────── */
-
-export function getPositionMeta(key: PictogramKey): { title: string; sub: string } | undefined {
-  return POSITION_TITLES[key];
-}
-
-/**
- * URLs for all illustrated (PNG-backed) positions. Use for <link rel="preload">
- * on the /positions route so picker switching is instant.
- */
-export function getIllustratedPositionUrls(): string[] {
-  return SEX_POSITION_KEYS.filter((k) => k !== "supine-bolster").map(
-    (k) => `/positions/${k}.png`,
-  );
-}
-
-/* ───────── sex positions: real illustrations ───────── */
+/* ───────── metadata ───────── */
 
 const POSITION_TITLES: Partial<Record<PictogramKey, { title: string; sub: string }>> = {
   spoon:               { title: "Spoon",                sub: "Lateral · Low spinal load" },
@@ -94,11 +72,57 @@ const POSITION_TITLES: Partial<Record<PictogramKey, { title: string; sub: string
   "supine-bolster":    { title: "Solo supine",          sub: "Hips elevated · Knees up · Acute-day default" },
 };
 
-/**
- * Card chrome shared by every position/exercise pictogram so the
- * cream-paper frame, caption row, and attribution sit in identical
- * positions regardless of what's inside.
- */
+const EXERCISE_META: Partial<
+  Record<PictogramKey, { file: string; title: string; sub: string }>
+> = {
+  "curl-up":    { file: "Crunch_exercise.svg",       title: "Curl-up",      sub: "Lumbar neutral · 20° lift only" },
+  "side-plank": { file: "Side_plank_exercise.svg",   title: "Side plank",   sub: "Hips lifted · Forearm support" },
+  "bird-dog":   { file: "Birddog_exercise.svg",      title: "Bird dog",     sub: "Opposite arm + leg · Spine still" },
+  breath:       { file: "Dead_bug_exercise.svg",     title: "Dead bug",     sub: "Supine · Spine-neutral core" },
+  decomp:       { file: "Glute_bridge_exercise.svg", title: "Glute bridge", sub: "Supine · Posterior chain" },
+};
+
+const SEX_POSITION_KEYS: PictogramKey[] = [
+  "spoon",
+  "supine-knees-up",
+  "side-T",
+  "edge-bed",
+  "cowgirl-upright",
+  "doggy-supported",
+  "scissor",
+  "seated-lap",
+];
+
+export function getPositionMeta(
+  key: PictogramKey,
+): { title: string; sub: string } | undefined {
+  return POSITION_TITLES[key];
+}
+
+export function getExerciseMeta(
+  key: PictogramKey,
+): { title: string; sub: string } | undefined {
+  const m = EXERCISE_META[key];
+  return m ? { title: m.title, sub: m.sub } : undefined;
+}
+
+/** URLs for the illustrated (PNG-backed) positions — for <link rel="preload">. */
+export function getIllustratedPositionUrls(): string[] {
+  return SEX_POSITION_KEYS.map((k) => `/positions/${k}.png`);
+}
+
+/* ───────── shared chrome ───────── */
+
+const SHIMMER_CSS = `
+  @keyframes bs-shimmer {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: -200% 0%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-bs-skeleton] { animation: none !important; }
+  }
+`;
+
 function PictogramFrame({
   children,
   caption,
@@ -159,36 +183,24 @@ function PictogramFrame({
   );
 }
 
-/** Skeleton state — shimmer-free, cream-paper-toned, matches frame. */
-function PositionSkeleton({ caption }: { caption?: string }) {
+function Skeleton() {
   return (
-    <PictogramFrame caption={caption}>
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(120deg, rgba(200,184,159,0.18) 0%, rgba(200,184,159,0.32) 50%, rgba(200,184,159,0.18) 100%)",
-          backgroundSize: "200% 100%",
-          animation: "bs-shimmer 2.4s ease-in-out infinite",
-        }}
-      />
-      <style>{`
-        @keyframes bs-shimmer {
-          0%   { background-position: 0% 0%; }
-          100% { background-position: -200% 0%; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          [data-bs-skeleton] { animation: none !important; }
-        }
-      `}</style>
-    </PictogramFrame>
+    <div
+      aria-hidden="true"
+      data-bs-skeleton
+      style={{
+        position: "absolute",
+        inset: 0,
+        background:
+          "linear-gradient(120deg, rgba(200,184,159,0.18) 0%, rgba(200,184,159,0.32) 50%, rgba(200,184,159,0.18) 100%)",
+        backgroundSize: "200% 100%",
+        animation: "bs-shimmer 2.4s ease-in-out infinite",
+      }}
+    />
   );
 }
 
-/** Fallback when the image fails to load — typographic card. */
-function PositionFallback({ meta }: { meta: { title: string; sub: string } }) {
+function Fallback({ meta }: { meta: { title: string; sub: string } }) {
   return (
     <PictogramFrame caption={`${meta.title} · ${meta.sub}`}>
       <div
@@ -209,7 +221,7 @@ function PositionFallback({ meta }: { meta: { title: string; sub: string } }) {
           style={{
             fontFamily: "Spectral, Georgia, serif",
             fontStyle: "italic",
-            fontSize: "clamp(36px, 5.5vw, 56px)",
+            fontSize: "clamp(34px, 5vw, 52px)",
             color: OXBLOOD,
             lineHeight: 1.0,
             marginBottom: 12,
@@ -233,6 +245,8 @@ function PositionFallback({ meta }: { meta: { title: string; sub: string } }) {
   );
 }
 
+/* ───────── sex positions: Seedfeeder PNGs, shown clean ───────── */
+
 function IllustratedPosition({
   positionKey,
   loading = "lazy",
@@ -245,56 +259,30 @@ function IllustratedPosition({
   const meta = POSITION_TITLES[positionKey];
   const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
 
-  // No meta = key isn't in the registry. Render a hard fallback.
-  if (!meta) {
-    return (
-      <PositionFallback
-        meta={{ title: positionKey, sub: "Unknown position key" }}
-      />
-    );
-  }
-
-  if (state === "error") {
-    return <PositionFallback meta={meta} />;
-  }
+  if (!meta) return <Fallback meta={{ title: positionKey, sub: "Unknown position key" }} />;
+  if (state === "error") return <Fallback meta={meta} />;
 
   const caption = `${meta.title} · ${meta.sub}`;
   const altText = `Illustration of the ${meta.title.toLowerCase()} position: ${meta.sub.toLowerCase()}.`;
 
   return (
-    <PictogramFrame
-      caption={caption}
-      attribution="Illus. Seedfeeder · CC-BY-SA 3.0"
-    >
-      {/* Skeleton sits behind the image and fades out when it loads.
-          Stays mounted so the caption stays in position from the start. */}
-      {state === "loading" && (
-        <div
-          aria-hidden="true"
-          data-bs-skeleton
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(120deg, rgba(200,184,159,0.18) 0%, rgba(200,184,159,0.32) 50%, rgba(200,184,159,0.18) 100%)",
-            backgroundSize: "200% 100%",
-            animation: "bs-shimmer 2.4s ease-in-out infinite",
-            transition: "opacity 220ms ease",
-          }}
-        />
-      )}
+    <PictogramFrame caption={caption} attribution="Illus. Seedfeeder · CC-BY-SA 3.0">
+      {state === "loading" && <Skeleton />}
       <img
         src={`/positions/${positionKey}.png`}
         alt={altText}
         loading={loading}
-        // React 19 / typed-as-html attr. Pass-through to the DOM.
         // @ts-expect-error — fetchpriority is the lowercase HTML attribute
         fetchpriority={fetchPriority}
         decoding="async"
-        // Intrinsic ratio so the box reserves space before the image
-        // loads — eliminates layout shift (CLS).
         width={800}
         height={600}
+        // Cache race: a cached image can finish loading before React
+        // attaches onLoad, so onLoad never fires and the figure stays
+        // at opacity 0. Resolve completeness on the ref instead.
+        ref={(el) => {
+          if (el && el.complete && el.naturalWidth > 0) setState("loaded");
+        }}
         onLoad={() => setState("loaded")}
         onError={() => setState("error")}
         style={{
@@ -305,34 +293,74 @@ function IllustratedPosition({
           objectFit: "contain",
           opacity: state === "loaded" ? 1 : 0,
           transition: "opacity 280ms ease",
-          // Show the illustration CLEAN. The previous grayscale+sepia
-          // +multiply treatment muddied the clear artwork into a brown
-          // swamp. Only a hair of warmth so it doesn't fight the cream
-          // page; the figures stay legible and demonstrate the position.
+          // Show the artwork CLEAN — a heavy grayscale+sepia+multiply
+          // treatment previously muddied it into a brown swamp. A hair
+          // of restraint only, so it doesn't fight the cream page.
           filter: "saturate(0.96) contrast(1.02)",
         }}
       />
-      <style>{`
-        @keyframes bs-shimmer {
-          0%   { background-position: 0% 0%; }
-          100% { background-position: -200% 0%; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          [data-bs-skeleton] { animation: none !important; }
-        }
-      `}</style>
+      <style>{SHIMMER_CSS}</style>
     </PictogramFrame>
   );
 }
 
-/* ───────── solo position: hand-authored SVG (no Seedfeeder file) ───────── */
+/* ───────── exercises: Pk0001 recolored SVGs ───────── */
+
+function IllustratedExercise({ exerciseKey }: { exerciseKey: PictogramKey }) {
+  const meta = EXERCISE_META[exerciseKey];
+  const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
+
+  if (!meta) return <Fallback meta={{ title: exerciseKey, sub: "Unknown exercise key" }} />;
+  if (state === "error") return <Fallback meta={{ title: meta.title, sub: meta.sub }} />;
+
+  const caption = `${meta.title} · ${meta.sub}`;
+  const altText = `Illustration demonstrating the ${meta.title.toLowerCase()}: ${meta.sub.toLowerCase()}.`;
+
+  return (
+    <PictogramFrame caption={caption} attribution="Illus. Pk0001 · CC-BY-SA 4.0">
+      {state === "loading" && <Skeleton />}
+      <img
+        src={`/exercises/${meta.file}`}
+        alt={altText}
+        loading="lazy"
+        decoding="async"
+        width={800}
+        height={520}
+        // Cache race fix — resolve completeness on ref attach in case
+        // the SVG loads before React binds onLoad.
+        ref={(el) => {
+          if (el && el.complete && el.naturalWidth > 0) setState("loaded");
+        }}
+        onLoad={() => setState("loaded")}
+        onError={() => setState("error")}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "contain",
+          padding: "28px 24px 52px",
+          opacity: state === "loaded" ? 1 : 0,
+          transition: "opacity 280ms ease",
+        }}
+      />
+      <style>{SHIMMER_CSS}</style>
+    </PictogramFrame>
+  );
+}
+
+/* ───────── solo position: hand-authored SVG ───────── */
 
 function SupineBolster() {
-  // Solo: supine, hips elevated on a bolster, knees up.
-  // McGill-safe acute-day default. Single figure (oxblood silhouette).
   return (
-    <div style={{ width: "100%", height: "100%", background: PAPER, position: "relative", overflow: "hidden", borderRadius: 16 }}>
-      <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }} role="img" aria-label="Solo supine with bolster">
+    <PictogramFrame caption="Solo supine · Hips elevated · Knees up">
+      <svg
+        viewBox="0 0 480 360"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+        role="img"
+        aria-label="Solo supine with the hips elevated on a bolster and knees up."
+      >
         <rect width="480" height="360" fill={PAPER} />
         <rect x="40" y="240" width="400" height="80" rx="10" fill="#e8dcc1" />
         <line x1="40" y1="245" x2="440" y2="245" stroke={RULE} strokeWidth="1.2" />
@@ -345,151 +373,11 @@ function SupineBolster() {
           <path d="M 175 252 C 195 260, 215 264, 225 270" stroke={OXBLOOD} strokeWidth="14" strokeLinecap="round" fill="none" />
         </g>
       </svg>
-      <div
-        style={{
-          position: "absolute",
-          bottom: 16,
-          left: 20,
-          fontFamily: "JetBrains Mono, monospace",
-          fontSize: 10,
-          letterSpacing: "3px",
-          color: MUTED,
-          textTransform: "uppercase",
-          pointerEvents: "none",
-        }}
-      >
-        Solo supine · Hips elevated · Knees up
-      </div>
-    </div>
-  );
-}
-
-/* ───────── exercises: hand-authored SVG (PT-handout style) ───────── */
-
-function ExerciseFrame({ children, label }: { children: React.ReactNode; label: string }) {
-  return (
-    <div style={{ width: "100%", height: "100%", background: PAPER, position: "relative", overflow: "hidden", borderRadius: 16 }}>
-      <svg viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }} role="img" aria-label={label}>
-        <rect width="480" height="320" fill={PAPER} />
-        <line x1="20" y1="270" x2="460" y2="270" stroke={RULE} strokeWidth="1.4" />
-        {children}
-      </svg>
-      <div
-        style={{
-          position: "absolute",
-          bottom: 12,
-          left: 20,
-          fontFamily: "JetBrains Mono, monospace",
-          fontSize: 10,
-          letterSpacing: "3px",
-          color: MUTED,
-          textTransform: "uppercase",
-          pointerEvents: "none",
-        }}
-      >
-        {label}
-      </div>
-    </div>
-  );
-}
-
-function CurlUp() {
-  return (
-    <ExerciseFrame label="Curl-up · McGill · Lumbar neutral">
-      <g fill={INK}>
-        <circle cx="80" cy="208" r="20" />
-        <path d="M 96 222 Q 115 228 130 235" stroke={INK} strokeWidth="14" strokeLinecap="round" fill="none" />
-        <path d="M 120 238 C 165 248, 240 250, 290 252 L 295 268 C 240 268, 165 266, 120 258 Z" />
-        <circle cx="220" cy="262" r="8" fill={OXBLOOD} />
-        <path d="M 295 258 C 340 256, 390 254, 430 252" stroke={INK} strokeWidth="22" strokeLinecap="round" fill="none" />
-        <ellipse cx="436" cy="252" rx="14" ry="8" fill={INK} />
-        <path d="M 290 250 C 320 230, 335 210, 330 188" stroke={INK} strokeWidth="22" strokeLinecap="round" fill="none" />
-        <path d="M 330 188 C 350 200, 365 222, 365 250" stroke={INK} strokeWidth="20" strokeLinecap="round" fill="none" />
-        <ellipse cx="367" cy="252" rx="14" ry="8" fill={INK} />
-      </g>
-      <path d="M 60 245 Q 65 220 92 198" stroke={OXBLOOD} strokeWidth="1.5" fill="none" strokeDasharray="3 3" />
-      <text x="40" y="260" fontFamily="JetBrains Mono, monospace" fontSize="9" letterSpacing="2" fill={OXBLOOD}>20°</text>
-    </ExerciseFrame>
-  );
-}
-
-function SidePlank() {
-  return (
-    <ExerciseFrame label="Side plank · Hips lifted · Forearm support">
-      <g fill={INK}>
-        <circle cx="80" cy="190" r="20" />
-        <path d="M 96 200 C 130 195, 200 200, 280 220 L 280 240 C 200 230, 130 220, 96 215 Z" />
-        <path d="M 100 215 C 100 235, 100 255, 100 268" stroke={INK} strokeWidth="22" strokeLinecap="round" fill="none" />
-        <path d="M 270 222 C 295 218, 320 216, 335 214" stroke={INK} strokeWidth="16" strokeLinecap="round" fill="none" />
-        <path d="M 280 232 C 320 232, 360 232, 390 232" stroke={INK} strokeWidth="22" strokeLinecap="round" fill="none" />
-        <path d="M 388 230 C 405 245, 405 258, 390 268" stroke={INK} strokeWidth="20" strokeLinecap="round" fill="none" />
-      </g>
-    </ExerciseFrame>
-  );
-}
-
-function BirdDog() {
-  return (
-    <ExerciseFrame label="Bird-dog · Opposite arm/leg · Spine neutral">
-      <g fill={INK}>
-        <path d="M 150 205 C 200 200, 280 200, 330 205 L 330 225 C 280 230, 200 230, 150 225 Z" />
-        <circle cx="345" cy="210" r="18" />
-        <path d="M 175 220 C 175 240, 175 258, 175 268" stroke={INK} strokeWidth="20" strokeLinecap="round" fill="none" />
-        <path d="M 300 224 C 300 245, 300 260, 300 268" stroke={INK} strokeWidth="22" strokeLinecap="round" fill="none" />
-        <path d="M 320 210 C 360 195, 405 195, 440 195" stroke={INK} strokeWidth="18" strokeLinecap="round" fill="none" />
-        <path d="M 165 210 C 125 195, 75 195, 35 195" stroke={INK} strokeWidth="22" strokeLinecap="round" fill="none" />
-      </g>
-    </ExerciseFrame>
-  );
-}
-
-function Breath() {
-  return (
-    <ExerciseFrame label="Diaphragmatic breath · Ribs · Abdomen">
-      <g fill={INK}>
-        <circle cx="70" cy="240" r="20" />
-        <path d="M 88 248 C 130 240, 220 240, 280 248 L 280 264 C 220 264, 130 262, 88 254 Z" />
-        <circle cx="155" cy="244" r="11" fill={OXBLOOD} />
-        <circle cx="220" cy="246" r="11" fill={OXBLOOD} />
-        <path d="M 290 252 C 320 235, 340 215, 335 200" stroke={INK} strokeWidth="22" strokeLinecap="round" fill="none" />
-        <path d="M 335 200 C 360 215, 375 240, 372 268" stroke={INK} strokeWidth="20" strokeLinecap="round" fill="none" />
-        <path d="M 295 248 C 330 230, 360 215, 365 200" stroke={INK} strokeWidth="22" strokeLinecap="round" fill="none" />
-        <path d="M 365 200 C 390 215, 405 240, 402 268" stroke={INK} strokeWidth="20" strokeLinecap="round" fill="none" />
-      </g>
-      <path d="M 185 215 Q 185 175 185 140" stroke={OXBLOOD} strokeWidth="2" fill="none" />
-      <path d="M 178 150 L 185 138 L 192 150" stroke={OXBLOOD} strokeWidth="2" fill="none" strokeLinecap="round" />
-      <text x="200" y="160" fontFamily="JetBrains Mono, monospace" fontSize="9" letterSpacing="2" fill={OXBLOOD}>INHALE</text>
-    </ExerciseFrame>
-  );
-}
-
-function Decomp() {
-  return (
-    <ExerciseFrame label="Decompression · Knees over bolster · Body neutral">
-      <ellipse cx="330" cy="265" rx="50" ry="14" fill="#d4c5a8" />
-      <g fill={INK}>
-        <circle cx="75" cy="240" r="20" />
-        <path d="M 92 248 C 135 240, 220 240, 285 248 L 285 265 C 220 265, 135 262, 92 254 Z" />
-        <path d="M 175 256 C 200 264, 220 268, 235 274" stroke={INK} strokeWidth="14" strokeLinecap="round" fill="none" />
-        <path d="M 285 256 C 315 252, 335 250, 345 245" stroke={INK} strokeWidth="22" strokeLinecap="round" fill="none" />
-        <path d="M 345 248 C 360 260, 365 270, 365 282" stroke={INK} strokeWidth="20" strokeLinecap="round" fill="none" />
-      </g>
-    </ExerciseFrame>
+    </PictogramFrame>
   );
 }
 
 /* ───────── dispatch ───────── */
-
-const SEX_POSITION_KEYS: PictogramKey[] = [
-  "spoon",
-  "supine-knees-up",
-  "side-T",
-  "edge-bed",
-  "cowgirl-upright",
-  "doggy-supported",
-  "scissor",
-  "seated-lap",
-];
 
 export function Pictogram({
   positionKey,
@@ -498,33 +386,26 @@ export function Pictogram({
   loading = "lazy",
   fetchPriority = "auto",
 }: PictogramProps) {
-  // Sex positions backed by Seedfeeder PNGs
+  const wrap = (child: React.ReactNode) => (
+    <div className={className} style={{ width: "100%", height: "100%", ...style }}>
+      {child}
+    </div>
+  );
+
   if (SEX_POSITION_KEYS.includes(positionKey)) {
-    return (
-      <div className={className} style={{ width: "100%", height: "100%", ...style }}>
-        <IllustratedPosition
-          positionKey={positionKey}
-          loading={loading}
-          fetchPriority={fetchPriority}
-        />
-      </div>
+    return wrap(
+      <IllustratedPosition
+        positionKey={positionKey}
+        loading={loading}
+        fetchPriority={fetchPriority}
+      />,
     );
   }
-  // Solo position (hand-drawn SVG)
   if (positionKey === "supine-bolster") {
-    return (
-      <div className={className} style={{ width: "100%", height: "100%", ...style }}>
-        <SupineBolster />
-      </div>
-    );
+    return wrap(<SupineBolster />);
   }
-  // Exercises — real recolored illustrations
   if (EXERCISE_META[positionKey]) {
-    return (
-      <div className={className} style={{ width: "100%", height: "100%", ...style }}>
-        <IllustratedExercise exerciseKey={positionKey} />
-      </div>
-    );
+    return wrap(<IllustratedExercise exerciseKey={positionKey} />);
   }
   return null;
 }
