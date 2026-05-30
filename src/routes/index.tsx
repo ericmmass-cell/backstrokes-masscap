@@ -61,11 +61,11 @@ function Index() {
               className="font-serif-display leading-[0.94] tracking-[-0.025em]"
               style={{ fontSize: "clamp(52px, 8vw, 116px)", color: PAPER_INK }}
             >
-              Your back should
+              Don't let your back
               <br />
-              not be the{" "}
+              be the reason you{" "}
               <span className="italic" style={{ color: "var(--brand-oxblood)" }}>
-                third person
+                scream
               </span>
               <br />
               in bed.
@@ -574,7 +574,7 @@ function Index() {
             </span>
           </h2>
           <p className="mt-8 max-w-xl mx-auto text-lg leading-relaxed italic" style={{ color: PAPER_INK, opacity: 0.82 }}>
-            Two weeks free. $39 a month after, or $399 a year. Cancel any time. Less than one drawer-abandoned supplement. More useful than pretending the third person in bed is part of the arrangement.
+            Two weeks free. $39 a month after, or $399 a year. Cancel any time. Less than one drawer-abandoned supplement. More useful than pretending the pain in bed is just part of the arrangement.
           </p>
 
           {/* Founding-member scarcity block */}

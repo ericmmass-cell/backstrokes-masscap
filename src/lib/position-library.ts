@@ -14,7 +14,7 @@
 export type Position = {
   id: string;
   name: string;
-  category: "low-load" | "moderate" | "high-load" | "solo";
+  category: "low-load" | "moderate" | "high-load";
   lumbarLoad: 1 | 2 | 3 | 4 | 5;
   hipFlexion: 1 | 2 | 3 | 4 | 5;
   breathAccess: 1 | 2 | 3 | 4 | 5;
@@ -42,8 +42,6 @@ export const POSITIONS: Position[] = [
   { id: "p17", name: "Lap-sitting, facing, both upright",                category: "moderate",  lumbarLoad: 3, hipFlexion: 4, breathAccess: 4, partnerMobility: 2, councilNote: "Receiving partner straddling, both sitting tall. Best if neither has thoracic kyphosis fatigue." },
   { id: "p18", name: "Side-lying, top leg in handheld stirrup",          category: "low-load",  lumbarLoad: 2, hipFlexion: 3, breathAccess: 4, partnerMobility: 3, councilNote: "Partner holds the top leg. Reduces hip abduction strain; preserves breath." },
   { id: "p19", name: "Doggy, but on the bed, knees on pillow",           category: "moderate",  lumbarLoad: 3, hipFlexion: 4, breathAccess: 3, partnerMobility: 4, councilNote: "Pillow under the receiving knees prevents the over-arched lumbar people fall into without realizing." },
-  { id: "p20", name: "Solo, supine, knees over pillow",                  category: "solo",      lumbarLoad: 1, hipFlexion: 2, breathAccess: 5, partnerMobility: 1, councilNote: "Supine with pillow under knees preserves lumbar lordosis. The default acute-day solo option." },
-  { id: "p21", name: "Solo, side-lying with pillow between knees",       category: "solo",      lumbarLoad: 1, hipFlexion: 3, breathAccess: 5, partnerMobility: 1, councilNote: "Side-lying spares the disc entirely. Pillow keeps the top hip from drifting forward and torquing the SI joint." },
   { id: "p22", name: "Supine, double-pillow lumbar support",             category: "low-load",  lumbarLoad: 1, hipFlexion: 2, breathAccess: 5, partnerMobility: 2, councilNote: "Two pillows: one under knees, one filling the lumbar arch. Acute-day default." },
   { id: "p23", name: "Side-lying, receiver supported by wedge",          category: "low-load",  lumbarLoad: 2, hipFlexion: 3, breathAccess: 4, partnerMobility: 2, councilNote: "Wedge under torso plus pillow between knees. Geometry the spine can stop monitoring." },
   { id: "p24", name: "Standing, supported squat with partner",           category: "high-load", lumbarLoad: 4, hipFlexion: 5, breathAccess: 2, partnerMobility: 5, councilNote: "Both squat; one partner braced against a wall. High mobility demand. Not an acute-day choice." },
@@ -62,7 +60,6 @@ export const POSITIONS: Position[] = [
   { id: "p37", name: "Squatting over partner",                           category: "high-load", lumbarLoad: 4, hipFlexion: 5, breathAccess: 2, partnerMobility: 5, councilNote: "Receiving partner deep-squats. Highest mobility demand in the library. Save for steady weeks." },
   { id: "p38", name: "Supine, one knee bent and externally rotated",     category: "low-load",  lumbarLoad: 2, hipFlexion: 3, breathAccess: 4, partnerMobility: 3, councilNote: "Frog-leg supine. Off-loads the hip without spinal cost. Good for hip-impingement bodies." },
   { id: "p39", name: "Standing, both face-to-face, low partner squat",   category: "moderate",  lumbarLoad: 3, hipFlexion: 4, breathAccess: 3, partnerMobility: 4, councilNote: "Partner with the more durable knees does the squat work. Decide who that is before, not during." },
-  { id: "p40", name: "Solo, supine, breath-led arousal, no implement",   category: "solo",      lumbarLoad: 1, hipFlexion: 2, breathAccess: 5, partnerMobility: 1, councilNote: "The 4-7-8 cycle paired with self-touch. Re-pairs arousal with the parasympathetic switch. Three weeks of this changes partnered work." },
 ];
 
 /**

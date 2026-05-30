@@ -4,8 +4,17 @@ import {
   POSITIONS,
   matchToTodaysBack,
   maxLoadForIndex,
+  roleLoad,
+  roleLoadNote,
   type Position,
+  type Role,
 } from "@/lib/position-library";
+
+const ROLES: { key: Role; label: string; short: string }[] = [
+  { key: "either", label: "Depends on the day", short: "Either role" },
+  { key: "penetrator", label: "Penetrating partner", short: "Penetrating" },
+  { key: "receiver", label: "Receiving partner", short: "Receiving" },
+];
 import { PositionDemo } from "@/components/PositionDemo";
 import { Pictogram, type PictogramKey, getIllustratedPositionUrls } from "@/components/Pictogram";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -39,7 +48,6 @@ const CATEGORIES: Array<Position["category"] | "all"> = [
   "low-load",
   "moderate",
   "high-load",
-  "solo",
 ];
 
 function Score({ v }: { v: number }) {
@@ -62,8 +70,8 @@ function Score({ v }: { v: number }) {
 /**
  * Explicit position → illustration map, hand-assigned by id.
  *
- * We have 8 real Seedfeeder illustrations (plus one hand-drawn solo
- * figure) for 40 catalogued positions, so each illustration stands in
+ * We have 8 real Seedfeeder illustrations for 37 catalogued positions,
+ * so each illustration stands in
  * for its whole geometric FAMILY. Keyword matching was misfiring badly
  * ("Supine with wEDGE" matched /edge/ and drew the edge-of-bed couple),
  * so every entry is now assigned by hand to the figure that actually
@@ -127,19 +135,16 @@ const ILLUSTRATION_BY_ID: Record<string, PictogramKey> = {
   p24: "seated-lap",      // Standing, supported squat with partner
   p35: "seated-lap",      // Cradle-sitting, facing, both legs wrapped
   p39: "seated-lap",      // Standing, both face-to-face, low partner squat
-
-  // Solo (hand-drawn supine figure)
-  p20: "supine-bolster",  // Solo, supine, knees over pillow
-  p21: "supine-bolster",  // Solo, side-lying with pillow between knees
-  p40: "supine-bolster",  // Solo, supine, breath-led arousal
 };
 
 function illustrationFor(p: Position): PictogramKey {
-  return ILLUSTRATION_BY_ID[p.id] ?? (p.category === "solo" ? "supine-bolster" : "supine-knees-up");
+  return ILLUSTRATION_BY_ID[p.id] ?? "supine-knees-up";
 }
 
-function PositionRow({ p }: { p: Position }) {
+function PositionRow({ p, role }: { p: Position; role: Role }) {
   const cat = p.category.toUpperCase();
+  const yourLoad = roleLoad(p, role);
+  const loadLabel = role === "either" ? "Lumbar load" : "Your lumbar load";
   return (
     <li className="bg-background flex flex-col overflow-hidden rounded-2xl border border-border">
       <div style={{ aspectRatio: "4 / 3" }}>
@@ -152,7 +157,7 @@ function PositionRow({ p }: { p: Position }) {
           <span className="font-mono-label text-[10px] tracking-[0.28em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
             {p.id.toUpperCase()} · {cat}
           </span>
-          {p.lumbarLoad <= 2 && (
+          {yourLoad <= 2 && (
             <span className="font-mono-label text-[9px] tracking-[0.18em] uppercase" style={{ color: "var(--brand-oxblood)", opacity: 0.6 }}>
               acute-day safe
             </span>
@@ -169,10 +174,15 @@ function PositionRow({ p }: { p: Position }) {
           {p.councilNote}
         </p>
 
+        {/* Role-aware lumbar read — whose back is working */}
+        <p className="mt-4 font-mono-label text-[9px] tracking-[0.18em] uppercase leading-relaxed" style={{ color: "var(--brand-amber)" }}>
+          {roleLoadNote(p, role)}
+        </p>
+
         {/* Score grid */}
         <div className="mt-5 grid grid-cols-2 gap-3 text-[11px]">
           {[
-            ["Lumbar load", p.lumbarLoad],
+            [loadLabel, yourLoad],
             ["Hip flexion", p.hipFlexion],
             ["Breath access", p.breathAccess],
             ["Partner mobility", p.partnerMobility],
@@ -214,7 +224,6 @@ const PICKABLE: Pickable[] = [
   { key: "doggy-supported", label: "Supported rear-entry", sub: "Quadruped chest-down · forearms supported" },
   { key: "scissor", label: "Side-lying scissor", sub: "Perpendicular · both partners side-lying" },
   { key: "seated-lap", label: "Seated lap embrace", sub: "Both upright · face to face · stacked spines" },
-  { key: "supine-bolster", label: "Solo supine with bolster", sub: "Acute-day default · hips elevated, knees up" },
 ];
 
 /* ───────── PositionShowcase ─────────
@@ -283,7 +292,7 @@ function PositionShowcase() {
             className="font-mono-label text-[10px] tracking-[0.22em] uppercase"
             style={{ color: "var(--brand-oxblood)" }}
           >
-            Drawn · {PICKABLE.length} of 40 · arrow keys to browse
+            Drawn · {PICKABLE.length} of {POSITIONS.length} · arrow keys to browse
           </p>
           <h2
             id="position-showcase-heading"
@@ -361,22 +370,23 @@ function PositionsPage() {
   const [index, setIndex] = useState(67);
   const [category, setCategory] = useState<(typeof CATEGORIES)[number]>("all");
   const [sort, setSort] = useState<SortKey>("lumbarLoad");
+  const [role, setRole] = useState<Role>("either");
   const [showMatch, setShowMatch] = useState(false);
 
   const cap = maxLoadForIndex(index);
 
   const rows = useMemo(() => {
-    if (showMatch) return matchToTodaysBack(index, 3);
+    if (showMatch) return matchToTodaysBack(index, 3, role);
     return [...POSITIONS]
       .filter((p) => (category === "all" ? true : p.category === category))
-      .filter((p) => p.lumbarLoad <= cap)
+      .filter((p) => roleLoad(p, role) <= cap)
       .sort((a, b) => {
-        if (sort === "lumbarLoad") return a.lumbarLoad - b.lumbarLoad;
+        if (sort === "lumbarLoad") return roleLoad(a, role) - roleLoad(b, role);
         if (sort === "breathAccess") return b.breathAccess - a.breathAccess;
         if (sort === "hipFlexion") return a.hipFlexion - b.hipFlexion;
         return a.partnerMobility - b.partnerMobility;
       });
-  }, [index, category, sort, showMatch, cap]);
+  }, [index, category, sort, role, showMatch, cap]);
 
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
@@ -387,7 +397,7 @@ function PositionsPage() {
       <section className="px-6 md:px-10 py-16 md:py-20 border-b border-border">
         <div className="max-w-[1280px] mx-auto">
           <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">
-            POSITION LIBRARY · 40 ENTRIES · SCORED BY SPINE
+            POSITION LIBRARY · {POSITIONS.length} ENTRIES · SCORED BY SPINE
           </p>
           <h1 className="font-serif-display text-5xl md:text-7xl mt-5 leading-[0.98] tracking-[-0.025em] max-w-3xl">
             Bedroom geometry, <span className="italic" style={{ color: "var(--brand-amber)" }}>scored by spine.</span>
@@ -420,6 +430,41 @@ function PositionsPage() {
 
       {/* Controls */}
       <section className="px-6 md:px-10 py-8 border-b border-border bg-card/30 sticky top-16 z-20 backdrop-blur-xl">
+        {/* Role picker — whose back is working tonight */}
+        <div className="max-w-[1280px] mx-auto mb-7">
+          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-1" style={{ color: "var(--brand-oxblood)" }}>
+            Tonight you're the . . .
+          </p>
+          <p className="text-sm text-muted-foreground mb-3 max-w-2xl leading-relaxed">
+            The same position loads each partner's back differently. Pick your role and every score below re-reads for your spine.
+          </p>
+          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Your role tonight">
+            {ROLES.map((r) => {
+              const active = role === r.key;
+              return (
+                <button
+                  key={r.key}
+                  type="button"
+                  role="radio"
+                  aria-checked={active}
+                  onClick={() => {
+                    setShowMatch(false);
+                    setRole(r.key);
+                  }}
+                  className={`px-4 py-2 rounded-full font-mono-label text-[11px] tracking-[0.16em] uppercase transition ${
+                    active
+                      ? "text-background"
+                      : "border border-border text-muted-foreground hover:text-foreground"
+                  }`}
+                  style={active ? { background: "var(--brand-oxblood)" } : undefined}
+                >
+                  {r.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="max-w-[1280px] mx-auto grid lg:grid-cols-4 gap-6 items-end">
           <div>
             <label className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-muted-foreground">
@@ -512,12 +557,12 @@ function PositionsPage() {
 
           {rows.length === 0 ? (
             <p className="font-serif-display text-xl italic text-muted-foreground max-w-md">
-              Nothing in this slice clears today's load cap. Lower the filter. Or pick solo, which the spine has fewer opinions about and the council has no notes on.
+              Nothing in this slice clears today's load cap. Lower the filter, or come back on a quieter-back day.
             </p>
           ) : (
             <ul className="grid md:grid-cols-2 gap-px bg-border border border-border">
               {rows.map((p) => (
-                <PositionRow key={p.id} p={p} />
+                <PositionRow key={p.id} p={p} role={role} />
               ))}
             </ul>
           )}
