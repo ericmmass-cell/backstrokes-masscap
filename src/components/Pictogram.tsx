@@ -305,21 +305,11 @@ function IllustratedPosition({
           objectFit: "contain",
           opacity: state === "loaded" ? 1 : 0,
           transition: "opacity 280ms ease",
-          // Warm cream-paper / ink-art tint
-          filter:
-            "grayscale(1) sepia(0.55) saturate(0.85) brightness(1.04) contrast(1.12)",
-          mixBlendMode: "multiply",
-        }}
-      />
-      {/* Cream paper warm wash */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(180deg, rgba(244,239,227,0.18) 0%, rgba(244,239,227,0.28) 100%)",
-          pointerEvents: "none",
+          // Show the illustration CLEAN. The previous grayscale+sepia
+          // +multiply treatment muddied the clear artwork into a brown
+          // swamp. Only a hair of warmth so it doesn't fight the cream
+          // page; the figures stay legible and demonstrate the position.
+          filter: "saturate(0.96) contrast(1.02)",
         }}
       />
       <style>{`
