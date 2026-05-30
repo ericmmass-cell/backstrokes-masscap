@@ -9,38 +9,281 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SessionRouteImport } from './routes/session'
+import { Route as ScienceRouteImport } from './routes/science'
+import { Route as PositionsRouteImport } from './routes/positions'
+import { Route as PartnerRouteImport } from './routes/partner'
+import { Route as ManifestoRouteImport } from './routes/manifesto'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ConversationRouteImport } from './routes/conversation'
+import { Route as BuyRouteImport } from './routes/buy'
+import { Route as BedroomRouteImport } from './routes/bedroom'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ShareTokenRouteImport } from './routes/share.$token'
+import { Route as BuySuccessRouteImport } from './routes/buy_.success'
+import { Route as BuyCancelRouteImport } from './routes/buy_.cancel'
 
+const SessionRoute = SessionRouteImport.update({
+  id: '/session',
+  path: '/session',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScienceRoute = ScienceRouteImport.update({
+  id: '/science',
+  path: '/science',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PositionsRoute = PositionsRouteImport.update({
+  id: '/positions',
+  path: '/positions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnerRoute = PartnerRouteImport.update({
+  id: '/partner',
+  path: '/partner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManifestoRoute = ManifestoRouteImport.update({
+  id: '/manifesto',
+  path: '/manifesto',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConversationRoute = ConversationRouteImport.update({
+  id: '/conversation',
+  path: '/conversation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuyRoute = BuyRouteImport.update({
+  id: '/buy',
+  path: '/buy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BedroomRoute = BedroomRouteImport.update({
+  id: '/bedroom',
+  path: '/bedroom',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShareTokenRoute = ShareTokenRouteImport.update({
+  id: '/share/$token',
+  path: '/share/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuySuccessRoute = BuySuccessRouteImport.update({
+  id: '/buy_/success',
+  path: '/buy/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuyCancelRoute = BuyCancelRouteImport.update({
+  id: '/buy_/cancel',
+  path: '/buy/cancel',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/bedroom': typeof BedroomRoute
+  '/buy': typeof BuyRoute
+  '/conversation': typeof ConversationRoute
+  '/dashboard': typeof DashboardRoute
+  '/manifesto': typeof ManifestoRoute
+  '/partner': typeof PartnerRoute
+  '/positions': typeof PositionsRoute
+  '/science': typeof ScienceRoute
+  '/session': typeof SessionRoute
+  '/buy/cancel': typeof BuyCancelRoute
+  '/buy/success': typeof BuySuccessRoute
+  '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/bedroom': typeof BedroomRoute
+  '/buy': typeof BuyRoute
+  '/conversation': typeof ConversationRoute
+  '/dashboard': typeof DashboardRoute
+  '/manifesto': typeof ManifestoRoute
+  '/partner': typeof PartnerRoute
+  '/positions': typeof PositionsRoute
+  '/science': typeof ScienceRoute
+  '/session': typeof SessionRoute
+  '/buy/cancel': typeof BuyCancelRoute
+  '/buy/success': typeof BuySuccessRoute
+  '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/bedroom': typeof BedroomRoute
+  '/buy': typeof BuyRoute
+  '/conversation': typeof ConversationRoute
+  '/dashboard': typeof DashboardRoute
+  '/manifesto': typeof ManifestoRoute
+  '/partner': typeof PartnerRoute
+  '/positions': typeof PositionsRoute
+  '/science': typeof ScienceRoute
+  '/session': typeof SessionRoute
+  '/buy_/cancel': typeof BuyCancelRoute
+  '/buy_/success': typeof BuySuccessRoute
+  '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/bedroom'
+    | '/buy'
+    | '/conversation'
+    | '/dashboard'
+    | '/manifesto'
+    | '/partner'
+    | '/positions'
+    | '/science'
+    | '/session'
+    | '/buy/cancel'
+    | '/buy/success'
+    | '/share/$token'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/bedroom'
+    | '/buy'
+    | '/conversation'
+    | '/dashboard'
+    | '/manifesto'
+    | '/partner'
+    | '/positions'
+    | '/science'
+    | '/session'
+    | '/buy/cancel'
+    | '/buy/success'
+    | '/share/$token'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/bedroom'
+    | '/buy'
+    | '/conversation'
+    | '/dashboard'
+    | '/manifesto'
+    | '/partner'
+    | '/positions'
+    | '/science'
+    | '/session'
+    | '/buy_/cancel'
+    | '/buy_/success'
+    | '/share/$token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BedroomRoute: typeof BedroomRoute
+  BuyRoute: typeof BuyRoute
+  ConversationRoute: typeof ConversationRoute
+  DashboardRoute: typeof DashboardRoute
+  ManifestoRoute: typeof ManifestoRoute
+  PartnerRoute: typeof PartnerRoute
+  PositionsRoute: typeof PositionsRoute
+  ScienceRoute: typeof ScienceRoute
+  SessionRoute: typeof SessionRoute
+  BuyCancelRoute: typeof BuyCancelRoute
+  BuySuccessRoute: typeof BuySuccessRoute
+  ShareTokenRoute: typeof ShareTokenRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/session': {
+      id: '/session'
+      path: '/session'
+      fullPath: '/session'
+      preLoaderRoute: typeof SessionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/science': {
+      id: '/science'
+      path: '/science'
+      fullPath: '/science'
+      preLoaderRoute: typeof ScienceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/positions': {
+      id: '/positions'
+      path: '/positions'
+      fullPath: '/positions'
+      preLoaderRoute: typeof PositionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partner': {
+      id: '/partner'
+      path: '/partner'
+      fullPath: '/partner'
+      preLoaderRoute: typeof PartnerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manifesto': {
+      id: '/manifesto'
+      path: '/manifesto'
+      fullPath: '/manifesto'
+      preLoaderRoute: typeof ManifestoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conversation': {
+      id: '/conversation'
+      path: '/conversation'
+      fullPath: '/conversation'
+      preLoaderRoute: typeof ConversationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buy': {
+      id: '/buy'
+      path: '/buy'
+      fullPath: '/buy'
+      preLoaderRoute: typeof BuyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bedroom': {
+      id: '/bedroom'
+      path: '/bedroom'
+      fullPath: '/bedroom'
+      preLoaderRoute: typeof BedroomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +291,56 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/share/$token': {
+      id: '/share/$token'
+      path: '/share/$token'
+      fullPath: '/share/$token'
+      preLoaderRoute: typeof ShareTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buy_/success': {
+      id: '/buy_/success'
+      path: '/buy/success'
+      fullPath: '/buy/success'
+      preLoaderRoute: typeof BuySuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buy_/cancel': {
+      id: '/buy_/cancel'
+      path: '/buy/cancel'
+      fullPath: '/buy/cancel'
+      preLoaderRoute: typeof BuyCancelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BedroomRoute: BedroomRoute,
+  BuyRoute: BuyRoute,
+  ConversationRoute: ConversationRoute,
+  DashboardRoute: DashboardRoute,
+  ManifestoRoute: ManifestoRoute,
+  PartnerRoute: PartnerRoute,
+  PositionsRoute: PositionsRoute,
+  ScienceRoute: ScienceRoute,
+  SessionRoute: SessionRoute,
+  BuyCancelRoute: BuyCancelRoute,
+  BuySuccessRoute: BuySuccessRoute,
+  ShareTokenRoute: ShareTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

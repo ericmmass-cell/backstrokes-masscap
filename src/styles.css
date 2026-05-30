@@ -63,20 +63,21 @@
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(0.13 0.012 28);
-  --foreground: oklch(0.95 0.012 80);
-  --card: oklch(0.18 0.018 26);
-  --card-foreground: oklch(0.95 0.012 80);
-  --popover: oklch(0.18 0.018 26);
-  --popover-foreground: oklch(0.95 0.012 80);
-  --primary: oklch(0.8 0.13 80);
-  --primary-foreground: oklch(0.13 0.012 28);
-  --secondary: oklch(0.24 0.02 26);
-  --secondary-foreground: oklch(0.95 0.012 80);
-  --muted: oklch(0.22 0.018 28);
-  --muted-foreground: oklch(0.7 0.018 70);
-  --accent: oklch(0.42 0.14 22);
-  --accent-foreground: oklch(0.95 0.012 80);
+  /* Unified cream-paper theme. The whole app reads as one magazine spread. */
+  --background: oklch(0.94 0.018 78);          /* ivory paper */
+  --foreground: oklch(0.18 0.01 40);           /* warm ink */
+  --card: oklch(0.96 0.012 80);                /* slightly lifted paper */
+  --card-foreground: oklch(0.18 0.01 40);
+  --popover: oklch(0.96 0.012 80);
+  --popover-foreground: oklch(0.18 0.01 40);
+  --primary: oklch(0.32 0.11 22);              /* oxblood */
+  --primary-foreground: oklch(0.94 0.018 78);
+  --secondary: oklch(0.92 0.022 76);           /* paper 2 */
+  --secondary-foreground: oklch(0.18 0.01 40);
+  --muted: oklch(0.92 0.022 76);
+  --muted-foreground: oklch(0.45 0.02 40);     /* warm gray */
+  --accent: oklch(0.32 0.11 22);               /* oxblood accents */
+  --accent-foreground: oklch(0.94 0.018 78);
 
   /* Speakeasy palette: oxblood velvet, candlelight gold, ivory, smoke */
   --brand-amber: oklch(0.78 0.13 78);          /* candle gold */
@@ -91,20 +92,20 @@
   --brand-blush: oklch(0.7 0.11 18);           /* dusty rose */
   --brand-teal: oklch(0.78 0.13 78);           /* legacy alias → gold */
   --brand-pink: oklch(0.6 0.14 22);            /* legacy alias → oxblood-rose */
-  --gradient-text: linear-gradient(92deg, oklch(0.88 0.1 82), oklch(0.66 0.12 50));
+  --gradient-text: linear-gradient(92deg, oklch(0.32 0.11 22), oklch(0.42 0.14 22));  /* oxblood deep → ember */
   --gradient-ember: linear-gradient(135deg, var(--brand-oxblood), var(--brand-ember));
   --gradient-neon: linear-gradient(135deg, var(--brand-oxblood), var(--brand-amber));
   --glow-teal: 0 0 18px oklch(0.78 0.13 78 / 0.35), 0 0 50px oklch(0.78 0.13 78 / 0.18);
   --glow-pink: 0 0 18px oklch(0.5 0.14 22 / 0.45), 0 0 50px oklch(0.42 0.14 22 / 0.22);
-  --shadow-soft: 0 1px 0 oklch(1 0 0 / 0.04) inset, 0 20px 60px -20px oklch(0 0 0 / 0.55);
-  --shadow-lift: 0 30px 80px -30px oklch(0 0 0 / 0.6);
-  --shadow-ember: 0 30px 80px -20px oklch(0.55 0.18 25 / 0.35);
-  --hairline: oklch(1 0 0 / 0.09);
+  --shadow-soft: 0 1px 0 oklch(1 0 0 / 0.6) inset, 0 14px 40px -18px oklch(0.18 0.01 40 / 0.18);
+  --shadow-lift: 0 22px 60px -28px oklch(0.18 0.01 40 / 0.28);
+  --shadow-ember: 0 22px 60px -22px oklch(0.32 0.11 22 / 0.32);
+  --hairline: oklch(0.18 0.01 40 / 0.10);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 0.08);
-  --input: oklch(1 0 0 / 0.1);
-  --ring: oklch(0.78 0.11 75);
+  --border: oklch(0.86 0.025 70);              /* warm paper rule */
+  --input: oklch(0.18 0.01 40 / 0.08);
+  --ring: oklch(0.32 0.11 22);                 /* oxblood focus */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);

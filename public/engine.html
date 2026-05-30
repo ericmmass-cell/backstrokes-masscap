@@ -1,0 +1,2255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BackStroke · Position Intelligence Engine · v6</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Cream-paper palette to match the rest of the app. Same oxblood accents,
+     same sage and amber, but the surface is ivory and the ink is warm. */
+  --bg: #f4efe3;             /* ivory paper, matches --background */
+  --bg-elev: #f8f2e5;        /* slightly lifted card */
+  --bg-elev-2: #efe7d2;      /* page-2 alternate */
+  --cream: #2a2620;          /* warm ink (used for body text + figures) */
+  --cream-dim: #6f6859;      /* warm muted */
+  --muted: #8a8270;          /* lighter muted */
+  --oxblood: #722B2B;        /* matches --brand-oxblood */
+  --oxblood-deep: #4d1c1c;
+  --oxblood-glow: rgba(114, 43, 43, 0.22);
+  --sage: #6b8252;           /* deeper sage for cream contrast */
+  --amber: #8a6520;          /* deeper amber for cream contrast */
+  --grey-state: #c5bba8;
+  --rule: rgba(42, 38, 32, 0.10);
+  --rule-strong: rgba(42, 38, 32, 0.24);
+  --serif: 'Cormorant Garamond', Garamond, serif;
+  --sans: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', 'SF Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: var(--serif);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  background:
+    radial-gradient(circle at 18% 8%, rgba(114,43,43,0.05) 0%, transparent 55%),
+    radial-gradient(circle at 82% 92%, rgba(114,43,43,0.04) 0%, transparent 50%),
+    var(--bg);
+  background-attachment: fixed;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 56px 32px 96px; }
+@media (max-width: 600px) { .wrap { padding: 36px 20px 80px; } }
+
+header.hero { text-align: center; padding: 28px 0 48px; border-bottom: 1px solid var(--rule); margin-bottom: 56px; }
+.eyebrow { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 0.34em; color: var(--oxblood); margin-bottom: 22px; text-transform: uppercase; }
+h1.title { font-family: var(--serif); font-weight: 300; font-size: clamp(44px, 7vw, 88px); letter-spacing: -0.02em; line-height: 1.02; color: var(--cream); margin-bottom: 22px; }
+h1.title em { font-style: italic; color: var(--oxblood); font-weight: 400; }
+.tagline { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--cream-dim); font-weight: 300; max-width: 600px; margin: 0 auto; line-height: 1.55; }
+
+button.primary-cta {
+  font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.22em;
+  padding: 19px 42px; border-radius: 999px;
+  background: var(--oxblood); color: var(--cream); border: none; cursor: pointer;
+  text-transform: uppercase; box-shadow: 0 10px 36px var(--oxblood-glow);
+  transition: all 280ms cubic-bezier(.2,.7,.2,1);
+}
+button.primary-cta:hover { background: var(--oxblood-deep); transform: translateY(-2px); box-shadow: 0 16px 48px var(--oxblood-glow); }
+button.primary-cta:disabled { background: var(--grey-state); color: var(--muted); cursor: not-allowed; box-shadow: none; transform: none; }
+
+/* Sticky timeline */
+.timeline-strip {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(244,239,227,0.92);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rule);
+  padding: 16px 32px;
+  display: none; align-items: center; gap: 24px; flex-wrap: wrap;
+}
+.timeline-strip.visible { display: flex; }
+.timeline-tiles { display: flex; flex: 1; gap: 6px; align-items: center; min-width: 0; }
+.tl-tile {
+  flex: 1; display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 10px;
+  border: 1px solid var(--rule); background: rgba(42,38,32,0.03);
+  cursor: pointer; transition: all 240ms ease; min-width: 0;
+}
+.tl-tile:hover { border-color: var(--rule-strong); background: rgba(42,38,32,0.07); }
+.tl-tile.active { border-color: var(--oxblood); background: rgba(114,43,43,0.10); box-shadow: 0 0 0 1px var(--oxblood-glow); }
+.tl-tile.done { opacity: 0.7; }
+.tl-num { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--oxblood); flex-shrink: 0; width: 22px; }
+.tl-text { min-width: 0; flex: 1; }
+.tl-role { font-family: var(--sans); font-size: 9px; letter-spacing: 0.22em; color: var(--cream-dim); text-transform: uppercase; }
+.tl-name { font-family: var(--serif); font-size: 14px; color: var(--cream); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.tl-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.tl-actions button {
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.20em;
+  background: none; border: 1px solid var(--rule); border-radius: 8px;
+  padding: 7px 12px; color: var(--cream-dim); cursor: pointer;
+  text-transform: uppercase; transition: all 220ms ease;
+}
+.tl-actions button:hover { color: var(--cream); border-color: var(--cream-dim); }
+.tl-arrow { width: 14px; height: 1px; background: var(--rule-strong); flex-shrink: 0; }
+@media (max-width: 760px) {
+  .timeline-strip { padding: 12px 16px; }
+  .tl-name { display: none; }
+  .tl-tile { padding: 10px; gap: 6px; }
+}
+
+.diagram-toggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--cream-dim);
+  cursor: pointer; user-select: none; font-weight: 500;
+  padding: 7px 12px; border: 1px solid var(--rule); border-radius: 8px;
+}
+.diagram-toggle .switch {
+  width: 28px; height: 16px; background: rgba(42,38,32,0.16);
+  border-radius: 999px; position: relative; transition: background 240ms ease;
+}
+.diagram-toggle.on .switch { background: var(--sage); }
+.diagram-toggle .switch::after {
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: 12px; height: 12px; background: var(--cream); border-radius: 50%;
+  transition: transform 240ms ease;
+}
+.diagram-toggle.on .switch::after { transform: translateX(12px); }
+
+/* GATE */
+section.gate { transition: opacity 480ms ease; }
+.gate-card {
+  background: var(--bg-elev); border: 1px solid var(--rule);
+  border-left: 3px solid var(--oxblood); border-radius: 16px;
+  padding: 44px; max-width: 760px; margin: 0 auto;
+}
+.gate-eyebrow { font-family: var(--sans); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--oxblood); font-weight: 600; margin-bottom: 14px; }
+.gate-card h2 { font-family: var(--serif); font-weight: 300; font-size: 40px; line-height: 1.05; margin-bottom: 14px; letter-spacing: -0.01em; }
+.gate-card h2 em { font-style: italic; color: var(--oxblood); }
+.gate-card .gate-sub { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--cream-dim); line-height: 1.55; margin-bottom: 28px; }
+.flag-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+.flag {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 14px 16px; border: 1px solid var(--rule); border-radius: 10px;
+  cursor: pointer; transition: all 200ms ease;
+  background: rgba(42,38,32,0.025);
+}
+.flag:hover { border-color: var(--rule-strong); background: rgba(42,38,32,0.07); }
+.flag.checked { border-color: var(--oxblood); background: rgba(114,43,43,0.10); }
+.flag .box {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--cream-dim); border-radius: 5px;
+  flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 200ms ease;
+}
+.flag.checked .box { background: var(--oxblood); border-color: var(--oxblood); }
+.flag.checked .box::after { content: '✓'; font-family: var(--sans); font-size: 12px; color: var(--cream); font-weight: 700; }
+.flag .text { font-family: var(--serif); font-size: 16px; color: var(--cream); line-height: 1.45; }
+.gate-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.gate-confirm {
+  font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em;
+  padding: 16px 30px; border-radius: 999px;
+  background: var(--cream); color: var(--bg); border: none; cursor: pointer;
+  text-transform: uppercase; font-weight: 600; transition: all 220ms ease;
+}
+.gate-confirm:hover { background: var(--cream-dim); transform: translateY(-1px); }
+.gate-confirm.disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.gate-redirect {
+  font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em;
+  padding: 16px 28px; border-radius: 999px;
+  background: var(--oxblood); color: var(--cream); border: none; cursor: pointer;
+  text-transform: uppercase; font-weight: 600; transition: all 220ms ease; display: none;
+}
+.gate-redirect.visible { display: inline-flex; }
+.gate-redirect:hover { background: var(--oxblood-deep); }
+.gate-flag-msg {
+  display: none; margin-top: 18px; padding: 18px 22px;
+  background: rgba(114,43,43,0.10); border-left: 3px solid var(--oxblood); border-radius: 8px;
+  font-family: var(--serif); font-style: italic; font-size: 17px; line-height: 1.6; color: var(--cream);
+}
+.gate-flag-msg.visible { display: block; }
+
+/* STEPPED FILTER */
+section.setup { display: none; transition: opacity 400ms ease; }
+section.setup.active { display: block; }
+.step-progress { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 48px; }
+.sp-dot { width: 26px; height: 4px; border-radius: 2px; background: rgba(42,38,32,0.16); transition: all 280ms ease; }
+.sp-dot.done { background: var(--cream-dim); }
+.sp-dot.active { background: var(--oxblood); width: 50px; box-shadow: 0 0 12px var(--oxblood-glow); }
+.step-card { max-width: 760px; margin: 0 auto; text-align: center; min-height: 360px; }
+.step-card .step-eyebrow { font-family: var(--sans); font-size: 10px; letter-spacing: 0.32em; color: var(--oxblood); margin-bottom: 18px; text-transform: uppercase; font-weight: 600; }
+.step-card .step-question { font-family: var(--serif); font-weight: 300; font-size: clamp(36px, 5.5vw, 56px); letter-spacing: -0.01em; line-height: 1.05; color: var(--cream); margin-bottom: 14px; }
+.step-card .step-question em { font-style: italic; color: var(--oxblood); }
+.step-card .step-help { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--muted); margin-bottom: 40px; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.55; }
+.step-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 720px; margin: 0 auto 36px; }
+.step-chip {
+  font-family: var(--sans); font-size: 14px; font-weight: 500;
+  padding: 14px 22px; border-radius: 999px;
+  border: 1px solid rgba(42,38,32,0.22); background: rgba(42,38,32,0.05);
+  color: var(--cream); cursor: pointer; user-select: none;
+  transition: all 240ms cubic-bezier(.2,.7,.2,1);
+}
+.step-chip:hover { border-color: var(--cream-dim); background: rgba(42,38,32,0.09); transform: translateY(-2px); }
+.step-chip[aria-pressed="true"] { background: var(--oxblood); border-color: var(--oxblood); color: var(--cream); box-shadow: 0 6px 28px var(--oxblood-glow); transform: translateY(-2px); }
+.step-nav { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 12px; }
+.step-back {
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.22em;
+  text-transform: uppercase; background: none; border: none;
+  color: var(--muted); cursor: pointer; padding: 12px 20px; transition: color 240ms ease;
+}
+.step-back:hover { color: var(--cream-dim); }
+.step-back:disabled { opacity: 0.3; cursor: not-allowed; }
+.step-build { display: none; flex-direction: column; align-items: center; gap: 14px; margin-top: 12px; }
+.step-build.visible { display: flex; }
+.step-build .built-summary { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--cream-dim); max-width: 520px; text-align: center; line-height: 1.5; }
+
+.browse-link { text-align: center; margin-top: 32px; }
+.browse-link button {
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.20em;
+  text-transform: uppercase; background: none; border: none;
+  color: var(--muted); cursor: pointer;
+  text-decoration: underline; text-decoration-color: var(--rule);
+  text-underline-offset: 4px; transition: color 240ms ease;
+}
+.browse-link button:hover { color: var(--cream-dim); }
+
+/* PLAN */
+section.plan { display: none; }
+section.plan.active { display: block; animation: fadeUp 540ms cubic-bezier(.2,.7,.2,1); }
+.plan-header { text-align: center; margin-bottom: 24px; padding-top: 24px; }
+.plan-header h2 { font-family: var(--serif); font-weight: 300; font-size: 46px; letter-spacing: -0.01em; margin-bottom: 14px; }
+.plan-header h2 em { font-style: italic; color: var(--oxblood); }
+.plan-header .results-microcopy { font-family: var(--serif); font-style: italic; color: var(--cream-dim); font-size: 17px; max-width: 620px; margin: 0 auto; line-height: 1.55; }
+
+.plan-summary {
+  background: linear-gradient(140deg, rgba(114,43,43,0.14) 0%, var(--bg-elev) 60%);
+  border: 1px solid rgba(114,43,43,0.42);
+  border-radius: 18px; padding: 36px 40px; margin-bottom: 40px;
+  position: relative; box-shadow: 0 12px 48px rgba(114,43,43,0.10);
+}
+.plan-summary::before { content: ''; position: absolute; left: 0; top: 16px; bottom: 16px; width: 3px; background: var(--oxblood); border-radius: 0 3px 3px 0; }
+.plan-summary .ps-label { font-family: var(--sans); font-size: 10px; letter-spacing: 0.32em; color: var(--oxblood); text-transform: uppercase; margin-bottom: 14px; font-weight: 600; }
+.plan-summary .ps-instructions { font-family: var(--serif); font-size: 26px; line-height: 1.4; color: var(--cream); margin-bottom: 14px; font-weight: 400; letter-spacing: -0.005em; }
+.plan-summary .ps-closer { font-family: var(--serif); font-style: italic; font-size: 19px; color: var(--cream-dim); line-height: 1.5; }
+
+#actContainer { display: flex; flex-direction: column; gap: 36px; }
+.act-block { display: flex; flex-direction: column; gap: 28px; position: relative; scroll-margin-top: 100px; }
+
+.act-card {
+  background: var(--bg-elev); border: 1px solid var(--rule);
+  border-radius: 20px; padding: 40px;
+  display: grid; grid-template-columns: 1.05fr 1fr; gap: 44px;
+  align-items: center; position: relative; overflow: hidden;
+}
+@media (max-width: 880px) { .act-card { grid-template-columns: 1fr; gap: 24px; padding: 28px 22px; } }
+.fade-in { animation: fadeUp 560ms cubic-bezier(.2,.7,.2,1); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+.act-card .visual {
+  background: radial-gradient(ellipse at 30% 25%, rgba(138,101,32,0.14) 0%, transparent 55%),
+              linear-gradient(160deg, rgba(42,38,32,0.07) 0%, rgba(214,202,176,0.55) 100%);
+  border-radius: 14px; aspect-ratio: 16/10;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0; border: 1px solid var(--rule);
+  position: relative; cursor: default; overflow: hidden;
+  transition: transform 320ms cubic-bezier(.2,.7,.2,1), border-color 320ms ease;
+}
+.act-card .visual:hover { border-color: var(--rule-strong); }
+.act-card .visual svg { width: 100%; height: 100%; display: block; }
+.act-card .visual .zoom-hint { position: absolute; bottom: 10px; right: 14px; z-index: 5; font-family: var(--sans); font-size: 9px; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; opacity: 0.62; transition: opacity 240ms ease; text-shadow: 0 1px 8px rgba(244,239,227,0.85); }
+.act-card .visual:hover .zoom-hint { opacity: 1; }
+.act-card .visual .zoom-hint { display: none; }
+
+.engine-demo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  isolation: isolate;
+  overflow: hidden;
+  contain: layout paint style;
+  background:
+    linear-gradient(180deg, rgba(244,239,227,0.94), rgba(239,231,210,0.78)),
+    var(--cream);
+}
+.engine-demo * { box-sizing: border-box; }
+.engine-demo__plate {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(42,38,32,0.08);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(42,38,32,0.065), transparent 24%),
+    linear-gradient(90deg, rgba(114,43,43,0.07), transparent 22%, transparent 78%, rgba(42,38,32,0.05));
+}
+.engine-demo__media-shell {
+  position: absolute;
+  inset: 26px 14px 30px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.engine-demo__sprite {
+  position: relative;
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: 1px solid rgba(42,38,32,0.17);
+  background-color: var(--cream);
+  box-shadow: 0 18px 42px -30px rgba(42,38,32,0.58);
+  transform-origin: 50% 68%;
+  background-image: var(--sprite-lg);
+  background-size: var(--sprite-width) 100%;
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  animation:
+    engineSpriteTrack var(--cycle) step-end infinite,
+    engineDemoBody var(--cycle) ease-in-out infinite;
+  will-change: background-position, transform;
+}
+.engine-demo[data-paused="true"] .engine-demo__sprite {
+  animation-play-state: paused;
+}
+.engine-demo__chrome {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: var(--bg);
+}
+.engine-demo__label {
+  position: absolute;
+  left: 18px;
+  top: 16px;
+  right: 18px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.engine-demo__fig,
+.engine-demo__mode,
+.engine-demo__frames {
+  font-family: var(--mono);
+  font-size: 8px;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.engine-demo__fig { color: var(--oxblood); }
+.engine-demo__title {
+  font-family: var(--serif);
+  font-size: clamp(15px, 1.45vw, 21px);
+  font-style: italic;
+  line-height: 1;
+  color: var(--bg);
+  white-space: nowrap;
+}
+.engine-demo__mode,
+.engine-demo__frames { color: rgba(42,38,32,0.58); }
+.engine-demo__frames {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+}
+.engine-demo__role {
+  position: absolute;
+  right: 18px;
+  bottom: 15px;
+  max-width: 52%;
+  font-family: var(--serif);
+  font-size: clamp(11px, 1.05vw, 14px);
+  font-style: italic;
+  line-height: 1.12;
+  text-align: right;
+  color: var(--bg);
+}
+.engine-demo--thumb {
+  min-height: 170px;
+  border-radius: 8px;
+}
+.engine-demo--thumb .engine-demo__media-shell { inset: 18px 8px 20px; }
+.engine-demo--thumb .engine-demo__fig,
+.engine-demo--thumb .engine-demo__mode,
+.engine-demo--thumb .engine-demo__frames,
+.engine-demo--thumb .engine-demo__role { display: none; }
+.engine-demo--thumb .engine-demo__title {
+  font-size: 13px;
+}
+.engine-demo--zoom {
+  min-height: min(70vh, 680px);
+  border-radius: 18px;
+  border: 1px solid rgba(244,239,227,0.26);
+  background:
+    linear-gradient(180deg, rgba(244,239,227,0.96), rgba(239,231,210,0.86)),
+    var(--bg);
+  box-shadow: 0 28px 96px rgba(0,0,0,0.36);
+}
+.engine-demo--zoom .engine-demo__media-shell { inset: 38px 24px 42px; }
+.lib-card .thumb {
+  padding: 0;
+  overflow: hidden;
+}
+.lib-card .thumb .engine-demo { height: 100%; min-height: 0; }
+@keyframes engineDemoBody {
+  0%, 100% { transform: translateY(0) scale(1); }
+  28%, 64% { transform: translateY(-4px) scale(1.012); }
+  84% { transform: translateY(2px) scale(1.004); }
+}
+@keyframes engineSpriteTrack {
+  0%, 11% { background-position: 0% 50%; }
+  12.5%, 23.5% { background-position: 14.285714% 50%; }
+  25%, 36% { background-position: 28.571429% 50%; }
+  37.5%, 48.5% { background-position: 42.857143% 50%; }
+  50%, 61% { background-position: 57.142857% 50%; }
+  62.5%, 73.5% { background-position: 71.428571% 50%; }
+  75%, 86% { background-position: 85.714286% 50%; }
+  87.5%, 100% { background-position: 100% 50%; }
+}
+@media (max-width: 760px) {
+  .engine-demo { min-height: 330px; }
+  .engine-demo__media-shell { inset: 34px 10px 52px; }
+  .engine-demo__label { left: 14px; right: 14px; }
+  .engine-demo__mode { display: none; }
+  .engine-demo__frames { left: 14px; bottom: 38px; }
+  .engine-demo__role {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    max-width: none;
+    text-align: left;
+  }
+  .engine-demo__sprite { background-image: var(--sprite-sm); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .engine-demo__sprite {
+    animation: none;
+    background-position: 0% 50%;
+  }
+}
+
+.act-card .copy { position: relative; z-index: 1; }
+.act-card .copy .act-label { font-family: var(--sans); font-size: 10px; letter-spacing: 0.34em; color: var(--oxblood); margin-bottom: 6px; text-transform: uppercase; font-weight: 600; }
+.act-card .copy .approach { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--amber); margin-bottom: 14px; }
+.act-card .copy h3 { font-family: var(--serif); font-weight: 300; font-size: 34px; letter-spacing: -0.01em; line-height: 1.1; margin-bottom: 18px; color: var(--cream); }
+.act-card .copy .geometry { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--cream-dim); line-height: 1.6; margin-bottom: 22px; }
+.act-card .copy .badges { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 6px; }
+.badge {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em;
+  padding: 5px 10px; border-radius: 5px;
+  background: rgba(42,38,32,0.07); border: 1px solid var(--rule);
+  color: var(--cream-dim); text-transform: lowercase;
+}
+.badge.load { color: var(--amber); border-color: rgba(138,101,32,0.38); }
+.badge.safe { color: var(--sage); border-color: rgba(138,155,118,0.32); }
+
+.drawer-row { margin-top: 22px; }
+details.drawer { border-top: 1px solid var(--rule); padding: 16px 0; }
+details.drawer:last-child { border-bottom: 1px solid var(--rule); }
+details.drawer summary {
+  cursor: pointer; list-style: none;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--cream); font-weight: 500;
+}
+details.drawer summary::-webkit-details-marker { display: none; }
+details.drawer summary::after { content: '+'; font-family: var(--serif); font-size: 22px; color: var(--oxblood); transition: all 240ms ease; line-height: 1; }
+details.drawer[open] summary::after { content: '−'; }
+details.drawer .body { margin-top: 14px; font-family: var(--serif); font-size: 17px; line-height: 1.6; color: var(--cream); font-style: italic; }
+details.drawer .body.line { border-left: 2px solid var(--oxblood); padding-left: 18px; font-size: 19px; }
+
+.decision-panel { text-align: center; padding: 8px 0 4px; transition: opacity 320ms ease; }
+.decision-panel.used { opacity: 0.32; pointer-events: none; }
+.decision-prompt { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--cream-dim); margin-bottom: 24px; }
+.decisions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+button.decision {
+  font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.16em;
+  padding: 18px 22px 16px; border-radius: 14px;
+  border: 1px solid rgba(42,38,32,0.22); background: rgba(42,38,32,0.06);
+  color: var(--cream); cursor: pointer; text-transform: uppercase;
+  display: flex; flex-direction: column; align-items: center; gap: 7px;
+  min-width: 188px; position: relative;
+  transition: all 280ms cubic-bezier(.2,.7,.2,1);
+}
+button.decision .arrow { font-size: 26px; font-family: var(--serif); line-height: 1; font-weight: 300; }
+button.decision .label { font-size: 11px; letter-spacing: 0.24em; }
+button.decision .micro { font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--muted); letter-spacing: 0; text-transform: none; font-weight: 400; }
+button.decision.de:hover { border-color: var(--sage); background: rgba(138,155,118,0.08); transform: translateY(-2px); }
+button.decision.de .arrow { color: var(--sage); }
+button.decision.hold:hover { border-color: var(--cream-dim); background: rgba(42,38,32,0.07); transform: translateY(-2px); }
+button.decision.hold .arrow { color: var(--cream-dim); }
+button.decision.up:hover { border-color: var(--oxblood); background: rgba(114,43,43,0.10); transform: translateY(-2px); }
+button.decision.up .arrow { color: var(--oxblood); }
+button.decision.suggested { border-color: var(--oxblood); box-shadow: 0 0 0 1px var(--oxblood), 0 6px 22px var(--oxblood-glow); }
+button.decision.suggested::before { content: 'BackStroke suggests'; position: absolute; top: -26px; left: 50%; transform: translateX(-50%); font-family: var(--serif); font-style: italic; font-size: 12px; color: var(--oxblood); white-space: nowrap; }
+button.decision:disabled, button.decision.disabled { opacity: 0.34; cursor: not-allowed; transform: none; box-shadow: none; }
+button.decision:disabled::before { display: none; }
+
+.nav-row { display: flex; justify-content: center; gap: 10px; margin-top: 4px; }
+.nav-row .nav-btn {
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.20em;
+  text-transform: uppercase; background: none; border: 1px solid var(--rule);
+  color: var(--muted); padding: 8px 14px; border-radius: 999px;
+  cursor: pointer; transition: all 240ms ease;
+}
+.nav-row .nav-btn:hover { color: var(--cream-dim); border-color: var(--cream-dim); }
+
+.stop-row { margin-top: 28px; text-align: center; }
+button.stop {
+  font-family: var(--sans); font-size: 11px; letter-spacing: 0.24em;
+  text-transform: uppercase; background: transparent; border: 1px solid var(--rule);
+  color: var(--muted); cursor: pointer; padding: 13px 22px; border-radius: 999px;
+  font-weight: 500; transition: all 280ms ease;
+}
+button.stop:hover { color: var(--cream-dim); border-color: var(--cream-dim); }
+
+.plan-end-actions {
+  display: none; flex-wrap: wrap; justify-content: center; gap: 12px;
+  margin-top: 36px; padding: 28px;
+  background: rgba(42,38,32,0.05);
+  border: 1px solid var(--rule); border-radius: 14px;
+}
+.plan-end-actions.visible { display: flex; }
+.plan-end-actions button {
+  font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em;
+  padding: 14px 22px; border-radius: 999px;
+  border: 1px solid var(--rule-strong); background: rgba(42,38,32,0.04);
+  color: var(--cream); cursor: pointer; text-transform: uppercase;
+  font-weight: 600; transition: all 220ms ease;
+}
+.plan-end-actions button:hover { border-color: var(--cream-dim); background: rgba(42,38,32,0.09); transform: translateY(-1px); }
+.plan-end-actions button.primary { background: var(--cream); color: var(--bg); border-color: var(--cream); }
+.plan-end-actions button.primary:hover { background: var(--cream-dim); }
+
+.copy-toast {
+  position: fixed; bottom: 30px; left: 50%;
+  transform: translateX(-50%) translateY(40px);
+  background: var(--cream); color: var(--bg);
+  padding: 14px 24px; border-radius: 999px;
+  font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em;
+  text-transform: uppercase; font-weight: 600;
+  opacity: 0; transition: all 320ms cubic-bezier(.2,.7,.2,1); z-index: 300;
+}
+.copy-toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.stop-rule {
+  margin-top: 56px; padding: 30px 34px;
+  background: rgba(114,43,43,0.07);
+  border-left: 3px solid var(--oxblood); border-radius: 8px;
+}
+.stop-rule .lbl { font-family: var(--sans); font-size: 10px; letter-spacing: 0.32em; color: var(--oxblood); text-transform: uppercase; margin-bottom: 12px; font-weight: 600; }
+.stop-rule .body { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--cream-dim); line-height: 1.65; }
+
+footer.foot {
+  margin-top: 96px; padding-top: 36px;
+  border-top: 1px solid var(--rule); text-align: center;
+  font-family: var(--serif); font-style: italic; font-size: 13px;
+  color: var(--muted); line-height: 1.7;
+  max-width: 720px; margin-left: auto; margin-right: auto;
+}
+
+/* Library modal */
+.modal-bg {
+  position: fixed; inset: 0;
+  background: rgba(42,38,32,0.42);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  z-index: 200; display: none;
+  align-items: flex-start; justify-content: center;
+  overflow-y: auto; padding: 60px 24px;
+}
+.modal-bg.active { display: flex; animation: fadeIn 240ms ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal {
+  max-width: 1080px; width: 100%;
+  background: var(--bg-elev); border: 1px solid var(--rule);
+  border-radius: 18px; padding: 40px; position: relative;
+}
+.modal h3 { font-family: var(--serif); font-weight: 300; font-size: 36px; letter-spacing: -0.01em; margin-bottom: 8px; }
+.modal h3 em { font-style: italic; color: var(--oxblood); }
+.modal .modal-sub { font-family: var(--serif); font-style: italic; color: var(--cream-dim); font-size: 17px; margin-bottom: 28px; }
+.modal-close {
+  position: absolute; top: 22px; right: 22px;
+  background: none; border: 1px solid var(--rule); color: var(--cream-dim);
+  width: 38px; height: 38px; border-radius: 50%;
+  cursor: pointer; font-family: var(--serif); font-size: 22px;
+  transition: all 240ms ease;
+}
+.modal-close:hover { color: var(--cream); border-color: var(--cream-dim); }
+.lib-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+.lib-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.lib-tab {
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.22em;
+  text-transform: uppercase; padding: 9px 16px; border-radius: 999px;
+  border: 1px solid var(--rule); background: transparent;
+  color: var(--cream-dim); cursor: pointer; font-weight: 500;
+  transition: all 220ms ease;
+}
+.lib-tab[aria-pressed="true"] { background: var(--oxblood); border-color: var(--oxblood); color: var(--cream); }
+.lib-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 880px) { .lib-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 580px) { .lib-grid { grid-template-columns: 1fr; } }
+.lib-card {
+  background: var(--bg-elev-2); border: 1px solid var(--rule);
+  border-radius: 12px; padding: 16px; cursor: default;
+  transition: all 240ms ease; position: relative; overflow: hidden;
+}
+.lib-card:hover { border-color: var(--rule-strong); }
+.lib-card .thumb {
+  aspect-ratio: 16/10;
+  background: radial-gradient(ellipse at 30% 25%, rgba(138,101,32,0.14) 0%, transparent 55%),
+              linear-gradient(160deg, rgba(42,38,32,0.07) 0%, rgba(214,202,176,0.55) 100%);
+  border-radius: 8px; margin-bottom: 12px; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.lib-card .thumb svg { width: 100%; height: 100%; }
+.lib-card h4 { font-family: var(--serif); font-weight: 400; font-size: 17px; color: var(--cream); margin-bottom: 5px; line-height: 1.2; }
+.lib-card .lib-meta { font-family: var(--sans); font-size: 10px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; font-weight: 500; }
+
+.zoom-bg {
+  position: fixed; inset: 0;
+  background: rgba(26,23,20,0.82);
+  backdrop-filter: blur(18px);
+  z-index: 250; display: none;
+  align-items: center; justify-content: center; flex-direction: column;
+  gap: 18px;
+  padding: clamp(18px, 3vw, 40px); cursor: zoom-out;
+}
+.zoom-bg.active { display: flex; animation: fadeIn 240ms ease; }
+.zoom-bg .zoom-svg {
+  width: min(920px, calc(100vw - 40px));
+  height: min(58vh, 560px);
+  flex: 0 1 auto;
+}
+.zoom-caption {
+  position: static;
+  transform: none;
+  font-family: var(--serif);
+  color: rgba(244,239,227,0.72);
+  font-size: clamp(15px, 1.6vw, 18px);
+  text-align: center;
+  max-width: min(840px, calc(100vw - 40px));
+  line-height: 1.45;
+  text-wrap: balance;
+}
+.zoom-caption .zoom-name {
+  font-style: italic;
+  color: var(--bg);
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+@media (max-width: 760px) {
+  .zoom-bg {
+    justify-content: flex-start;
+    padding-top: 24px;
+    overflow-y: auto;
+  }
+  .zoom-bg .zoom-svg {
+    width: calc(100vw - 28px);
+    height: min(62vh, 520px);
+  }
+}
+
+/* ANIMATIONS */
+@keyframes thrust-h { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-8px); } }
+@keyframes thrust-v { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+@keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+.motion-arrow { animation: pulse 2.4s ease-in-out infinite; }
+svg .partner.has-thrust-h { animation: thrust-h 2.4s ease-in-out infinite; transform-origin: center; }
+svg .partner.has-thrust-v { animation: thrust-v 2.4s ease-in-out infinite; transform-origin: center; }
+svg .receiver.has-thrust-v { animation: thrust-v 2.4s ease-in-out infinite; transform-origin: center; }
+svg .receiver.has-breathe { animation: breathe 4.2s ease-in-out infinite; transform-origin: center; }
+@keyframes settle { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.act-card .visual svg g.partner { animation: settle 700ms cubic-bezier(.2,.7,.2,1) backwards; }
+.act-card .visual svg g.receiver { animation: settle 700ms cubic-bezier(.2,.7,.2,1) 140ms backwards; }
+.act-card .visual svg g.motion { animation: settle 700ms cubic-bezier(.2,.7,.2,1) 320ms backwards; }
+
+/* ============================================================
+   NIGHTSTAND PRINT CARD
+   A single-page, glanceable plan you can fold and leave by the
+   bed. Hidden on screen. Becomes the only thing in the print
+   stream when window.print() is called.
+   ============================================================ */
+.print-card { display: none; }
+@media print {
+  @page { size: letter portrait; margin: 0.5in; }
+  body * { visibility: hidden !important; }
+  .print-card, .print-card * { visibility: visible !important; }
+  .print-card {
+    display: block !important;
+    position: absolute;
+    inset: 0;
+    background: #fff !important;
+    color: #1a1714 !important;
+    font-family: 'Spectral', 'Cormorant Garamond', Georgia, serif;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+  .pc-rule { border: 0; border-top: 1px solid #c8b89f; margin: 14px 0; }
+  .pc-rule-thick { border: 0; border-top: 2px solid #722B2B; margin: 12px 0; }
+  .pc-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .pc-brand { font-style: italic; font-size: 18pt; letter-spacing: -0.01em; }
+  .pc-brand b { color: #722B2B; font-weight: 700; }
+  .pc-meta { font-family: 'JetBrains Mono', monospace; font-size: 8pt; letter-spacing: 0.22em; text-transform: uppercase; color: #6b5d4a; }
+  .pc-headline { font-style: italic; font-size: 28pt; line-height: 1.0; letter-spacing: -0.02em; margin: 16px 0 4px; }
+  .pc-headline b { color: #722B2B; font-style: italic; font-weight: 400; }
+  .pc-summary { font-size: 11pt; line-height: 1.45; margin: 12px 0; }
+  .pc-closer { font-style: italic; color: #722B2B; font-size: 11pt; margin: 4px 0 0; }
+  .pc-act { margin: 14px 0; page-break-inside: avoid; }
+  .pc-act-label { font-family: 'JetBrains Mono', monospace; font-size: 8pt; letter-spacing: 0.22em; text-transform: uppercase; color: #722B2B; }
+  .pc-act-name { font-size: 16pt; font-style: italic; line-height: 1.05; margin: 4px 0 6px; }
+  .pc-act-geo { font-size: 10pt; line-height: 1.4; }
+  .pc-act-approach { font-family: 'JetBrains Mono', monospace; font-size: 8pt; letter-spacing: 0.12em; text-transform: uppercase; color: #6b5d4a; margin: 6px 0 0; }
+  .pc-act-line { font-size: 10pt; line-height: 1.4; margin-top: 6px; font-style: italic; }
+  .pc-act-line b { font-style: normal; font-family: 'JetBrains Mono', monospace; font-size: 7pt; letter-spacing: 0.22em; text-transform: uppercase; color: #6b5d4a; font-weight: 400; display: block; margin-bottom: 2px; }
+  .pc-stop {
+    border: 1px solid #722B2B;
+    padding: 10px 14px;
+    margin-top: 16px;
+    page-break-inside: avoid;
+  }
+  .pc-stop-label { font-family: 'JetBrains Mono', monospace; font-size: 8pt; letter-spacing: 0.22em; text-transform: uppercase; color: #722B2B; }
+  .pc-stop-body { font-size: 9.5pt; line-height: 1.4; margin-top: 4px; }
+  .pc-foot { margin-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 7pt; letter-spacing: 0.22em; text-transform: uppercase; color: #6b5d4a; display: flex; justify-content: space-between; }
+}
+</style>
+</head>
+<body>
+
+<div class="timeline-strip" id="timelineStrip">
+  <div class="timeline-tiles" id="tlTiles"></div>
+  <div class="tl-actions">
+    <button id="diagramBtn" class="diagram-toggle"><span class="switch"></span><span id="motionToggleLabel">Pause motion</span></button>
+    <button id="editInputsBtn">Edit inputs</button>
+    <button id="restartBtn">Restart</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">BackStroke · Position Intelligence Engine · v6</div>
+    <h1 class="title">Your back should not be<br><em>the third person in bed.</em></h1>
+    <p class="tagline">Five taps. A plan that reads tonight's body. Human motion studies so you can actually see what the position is.</p>
+  </header>
+
+  <section class="gate" id="gate">
+    <div class="gate-card">
+      <div class="gate-eyebrow">Before any of the fun</div>
+      <h2>Some pain belongs to <em>a clinician</em>, not an algorithm.</h2>
+      <p class="gate-sub">Tap any of these that apply. None? Continue. Even one? We get out of the way.</p>
+      <div class="flag-list" id="flagList">
+        <div class="flag" data-flag="cauda"><div class="box"></div><div class="text">Numbness in the saddle area, or any new loss of bladder or bowel control.</div></div>
+        <div class="flag" data-flag="weakness"><div class="box"></div><div class="text">Progressive weakness or numbness moving down a leg, getting worse over hours or days.</div></div>
+        <div class="flag" data-flag="surgery"><div class="box"></div><div class="text">Recent back, pelvic, or abdominal surgery without clearance from your clinician for sexual activity.</div></div>
+        <div class="flag" data-flag="systemic"><div class="box"></div><div class="text">Fever, chills, night sweats, or unexplained weight loss alongside the back pain.</div></div>
+        <div class="flag" data-flag="severe"><div class="box"></div><div class="text">Severe, unrelenting pain that does not change at all with position or rest.</div></div>
+        <div class="flag" data-flag="pregnancy"><div class="box"></div><div class="text">Pregnancy with bleeding, severe pain, or any complication your OB has flagged.</div></div>
+      </div>
+      <div class="gate-actions">
+        <button class="gate-confirm" id="gateConfirm">None of these — continue</button>
+        <button class="gate-redirect" id="gateRedirect">Take me to a contact-only option</button>
+      </div>
+      <div class="gate-flag-msg" id="gateFlagMsg">
+        Stop. This needs a clinician before it needs an app. BackStroke can offer one thing in the meantime: a side-lying breath drill that asks nothing of your back. Beyond that, we wait, and you make a phone call.
+      </div>
+    </div>
+  </section>
+
+  <section class="setup" id="setup">
+    <div class="step-progress" id="stepProgress"></div>
+    <div class="step-card" id="stepCard"></div>
+    <div class="browse-link"><button id="browseBtn">Browse the full library →</button></div>
+  </section>
+
+  <section class="plan" id="plan">
+    <div class="plan-header">
+      <h2>Tonight's <em>plan</em></h2>
+      <p class="results-microcopy">Ranked by what your body reported, not by what a magazine intern found under deadline.</p>
+    </div>
+    <div class="plan-summary" id="planSummary"></div>
+    <div id="actContainer"></div>
+    <div class="stop-row"><button class="stop" id="stopBtn">Stop and go to recovery</button></div>
+    <div class="plan-end-actions" id="planEndActions">
+      <button id="saveBtn">Save tonight's plan</button>
+      <button id="printBtn">Print the nightstand card</button>
+      <button id="shareBtn" class="primary">Share the human version</button>
+    </div>
+    <div class="stop-rule">
+      <div class="lbl">Stop rule, every act</div>
+      <div class="body">Stop if pain travels farther down a leg, turns sharp, becomes electrical, or starts writing legal correspondence. Quiet means quiet — not still technically able to continue, which is how men invented half of orthopaedics.</div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Built from public-source biomechanics and practical movement logic. Not medical care. Not sex therapy. Not a retreat with bad WiFi and worse boundaries.
+  </footer>
+</div>
+
+<div class="modal-bg" id="libraryBg">
+  <div class="modal" id="libraryModal">
+    <button class="modal-close" id="libClose">×</button>
+    <h3>The <em>full library</em></h3>
+    <p class="modal-sub">Every position the engine can route to.</p>
+    <div class="lib-controls">
+      <div class="lib-tabs">
+        <button class="lib-tab" data-tab="all" aria-pressed="true">All</button>
+        <button class="lib-tab" data-tab="warm">Warm-up</button>
+        <button class="lib-tab" data-tab="main">Main</button>
+        <button class="lib-tab" data-tab="dessert">Dessert</button>
+        <button class="lib-tab" data-tab="recovery">Recovery</button>
+      </div>
+    </div>
+    <div class="lib-grid" id="libGrid"></div>
+  </div>
+</div>
+
+<div class="zoom-bg" id="zoomBg">
+  <div class="zoom-svg" id="zoomContent"></div>
+  <div class="zoom-caption" id="zoomCaption"></div>
+</div>
+
+<div class="copy-toast" id="copyToast">Copied to clipboard</div>
+
+<!-- Nightstand print card. Populated by buildPrintCard() before window.print(). -->
+<div class="print-card" id="printCard"></div>
+
+<script>
+// =================================================================
+// EVENT STORE BRIDGE
+// Engine is a static HTML page (no module system), so we inline a
+// tiny tracker that writes to the same localStorage key as the
+// TypeScript event store (src/lib/events.ts). Both readers can
+// then compute the Index from a single canonical event log.
+// =================================================================
+const BS_EVENTS_KEY = 'bs.events.v1';
+const BS_USER_KEY = 'bs.userId.v1';
+const BS_SESSION_KEY = 'bs.sessionId.v1';
+function bsUuid() {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+  return 'x-x-x-x-x'.replace(/x/g, () => Math.floor(Math.random()*1e9).toString(36));
+}
+function bsUser() {
+  let id = localStorage.getItem(BS_USER_KEY);
+  if (!id) { id = bsUuid(); localStorage.setItem(BS_USER_KEY, id); }
+  return id;
+}
+function bsSession() {
+  let id = sessionStorage.getItem(BS_SESSION_KEY);
+  if (!id) { id = bsUuid(); sessionStorage.setItem(BS_SESSION_KEY, id); }
+  return id;
+}
+function bsTrack(name, props) {
+  const event = {
+    id: bsUuid(),
+    user_id: bsUser(),
+    session_id: bsSession(),
+    event_name: name,
+    props: props || {},
+    client_ts: new Date().toISOString()
+  };
+  try {
+    const raw = localStorage.getItem(BS_EVENTS_KEY);
+    const events = raw ? JSON.parse(raw) : [];
+    events.push(event);
+    // Cap at 5000 so we don't blow LS quota
+    const trimmed = events.length > 5000 ? events.slice(-5000) : events;
+    localStorage.setItem(BS_EVENTS_KEY, JSON.stringify(trimmed));
+  } catch (e) {}
+  // Cloud writes happen later when Eric drops in Supabase keys; the
+  // local mirror is enough to power the Index today.
+}
+bsTrack('engine.opened', { url: location.pathname });
+
+// =================================================================
+// POSITION LIBRARY (unchanged from v5)
+// =================================================================
+const positions = [
+  { id:'breath_side', name:'Side-lying breath, knees stacked', role:'warm', stick:'single_side', load:0, flex:0, ext:0, rot:0, thrust:0, hip:0, floor:0, climax:false,
+    geometry:'Side-lying with a pillow between knees. One hand on the lower ribs, one on the lower abdomen. Inhale and let the lower ribs widen. Exhale and let the breath go long. No bracing.',
+    why:'Settles the nervous system before anything is asked of the back. Tells the body it does not need to guard. The best opening when the back is loud, unclear, or simply unread.',
+    contra:[], partnerLine:'Two minutes of breath first. I want this. I just need my back to stop running the meeting.' },
+  { id:'spoon_hold', name:'Spoon embrace, clothes optional', role:'warm', stick:'spoon_still', load:0, flex:0, ext:0, rot:0, thrust:0, hip:0, floor:0, climax:false,
+    geometry:'Partner behind, knees stacked, pelvis neutral. Contact only. Slow breath together. No goal yet.',
+    why:'Co-regulation. Two nervous systems syncing before either body has to organise anything mechanical.',
+    contra:[], partnerLine:'Just be here for a minute. We are not starting yet. We are arriving.' },
+  { id:'lap_embrace', name:'Seated lap embrace, neutral spine', role:'warm', stick:'seated_face', load:0, flex:1, ext:0, rot:0, thrust:0, hip:1, floor:1, climax:false,
+    geometry:'Receiver in partner\'s lap, facing, sitting tall not slouched. Hips stacked over sits-bones. Foreheads together.',
+    why:'Eye contact and slow weight-share without committing to anything mechanical yet.',
+    contra:['flexion','sitting'], partnerLine:'I want my face near yours before I want anything else.' },
+  { id:'supine_handhold', name:'Supine, hands held, breath synced', role:'warm', stick:'supine_both', load:0, flex:0, ext:0, rot:0, thrust:0, hip:0, floor:0, climax:false,
+    geometry:'Both on back, shoulders touching, hands held. Three breaths slower than usual.',
+    why:'A re-entry move. Especially after a hard day, a fight, post-surgical recovery, or a body that has not been to bed for sex in a while.',
+    contra:[], partnerLine:'Three breaths first. Then I will know what my body wants.' },
+  { id:'sup_sidelie', name:'Supported side-lie, low amplitude', role:'main', stick:'spoon_motion', load:1, flex:0, ext:0, rot:0, thrust:1, hip:0, floor:0, climax:true,
+    geometry:'Receiver side-lying, affected side up, pillow between knees, pelvis stacked. Partner behind. Movement slow, range small.',
+    why:'The geometry of choice for right or left sciatica. Spine stays neutral, the affected leg stays unloaded, amplitude can be tuned in real time.',
+    contra:[], partnerLine:'Small. Slow. If my back starts speaking we stop and re-route.' },
+  { id:'spoon_pen', name:'Spooning penetration, supported', role:'main', stick:'spoon_motion', load:1, flex:0, ext:0, rot:0, thrust:1, hip:0, floor:0, climax:true,
+    geometry:'Spoon position with shallow entry. Partner controls amplitude. Pillow between knees, neutral spine.',
+    why:'Low-everything. Works for sciatica, SI irritation, a loud lumbar, post-load fatigue, the back that survived a flight.',
+    contra:[], partnerLine:'Stay shallow. Stay slow. The point is not the meters covered.' },
+  { id:'scissor', name:'Side-by-side scissor', role:'main', stick:'scissor', load:1, flex:0, ext:0, rot:0, thrust:1, hip:1, floor:1, climax:true,
+    geometry:'Both partners on side, legs scissored. Pelvises angle toward each other with one cushion of support beneath.',
+    why:'Intimate, low-effort, mutual range of motion. Excellent for endurance days and for couples who want to look at each other.',
+    contra:[], partnerLine:'I want to see your face for this one.' },
+  { id:'cat_pillow', name:'CAT with pillow under hips', role:'main', stick:'missionary', load:2, flex:1, ext:0, rot:0, thrust:1, hip:1, floor:2, climax:true,
+    geometry:'Receiver supine, pillow under hips for slight posterior tilt. Partner above with weight shared on forearms. Pelvises slide rather than thrust.',
+    why:'Coital Alignment Technique with a neutral-spine modification. The motion is rocking, not pumping. Pleasure-build runs high; thrust amplitude stays low.',
+    contra:['flexion'], partnerLine:'Rocking, not thrusting. I want the rhythm, not the runway.' },
+  { id:'edge_bed', name:'Edge-of-bed receiver supine', role:'main', stick:'edge_bed', load:2, flex:0, ext:1, rot:0, thrust:2, hip:1, floor:1, climax:true,
+    geometry:'Receiver supine with hips at the bed edge, knees supported by partner. Partner standing. Spine stays neutral; partner controls amplitude.',
+    why:'For when the receiver wants stillness in the spine while the partner does the work. Watch for extension drift if the lumbar lifts.',
+    contra:['extension'], partnerLine:'You move. I am keeping my spine quiet on purpose.' },
+  { id:'knees_bent_sup', name:'Supine, knees bent, feet flat', role:'main', stick:'missionary', load:2, flex:1, ext:0, rot:0, thrust:1, hip:1, floor:1, climax:true,
+    geometry:'Receiver supine, knees bent, feet flat on the bed. Partner kneeling between. Pillow under lumbar if needed.',
+    why:'Stable. Adjustable. The feet in contact with the bed give the receiver proprioceptive ground that calms the lower back.',
+    contra:[], partnerLine:'Feet are staying on the bed. That is the anchor.' },
+  { id:'doggy_supp', name:'Supported rear-entry, chest down', role:'dessert', stick:'rear_entry', load:2, flex:0, ext:1, rot:1, thrust:2, hip:1, floor:2, climax:true,
+    geometry:'Receiver on knees with chest and forearms on a pile of pillows, hips elevated, spine neutral — not arched. Partner behind, low amplitude.',
+    why:'Lets the receiver progress without loading lumbar extension. The pillows do the lordosis prevention.',
+    contra:['extension','si_joint'], partnerLine:'Chest down. The pillows are doing my arching for me.' },
+  { id:'cowgirl_up', name:'Receiver-on-top, upright', role:'dessert', stick:'on_top', load:3, flex:1, ext:1, rot:1, thrust:2, hip:1, floor:3, climax:true,
+    geometry:'Receiver sits upright over partner, spine stacked, hands on partner\'s chest or thighs for support. Receiver controls rhythm and depth.',
+    why:'Highest agency position. Best when the receiver wants to drive and the back is quiet enough to sit tall.',
+    contra:['flexion','si_joint'], partnerLine:'I am driving. If I slow down it means slow down.' },
+  { id:'rev_cowgirl', name:'Reverse receiver-on-top, supported', role:'dessert', stick:'on_top_rev', load:3, flex:1, ext:1, rot:1, thrust:2, hip:1, floor:3, climax:true,
+    geometry:'Receiver on top facing away, leaning slightly forward with hands on partner\'s shins. Partner stays still.',
+    why:'An angle variation when the standard upright creates rotation pain or when the receiver wants more visual privacy.',
+    contra:['si_joint'], partnerLine:'You stay still. I will find the angle.' },
+  { id:'spoon_climax', name:'Spoon with manual stimulation', role:'dessert', stick:'spoon_still', load:1, flex:0, ext:0, rot:0, thrust:0, hip:0, floor:0, climax:true,
+    geometry:'Spoon hold with shared or solo manual stimulation. No thrusting required for climax.',
+    why:'Climax-conservative. A closing geometry that does not introduce new load.',
+    contra:[], partnerLine:'Stay here. My back has earned a quiet finish.' },
+  { id:'sidelie_hand', name:'Side-lying mutual hand', role:'dessert', stick:'sidelie_face', load:1, flex:0, ext:0, rot:0, thrust:0, hip:0, floor:0, climax:true,
+    geometry:'Both on side, facing, hands free. Eye contact is allowed and recommended.',
+    why:'The lowest-load climax option. Works on red Index days when penetration is off the menu and the evening still has somewhere to go.',
+    contra:[], partnerLine:'Hands tonight. The geometry is yours and mine, separately and together.' },
+  { id:'rec_breath', name:'Side-lying breath, partner\'s hand on the back', role:'recovery', stick:'spoon_still', load:0, flex:0, ext:0, rot:0, thrust:0, hip:0, floor:0, climax:false,
+    geometry:'Side-lying, knees stacked, partner\'s warm hand resting on the quiet or painful area. No movement. Five breaths longer than feels natural.',
+    why:'Closes the session with downregulation. Tells the nervous system the evening ended safely, which is a learnable signal over time.',
+    contra:[], partnerLine:'Hand on my lower back. Just stay for a minute.' },
+  { id:'rec_legs_lap', name:'Supine, legs over partner\'s lap', role:'recovery', stick:'legs_lap', load:0, flex:0, ext:0, rot:0, thrust:0, hip:0, floor:0, climax:false,
+    geometry:'Receiver supine, calves draped across partner\'s thighs. Partner seated upright. No movement, occasional pressure on the calf or foot.',
+    why:'Constructive rest with company. The lumbar gets slight relief; psoas can release into the partner\'s thighs.',
+    contra:[], partnerLine:'Legs up. Tell me about your week.' }
+];
+
+const QUESTIONS = [
+  { key:'painVector', eyebrow:'Question 1 of 5', q:'Where is the <em>pain</em> tonight?', help:'Where it lives, where it travels.',
+    options:[['right_sciatica','Right sciatica'],['left_sciatica','Left sciatica'],['central_lumbar','Central lumbar'],['si_joint','SI joint'],['hip_flexor','Hip flexor'],['piriformis','Piriformis'],['flare','Flare day'],['none','Nothing today']]},
+  { key:'painBehavior', eyebrow:'Question 2 of 5', q:'What <em>makes it worse</em>?', help:'The action your back will resist most tonight.',
+    options:[['sitting','Sitting'],['standing','Standing'],['flexion','Bending forward'],['extension','Arching back'],['rotation','Twisting'],['unclear','Hard to tell']]},
+  { key:'index', eyebrow:'Question 3 of 5', q:'Today\'s <em>Index</em>?', help:'The load cap your back will tolerate before it joins the conversation.',
+    options:[['green','Green'],['amber','Amber'],['red','Red'],['flare','Flare']]},
+  { key:'goal', eyebrow:'Question 4 of 5', q:'What is the <em>evening</em> for?', help:'Not a directive. A route.',
+    options:[['penetrative','Penetrative'],['climax','Climax-focused'],['closeness','Closeness'],['solo','Solo'],['recovery','Recovery only']]},
+  { key:'time', eyebrow:'Question 5 of 5', q:'How much <em>time</em>?', help:'Honest about what you have, not what you wish you had.',
+    options:[['short','Under 10 min'],['medium','10–20 min'],['long','20–40 min'],['extended','40+ min']]}
+];
+
+const ENGINE_FRAME_COUNT = 8;
+let MOTION_PAUSED = false;
+
+const ENGINE_VISUALS = {
+  'side-spoon': {
+    fig:'P.01', title:'Side-Lying Spooning', role:'Pelvises aligned; top knee supported',
+    frameHold:'setup / support / neutral / settle', cycleSeconds:2.45,
+    sprite:'/demos/positions/side-spoon.jpg', spriteSmall:'/demos/positions/side-spoon-sm.jpg'
+  },
+  'supine-support': {
+    fig:'P.02', title:'Supported Missionary', role:'Partner close; knees supported; lumbar neutral',
+    frameHold:'setup / bolster / breathe / hold', cycleSeconds:2.42,
+    sprite:'/demos/positions/supine-support.jpg', spriteSmall:'/demos/positions/supine-support-sm.jpg'
+  },
+  'side-facing': {
+    fig:'P.03', title:'Side-Lying Scissor', role:'Hips close; top leg supported; low rotation',
+    frameHold:'setup / align / support / settle', cycleSeconds:2.5,
+    sprite:'/demos/positions/side-facing.jpg', spriteSmall:'/demos/positions/side-facing-sm.jpg'
+  },
+  'seated-upright': {
+    fig:'P.04', title:'Lap-Sitting Upright', role:'Straddle seated; both spines stacked',
+    frameHold:'setup / stack / close / breathe', cycleSeconds:2.35,
+    sprite:'/demos/positions/seated-upright.jpg', spriteSmall:'/demos/positions/seated-upright-sm.jpg'
+  },
+  'cowgirl-upright': {
+    fig:'P.05', title:'Receiver-On-Top Upright', role:'Receiving partner controls depth; torso stacked',
+    frameHold:'recline / straddle / stack / hold', cycleSeconds:2.25,
+    sprite:'/demos/positions/cowgirl-upright.jpg', spriteSmall:'/demos/positions/cowgirl-upright-sm.jpg'
+  },
+  'reverse-cowgirl': {
+    fig:'P.06', title:'Reverse Receiver-On-Top', role:'Backward lean; partner support; lumbar quiet',
+    frameHold:'recline / reverse / lean / hold', cycleSeconds:2.25,
+    sprite:'/demos/positions/reverse-cowgirl.jpg', spriteSmall:'/demos/positions/reverse-cowgirl-sm.jpg'
+  },
+  'stirrup-missionary': {
+    fig:'P.07', title:'Knees-High Missionary', role:'Knees supported; depth controlled by range',
+    frameHold:'setup / lift / support / hold', cycleSeconds:2.38,
+    sprite:'/demos/positions/stirrup-missionary.jpg', spriteSmall:'/demos/positions/stirrup-missionary-sm.jpg'
+  },
+  'side-leg-held': {
+    fig:'P.08', title:'Side-Lying Leg Held', role:'Top leg supported; hips close; rotation limited',
+    frameHold:'side / align / support / hold', cycleSeconds:2.42,
+    sprite:'/demos/positions/side-leg-held.jpg', spriteSmall:'/demos/positions/side-leg-held-sm.jpg'
+  },
+  'quadruped-support': {
+    fig:'P.09', title:'Supported Rear Entry', role:'Forearms down; support reduces lumbar work',
+    frameHold:'hands / forearms / bolster / hold', cycleSeconds:2.38,
+    sprite:'/demos/positions/quadruped-support.jpg', spriteSmall:'/demos/positions/quadruped-support-sm.jpg'
+  },
+  'edge-bed': {
+    fig:'P.10', title:'Edge-Of-Bed Missionary', role:'Hips at edge; partner close; support takes load',
+    frameHold:'setup / support / align / hold', cycleSeconds:2.38,
+    sprite:'/demos/positions/edge-bed.jpg', spriteSmall:'/demos/positions/edge-bed-sm.jpg'
+  },
+  'standing-support': {
+    fig:'P.11', title:'Standing Supported Rear', role:'Hands high; hip hinge; spine stays long',
+    frameHold:'stand / hands / hinge / hold', cycleSeconds:2.3,
+    sprite:'/demos/positions/standing-support.jpg', spriteSmall:'/demos/positions/standing-support-sm.jpg'
+  },
+  'standing-wall': {
+    fig:'P.12', title:'Standing Face-To-Face', role:'Wall support; staggered feet; low thrust range',
+    frameHold:'stand / brace / close / hold', cycleSeconds:2.3,
+    sprite:'/demos/positions/standing-wall.jpg', spriteSmall:'/demos/positions/standing-wall-sm.jpg'
+  },
+  'prone-pillow': {
+    fig:'P.13', title:'Prone Pillow Support', role:'Pillow under hips softens extension load',
+    frameHold:'prone / pillow / neutral / hold', cycleSeconds:2.55,
+    sprite:'/demos/positions/prone-pillow.jpg', spriteSmall:'/demos/positions/prone-pillow-sm.jpg'
+  },
+  'cradle-sitting': {
+    fig:'P.14', title:'Cradle Sitting', role:'Facing close; legs wrapped; breath-led',
+    frameHold:'sit / wrap / close / hold', cycleSeconds:2.45,
+    sprite:'/demos/positions/cradle-sitting.jpg', spriteSmall:'/demos/positions/cradle-sitting-sm.jpg'
+  },
+  'squat-over': {
+    fig:'P.15', title:'Supported Squat', role:'High demand; hands braced; short range only',
+    frameHold:'setup / brace / squat / hold', cycleSeconds:2.18,
+    sprite:'/demos/positions/squat-over.jpg', spriteSmall:'/demos/positions/squat-over-sm.jpg'
+  },
+  'solo-side': {
+    fig:'P.16', title:'Solo, Side-Lying', role:'Pillow between knees; back stays neutral',
+    frameHold:'side / pillow / hand / breath', cycleSeconds:2.85,
+    sprite:'/demos/positions/solo-side.jpg', spriteSmall:'/demos/positions/solo-side-sm.jpg'
+  },
+  'solo-supine': {
+    fig:'P.17', title:'Solo, Supine', role:'Supported knees; lumbar quiet',
+    frameHold:'setup / support / inhale / settle', cycleSeconds:2.9,
+    sprite:'/demos/positions/solo-supine.jpg', spriteSmall:'/demos/positions/solo-supine-sm.jpg'
+  }
+};
+
+const ENGINE_VISUAL_BY_ID = {
+  breath_side:'solo-side',
+  spoon_hold:'side-spoon',
+  lap_embrace:'cradle-sitting',
+  supine_handhold:'supine-support',
+  sup_sidelie:'side-spoon',
+  spoon_pen:'side-spoon',
+  scissor:'side-facing',
+  cat_pillow:'supine-support',
+  edge_bed:'edge-bed',
+  knees_bent_sup:'stirrup-missionary',
+  doggy_supp:'quadruped-support',
+  cowgirl_up:'cowgirl-upright',
+  rev_cowgirl:'reverse-cowgirl',
+  spoon_climax:'side-spoon',
+  sidelie_hand:'side-facing',
+  rec_breath:'side-spoon',
+  rec_legs_lap:'solo-supine'
+};
+
+function engineVisualKey(pos) {
+  return ENGINE_VISUAL_BY_ID[pos.id] || 'supine-support';
+}
+
+function demoFor(pos, variant='card') {
+  const key = engineVisualKey(pos);
+  const spec = ENGINE_VISUALS[key];
+  const isZoom = variant === 'zoom';
+  const isPaused = MOTION_PAUSED || isZoom;
+  const modifier = variant === 'thumb' ? ' engine-demo--thumb' : (isZoom ? ' engine-demo--zoom' : '');
+  const mode = isPaused ? 'paused' : '8-frame motion';
+  return `
+    <figure class="engine-demo${modifier}" data-paused="${isPaused}" data-visual-key="${key}" aria-label="${escapeHtml(spec.title)}: ${escapeHtml(spec.role)}"
+      style="--cycle:${spec.cycleSeconds}s; --sprite-lg:url('${spec.sprite}'); --sprite-sm:url('${spec.spriteSmall}'); --sprite-width:${ENGINE_FRAME_COUNT * 100}%;">
+      <div class="engine-demo__plate"></div>
+      <div class="engine-demo__media-shell">
+        <div class="engine-demo__sprite" aria-hidden="true"></div>
+      </div>
+      <figcaption class="engine-demo__chrome">
+        <div class="engine-demo__label">
+          <span><span class="engine-demo__fig">${spec.fig}</span> <span class="engine-demo__title">${spec.title}</span></span>
+          <span class="engine-demo__mode">${mode}</span>
+        </div>
+        <div class="engine-demo__frames">${spec.frameHold}</div>
+        <div class="engine-demo__role">${spec.role}</div>
+      </figcaption>
+    </figure>`;
+}
+
+// =================================================================
+// YOGA-SILHOUETTE FIGURE LIBRARY
+// =================================================================
+// Each figure is rendered as a single closed SVG path (silhouette).
+// Style modeled on yoga-app icons: solid fill, no visible joints,
+// smooth flowing curves. Two-figure compositions overlay one cream
+// silhouette over one oxblood silhouette for clear distinction.
+
+// Cream-paper palette: figures filled with deep ink (CR) so they read on
+// ivory; oxblood and amber accents tuned for cream contrast.
+const OX = '#722B2B';                  // oxblood (partner figure, accents)
+const CR = '#3a342c';                  // warm ink (receiver figure, body lines)
+const AMB = '#8a6520';                 // deep amber (motion arrows, labels)
+const RULE_C = 'rgba(42,38,32,0.22)';  // hairline ink rule
+const RULE_S = 'rgba(42,38,32,0.40)';  // strong ink rule
+
+// =====================================================================
+// SILHOUETTE PATHS — each function returns <path> SVG for one figure
+// =====================================================================
+
+// Side-lying figure curled on its side, head LEFT, feet RIGHT.
+// Translatable via wrapping <g transform="translate(x,y)">.
+function silSideLying(color, tx=0, ty=0, scale=1, mirror=false, className='') {
+  const transform = `translate(${tx},${ty})${mirror?' scale(-1,1)':''} scale(${scale})`;
+  return `<g class="${className}" transform="${transform}">
+    <path d="
+      M 28 18
+      C 14 18, 8 32, 12 44
+      C 14 50, 18 54, 24 56
+      C 30 60, 42 62, 60 62
+      C 90 62, 130 64, 175 70
+      C 195 73, 210 78, 222 88
+      C 232 96, 238 108, 240 118
+      C 241 124, 240 128, 234 130
+      C 226 132, 220 130, 216 124
+      C 212 117, 208 112, 200 108
+      C 188 104, 172 102, 152 102
+      C 134 102, 116 100, 100 96
+      C 80 91, 60 84, 44 74
+      C 32 66, 24 56, 20 44
+      C 17 36, 18 28, 22 22
+      C 24 19, 26 18, 28 18
+      Z
+    " fill="${color}"/>
+  </g>`;
+}
+
+// Supine figure (lying flat on back) — top-down view, head LEFT
+function silSupine(color, tx=0, ty=0, scale=1, mirror=false, className='') {
+  const transform = `translate(${tx},${ty})${mirror?' scale(-1,1)':''} scale(${scale})`;
+  return `<g class="${className}" transform="${transform}">
+    <path d="
+      M 18 30
+      C 4 30, 0 42, 6 50
+      C 10 55, 18 58, 30 58
+      C 50 60, 80 60, 130 60
+      C 175 60, 210 60, 235 60
+      C 245 60, 252 56, 254 50
+      C 256 44, 254 38, 248 34
+      C 240 28, 220 26, 180 26
+      C 130 26, 70 28, 36 30
+      C 28 30, 22 30, 18 30
+      Z
+    " fill="${color}"/>
+  </g>`;
+}
+
+// Seated upright figure (cross-legged, viewed from front)
+function silSeatedUp(color, tx=0, ty=0, scale=1, className='') {
+  const transform = `translate(${tx},${ty}) scale(${scale})`;
+  return `<g class="${className}" transform="${transform}">
+    <path d="
+      M 60 6
+      C 48 6, 42 14, 42 24
+      C 42 32, 46 38, 52 42
+      C 48 46, 44 52, 42 60
+      C 38 70, 36 84, 36 100
+      C 36 112, 38 122, 42 130
+      C 24 136, 8 144, 4 152
+      C 2 158, 6 164, 14 166
+      C 30 168, 50 166, 70 162
+      C 90 166, 110 168, 116 166
+      C 124 164, 128 158, 126 152
+      C 122 144, 106 136, 88 130
+      C 92 122, 94 112, 94 100
+      C 94 84, 92 70, 88 60
+      C 86 52, 82 46, 78 42
+      C 84 38, 88 32, 88 24
+      C 88 14, 82 6, 70 6
+      C 67 5, 63 5, 60 6
+      Z
+    " fill="${color}"/>
+  </g>`;
+}
+
+// Kneeling upright figure (side view, knees on bed, torso vertical)
+function silKneeling(color, tx=0, ty=0, scale=1, mirror=false, className='') {
+  const transform = `translate(${tx},${ty})${mirror?' scale(-1,1)':''} scale(${scale})`;
+  return `<g class="${className}" transform="${transform}">
+    <path d="
+      M 38 6
+      C 28 6, 22 14, 22 24
+      C 22 32, 26 38, 32 42
+      C 28 48, 24 56, 22 70
+      C 18 86, 18 100, 22 112
+      C 16 116, 8 122, 4 130
+      C 2 136, 6 140, 14 140
+      C 30 140, 50 138, 70 134
+      C 76 132, 78 128, 76 122
+      C 72 112, 64 104, 50 100
+      C 54 86, 56 70, 54 60
+      C 52 52, 48 46, 44 42
+      C 50 38, 54 32, 54 24
+      C 54 14, 48 6, 38 6
+      Z
+    " fill="${color}"/>
+  </g>`;
+}
+
+// Standing figure (front view, arms at sides)
+function silStanding(color, tx=0, ty=0, scale=1, className='') {
+  const transform = `translate(${tx},${ty}) scale(${scale})`;
+  return `<g class="${className}" transform="${transform}">
+    <path d="
+      M 38 6
+      C 28 6, 22 14, 22 24
+      C 22 32, 26 38, 32 42
+      C 28 46, 24 52, 22 60
+      C 20 68, 20 76, 22 82
+      C 16 84, 12 88, 10 96
+      C 8 110, 8 130, 12 150
+      C 13 156, 16 158, 20 156
+      C 24 154, 26 148, 26 138
+      C 26 124, 28 110, 32 102
+      C 34 122, 34 142, 32 158
+      C 30 168, 32 174, 36 174
+      C 40 174, 42 168, 42 154
+      C 42 138, 44 118, 44 100
+      C 44 100, 46 100, 46 100
+      C 46 118, 48 138, 48 154
+      C 48 168, 50 174, 54 174
+      C 58 174, 60 168, 58 158
+      C 56 142, 56 122, 58 102
+      C 62 110, 64 124, 64 138
+      C 64 148, 66 154, 70 156
+      C 74 158, 77 156, 78 150
+      C 82 130, 82 110, 80 96
+      C 78 88, 74 84, 68 82
+      C 70 76, 70 68, 68 60
+      C 66 52, 62 46, 58 42
+      C 64 38, 68 32, 68 24
+      C 68 14, 62 6, 52 6
+      C 47 5, 43 5, 38 6
+      Z
+    " fill="${color}"/>
+  </g>`;
+}
+
+// Plank/forearms-down figure (side view, body horizontal supported on forearms)
+function silPlank(color, tx=0, ty=0, scale=1, mirror=false, className='') {
+  const transform = `translate(${tx},${ty})${mirror?' scale(-1,1)':''} scale(${scale})`;
+  return `<g class="${className}" transform="${transform}">
+    <path d="
+      M 30 18
+      C 18 18, 12 28, 14 38
+      C 16 44, 22 48, 30 50
+      C 36 52, 50 54, 70 56
+      C 100 58, 140 60, 180 64
+      C 200 66, 218 70, 230 78
+      C 238 84, 240 92, 234 96
+      C 226 98, 218 96, 210 90
+      C 200 82, 184 76, 160 74
+      C 130 72, 100 70, 70 68
+      C 50 66, 36 62, 26 56
+      C 18 50, 14 42, 16 32
+      C 17 24, 22 19, 30 18
+      Z
+      M 36 56
+      C 30 56, 26 62, 26 70
+      C 26 78, 28 84, 32 86
+      C 36 88, 42 86, 42 80
+      C 42 72, 40 60, 36 56 Z
+      M 70 60
+      C 62 60, 58 68, 58 78
+      C 58 88, 62 92, 68 90
+      C 72 88, 74 80, 72 70
+      C 72 64, 71 60, 70 60 Z
+    " fill="${color}" fill-rule="evenodd"/>
+  </g>`;
+}
+
+// Child's pose with elevated hips (chest down, knees down, hips raised)
+function silChildElevated(color, tx=0, ty=0, scale=1, mirror=false, className='') {
+  const transform = `translate(${tx},${ty})${mirror?' scale(-1,1)':''} scale(${scale})`;
+  return `<g class="${className}" transform="${transform}">
+    <path d="
+      M 28 60
+      C 16 60, 8 68, 10 78
+      C 12 84, 18 88, 28 88
+      C 38 88, 50 86, 64 80
+      C 88 70, 116 60, 144 50
+      C 158 46, 168 44, 176 50
+      C 182 56, 184 64, 180 70
+      C 174 78, 162 80, 152 76
+      C 146 74, 142 72, 140 68
+      C 138 64, 138 60, 142 56
+      C 144 60, 148 64, 156 64
+      C 162 64, 168 60, 168 54
+      C 168 46, 162 40, 154 40
+      C 144 40, 132 46, 124 54
+      C 116 48, 108 44, 100 42
+      C 84 38, 70 38, 56 42
+      C 42 46, 32 50, 26 56
+      C 24 58, 25 59, 28 60
+      Z
+    " fill="${color}"/>
+  </g>`;
+}
+
+// =====================================================================
+// SCENE HELPERS (bed, pillows, motion arrows)
+// =====================================================================
+function defs() {
+  return `<defs>
+    <linearGradient id="grad-bed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(42,38,32,0.09)"/>
+      <stop offset="100%" stop-color="rgba(42,38,32,0.04)"/>
+    </linearGradient>
+  </defs>`;
+}
+function bedScene(opts={}) {
+  const { bedY=210, sheets=true, headboard=false } = opts;
+  let svg = '';
+  svg += `<rect x="20" y="${bedY-2}" width="380" height="22" rx="3" fill="url(#grad-bed)" stroke="${RULE_C}" stroke-width="1"/>`;
+  svg += `<line x1="20" y1="${bedY}" x2="400" y2="${bedY}" stroke="${RULE_S}" stroke-width="1.5"/>`;
+  if (sheets) {
+    svg += `<path d="M 30 ${bedY-3} Q 80 ${bedY-5} 130 ${bedY-3} T 240 ${bedY-3} T 380 ${bedY-3}" stroke="${RULE_C}" stroke-width="0.8" fill="none" opacity="0.7"/>`;
+  }
+  if (headboard) {
+    svg += `<rect x="20" y="60" width="6" height="${bedY-60}" fill="${RULE_C}" opacity="0.5"/>`;
+  }
+  return svg;
+}
+function pillowEl(cx, cy, rx=22, ry=10, opacity=0.22) {
+  return `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${CR}" fill-opacity="${opacity}" stroke="${CR}" stroke-opacity="0.36" stroke-width="1.2"/>`;
+}
+function pillowRect(x, y, w, h, opacity=0.20) {
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${CR}" fill-opacity="${opacity}" stroke="${CR}" stroke-opacity="0.36" stroke-width="1.2"/>`;
+}
+function motionArrowH(x1, y, x2, label) {
+  const dir = x2 > x1 ? 1 : -1;
+  return `<g class="motion motion-arrow" stroke="${AMB}" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}"/>
+    <polyline points="${x2-7*dir} ${y-6} ${x2} ${y} ${x2-7*dir} ${y+6}"/>
+  </g>${label?`<text x="${(x1+x2)/2}" y="${y-12}" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="${AMB}" opacity="0.85" text-anchor="middle" letter-spacing="0.18em">${label}</text>`:''}`;
+}
+function motionArrowV(x, y1, y2, label) {
+  const dir = y2 > y1 ? 1 : -1;
+  return `<g class="motion motion-arrow" stroke="${AMB}" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="${x}" y1="${y1}" x2="${x}" y2="${y2}"/>
+    <polyline points="${x-6} ${y2-7*dir} ${x} ${y2} ${x+6} ${y2-7*dir}"/>
+  </g>${label?`<text x="${x+10}" y="${(y1+y2)/2}" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="${AMB}" opacity="0.85" letter-spacing="0.18em" dominant-baseline="middle">${label}</text>`:''}`;
+}
+function svgWrap(inner, viewBox='0 0 420 240') {
+  return `<svg viewBox="${viewBox}" xmlns="http://www.w3.org/2000/svg">${defs()}${inner}</svg>`;
+}
+
+// Stick-figure fallback for diagram mode (kept simple)
+function stickFigure(joints, color, className='') {
+  const sw = 2.4;
+  const j = joints;
+  const hipCenter = [(j.hipL[0]+j.hipR[0])/2, (j.hipL[1]+j.hipR[1])/2];
+  let svg = '';
+  svg += `<line x1="${j.neck[0]}" y1="${j.neck[1]}" x2="${hipCenter[0]}" y2="${hipCenter[1]}" stroke="${color}" stroke-width="${sw}" stroke-linecap="round"/>`;
+  svg += `<line x1="${j.shoulderL[0]}" y1="${j.shoulderL[1]}" x2="${j.shoulderR[0]}" y2="${j.shoulderR[1]}" stroke="${color}" stroke-width="${sw*0.85}" stroke-linecap="round"/>`;
+  svg += `<line x1="${j.hipL[0]}" y1="${j.hipL[1]}" x2="${j.hipR[0]}" y2="${j.hipR[1]}" stroke="${color}" stroke-width="${sw*0.85}" stroke-linecap="round"/>`;
+  svg += `<line x1="${j.shoulderL[0]}" y1="${j.shoulderL[1]}" x2="${j.elbowL[0]}" y2="${j.elbowL[1]}" stroke="${color}" stroke-width="${sw}" stroke-linecap="round"/>`;
+  svg += `<line x1="${j.elbowL[0]}" y1="${j.elbowL[1]}" x2="${j.handL[0]}" y2="${j.handL[1]}" stroke="${color}" stroke-width="${sw}" stroke-linecap="round"/>`;
+  svg += `<line x1="${j.shoulderR[0]}" y1="${j.shoulderR[1]}" x2="${j.elbowR[0]}" y2="${j.elbowR[1]}" stroke="${color}" stroke-width="${sw}" stroke-linecap="round"/>`;
+  svg += `<line x1="${j.elbowR[0]}" y1="${j.elbowR[1]}" x2="${j.handR[0]}" y2="${j.handR[1]}" stroke="${color}" stroke-width="${sw}" stroke-linecap="round"/>`;
+  svg += `<line x1="${j.hipL[0]}" y1="${j.hipL[1]}" x2="${j.kneeL[0]}" y2="${j.kneeL[1]}" stroke="${color}" stroke-width="${sw}" stroke-linecap="round"/>`;
+  svg += `<line x1="${j.kneeL[0]}" y1="${j.kneeL[1]}" x2="${j.footL[0]}" y2="${j.footL[1]}" stroke="${color}" stroke-width="${sw}" stroke-linecap="round"/>`;
+  svg += `<line x1="${j.hipR[0]}" y1="${j.hipR[1]}" x2="${j.kneeR[0]}" y2="${j.kneeR[1]}" stroke="${color}" stroke-width="${sw}" stroke-linecap="round"/>`;
+  svg += `<line x1="${j.kneeR[0]}" y1="${j.kneeR[1]}" x2="${j.footR[0]}" y2="${j.footR[1]}" stroke="${color}" stroke-width="${sw}" stroke-linecap="round"/>`;
+  ['shoulderL','shoulderR','elbowL','elbowR','hipL','hipR','kneeL','kneeR'].forEach(p => {
+    svg += `<circle cx="${j[p][0]}" cy="${j[p][1]}" r="2.4" fill="${color}"/>`;
+  });
+  svg += `<ellipse cx="${j.head[0]}" cy="${j.head[1]}" rx="9" ry="10" fill="${color}" fill-opacity="0.18" stroke="${color}" stroke-width="${sw}"/>`;
+  svg += `<line x1="${j.head[0]}" y1="${j.head[1]+9}" x2="${j.neck[0]}" y2="${j.neck[1]}" stroke="${color}" stroke-width="${sw}" stroke-linecap="round"/>`;
+  return `<g class="${className}">${svg}</g>`;
+}
+
+// Approximate stick joints per pose (fallback for diagram mode)
+const STICK_JOINTS = {
+  single_side: { head:[100,150], neck:[110,158], shoulderL:[112,154], shoulderR:[112,162], elbowL:[140,150], elbowR:[140,170], handL:[166,148], handR:[160,180], hipL:[200,168], hipR:[200,176], kneeL:[245,180], kneeR:[245,188], footL:[280,196], footR:[280,202] }
+};
+
+// =====================================================================
+// 13 POSE COMPOSITIONS
+// =====================================================================
+let DIAGRAM_MODE = false;
+
+function fig_single_side() {
+  if (DIAGRAM_MODE) return svgWrap(`${bedScene({bedY:210})}${pillowEl(70, 154, 26, 11)}${stickFigure(STICK_JOINTS.single_side, CR, 'receiver has-breathe')}${pillowEl(252, 192, 16, 9)}`);
+  return svgWrap(`
+    ${bedScene({bedY:210})}
+    ${pillowEl(70, 156, 26, 11)}
+    ${silSideLying(CR, 80, 132, 1.0, false, 'receiver has-breathe')}
+    ${pillowRect(254, 184, 22, 14)}
+  `);
+}
+
+function fig_spoon_still() {
+  return svgWrap(`
+    ${bedScene({bedY:212})}
+    ${pillowEl(56, 152, 28, 12)}
+    ${silSideLying(OX, 60, 124, 1.0, false, 'partner')}
+    ${silSideLying(CR, 88, 142, 1.0, false, 'receiver')}
+    ${pillowRect(244, 192, 22, 14)}
+  `);
+}
+
+function fig_spoon_motion() {
+  return svgWrap(`
+    ${bedScene({bedY:212})}
+    ${pillowEl(56, 152, 28, 12)}
+    ${silSideLying(OX, 60, 124, 1.0, false, 'partner has-thrust-h')}
+    ${silSideLying(CR, 88, 142, 1.0, false, 'receiver')}
+    ${pillowRect(244, 192, 22, 14)}
+    ${motionArrowH(28, 132, 56, 'low amplitude')}
+  `);
+}
+
+function fig_seated_face() {
+  return svgWrap(`
+    ${bedScene({bedY:212})}
+    ${silSeatedUp(OX, 162, 78, 1.05, 'partner')}
+    ${silSeatedUp(CR, 168, 36, 0.85, 'receiver has-breathe')}
+  `);
+}
+
+function fig_supine_both() {
+  return svgWrap(`
+    ${bedScene({bedY:218, headboard:true})}
+    ${pillowEl(70, 76, 32, 12)}
+    ${pillowEl(70, 158, 32, 12)}
+    ${silSupine(OX, 60, 56, 1.05, false, 'partner')}
+    ${silSupine(CR, 60, 138, 1.05, false, 'receiver has-breathe')}
+    <circle cx="200" cy="118" r="5" fill="${AMB}" opacity="0.85"/>
+  `);
+}
+
+function fig_sidelie_face() {
+  return svgWrap(`
+    ${bedScene({bedY:218})}
+    ${silSideLying(OX, 60, 132, 0.95, false, 'partner')}
+    ${silSideLying(CR, 360, 132, 0.95, true, 'receiver')}
+  `);
+}
+
+function fig_scissor() {
+  return svgWrap(`
+    ${bedScene({bedY:222})}
+    ${pillowRect(196, 188, 28, 12)}
+    ${silSideLying(OX, 50, 140, 0.95, false, 'partner has-thrust-h')}
+    ${silSideLying(CR, 380, 140, 0.95, true, 'receiver')}
+  `);
+}
+
+function fig_missionary() {
+  return svgWrap(`
+    ${bedScene({bedY:218})}
+    ${pillowEl(76, 168, 26, 11)}
+    ${pillowRect(170, 174, 36, 11)}
+    ${silSupine(CR, 70, 152, 1.10, false, 'receiver')}
+    ${silPlank(OX, 90, 84, 1.05, false, 'partner has-thrust-v')}
+    ${motionArrowV(360, 200, 130, 'rocking')}
+  `);
+}
+
+function fig_edge_bed() {
+  return svgWrap(`
+    <rect x="20" y="186" width="276" height="22" rx="3" fill="url(#grad-bed)" stroke="${RULE_C}" stroke-width="1"/>
+    <line x1="20" y1="188" x2="296" y2="188" stroke="${RULE_S}" stroke-width="1.5"/>
+    <line x1="296" y1="188" x2="296" y2="222" stroke="${RULE_C}" stroke-width="1"/>
+    <line x1="296" y1="222" x2="406" y2="222" stroke="${RULE_S}" stroke-width="1.5"/>
+    <path d="M 30 184 Q 80 182 130 184 T 240 184 T 290 184" stroke="${RULE_C}" stroke-width="0.8" fill="none" opacity="0.7"/>
+    ${pillowEl(54, 132, 26, 11)}
+    ${silSupine(CR, 50, 122, 0.95, false, 'receiver')}
+    ${silStanding(OX, 290, 50, 0.95, 'partner has-thrust-h')}
+    ${motionArrowH(280, 100, 250, 'thrust')}
+  `);
+}
+
+function fig_rear_entry() {
+  return svgWrap(`
+    ${bedScene({bedY:230})}
+    ${pillowRect(40, 130, 96, 22)}
+    ${silChildElevated(CR, 30, 90, 1.10, false, 'receiver')}
+    ${silKneeling(OX, 282, 116, 1.05, false, 'partner has-thrust-h')}
+    ${motionArrowH(360, 178, 332, 'thrust')}
+  `);
+}
+
+function fig_on_top() {
+  return svgWrap(`
+    ${bedScene({bedY:218})}
+    ${pillowEl(54, 168, 26, 11)}
+    ${silSupine(OX, 50, 162, 1.05, false, 'partner')}
+    ${silSeatedUp(CR, 178, 70, 1.0, 'receiver has-thrust-v')}
+    ${motionArrowV(322, 110, 168, 'rhythm')}
+  `);
+}
+
+function fig_on_top_rev() {
+  return svgWrap(`
+    ${bedScene({bedY:218})}
+    ${pillowEl(54, 168, 26, 11)}
+    ${silSupine(OX, 50, 162, 1.05, false, 'partner')}
+    <g transform="translate(178,70) scale(-1,1) translate(-110,0)">
+      ${silSeatedUp(CR, 0, 0, 1.0, 'receiver has-thrust-v')}
+    </g>
+    ${motionArrowV(98, 110, 168, 'rhythm')}
+  `);
+}
+
+function fig_legs_lap() {
+  return svgWrap(`
+    <rect x="20" y="186" width="276" height="22" rx="3" fill="url(#grad-bed)" stroke="${RULE_C}" stroke-width="1"/>
+    <line x1="20" y1="188" x2="296" y2="188" stroke="${RULE_S}" stroke-width="1.5"/>
+    <line x1="296" y1="188" x2="296" y2="222" stroke="${RULE_C}" stroke-width="1"/>
+    <line x1="296" y1="222" x2="406" y2="222" stroke="${RULE_S}" stroke-width="1.5"/>
+    <path d="M 30 184 Q 80 182 130 184 T 240 184 T 290 184" stroke="${RULE_C}" stroke-width="0.8" fill="none" opacity="0.7"/>
+    ${pillowEl(54, 138, 26, 11)}
+    ${silSupine(CR, 50, 130, 0.95, false, 'receiver has-breathe')}
+    ${silSeatedUp(OX, 290, 70, 0.95, 'partner')}
+  `);
+}
+
+const STICK_RENDERERS = {
+  single_side: fig_single_side, spoon_still: fig_spoon_still, spoon_motion: fig_spoon_motion,
+  seated_face: fig_seated_face, supine_both: fig_supine_both, sidelie_face: fig_sidelie_face,
+  scissor: fig_scissor, missionary: fig_missionary, edge_bed: fig_edge_bed,
+  rear_entry: fig_rear_entry, on_top: fig_on_top, on_top_rev: fig_on_top_rev,
+  legs_lap: fig_legs_lap
+};
+function svgFor(pos) { return (STICK_RENDERERS[pos.stick] || fig_spoon_still)(); }
+
+// =================================================================
+// STATE & ROUTING (unchanged from v5)
+// =================================================================
+const state = {
+  filter: { painVector:null, painBehavior:null, floorState:null, index:null, goal:null, time:null },
+  flags: {}, step: 0, currentAct: 0, currentLoad: 0,
+  shown: [], history: [], planSummary: null, planTiles: []
+};
+const indexCap = { green:3, amber:2, red:1, flare:0 };
+
+function exclude(pos, f) {
+  const reasons = [];
+  if (!f.index) return reasons;
+  if (pos.load > indexCap[f.index]) reasons.push(`load ${pos.load} above today's Index cap`);
+  if ((f.painVector === 'right_sciatica' || f.painVector === 'left_sciatica') && pos.rot > 1) reasons.push('rotation can tension the sciatic nerve');
+  if (f.painVector === 'si_joint' && pos.rot > 0) reasons.push('SI joint avoids rotational shear');
+  if (f.painVector === 'central_lumbar' && pos.thrust > 1) reasons.push('central lumbar avoids thrust amplitude');
+  if (f.painVector === 'hip_flexor') {
+    if (pos.hip > 1) reasons.push('hip flexor needs hip flexion kept small');
+    if (pos.ext > 1) reasons.push('hip flexor responds to extension load');
+  }
+  if (f.painVector === 'piriformis' && pos.rot > 0) reasons.push('piriformis routes through rotational positions');
+  if (f.painVector === 'flare' && pos.load > 0) reasons.push('flare mode is contact only');
+  if (f.painBehavior === 'flexion' && pos.flex > 1) reasons.push('flexion-worsened back avoids deep flexion');
+  if (f.painBehavior === 'extension' && pos.ext > 1) reasons.push('extension-worsened back avoids prone arching');
+  if (f.painBehavior === 'rotation' && pos.rot > 0) reasons.push('rotation reproduces pain');
+  if (pos.contra.includes('sitting') && f.painBehavior === 'sitting') reasons.push('today\'s sitting load has already proved aggravating');
+  if (pos.contra.includes('flexion') && f.painBehavior === 'flexion') reasons.push('flexion-worsened back avoids this geometry');
+  if (pos.contra.includes('extension') && f.painBehavior === 'extension') reasons.push('extension-worsened back avoids this geometry');
+  if (pos.contra.includes('si_joint') && f.painVector === 'si_joint') reasons.push('SI joint contra-indicated');
+  return reasons;
+}
+const fits = (p, f) => exclude(p, f).length === 0;
+function scorePos(pos, f, targetLoad) {
+  let s = 10 - Math.abs(pos.load - targetLoad) * 4;
+  if (f.goal === 'climax' && pos.climax) s += 4;
+  if (f.goal === 'closeness' && pos.load <= 1) s += 3;
+  if (f.goal === 'solo' && pos.hip === 0) s += 2;
+  if (f.goal === 'recovery' && pos.role === 'recovery') s += 8;
+  if (f.goal === 'penetrative' && pos.thrust > 0 && pos.role === 'main') s += 3;
+  return s;
+}
+function freshVisualPool(candidates, excludeIds) {
+  const usedVisuals = new Set(
+    excludeIds
+      .map(id => positions.find(p => p.id === id))
+      .filter(Boolean)
+      .map(pos => engineVisualKey(pos))
+  );
+  const fresh = candidates.filter(p => !usedVisuals.has(engineVisualKey(p)));
+  return fresh.length ? fresh : candidates;
+}
+function pickPosition(role, f, targetLoad, excludeIds=[]) {
+  const cands = positions.filter(p => p.role === role && !excludeIds.includes(p.id) && fits(p, f));
+  if (cands.length > 0) {
+    const pool = freshVisualPool(cands, excludeIds);
+    pool.sort((a,b) => scorePos(b,f,targetLoad) - scorePos(a,f,targetLoad));
+    return pool[0];
+  }
+  const fb = positions.filter(p => fits(p, f) && p.load <= targetLoad && !excludeIds.includes(p.id));
+  const pool = freshVisualPool(fb, excludeIds)
+    .sort((a,b) => scorePos(b,f,targetLoad) - scorePos(a,f,targetLoad));
+  return pool[0] || null;
+}
+function suggestedDecision(actNum, f) {
+  if (f.index === 'flare' || f.index === 'red') return 'hold';
+  if (f.painVector === 'flare') return 'hold';
+  if (actNum === 1) return 'up';
+  if (actNum === 2) return (f.index === 'green' && f.goal !== 'closeness') ? 'up' : 'hold';
+  return 'hold';
+}
+
+function generatePlanSummary(f) {
+  const ins = [];
+  if (f.painVector === 'right_sciatica') { ins.push('keep the spine neutral'); ins.push('avoid deep right hip flexion'); }
+  else if (f.painVector === 'left_sciatica') { ins.push('keep the spine neutral'); ins.push('avoid deep left hip flexion'); }
+  else if (f.painVector === 'central_lumbar') { ins.push('keep the spine quiet'); ins.push('thrust amplitude stays small'); }
+  else if (f.painVector === 'si_joint') { ins.push('no rotational shear'); ins.push('symmetrical loading throughout'); }
+  else if (f.painVector === 'hip_flexor') { ins.push('hip flexion stays small'); ins.push('no extension load on the front of the hip'); }
+  else if (f.painVector === 'piriformis') { ins.push('avoid rotation'); ins.push('keep the affected hip quiet'); }
+  else if (f.painVector === 'flare') { ins.push('contact only tonight'); ins.push('penetration is off the menu, not the relationship'); }
+  else { ins.push('the spine stays loose, the breath stays long'); }
+  if (f.painBehavior === 'flexion') ins.push('nothing that folds the lumbar');
+  else if (f.painBehavior === 'extension') ins.push('nothing that arches the lumbar');
+  if (f.goal === 'climax') ins.push('the dessert is the climax, not the geometry');
+  else if (f.goal === 'closeness') ins.push('the main course is closeness, not throughput');
+  else if (f.goal === 'solo') ins.push('no partner choreography required');
+  const instrText = ins.slice(0, 3).join(', ') + '.';
+  let closer = 'The geometry below has been routed for the body you described tonight.';
+  if (f.painVector === 'right_sciatica' && (f.index === 'amber' || f.index === 'red')) closer = 'Your right sciatic nerve has not agreed to improv night.';
+  else if (f.painVector === 'left_sciatica' && (f.index === 'amber' || f.index === 'red')) closer = 'Your left sciatic nerve has not agreed to improv night.';
+  else if (f.painVector === 'central_lumbar') closer = 'Your lumbar would like a quieter conversation than usual. The plan respects that.';
+  else if (f.painVector === 'si_joint') closer = 'Your SI joint is not in the mood for asymmetry. Honor the boring angle.';
+  else if (f.painVector === 'hip_flexor' && f.painBehavior === 'sitting') closer = 'Your hip flexor has been sitting in chair traffic all day. Treat it accordingly.';
+  else if (f.painVector === 'piriformis') closer = 'Your piriformis is one rotation away from drafting a strongly worded letter.';
+  else if (f.painVector === 'flare' || f.index === 'flare') closer = 'The flare is management. Do not negotiate with management.';
+  else if (f.index === 'green' && f.goal === 'climax') closer = 'Green Index says yes. The dessert is the point.';
+  else if (f.index === 'green') closer = 'Green Index says yes. The spine still does not want to be a third party.';
+  else if (f.index === 'red') closer = 'Red Index. Release-first is not a punishment. It is the product refusing to let optimism drive without insurance.';
+  return { instructions: 'Tonight\'s plan: ' + instrText, closer };
+}
+function pleasureModule(actNum, f) {
+  if (actNum === 1) {
+    if (f.index === 'red' || f.index === 'flare' || f.painVector === 'flare') return 'Breath-first';
+    if (f.goal === 'closeness') return 'Touch-first';
+    if (['right_sciatica','left_sciatica','si_joint','hip_flexor','piriformis','central_lumbar'].includes(f.painVector)) return 'Angle-first';
+    return 'Breath-first';
+  }
+  if (actNum === 2) {
+    if (['right_sciatica','left_sciatica','si_joint','central_lumbar'].includes(f.painVector)) return 'Angle-first';
+    return 'Cadence-first';
+  }
+  if (actNum === 3) {
+    if (f.index === 'green' && state.currentLoad >= 2) return 'Advance-if-quiet';
+    return 'Climax-conservative';
+  }
+  if (actNum === 4) return 'Recovery';
+  return null;
+}
+
+const $ = sel => document.querySelector(sel);
+const $$ = sel => document.querySelectorAll(sel);
+
+function renderStepProgress() {
+  const el = $('#stepProgress');
+  el.innerHTML = QUESTIONS.map((_, i) => {
+    let cls = '';
+    if (i < state.step) cls = 'done';
+    else if (i === state.step) cls = 'active';
+    return `<div class="sp-dot ${cls}"></div>`;
+  }).join('');
+}
+
+function renderStep() {
+  renderStepProgress();
+  const q = QUESTIONS[state.step];
+  if (!q) return;
+  const card = $('#stepCard');
+  const isLast = state.step === QUESTIONS.length - 1;
+  const currentVal = state.filter[q.key];
+  card.innerHTML = `
+    <div class="step-eyebrow">${q.eyebrow}</div>
+    <div class="step-question">${q.q}</div>
+    <div class="step-help">${q.help}</div>
+    <div class="step-chips">
+      ${q.options.map(([val, label]) =>
+        `<button class="step-chip" data-val="${val}" aria-pressed="${currentVal===val?'true':'false'}">${label}</button>`
+      ).join('')}
+    </div>
+    <div class="step-build ${isLast && currentVal ? 'visible' : ''}" id="stepBuild">
+      <div class="built-summary">All six answered. The engine has enough.</div>
+      <button class="primary-cta" id="stepBuildBtn">Build the evening →</button>
+    </div>
+    <div class="step-nav">
+      <button class="step-back" id="stepBack" ${state.step===0?'disabled':''}>← back</button>
+    </div>
+  `;
+  card.querySelectorAll('.step-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      state.filter[q.key] = chip.dataset.val;
+      card.querySelectorAll('.step-chip').forEach(c => c.setAttribute('aria-pressed','false'));
+      chip.setAttribute('aria-pressed','true');
+      setTimeout(() => {
+        if (state.step < QUESTIONS.length - 1) { state.step++; renderStep(); }
+        else $('#stepBuild').classList.add('visible');
+      }, 320);
+    });
+  });
+  $('#stepBack')?.addEventListener('click', () => { if (state.step > 0) { state.step--; renderStep(); } });
+  $('#stepBuildBtn')?.addEventListener('click', startPlan);
+}
+
+const loadName = load => ['Quiet','Low','Moderate','High'][load] || 'Quiet';
+
+function badges(pos) {
+  const items = [];
+  items.push(`<span class="badge load">load · ${loadName(pos.load)}</span>`);
+  if (pos.flex > 0) items.push(`<span class="badge">flex · ${pos.flex}</span>`);
+  if (pos.ext > 0) items.push(`<span class="badge">ext · ${pos.ext}</span>`);
+  if (pos.rot > 0) items.push(`<span class="badge">rot · ${pos.rot}</span>`);
+  if (pos.thrust > 0) items.push(`<span class="badge">thrust · ${pos.thrust}</span>`);
+  if (pos.climax) items.push(`<span class="badge safe">climax-friendly</span>`);
+  return items.join('');
+}
+
+function cardHTML(actNum, pos, labelOverride) {
+  const labels = { 1:'Act i · Warm-up', 2:'Act ii · Main course', 3:'Act iii · Dessert', 4:'Recovery' };
+  const lbl = labelOverride || labels[actNum] || 'Recovery';
+  const approach = pleasureModule(actNum, state.filter);
+  return `
+    <div class="act-card fade-in" data-pos-id="${pos.id}" data-act-num="${actNum}">
+      <div class="visual" data-zoom-pos="${pos.id}">
+        ${demoFor(pos)}
+        <div class="zoom-hint">tap to enlarge</div>
+      </div>
+      <div class="copy">
+        <div class="act-label">${lbl}</div>
+        ${approach ? `<div class="approach">Approach · ${approach}</div>` : ''}
+        <h3>${pos.name}</h3>
+        <p class="geometry">${pos.geometry}</p>
+        <div class="badges">${badges(pos)}</div>
+        <div class="drawer-row">
+          <details class="drawer"><summary>Why this</summary><div class="body">${pos.why}</div></details>
+          <details class="drawer"><summary>The partner line</summary><div class="body line">&ldquo;${pos.partnerLine}&rdquo;</div></details>
+        </div>
+      </div>
+    </div>`;
+}
+
+function decisionsHTML(actNum, suggestion) {
+  const upDisabled = (state.currentLoad + 1 > indexCap[state.filter.index]);
+  return `
+    <div class="decision-panel">
+      <div class="decision-prompt">How does it feel?</div>
+      <div class="decisions">
+        <button class="decision de ${suggestion==='de'?'suggested':''}" data-d="de"><span class="arrow">⤓</span><span class="label">Quieter</span><span class="micro">take pressure off</span></button>
+        <button class="decision hold ${suggestion==='hold'?'suggested':''}" data-d="hold"><span class="arrow">→</span><span class="label">Hold</span><span class="micro">stay at this level</span></button>
+        <button class="decision up ${suggestion==='up'?'suggested':''} ${upDisabled?'disabled':''}" data-d="up" ${upDisabled?'disabled':''}><span class="arrow">⤒</span><span class="label">More</span><span class="micro">${upDisabled?'above today\'s cap':'if it feels good'}</span></button>
+      </div>
+      <div class="nav-row"><button class="nav-btn back-btn">← back one step</button></div>
+    </div>`;
+}
+function finalDecisionsHTML() {
+  const advanceDisabled = state.currentLoad + 1 > indexCap[state.filter.index];
+  return `
+    <div class="decision-panel">
+      <div class="decision-prompt">Close the evening on which note?</div>
+      <div class="decisions">
+        <button class="decision de" data-d="recovery"><span class="arrow">⤓</span><span class="label">Recovery</span><span class="micro">downshift and end</span></button>
+        <button class="decision hold suggested" data-d="climax"><span class="arrow">→</span><span class="label">Climax here</span><span class="micro">low-load close</span></button>
+        <button class="decision up ${advanceDisabled?'disabled':''}" data-d="advance" ${advanceDisabled?'disabled':''}><span class="arrow">⤒</span><span class="label">One more step</span><span class="micro">${advanceDisabled?'above today\'s cap':'advance only if quiet'}</span></button>
+      </div>
+      <div class="nav-row"><button class="nav-btn back-btn">← back one step</button></div>
+    </div>`;
+}
+
+function appendActBlock(actNum, pos, withDecisions=true, labelOverride=null) {
+  const block = document.createElement('div');
+  block.className = 'act-block';
+  block.id = `act-${actNum}`;
+  block.dataset.act = actNum;
+  let html = cardHTML(actNum, pos, labelOverride);
+  if (withDecisions) {
+    if (actNum < 3) html += decisionsHTML(actNum, suggestedDecision(actNum, state.filter));
+    else if (actNum === 3) html += finalDecisionsHTML();
+  }
+  block.innerHTML = html;
+  $('#actContainer').appendChild(block);
+  bindDecisionButtons(block);
+  bindBackButtons(block);
+  bindZoom(block);
+  state.planTiles = state.planTiles.filter(t => t.actNum !== actNum);
+  state.planTiles.push({ actNum, posId: pos.id, name: pos.name, role: labelOverride || actLabels(actNum) });
+  renderTimeline();
+  setTimeout(() => block.scrollIntoView({ behavior:'smooth', block:'center' }), 80);
+}
+function actLabels(n) { return { 1:'Warm-up', 2:'Main course', 3:'Dessert', 4:'Recovery' }[n] || 'Recovery'; }
+
+function renderTimeline() {
+  const tilesEl = $('#tlTiles');
+  if (state.planTiles.length === 0) { $('#timelineStrip').classList.remove('visible'); return; }
+  $('#timelineStrip').classList.add('visible');
+  const sorted = [...state.planTiles].sort((a,b) => a.actNum - b.actNum);
+  tilesEl.innerHTML = sorted.map((t, i) => {
+    const isActive = t.actNum === state.currentAct || (state.currentAct === 4 && t.actNum === 4);
+    const isDone = t.actNum < state.currentAct;
+    const cls = isActive ? 'active' : (isDone ? 'done' : '');
+    const numLabel = t.actNum === 4 ? 'rec' : ['i','ii','iii'][t.actNum - 1] || '';
+    return `${i>0?'<div class="tl-arrow"></div>':''}<div class="tl-tile ${cls}" data-act="${t.actNum}">
+      <span class="tl-num">${numLabel}</span>
+      <div class="tl-text"><div class="tl-role">${t.role || actLabels(t.actNum)}</div><div class="tl-name">${t.name}</div></div>
+    </div>`;
+  }).join('');
+  tilesEl.querySelectorAll('.tl-tile').forEach(t => {
+    t.addEventListener('click', () => {
+      const target = document.getElementById(`act-${parseInt(t.dataset.act)}`);
+      if (target) target.scrollIntoView({ behavior:'smooth', block:'center' });
+    });
+  });
+}
+
+function renderPlanSummary() {
+  const ps = generatePlanSummary(state.filter);
+  state.planSummary = ps;
+  bsTrack('engine.plan.generated', { filter: state.filter });
+  $('#planSummary').innerHTML = `
+    <div class="ps-label">The engine read tonight</div>
+    <div class="ps-instructions">${ps.instructions}</div>
+    <div class="ps-closer">${ps.closer}</div>
+  `;
+}
+
+function startPlan() {
+  $('#setup').classList.remove('active');
+  setTimeout(() => $('#setup').style.display = 'none', 320);
+  $('#plan').classList.add('active');
+  $('#gate').style.display = 'none';
+  state.currentAct = 1; state.currentLoad = 0;
+  state.shown = []; state.history = [{ event:'start', filter:{...state.filter} }];
+  state.planTiles = [];
+  renderPlanSummary();
+  const f = state.filter;
+  if (f.goal === 'recovery' || f.index === 'flare' || f.painVector === 'flare') {
+    const pos = pickPosition('recovery', f, 0) || pickPosition('warm', f, 0);
+    state.shown.push(pos.id);
+    state.currentAct = 4;
+    appendActBlock(4, pos, false, 'Recovery mode');
+    appendClosingLine('Tonight ends here. The bed will still be there after the flare stops acting like management.');
+    showEndActions();
+    return;
+  }
+  const warmPos = pickPosition('warm', f, 0) || pickPosition('main', f, 0);
+  if (!warmPos) { appendEmptyState(); return; }
+  state.shown.push(warmPos.id);
+  state.history.push({ act:1, pos:warmPos.id, load:0 });
+  appendActBlock(1, warmPos);
+}
+
+function appendEmptyState() {
+  const note = document.createElement('div');
+  note.className = 'plan-summary';
+  note.innerHTML = `
+    <div class="ps-label">Empty state</div>
+    <div class="ps-instructions">Nothing clears today's load cap.</div>
+    <div class="ps-closer">That is not a sexual referendum. It is geometry having boundaries. Choose release-first, solo, or recovery. The bed will still be there after the flare stops acting like management.</div>
+  `;
+  $('#actContainer').appendChild(note);
+  showEndActions();
+}
+
+function bindDecisionButtons(scope) {
+  (scope || document).querySelectorAll('.decision:not([data-bound])').forEach(btn => {
+    btn.setAttribute('data-bound', '1');
+    if (btn.disabled) return;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.decision-panel').forEach(p => {
+        if (!p.classList.contains('used')) {
+          p.classList.add('used');
+          p.querySelectorAll('.decision').forEach(b => b.disabled = true);
+        }
+      });
+      handleDecision(btn.dataset.d);
+    });
+  });
+}
+function bindBackButtons(scope) {
+  (scope || document).querySelectorAll('.back-btn:not([data-bound])').forEach(btn => {
+    btn.setAttribute('data-bound', '1');
+    btn.addEventListener('click', () => stepBack());
+  });
+}
+function bindZoom(scope) {
+  (scope || document).querySelectorAll('.visual:not([data-zoom-bound])').forEach(el => {
+    el.setAttribute('data-zoom-bound','1');
+  });
+}
+
+function openZoom(pos) {
+  $('#zoomContent').innerHTML = demoFor(pos, 'zoom');
+  $('#zoomCaption').innerHTML = `<div class="zoom-name">${pos.name}</div><div>${pos.geometry}</div>`;
+  $('#zoomBg').classList.add('active');
+}
+
+function stepBack() {
+  const blocks = $$('#actContainer .act-block');
+  if (blocks.length <= 1) return;
+  const last = blocks[blocks.length - 1];
+  const removedActNum = parseInt(last.dataset.act);
+  const removedId = last.querySelector('.act-card')?.dataset.posId;
+  if (removedId) state.shown = state.shown.filter(id => id !== removedId);
+  state.planTiles = state.planTiles.filter(t => t.actNum !== removedActNum);
+  last.remove();
+  $$('#actContainer > .decision-panel').forEach(p => p.remove());
+  $('#planEndActions').classList.remove('visible');
+  const prevBlocks = $$('#actContainer .act-block');
+  const prev = prevBlocks[prevBlocks.length - 1];
+  if (prev) {
+    const panel = prev.querySelector('.decision-panel');
+    if (panel) {
+      panel.classList.remove('used');
+      panel.querySelectorAll('.decision').forEach(b => { if (!b.classList.contains('disabled')) b.disabled = false; });
+    }
+    state.currentAct = parseInt(prev.dataset.act) || state.currentAct - 1;
+    const lastHistory = state.history.filter(h => h.act && h.act === state.currentAct).pop();
+    state.currentLoad = lastHistory ? lastHistory.load : 0;
+  }
+  renderTimeline();
+}
+
+function handleDecision(decision) {
+  const f = state.filter;
+  state.history.push({ event:'decision', value:decision, fromAct:state.currentAct });
+  if (state.currentAct === 3) {
+    if (decision === 'recovery') {
+      const rec = pickPosition('recovery', f, 0, state.shown) || pickPosition('warm', f, 0, state.shown);
+      state.shown.push(rec.id);
+      state.currentLoad = 0; state.currentAct = 4;
+      appendActBlock(4, rec, false, 'Recovery · evening close');
+      appendClosingLine('Plan complete via recovery. Your back stayed out of the conversation. That is not a small thing.');
+      showEndActions(); return;
+    }
+    if (decision === 'climax') {
+      const cand = positions.filter(p => p.role==='dessert' && p.climax && p.load<=1 && fits(p,f) && !state.shown.includes(p.id))
+        .sort((a,b) => scorePos(b,f,1) - scorePos(a,f,1))[0]
+        || pickPosition('dessert', f, 1, state.shown);
+      if (cand) {
+        state.shown.push(cand.id); state.currentLoad = cand.load;
+        appendActBlock(3, cand, false, 'Act iii · Climax close');
+        appendClosingLine('Closed on the low-load option. Climax was the geometry, not the achievement.');
+      }
+      state.currentAct = 4; showEndActions(); return;
+    }
+    if (decision === 'advance') {
+      const adv = positions.filter(p => p.role==='dessert' && p.load > state.currentLoad && fits(p,f) && !state.shown.includes(p.id))
+        .sort((a,b) => a.load - b.load)[0];
+      if (adv) {
+        state.shown.push(adv.id); state.currentLoad = adv.load;
+        appendActBlock(3, adv, false, 'Act iii · One more step');
+        appendClosingLine('Advanced one click. The escalation button was permission. The body said yes.');
+      } else appendClosingLine('No higher-load position clears today\'s rules. Holding here is the right call.');
+      state.currentAct = 4; showEndActions(); return;
+    }
+  }
+  let targetLoad = state.currentLoad;
+  if (decision === 'up') targetLoad = Math.min(targetLoad + 1, indexCap[f.index]);
+  if (decision === 'de') targetLoad = Math.max(targetLoad - 1, 0);
+  if (decision === 'de' && targetLoad === 0) {
+    const rec = pickPosition('recovery', f, 0, state.shown);
+    state.shown.push(rec.id); state.currentLoad = 0; state.currentAct = 4;
+    appendActBlock(4, rec, false, 'De-escalation · recovery route');
+    appendClosingLine('You took pressure off. The engine routed to recovery. Closing the evening here is the smartest move on the board.');
+    showEndActions(); return;
+  }
+  state.currentAct += 1; state.currentLoad = targetLoad;
+  const nextRole = state.currentAct === 2 ? 'main' : 'dessert';
+  const next = pickPosition(nextRole, f, targetLoad, state.shown);
+  if (!next) {
+    const fb = pickPosition('main', f, Math.max(targetLoad-1, 0), state.shown) || pickPosition('warm', f, 0, state.shown);
+    if (fb) { state.shown.push(fb.id); appendActBlock(state.currentAct, fb, state.currentAct < 4); }
+    return;
+  }
+  state.shown.push(next.id);
+  state.history.push({ act:state.currentAct, pos:next.id, load:targetLoad });
+  appendActBlock(state.currentAct, next, true);
+}
+function appendClosingLine(text) {
+  const note = document.createElement('div');
+  note.className = 'decision-panel';
+  note.innerHTML = `<div class="decision-prompt">${text}</div>`;
+  $('#actContainer').appendChild(note);
+  setTimeout(() => note.scrollIntoView({ behavior:'smooth', block:'center' }), 100);
+}
+function showEndActions() { $('#planEndActions').classList.add('visible'); }
+function stopAndRecover() {
+  if (state.currentAct === 0 || state.currentAct === 4) return;
+  bsTrack('stop.invoked', { atAct: state.currentAct });
+  const rec = pickPosition('recovery', state.filter, 0, state.shown);
+  state.shown.push(rec.id); state.currentLoad = 0; state.currentAct = 4;
+  document.querySelectorAll('.decision-panel').forEach(p => {
+    p.classList.add('used');
+    p.querySelectorAll('.decision').forEach(b => b.disabled = true);
+  });
+  appendActBlock(4, rec, false, 'Stop · recovery close');
+  appendClosingLine('Stopping is the highest form of competence this engine recognises. Sex did not get downgraded. Tonight did.');
+  showEndActions();
+}
+function restart() {
+  state.filter = { painVector:null, painBehavior:null, floorState:null, index:null, goal:null, time:null };
+  state.flags = {}; state.step = 0;
+  state.currentAct = 0; state.currentLoad = 0; state.shown = []; state.history = []; state.planTiles = [];
+  $$('.flag').forEach(f => f.classList.remove('checked'));
+  $('#gate').style.display = 'block'; $('#gate').style.opacity = '1';
+  $('#setup').classList.remove('active'); $('#setup').style.display = 'none';
+  $('#plan').classList.remove('active');
+  $('#actContainer').innerHTML = ''; $('#planSummary').innerHTML = '';
+  $('#planEndActions').classList.remove('visible');
+  $('#timelineStrip').classList.remove('visible');
+  $('#gateFlagMsg').classList.remove('visible');
+  $('#gateRedirect').classList.remove('visible');
+  $('#gateConfirm').classList.remove('disabled');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function editInputs() {
+  $('#plan').classList.remove('active');
+  $('#actContainer').innerHTML = ''; $('#planSummary').innerHTML = '';
+  $('#planEndActions').classList.remove('visible');
+  $('#timelineStrip').classList.remove('visible');
+  $('#setup').style.display = 'block'; $('#setup').classList.add('active');
+  state.currentAct = 0; state.currentLoad = 0; state.shown = []; state.planTiles = [];
+  state.step = 0; renderStep();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function bindGate() {
+  $$('.flag').forEach(flag => {
+    flag.addEventListener('click', () => {
+      const key = flag.dataset.flag;
+      if (state.flags[key]) { delete state.flags[key]; flag.classList.remove('checked'); }
+      else { state.flags[key] = true; flag.classList.add('checked'); }
+      updateGateState();
+    });
+  });
+  $('#gateConfirm').addEventListener('click', () => {
+    if ($('#gateConfirm').classList.contains('disabled')) return;
+    $('#gate').style.opacity = '0';
+    setTimeout(() => {
+      $('#gate').style.display = 'none';
+      $('#setup').style.display = 'block'; $('#setup').classList.add('active');
+      state.step = 0; renderStep();
+    }, 320);
+  });
+  $('#gateRedirect').addEventListener('click', () => {
+    state.filter = { painVector:'flare', painBehavior:'unclear', floorState:'unclear', index:'flare', goal:'recovery', time:'short' };
+    $('#gate').style.opacity = '0';
+    setTimeout(() => { $('#gate').style.display = 'none'; startPlan(); }, 320);
+  });
+}
+function updateGateState() {
+  const anyChecked = Object.keys(state.flags).length > 0;
+  $('#gateConfirm').classList.toggle('disabled', anyChecked);
+  $('#gateFlagMsg').classList.toggle('visible', anyChecked);
+  $('#gateRedirect').classList.toggle('visible', anyChecked);
+}
+
+function openLibrary() { renderLibrary('all'); $('#libraryBg').classList.add('active'); }
+function closeLibrary() { $('#libraryBg').classList.remove('active'); }
+function renderLibrary(tab) {
+  const list = tab === 'all' ? positions : positions.filter(p => p.role === tab);
+  const grid = $('#libGrid');
+  const roleLabel = { warm:'Warm-up', main:'Main', dessert:'Dessert', recovery:'Recovery' };
+  grid.innerHTML = list.map(pos => `
+    <div class="lib-card" data-zoom-pos="${pos.id}">
+      <div class="thumb">${demoFor(pos, 'thumb')}</div>
+      <h4>${pos.name}</h4>
+      <div class="lib-meta">${roleLabel[pos.role]} · load ${loadName(pos.load)}</div>
+    </div>`).join('');
+  grid.querySelectorAll('.lib-card').forEach(el => el.setAttribute('data-zoom-bound','1'));
+}
+function closeZoom() { $('#zoomBg').classList.remove('active'); }
+
+function buildHumanText() {
+  const ps = state.planSummary || generatePlanSummary(state.filter);
+  const blocks = $$('#actContainer .act-block');
+  const lines = [];
+  lines.push('Tonight\'s plan from BackStroke');
+  lines.push('—');
+  lines.push(ps.instructions);
+  lines.push(ps.closer);
+  lines.push('');
+  blocks.forEach((b, i) => {
+    const card = b.querySelector('.act-card');
+    if (!card) return;
+    const id = card.dataset.posId;
+    const pos = positions.find(p => p.id === id);
+    if (!pos) return;
+    const lbl = card.querySelector('.act-label')?.textContent.trim() || `Act ${i+1}`;
+    const approach = card.querySelector('.approach')?.textContent.trim() || '';
+    lines.push(lbl);
+    if (approach) lines.push(approach);
+    lines.push(`— ${pos.name}`);
+    lines.push(pos.geometry);
+    lines.push(`Partner line: "${pos.partnerLine}"`);
+    lines.push('');
+  });
+  lines.push('Stop rule: stop if pain travels farther down a leg, turns sharp, becomes electrical, or starts writing legal correspondence. Quiet means quiet.');
+  return lines.join('\n');
+}
+function savePlan() {
+  bsTrack('engine.plan.saved', {});
+  const text = buildHumanText();
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const today = new Date().toISOString().slice(0,10);
+  a.href = url; a.download = `backstroke-plan-${today}.txt`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showToast('Saved to your downloads');
+}
+
+/**
+ * Build the nightstand print card from current state and dispatch
+ * window.print(). The card is hidden on screen by CSS and only
+ * appears in the print stream. Designed to fold to a 4x6 nightstand
+ * card or print full Letter, whichever the user prefers.
+ */
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+function buildPrintCard() {
+  const ps = state.planSummary || generatePlanSummary(state.filter);
+  const blocks = $$('#actContainer .act-block');
+  const today = new Date().toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'
+  });
+  const actsHtml = blocks.map((b, i) => {
+    const card = b.querySelector('.act-card');
+    if (!card) return '';
+    const id = card.dataset.posId;
+    const pos = positions.find(p => p.id === id);
+    if (!pos) return '';
+    const lbl = card.querySelector('.act-label')?.textContent.trim() || `Act ${i+1}`;
+    const approach = card.querySelector('.approach')?.textContent.trim() || '';
+    return `
+      <div class="pc-act">
+        <div class="pc-act-label">${escapeHtml(lbl)}</div>
+        <div class="pc-act-name">${escapeHtml(pos.name)}</div>
+        <div class="pc-act-geo">${escapeHtml(pos.geometry)}</div>
+        ${approach ? `<div class="pc-act-approach">${escapeHtml(approach)}</div>` : ''}
+        <div class="pc-act-line"><b>Partner line</b>${escapeHtml(pos.partnerLine)}</div>
+      </div>
+      ${i < blocks.length - 1 ? '<hr class="pc-rule"/>' : ''}
+    `;
+  }).join('');
+  const card = document.getElementById('printCard');
+  card.innerHTML = `
+    <div class="pc-head">
+      <div class="pc-brand">Back<b>Stroke</b><sup style="font-family:'JetBrains Mono',monospace;font-size:6pt;color:#6b5d4a;margin-left:3px;">&#8480;</sup></div>
+      <div class="pc-meta">Nightstand card &middot; ${escapeHtml(today)}</div>
+    </div>
+    <hr class="pc-rule-thick"/>
+    <div class="pc-headline">Tonight&rsquo;s <b>plan.</b></div>
+    <div class="pc-summary">${escapeHtml(ps.instructions)}</div>
+    <div class="pc-closer">${escapeHtml(ps.closer)}</div>
+    <hr class="pc-rule"/>
+    ${actsHtml}
+    <div class="pc-stop">
+      <div class="pc-stop-label">Stop rule</div>
+      <div class="pc-stop-body">Stop if pain travels farther down a leg, turns sharp, becomes electrical, or starts writing legal correspondence. Quiet means quiet.</div>
+    </div>
+    <div class="pc-foot">
+      <span>backstroke.app &middot; printed ${escapeHtml(today)}</span>
+      <span>Fold along the rule. Place on the nightstand.</span>
+    </div>
+  `;
+}
+function printPlan() {
+  bsTrack('engine.plan.printed', {});
+  buildPrintCard();
+  // Give layout one frame to apply before the print dialog opens.
+  setTimeout(() => window.print(), 50);
+}
+function sharePlan() {
+  bsTrack('engine.plan.shared', {});
+  const text = buildHumanText();
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => showToast('Copied — paste into a message')).catch(() => fallbackCopy(text));
+  } else fallbackCopy(text);
+}
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); showToast('Copied — paste into a message'); }
+  catch (e) { showToast('Copy failed'); }
+  document.body.removeChild(ta);
+}
+function showToast(msg) {
+  const t = $('#copyToast');
+  t.textContent = msg; t.classList.add('visible');
+  setTimeout(() => t.classList.remove('visible'), 2200);
+}
+
+function refreshAllVisuals() {
+  document.querySelectorAll('[data-zoom-pos]').forEach(el => {
+    const id = el.dataset.zoomPos;
+    const pos = positions.find(p => p.id === id);
+    if (!pos) return;
+    if (el.classList.contains('visual')) {
+      const hint = el.querySelector('.zoom-hint');
+      el.innerHTML = demoFor(pos);
+      if (hint) el.appendChild(hint);
+      else { const h = document.createElement('div'); h.className='zoom-hint'; h.textContent='tap to enlarge'; el.appendChild(h); }
+    } else if (el.classList.contains('lib-card')) {
+      const thumb = el.querySelector('.thumb');
+      if (thumb) thumb.innerHTML = demoFor(pos, 'thumb');
+    }
+  });
+}
+
+bindGate();
+$('#stopBtn').addEventListener('click', stopAndRecover);
+$('#restartBtn').addEventListener('click', restart);
+$('#editInputsBtn').addEventListener('click', editInputs);
+$('#diagramBtn').addEventListener('click', () => {
+  MOTION_PAUSED = !MOTION_PAUSED;
+  $('#diagramBtn').classList.toggle('on', MOTION_PAUSED);
+  $('#motionToggleLabel').textContent = MOTION_PAUSED ? 'Resume motion' : 'Pause motion';
+  refreshAllVisuals();
+});
+$('#browseBtn').addEventListener('click', openLibrary);
+$('#libClose').addEventListener('click', closeLibrary);
+$('#libraryBg').addEventListener('click', (e) => { if (e.target.id === 'libraryBg') closeLibrary(); });
+$('#zoomBg').addEventListener('click', closeZoom);
+$('#saveBtn').addEventListener('click', savePlan);
+$('#printBtn').addEventListener('click', printPlan);
+$('#shareBtn').addEventListener('click', sharePlan);
+$$('.lib-tab').forEach(t => t.addEventListener('click', () => {
+  $$('.lib-tab').forEach(x => x.setAttribute('aria-pressed','false'));
+  t.setAttribute('aria-pressed','true');
+  renderLibrary(t.dataset.tab);
+}));
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeZoom(); closeLibrary(); } });
+</script>
+</body>
+</html>

@@ -13,6 +13,7 @@ export type MoveDetail = {
   cues?: string[];
   why?: string;
   evidence?: string;
+  clinicianCTA?: boolean;
 };
 
 type Accent = "amber" | "blush";
@@ -149,18 +150,24 @@ export const BEDROOM_MOVES: MoveDetail[] = [
   {
     key: "release",
     ref: "F.03",
-    label: "Perineal + internal release",
-    blurb: "PT-led trigger work. Dyspareunia, vaginismus, post-partum, post-prostatectomy.",
-    sets: "PT-prescribed",
-    duration: "Variable",
+    label: "External perineal release",
+    blurb: "Gentle external perineal work. Anything internal is referred out.",
+    sets: "Daily",
+    duration: "4 min",
     steps: [
-      "External: gentle perineal pressure, 60 sec per trigger point.",
-      "Internal: only with a credentialed pelvic-health PT, dilator set when indicated.",
-      "Track pain, frequency, response. Slow ramp.",
+      "External only: gentle perineal pressure with a soft tool or fingertip, 60 sec per tender spot.",
+      "Pair with diaphragmatic breath. Inhale = lengthen, exhale = passive return.",
+      "Track tenderness day-over-day. If it doesn't soften in two weeks, route to a clinician.",
     ],
-    cues: ["No bravado. Less is more.", "Stop before guarding starts."],
-    why: "Trigger points refer pain. Releasing them restores tissue mobility and reduces pain with penetration. Done with a PT, not a YouTube tutorial.",
-    evidence: "FitzGerald MP, et al. Pelvic floor physical therapy for women with chronic pelvic pain (2009).",
+    cues: [
+      "No bravado. Less is more.",
+      "Stop before guarding starts.",
+      "Internal trigger-point release, dilator work, post-surgical rehab, dyspareunia, vaginismus, post-partum, post-prostatectomy and chronic pelvic pain are clinician-led work. Use the 'find a clinician' link below, not this video.",
+    ],
+    why: "External release softens the gate. The internal work (and any work tied to a diagnosis) is in-clinic, not in-app. We route, we don't pretend to deliver it.",
+    evidence:
+      "Routing logic informed by APTA pelvic-health scope-of-practice guidance and ISSWSH consensus on female sexual pain.",
+    clinicianCTA: true,
   },
   {
     key: "positions",
@@ -491,6 +498,25 @@ function DetailDialog({
                 <section className="border-t border-border pt-5 flex gap-3">
                   <FileText className="w-4 h-4 mt-0.5 shrink-0" style={{ color: accentColor }} />
                   <p className="text-[11px] text-muted-foreground italic leading-relaxed">{move.evidence}</p>
+                </section>
+              )}
+
+              {move.clinicianCTA && (
+                <section className="border-t border-border pt-5">
+                  <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase mb-2" style={{ color: accentColor }}>
+                    This one routes out
+                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Anything beyond external work belongs with a credentialed pelvic-health PT. Find one in your area through the APTA pelvic-health directory.
+                  </p>
+                  <a
+                    href="https://aptapelvichealth.org/ptlocator/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-4 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full font-mono-label text-[10px] tracking-[0.22em] uppercase bg-foreground text-background hover:opacity-90 transition"
+                  >
+                    Find a pelvic-health PT →
+                  </a>
                 </section>
               )}
             </div>
