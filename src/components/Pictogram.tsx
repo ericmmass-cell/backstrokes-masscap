@@ -37,8 +37,11 @@ export type PictogramKey =
   | "edge-bed"
   | "cowgirl-upright"
   | "doggy-supported"
+  | "doggy-kneeling"
   | "scissor"
   | "seated-lap"
+  | "missionary"
+  | "standing"
   // Solo position (hand-authored SVG)
   | "supine-bolster"
   // Exercises (Pk0001 SVG)
