@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef, type KeyboardEvent } from "react";
 import {
   POSITIONS,
   matchToTodaysBack,
@@ -7,7 +7,7 @@ import {
   type Position,
 } from "@/lib/position-library";
 import { PositionDemo } from "@/components/PositionDemo";
-import { Pictogram, type PictogramKey } from "@/components/Pictogram";
+import { Pictogram, type PictogramKey, getIllustratedPositionUrls } from "@/components/Pictogram";
 import { SiteHeader } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/positions")({
@@ -21,6 +21,14 @@ export const Route = createFileRoute("/positions")({
           "Forty positions, each scored on lumbar load, hip flexion, breath access, and partner mobility. Filter by your current Index. Sort by what your back can sign off on.",
       },
     ],
+    // Preload all picker images so switching is instant. Each is
+    // ~300KB. The hero PNG (spoon) also gets fetchPriority="high"
+    // at the component level.
+    links: getIllustratedPositionUrls().map((href) => ({
+      rel: "preload",
+      as: "image",
+      href,
+    })),
   }),
 });
 
@@ -128,27 +136,77 @@ const PICKABLE: Pickable[] = [
   { key: "supine-bolster", label: "Solo supine with bolster", sub: "Acute-day default · hips elevated, knees up" },
 ];
 
+/* ───────── PositionShowcase ─────────
+ *
+ * Hardened picker. ARIA radiogroup pattern, full keyboard nav
+ * (ArrowUp/Down/Left/Right cycle, Home/End jump, Tab leaves the
+ * group). Active item is announced via aria-checked; focus is
+ * managed via roving tabindex so screen-reader and keyboard users
+ * get one focusable item at a time and arrow keys cycle.
+ *
+ * Image preloading: link rel=preload tags injected via route head
+ * (see Route.head()). Picker switching is instant in the cache-
+ * warm case.
+ */
 function PositionShowcase() {
-  const [pick, setPick] = useState<Pickable>(PICKABLE[0]);
+  const [pickIdx, setPickIdx] = useState(0);
+  const pick = PICKABLE[pickIdx];
+  const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  // Roving tabindex with arrow-key + Home/End nav.
+  // Selection follows focus (matches ARIA radio pattern).
+  const handleKey = (e: KeyboardEvent<HTMLDivElement>) => {
+    const max = PICKABLE.length - 1;
+    let next = pickIdx;
+    switch (e.key) {
+      case "ArrowDown":
+      case "ArrowRight":
+        next = pickIdx === max ? 0 : pickIdx + 1;
+        break;
+      case "ArrowUp":
+      case "ArrowLeft":
+        next = pickIdx === 0 ? max : pickIdx - 1;
+        break;
+      case "Home":
+        next = 0;
+        break;
+      case "End":
+        next = max;
+        break;
+      default:
+        return;
+    }
+    e.preventDefault();
+    setPickIdx(next);
+    itemRefs.current[next]?.focus();
+  };
+
   return (
     <section
       className="px-6 md:px-10 py-12 border-b"
       style={{ borderColor: "oklch(0.86 0.025 70)" }}
+      aria-labelledby="position-showcase-heading"
     >
       <div className="max-w-[1280px] mx-auto grid lg:grid-cols-12 gap-8 items-start">
-        <div className="lg:col-span-7">
-          <div style={{ aspectRatio: "4 / 3", minHeight: 360 }}>
+        <div className="lg:col-span-7 min-w-0">
+          <div
+            style={{ aspectRatio: "4 / 3", minHeight: 280 }}
+            role="region"
+            aria-label={`${pick.label} position illustration`}
+          >
             <Pictogram positionKey={pick.key} />
           </div>
         </div>
-        <div className="lg:col-span-5 flex flex-col">
+        <div className="lg:col-span-5 flex flex-col min-w-0">
           <p
             className="font-mono-label text-[10px] tracking-[0.22em] uppercase"
             style={{ color: "var(--brand-oxblood)" }}
           >
-            Drawn · {PICKABLE.length} of 40
+            Drawn · {PICKABLE.length} of 40 · arrow keys to browse
           </p>
           <h2
+            id="position-showcase-heading"
+            aria-live="polite"
             className="font-serif-display italic mt-3 leading-[1.0] tracking-[-0.02em]"
             style={{ fontSize: "clamp(28px, 3.4vw, 44px)" }}
           >
@@ -160,39 +218,57 @@ function PositionShowcase() {
           >
             {pick.sub}
           </p>
-          <div className="mt-6 flex flex-col gap-2">
-            {PICKABLE.map((p) => (
-              <button
-                key={p.key}
-                onClick={() => setPick(p)}
-                className="text-left px-4 py-3 transition hover:bg-card/60"
-                style={{
-                  border: `1px solid ${pick.key === p.key ? "var(--brand-oxblood)" : "oklch(0.86 0.025 70)"}`,
-                  background: pick.key === p.key ? "oklch(0.96 0.012 80)" : "transparent",
-                }}
-              >
-                <div
-                  className="font-serif-display italic text-lg"
-                  style={{ color: pick.key === p.key ? "var(--brand-oxblood)" : "var(--brand-paper-ink)" }}
+          <div
+            role="radiogroup"
+            aria-label="Position picker"
+            onKeyDown={handleKey}
+            className="mt-6 flex flex-col gap-2"
+          >
+            {PICKABLE.map((p, i) => {
+              const isActive = pickIdx === i;
+              return (
+                <button
+                  key={p.key}
+                  ref={(el) => {
+                    itemRefs.current[i] = el;
+                  }}
+                  type="button"
+                  role="radio"
+                  aria-checked={isActive}
+                  tabIndex={isActive ? 0 : -1}
+                  onClick={() => setPickIdx(i)}
+                  onFocus={() => setPickIdx(i)}
+                  className="text-left px-4 py-3 transition hover:bg-card/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--brand-paper)]"
+                  style={{
+                    border: `1px solid ${isActive ? "var(--brand-oxblood)" : "oklch(0.86 0.025 70)"}`,
+                    background: isActive ? "oklch(0.96 0.012 80)" : "transparent",
+                    // @ts-expect-error - ring color via CSS var
+                    "--tw-ring-color": "var(--brand-oxblood)",
+                  }}
                 >
-                  {p.label}
-                </div>
-                <div
-                  className="font-mono-label text-[9px] tracking-[0.22em] uppercase mt-1"
-                  style={{ color: "oklch(0.45 0.02 40)" }}
-                >
-                  {p.sub}
-                </div>
-              </button>
-            ))}
+                  <div
+                    className="font-serif-display italic text-lg"
+                    style={{ color: isActive ? "var(--brand-oxblood)" : "var(--brand-paper-ink)" }}
+                  >
+                    {p.label}
+                  </div>
+                  <div
+                    className="font-mono-label text-[9px] tracking-[0.22em] uppercase mt-1"
+                    style={{ color: "oklch(0.45 0.02 40)" }}
+                  >
+                    {p.sub}
+                  </div>
+                </button>
+              );
+            })}
           </div>
           <p
             className="mt-6 text-xs italic leading-relaxed"
             style={{ color: "oklch(0.45 0.02 40)" }}
           >
-            The remaining 36 positions render below as scored library
-            entries. Each will get its own calibrated 3D pose in the
-            same system over the next two weeks.
+            The remaining 31 positions render below as scored library
+            entries. Each gets its own calibrated illustration as the
+            position library expands.
           </p>
         </div>
       </div>

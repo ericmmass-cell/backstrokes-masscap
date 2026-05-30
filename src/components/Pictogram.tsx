@@ -22,7 +22,7 @@
  * approved this register on the homepage hero.
  */
 
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties, type ImgHTMLAttributes } from "react";
 
 const INK = "#2a2620";
 const OXBLOOD = "#722B2B";
@@ -52,7 +52,33 @@ type PictogramProps = {
   positionKey: PictogramKey;
   className?: string;
   style?: CSSProperties;
+  /**
+   * "eager" for above-the-fold (homepage hero), "lazy" otherwise.
+   * Maps to the native HTMLImageElement loading attribute. Default: "lazy".
+   */
+  loading?: ImgHTMLAttributes<HTMLImageElement>["loading"];
+  /**
+   * "high" for the hero image, "auto" or "low" otherwise. Hints to the
+   * browser's resource scheduler. Default: "auto".
+   */
+  fetchPriority?: "high" | "low" | "auto";
 };
+
+/* ───────── public meta accessors (used by /positions picker, alt text) ───────── */
+
+export function getPositionMeta(key: PictogramKey): { title: string; sub: string } | undefined {
+  return POSITION_TITLES[key];
+}
+
+/**
+ * URLs for all illustrated (PNG-backed) positions. Use for <link rel="preload">
+ * on the /positions route so picker switching is instant.
+ */
+export function getIllustratedPositionUrls(): string[] {
+  return SEX_POSITION_KEYS.filter((k) => k !== "supine-bolster").map(
+    (k) => `/positions/${k}.png`,
+  );
+}
 
 /* ───────── sex positions: real illustrations ───────── */
 
@@ -68,34 +94,33 @@ const POSITION_TITLES: Partial<Record<PictogramKey, { title: string; sub: string
   "supine-bolster":    { title: "Solo supine",          sub: "Hips elevated · Knees up · Acute-day default" },
 };
 
-function IllustratedPosition({ positionKey }: { positionKey: PictogramKey }) {
-  const meta = POSITION_TITLES[positionKey];
+/**
+ * Card chrome shared by every position/exercise pictogram so the
+ * cream-paper frame, caption row, and attribution sit in identical
+ * positions regardless of what's inside.
+ */
+function PictogramFrame({
+  children,
+  caption,
+  attribution,
+}: {
+  children: React.ReactNode;
+  caption?: string;
+  attribution?: string;
+}) {
   return (
-    <div style={{ width: "100%", height: "100%", background: PAPER, position: "relative", overflow: "hidden", borderRadius: 16 }}>
-      <img
-        src={`/positions/${positionKey}.png`}
-        alt={meta?.title ?? positionKey}
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "contain",
-          // Warm cream-paper / ink-art tint: sepia + slight desaturate
-          // pushes the bright skin tones and blue background toward the
-          // brand palette without obscuring the figures.
-          filter: "grayscale(1) sepia(0.55) saturate(0.85) brightness(1.04) contrast(1.12)",
-          mixBlendMode: "multiply",
-        }}
-      />
-      {/* Cream paper warm wash */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(180deg, rgba(244,239,227,0.18) 0%, rgba(244,239,227,0.28) 100%)",
-          pointerEvents: "none",
-        }}
-      />
-      {meta && (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        background: PAPER,
+        position: "relative",
+        overflow: "hidden",
+        borderRadius: 16,
+      }}
+    >
+      {children}
+      {caption && (
         <div
           style={{
             position: "absolute",
@@ -110,26 +135,203 @@ function IllustratedPosition({ positionKey }: { positionKey: PictogramKey }) {
             pointerEvents: "none",
           }}
         >
-          {meta.title} · {meta.sub}
+          {caption}
         </div>
       )}
-      {/* Required CC-BY-SA attribution */}
+      {attribution && (
+        <div
+          style={{
+            position: "absolute",
+            bottom: 4,
+            right: 8,
+            fontFamily: "JetBrains Mono, monospace",
+            fontSize: 7,
+            letterSpacing: "1px",
+            color: MUTED,
+            opacity: 0.55,
+            pointerEvents: "none",
+          }}
+        >
+          {attribution}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Skeleton state — shimmer-free, cream-paper-toned, matches frame. */
+function PositionSkeleton({ caption }: { caption?: string }) {
+  return (
+    <PictogramFrame caption={caption}>
       <div
+        aria-hidden="true"
         style={{
           position: "absolute",
-          bottom: 4,
-          right: 8,
-          fontFamily: "JetBrains Mono, monospace",
-          fontSize: 7,
-          letterSpacing: "1px",
-          color: MUTED,
-          opacity: 0.55,
-          pointerEvents: "none",
+          inset: 0,
+          background:
+            "linear-gradient(120deg, rgba(200,184,159,0.18) 0%, rgba(200,184,159,0.32) 50%, rgba(200,184,159,0.18) 100%)",
+          backgroundSize: "200% 100%",
+          animation: "bs-shimmer 2.4s ease-in-out infinite",
+        }}
+      />
+      <style>{`
+        @keyframes bs-shimmer {
+          0%   { background-position: 0% 0%; }
+          100% { background-position: -200% 0%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          [data-bs-skeleton] { animation: none !important; }
+        }
+      `}</style>
+    </PictogramFrame>
+  );
+}
+
+/** Fallback when the image fails to load — typographic card. */
+function PositionFallback({ meta }: { meta: { title: string; sub: string } }) {
+  return (
+    <PictogramFrame caption={`${meta.title} · ${meta.sub}`}>
+      <div
+        role="img"
+        aria-label={`${meta.title}. Illustration unavailable.`}
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 32,
+          textAlign: "center",
         }}
       >
-        Illus. Seedfeeder · CC-BY-SA 3.0
+        <div
+          style={{
+            fontFamily: "Spectral, Georgia, serif",
+            fontStyle: "italic",
+            fontSize: "clamp(36px, 5.5vw, 56px)",
+            color: OXBLOOD,
+            lineHeight: 1.0,
+            marginBottom: 12,
+          }}
+        >
+          {meta.title}
+        </div>
+        <div
+          style={{
+            fontFamily: "JetBrains Mono, monospace",
+            fontSize: 10,
+            letterSpacing: "3px",
+            color: MUTED,
+            textTransform: "uppercase",
+          }}
+        >
+          Illustration unavailable
+        </div>
       </div>
-    </div>
+    </PictogramFrame>
+  );
+}
+
+function IllustratedPosition({
+  positionKey,
+  loading = "lazy",
+  fetchPriority = "auto",
+}: {
+  positionKey: PictogramKey;
+  loading?: ImgHTMLAttributes<HTMLImageElement>["loading"];
+  fetchPriority?: "high" | "low" | "auto";
+}) {
+  const meta = POSITION_TITLES[positionKey];
+  const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
+
+  // No meta = key isn't in the registry. Render a hard fallback.
+  if (!meta) {
+    return (
+      <PositionFallback
+        meta={{ title: positionKey, sub: "Unknown position key" }}
+      />
+    );
+  }
+
+  if (state === "error") {
+    return <PositionFallback meta={meta} />;
+  }
+
+  const caption = `${meta.title} · ${meta.sub}`;
+  const altText = `Illustration of the ${meta.title.toLowerCase()} position: ${meta.sub.toLowerCase()}.`;
+
+  return (
+    <PictogramFrame
+      caption={caption}
+      attribution="Illus. Seedfeeder · CC-BY-SA 3.0"
+    >
+      {/* Skeleton sits behind the image and fades out when it loads.
+          Stays mounted so the caption stays in position from the start. */}
+      {state === "loading" && (
+        <div
+          aria-hidden="true"
+          data-bs-skeleton
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(120deg, rgba(200,184,159,0.18) 0%, rgba(200,184,159,0.32) 50%, rgba(200,184,159,0.18) 100%)",
+            backgroundSize: "200% 100%",
+            animation: "bs-shimmer 2.4s ease-in-out infinite",
+            transition: "opacity 220ms ease",
+          }}
+        />
+      )}
+      <img
+        src={`/positions/${positionKey}.png`}
+        alt={altText}
+        loading={loading}
+        // React 19 / typed-as-html attr. Pass-through to the DOM.
+        // @ts-expect-error — fetchpriority is the lowercase HTML attribute
+        fetchpriority={fetchPriority}
+        decoding="async"
+        // Intrinsic ratio so the box reserves space before the image
+        // loads — eliminates layout shift (CLS).
+        width={800}
+        height={600}
+        onLoad={() => setState("loaded")}
+        onError={() => setState("error")}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "contain",
+          opacity: state === "loaded" ? 1 : 0,
+          transition: "opacity 280ms ease",
+          // Warm cream-paper / ink-art tint
+          filter:
+            "grayscale(1) sepia(0.55) saturate(0.85) brightness(1.04) contrast(1.12)",
+          mixBlendMode: "multiply",
+        }}
+      />
+      {/* Cream paper warm wash */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(180deg, rgba(244,239,227,0.18) 0%, rgba(244,239,227,0.28) 100%)",
+          pointerEvents: "none",
+        }}
+      />
+      <style>{`
+        @keyframes bs-shimmer {
+          0%   { background-position: 0% 0%; }
+          100% { background-position: -200% 0%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          [data-bs-skeleton] { animation: none !important; }
+        }
+      `}</style>
+    </PictogramFrame>
   );
 }
 
@@ -299,12 +501,22 @@ const SEX_POSITION_KEYS: PictogramKey[] = [
   "seated-lap",
 ];
 
-export function Pictogram({ positionKey, className, style }: PictogramProps) {
+export function Pictogram({
+  positionKey,
+  className,
+  style,
+  loading = "lazy",
+  fetchPriority = "auto",
+}: PictogramProps) {
   // Sex positions backed by Seedfeeder PNGs
   if (SEX_POSITION_KEYS.includes(positionKey)) {
     return (
       <div className={className} style={{ width: "100%", height: "100%", ...style }}>
-        <IllustratedPosition positionKey={positionKey} />
+        <IllustratedPosition
+          positionKey={positionKey}
+          loading={loading}
+          fetchPriority={fetchPriority}
+        />
       </div>
     );
   }

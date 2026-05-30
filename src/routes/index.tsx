@@ -118,7 +118,7 @@ function Index() {
                 aspectRatio: "4 / 5",
               }}
             >
-              <Pictogram positionKey="spoon" />
+              <Pictogram positionKey="spoon" loading="eager" fetchPriority="high" />
               <span
                 className="absolute -top-6 -right-3 font-script text-3xl rotate-[5deg] hidden md:block"
                 style={{ color: "var(--brand-oxblood)" }}
