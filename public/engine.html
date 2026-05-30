@@ -296,27 +296,14 @@ section.plan.active { display: block; animation: fadeUp 540ms cubic-bezier(.2,.7
   place-items: center;
   overflow: hidden;
 }
-.engine-demo__sprite {
+.engine-demo__img {
   position: relative;
+  width: 100%;
   height: 100%;
-  max-width: 100%;
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
+  object-fit: contain;
   border: 1px solid rgba(42,38,32,0.17);
   background-color: var(--cream);
   box-shadow: 0 18px 42px -30px rgba(42,38,32,0.58);
-  transform-origin: 50% 68%;
-  background-image: var(--sprite-lg);
-  background-size: var(--sprite-width) 100%;
-  background-position: 0% 50%;
-  background-repeat: no-repeat;
-  animation:
-    engineSpriteTrack var(--cycle) step-end infinite,
-    engineDemoBody var(--cycle) ease-in-out infinite;
-  will-change: background-position, transform;
-}
-.engine-demo[data-paused="true"] .engine-demo__sprite {
-  animation-play-state: paused;
 }
 .engine-demo__chrome {
   position: absolute;
@@ -1068,6 +1055,30 @@ const ENGINE_VISUAL_BY_ID = {
   rec_legs_lap:'solo-supine'
 };
 
+// Static Seedfeeder illustration per visual key. Replaces the old
+// real-photo filmstrip sprites. Eight illustrations cover the 17 visual
+// families by closest match; the two solo entries borrow the nearest
+// supine/side figure since there is no solo illustration yet.
+const ENGINE_ILLUS = {
+  'side-spoon':'spoon',
+  'supine-support':'supine-knees-up',
+  'side-facing':'scissor',
+  'seated-upright':'seated-lap',
+  'cowgirl-upright':'cowgirl-upright',
+  'reverse-cowgirl':'cowgirl-upright',
+  'stirrup-missionary':'supine-knees-up',
+  'side-leg-held':'spoon',
+  'quadruped-support':'doggy-supported',
+  'edge-bed':'edge-bed',
+  'standing-support':'doggy-supported',
+  'standing-wall':'seated-lap',
+  'prone-pillow':'doggy-supported',
+  'cradle-sitting':'seated-lap',
+  'squat-over':'cowgirl-upright',
+  'solo-side':'spoon',
+  'solo-supine':'supine-knees-up'
+};
+
 function engineVisualKey(pos) {
   return ENGINE_VISUAL_BY_ID[pos.id] || 'supine-support';
 }
@@ -1075,21 +1086,20 @@ function engineVisualKey(pos) {
 function demoFor(pos, variant='card') {
   const key = engineVisualKey(pos);
   const spec = ENGINE_VISUALS[key];
+  const png = ENGINE_ILLUS[key] || 'supine-knees-up';
   const isZoom = variant === 'zoom';
-  const isPaused = MOTION_PAUSED || isZoom;
   const modifier = variant === 'thumb' ? ' engine-demo--thumb' : (isZoom ? ' engine-demo--zoom' : '');
-  const mode = isPaused ? 'paused' : '8-frame motion';
+  const label = `${escapeHtml(spec.title)}: ${escapeHtml(spec.role)}`;
   return `
-    <figure class="engine-demo${modifier}" data-paused="${isPaused}" data-visual-key="${key}" aria-label="${escapeHtml(spec.title)}: ${escapeHtml(spec.role)}"
-      style="--cycle:${spec.cycleSeconds}s; --sprite-lg:url('${spec.sprite}'); --sprite-sm:url('${spec.spriteSmall}'); --sprite-width:${ENGINE_FRAME_COUNT * 100}%;">
+    <figure class="engine-demo${modifier}" data-visual-key="${key}" aria-label="${label}">
       <div class="engine-demo__plate"></div>
       <div class="engine-demo__media-shell">
-        <div class="engine-demo__sprite" aria-hidden="true"></div>
+        <img class="engine-demo__img" src="/positions/${png}.png" alt="${label}" loading="lazy" decoding="async" />
       </div>
       <figcaption class="engine-demo__chrome">
         <div class="engine-demo__label">
           <span><span class="engine-demo__fig">${spec.fig}</span> <span class="engine-demo__title">${spec.title}</span></span>
-          <span class="engine-demo__mode">${mode}</span>
+          <span class="engine-demo__mode">illustrated</span>
         </div>
         <div class="engine-demo__frames">${spec.frameHold}</div>
         <div class="engine-demo__role">${spec.role}</div>
