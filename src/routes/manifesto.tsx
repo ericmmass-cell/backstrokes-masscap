@@ -21,13 +21,13 @@ export const Route = createFileRoute("/manifesto")({
       {
         name: "description",
         content:
-          "Your back should not be the third person in bed. A manifesto for the people who were told to stretch, to breathe, to wait it out.",
+          "Don't let your back be the reason you scream in bed. A manifesto for the people who were told to stretch, to breathe, to wait it out.",
       },
       { property: "og:title", content: "The BackStroke manifesto" },
       {
         property: "og:description",
         content:
-          "Your back should not be the third person in bed. A manifesto for the people who were told to stretch, to breathe, to wait it out.",
+          "Don't let your back be the reason you scream in bed. A manifesto for the people who were told to stretch, to breathe, to wait it out.",
       },
     ],
   }),
@@ -66,13 +66,11 @@ function Manifesto() {
             color: PAPER_INK,
           }}
         >
-          Your back
+          Don't let your back
           <br />
-          should not be
+          be the reason you
           <br />
-          the third person
-          <br />
-          <span style={{ color: OXBLOOD }}>in bed.</span>
+          <span style={{ color: OXBLOOD }}>scream in bed.</span>
         </h1>
 
         <Spacer h={120} />

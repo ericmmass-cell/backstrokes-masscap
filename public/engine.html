@@ -725,7 +725,7 @@ svg .receiver.has-breathe { animation: breathe 4.2s ease-in-out infinite; transf
 <div class="wrap">
   <header class="hero">
     <div class="eyebrow">BackStroke · Position Intelligence Engine · v6</div>
-    <h1 class="title">Your back should not be<br><em>the third person in bed.</em></h1>
+    <h1 class="title">Don't let your back be<br><em>the reason you scream in bed.</em></h1>
     <p class="tagline">Five taps. A plan that reads tonight's body. Drawn clearly, so you can actually see what the position is.</p>
   </header>
 
@@ -914,7 +914,7 @@ const positions = [
     why:'An angle variation when the standard upright creates rotation pain or when the receiver wants more visual privacy.',
     contra:['si_joint'], partnerLine:'You stay still. I will find the angle.' },
   { id:'spoon_climax', name:'Spoon with manual stimulation', role:'dessert', stick:'spoon_still', load:1, flex:0, ext:0, rot:0, thrust:0, hip:0, floor:0, climax:true,
-    geometry:'Spoon hold with shared or solo manual stimulation. No thrusting required for climax.',
+    geometry:'Spoon hold with shared manual stimulation. No thrusting required for climax.',
     why:'Climax-conservative. A closing geometry that does not introduce new load.',
     contra:[], partnerLine:'Stay here. My back has earned a quiet finish.' },
   { id:'sidelie_hand', name:'Side-lying mutual hand', role:'dessert', stick:'sidelie_face', load:1, flex:0, ext:0, rot:0, thrust:0, hip:0, floor:0, climax:true,
@@ -939,7 +939,7 @@ const QUESTIONS = [
   { key:'index', eyebrow:'Question 3 of 5', q:'Today\'s <em>Index</em>?', help:'The load cap your back will tolerate before it joins the conversation.',
     options:[['green','Green'],['amber','Amber'],['red','Red'],['flare','Flare']]},
   { key:'goal', eyebrow:'Question 4 of 5', q:'What is the <em>evening</em> for?', help:'Not a directive. A route.',
-    options:[['penetrative','Penetrative'],['climax','Climax-focused'],['closeness','Closeness'],['solo','Solo'],['recovery','Recovery only']]},
+    options:[['penetrative','Penetrative'],['climax','Climax-focused'],['closeness','Closeness'],['recovery','Recovery only']]},
   { key:'time', eyebrow:'Question 5 of 5', q:'How much <em>time</em>?', help:'Honest about what you have, not what you wish you had.',
     options:[['short','Under 10 min'],['medium','10–20 min'],['long','20–40 min'],['extended','40+ min']]}
 ];
@@ -1024,12 +1024,12 @@ const ENGINE_VISUALS = {
     sprite:'/demos/positions/squat-over.jpg', spriteSmall:'/demos/positions/squat-over-sm.jpg'
   },
   'solo-side': {
-    fig:'P.16', title:'Solo, Side-Lying', role:'Pillow between knees; back stays neutral',
+    fig:'P.16', title:'Side-Lying Breath', role:'Pillow between knees; back stays neutral',
     frameHold:'side / pillow / hand / breath', cycleSeconds:2.85,
     sprite:'/demos/positions/solo-side.jpg', spriteSmall:'/demos/positions/solo-side-sm.jpg'
   },
   'solo-supine': {
-    fig:'P.17', title:'Solo, Supine', role:'Supported knees; lumbar quiet',
+    fig:'P.17', title:'Supine, Legs Supported', role:'Calves over partner\'s lap; lumbar quiet',
     frameHold:'setup / support / inhale / settle', cycleSeconds:2.9,
     sprite:'/demos/positions/solo-supine.jpg', spriteSmall:'/demos/positions/solo-supine-sm.jpg'
   }
@@ -1057,8 +1057,8 @@ const ENGINE_VISUAL_BY_ID = {
 
 // Static Seedfeeder illustration per visual key. Replaces the old
 // real-photo filmstrip sprites. Eight illustrations cover the 17 visual
-// families by closest match; the two solo entries borrow the nearest
-// supine/side figure since there is no solo illustration yet.
+// families by closest match; the breath + recovery entries borrow the
+// nearest supine/side figure.
 const ENGINE_ILLUS = {
   'side-spoon':'spoon',
   'supine-support':'supine-knees-up',
@@ -1592,7 +1592,6 @@ function scorePos(pos, f, targetLoad) {
   let s = 10 - Math.abs(pos.load - targetLoad) * 4;
   if (f.goal === 'climax' && pos.climax) s += 4;
   if (f.goal === 'closeness' && pos.load <= 1) s += 3;
-  if (f.goal === 'solo' && pos.hip === 0) s += 2;
   if (f.goal === 'recovery' && pos.role === 'recovery') s += 8;
   if (f.goal === 'penetrative' && pos.thrust > 0 && pos.role === 'main') s += 3;
   return s;
@@ -1641,7 +1640,6 @@ function generatePlanSummary(f) {
   else if (f.painBehavior === 'extension') ins.push('nothing that arches the lumbar');
   if (f.goal === 'climax') ins.push('the dessert is the climax, not the geometry');
   else if (f.goal === 'closeness') ins.push('the main course is closeness, not throughput');
-  else if (f.goal === 'solo') ins.push('no partner choreography required');
   const instrText = ins.slice(0, 3).join(', ') + '.';
   let closer = 'The geometry below has been routed for the body you described tonight.';
   if (f.painVector === 'right_sciatica' && (f.index === 'amber' || f.index === 'red')) closer = 'Your right sciatic nerve has not agreed to improv night.';
@@ -1879,7 +1877,7 @@ function appendEmptyState() {
   note.innerHTML = `
     <div class="ps-label">Empty state</div>
     <div class="ps-instructions">Nothing clears today's load cap.</div>
-    <div class="ps-closer">That is not a sexual referendum. It is geometry having boundaries. Choose release-first, solo, or recovery. The bed will still be there after the flare stops acting like management.</div>
+    <div class="ps-closer">That is not a sexual referendum. It is geometry having boundaries. Choose release-first, closeness, or recovery. The bed will still be there after the flare stops acting like management.</div>
   `;
   $('#actContainer').appendChild(note);
   showEndActions();
