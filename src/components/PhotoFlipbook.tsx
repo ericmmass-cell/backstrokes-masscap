@@ -1,22 +1,24 @@
 /**
  * PhotoFlipbook — plays the REAL workout photography as motion.
  *
- * After three rejected attempts at hand-drawn figures, the decision (Eric,
- * 2026-05-31) was: use the real art, make it move. The repo already ships
- * professional 4-frame motion sequences for every move at
- * /public/demos/workout/<move>.jpg — each a 1920×640 strip of four 480×640
- * frames (rest → lift → hold → lower), shot on the brand's cream background.
+ * Decision (Eric, 2026-05-31): use the real art, make it move. Three hand-drawn
+ * attempts were rejected. The repo ships professional 4-frame motion sequences
+ * for every move at /public/demos/workout/<move>.jpg — a 1920×640 strip of four
+ * 480×640 frames (rest → lift → hold → lower), on the brand cream background.
  *
- * So we don't draw anything. We step through the four real frames with a CSS
- * steps(4) sprite animation: a single full-strip <img> on a 400%-wide track
- * that translates 0 → -100% of its own width in 4 discrete steps. Each step
- * lands the track exactly on frame 0,1,2,3, held a quarter of the loop, then
- * wraps. The photo plays like a short looping clip of the actual movement.
+ * v2 (this file): CROSSFADE, not hard steps. The four frames are stacked as
+ * four layers (each a div showing one frame of the strip via background-position
+ * on a 400%-wide background). Each layer's opacity runs the same keyframe,
+ * offset by a quarter-cycle via negative animation-delay, so the move DISSOLVES
+ * frame→frame and reads like footage instead of a slideshow. A subtle slow zoom
+ * (the whole stack) adds life.
  *
- * Why width:400% + height:100% renders undistorted: the strip is 1920×640
- * (3:1). The stage aspect is 480/640 (0.75). A track at 400% width / 100%
- * height of the stage is 4·(0.75·H) × H = 3H × H = 3:1 — exactly the strip's
- * aspect, so no squish.
+ * Respects prefers-reduced-motion: holds the single "lift" frame, no motion.
+ *
+ * VERIFY NOTE: the preview/headless browser reports prefers-reduced-motion:
+ * reduce, which freezes these animations. To verify motion, force-drive a layer
+ * via inline `style.animation` (inline beats the media query) and sample opacity
+ * /transform over time — do NOT trust a static sample.
  */
 
 import type { CSSProperties } from "react";
@@ -31,14 +33,17 @@ const SRC: Record<FlipbookKey, string> = {
   decomp: "/demos/workout/decomp.jpg",
 };
 
-/* per-move loop duration (ms) — 4 frames, ~1s each reads as a deliberate rep */
+/* per-move loop duration (ms). A full cycle walks all four frames once. */
 const DUR: Record<FlipbookKey, number> = {
-  "curl-up": 4000,
-  "side-plank": 4400,
-  "bird-dog": 4400,
-  breath: 5200,
-  decomp: 4400,
+  "curl-up": 5200,
+  "side-plank": 5600,
+  "bird-dog": 5600,
+  breath: 6400,
+  decomp: 5600,
 };
+
+/* background-position-x for each of the 4 frames on a 400%-wide background */
+const FRAME_POS = ["0%", "33.3333%", "66.6667%", "100%"];
 
 const CSS = `
 .pf-stage {
@@ -51,31 +56,41 @@ const CSS = `
   border-radius: 14px;
   background: #efe7d6;
 }
-.pf-track {
+.pf-zoom { position: absolute; inset: 0; }
+.pf-run .pf-zoom { animation: pf-zoom var(--pf-dur, 5200ms) ease-in-out infinite; }
+@keyframes pf-zoom {
+  0%,100% { transform: scale(1.015); }
+  50%     { transform: scale(1.055); }   /* gentle push toward the held pose */
+}
+
+.pf-layer {
   position: absolute;
-  top: 0; left: 0;
-  height: 100%;
-  width: 400%;            /* 4 frames wide */
-  display: flex;
-  will-change: transform;
-  transform: translateX(0);
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: 400% 100%;             /* 4 frames wide; one frame fills the box */
+  opacity: 0;
+  will-change: opacity;
 }
-.pf-track img {
-  display: block;
-  width: 100%;            /* the full 1920×640 strip, undistorted (see header) */
-  height: 100%;
-  object-fit: fill;
-  user-select: none;
+/* each layer dissolves: fade in, hold, fade out, then stay off until next loop.
+   four layers at -0/-1/-2/-3 quarter-cycle delays tile the whole loop with a
+   short crossfade at every boundary. */
+@keyframes pf-cross {
+  0%   { opacity: 0; }
+  4%   { opacity: 1; }
+  25%  { opacity: 1; }
+  30%  { opacity: 0; }
+  100% { opacity: 0; }
 }
-.pf-run .pf-track {
-  animation: pf-flip var(--pf-dur, 4000ms) steps(4) infinite;
-}
-@keyframes pf-flip {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }  /* -100% of the 400% track = 4 frame-widths */
-}
+.pf-run .pf-layer { animation: pf-cross var(--pf-dur, 5200ms) linear infinite; }
+.pf-run .pf-l0 { animation-delay: 0ms; }
+.pf-run .pf-l1 { animation-delay: calc(var(--pf-dur, 5200ms) * -0.75); }
+.pf-run .pf-l2 { animation-delay: calc(var(--pf-dur, 5200ms) * -0.50); }
+.pf-run .pf-l3 { animation-delay: calc(var(--pf-dur, 5200ms) * -0.25); }
+
 @media (prefers-reduced-motion: reduce) {
-  .pf-run .pf-track { animation: none; transform: translateX(-25%); } /* hold the lift frame */
+  .pf-run .pf-zoom { animation: none; transform: scale(1.02); }
+  .pf-run .pf-layer { animation: none; }
+  .pf-run .pf-l1 { opacity: 1; }   /* hold the lift frame, statically */
 }
 `;
 
@@ -89,14 +104,26 @@ type Props = {
 export function PhotoFlipbook({ moveKey, paused = false, className, style }: Props) {
   const src = SRC[moveKey];
   const dur = DUR[moveKey];
+  const playState = paused ? "paused" : "running";
   return (
     <div className={`pf-wrap ${className ?? ""}`} style={style}>
-      <div className={`pf-stage ${paused ? "" : "pf-run"}`}>
-        <div
-          className="pf-track"
-          style={{ ["--pf-dur" as string]: `${dur}ms`, animationPlayState: paused ? "paused" : undefined }}
-        >
-          <img src={src} alt="" aria-hidden="true" draggable={false} />
+      <div
+        className={`pf-stage ${paused ? "" : "pf-run"}`}
+        style={{ ["--pf-dur" as string]: `${dur}ms` }}
+      >
+        <div className="pf-zoom" style={{ animationPlayState: playState }}>
+          {FRAME_POS.map((posX, i) => (
+            <div
+              key={i}
+              className={`pf-layer pf-l${i}`}
+              style={{
+                backgroundImage: `url(${src})`,
+                backgroundPositionX: posX,
+                backgroundPositionY: "center",
+                animationPlayState: playState,
+              }}
+            />
+          ))}
         </div>
       </div>
       <style>{CSS}</style>
