@@ -1,5 +1,5 @@
 /**
- * PopAtlas — the headline feature. A live anatomical back-map filters the
+ * PopAtlas, the headline feature. A live anatomical back-map filters the
  * 39-position library, and every position resolves into the POP meter: two
  * honest rows, RELIEF (the relief pop) over HEAT (the good pop), both derived
  * from the axes already scored in position-library.ts.

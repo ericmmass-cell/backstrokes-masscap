@@ -1,8 +1,8 @@
 /**
  * HumanFigure — used by /session.
  *
- * DECISION (2026-05-31, Eric): use the REAL art, make it move. The hand-drawn
- * AnimatedExercise / Mannequin figures were rejected as not good enough.
+ * DECISION (2026-05-31, Eric): use the REAL art, make it move. Several
+ * hand-drawn figure attempts were rejected as not good enough.
  *
  * The repo already ships professional 4-frame motion photography for all five
  * moves at /public/demos/workout/<move>.jpg (rest → lift → hold → lower, on
