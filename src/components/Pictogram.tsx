@@ -22,6 +22,7 @@
  */
 
 import { useState, type CSSProperties, type ImgHTMLAttributes } from "react";
+import { PositionAnnotation, type PositionAnnotateData } from "./PositionAnnotation";
 
 const INK = "#2a2620";
 const OXBLOOD = "#722B2B";
