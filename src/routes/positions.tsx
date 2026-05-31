@@ -150,6 +150,17 @@ function illustrationFor(p: Position): PictogramKey {
   return ILLUSTRATION_BY_ID[p.id] ?? "supine-knees-up";
 }
 
+/** First library position that renders with a given illustration family —
+ *  used to feed the showcase annotation layer representative clinical data. */
+function representativeFor(key: PictogramKey): Position | undefined {
+  return POSITIONS.find((p) => illustrationFor(p) === key);
+}
+
+/** Build the teaching-overlay payload for a position at a given role. */
+function annotateData(p: Position, role: Role) {
+  return { name: p.name, load: roleLoad(p, role), loadNote: roleLoadNote(p, role) };
+}
+
 function PositionRow({ p, role }: { p: Position; role: Role }) {
   const cat = p.category.toUpperCase();
   const yourLoad = roleLoad(p, role);
@@ -161,7 +172,7 @@ function PositionRow({ p, role }: { p: Position; role: Role }) {
   return (
     <li className="bg-background flex flex-col overflow-hidden rounded-2xl border border-border">
       <div style={{ aspectRatio: "4 / 3" }}>
-        <Pictogram positionKey={illustrationFor(p)} showCaption={false} />
+        <Pictogram positionKey={illustrationFor(p)} showCaption={false} annotate={annotateData(p, role)} />
       </div>
 
       <div className="p-6 md:p-7 flex flex-col">
@@ -317,7 +328,13 @@ function PositionShowcase() {
             role="region"
             aria-label={`${pick.label} position illustration`}
           >
-            <Pictogram positionKey={pick.key} />
+            <Pictogram
+              positionKey={pick.key}
+              annotate={(() => {
+                const rep = representativeFor(pick.key);
+                return rep ? annotateData(rep, "either") : undefined;
+              })()}
+            />
           </div>
         </div>
         <div className="lg:col-span-5 flex flex-col min-w-0">
