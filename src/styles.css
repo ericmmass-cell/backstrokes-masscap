@@ -213,3 +213,63 @@
   }
 }
 
+/* ═══════════════════════ THE POP ATLAS ═══════════════════════
+ * One set of motion tokens, reused everywhere. The two-pass POP meter fill
+ * and its single end-overshoot are the ONLY springy moments on the page; its
+ * scarcity is what reads as premium. Everything else is a quiet slow-out.
+ * Reduced-motion is shipped as a first-class final state, not an afterthought. */
+:root {
+  --ease-settle: cubic-bezier(.22, 1, .36, 1);      /* house slow-out */
+  --ease-anticipate: cubic-bezier(.55, -0.16, .42, 1); /* tiny wind-back: POP fill + press only */
+  --ease-drift: linear;                              /* ken burns only */
+  --d-fast: 140ms;
+  --d-base: 320ms;
+  --d-enter: 520ms;
+  --d-pop: 1100ms;
+  --d-kenburns: 18000ms;
+  --stagger: 60ms;
+  --pop-oxblood: #722B2B;   /* RELIEF */
+  --pop-amber: #b07d2b;     /* HEAT */
+}
+
+/* page-entrance: title/controls/grid fade-up, led by the eye */
+@keyframes popRise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.pop-rise { opacity: 0; animation: popRise var(--d-enter) var(--ease-settle) forwards; }
+
+/* POP meter dot fill: a dot pops in with one restrained overshoot */
+@keyframes popDotIn { 0% { transform: scale(0); } 70% { transform: scale(1.18); } 100% { transform: scale(1); } }
+.pop-dot { transform-origin: center; }
+.pop-meter.is-lit .pop-dot.is-on { animation: popDotIn 360ms var(--ease-anticipate) backwards; }
+
+/* the single signature overshoot: a soft glow ring on the meter when it settles */
+@keyframes popGlow { 0% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--pop-amber) 0%, transparent); } 45% { box-shadow: 0 0 0 6px color-mix(in oklch, var(--pop-amber) 22%, transparent); } 100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--pop-amber) 0%, transparent); } }
+.pop-meter.is-lit { animation: popGlow var(--d-pop) var(--ease-settle); }
+
+/* card hover lift + press */
+.pop-card { transition: transform var(--d-fast) var(--ease-settle), box-shadow var(--d-fast) var(--ease-settle); will-change: transform; }
+.pop-card:hover { transform: translateY(-4px) scale(1.012); box-shadow: 0 18px 40px -24px rgba(42,38,32,0.5); }
+.pop-card:active { transform: scale(0.985); transition-timing-function: var(--ease-anticipate); }
+
+/* ken-burns life on a still, paused until hover/focus/in-detail */
+@keyframes popKen { 0% { transform: scale(1.02) translate(0,0); } 100% { transform: scale(1.06) translate(-2%, -1.5%); } }
+.pop-ken { transform-origin: center; animation: popKen var(--d-kenburns) var(--ease-drift) alternate infinite; animation-play-state: paused; }
+.pop-card:hover .pop-ken, .pop-card:focus-within .pop-ken, .pop-ken.is-hero { animation-play-state: running; }
+
+/* newly-qualifying card underline wipe */
+@keyframes popWipe { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.pop-wipe { transform-origin: left; animation: popWipe 300ms var(--ease-settle); }
+
+/* back-map region select */
+.pop-region { transition: fill-opacity var(--d-base) var(--ease-settle), opacity var(--d-base) var(--ease-settle); cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pop-rise { opacity: 1; animation: none; }
+  .pop-meter.is-lit { animation: none; }
+  .pop-meter.is-lit .pop-dot.is-on { animation: none; }
+  .pop-card { transition: none; }
+  .pop-card:hover { transform: none; }
+  .pop-ken, .pop-card:hover .pop-ken, .pop-ken.is-hero { animation: none; }
+  .pop-wipe { animation: none; }
+  .pop-region { transition: none; }
+}
+
