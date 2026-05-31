@@ -1055,10 +1055,8 @@ const ENGINE_VISUAL_BY_ID = {
   rec_legs_lap:'solo-supine'
 };
 
-// Static Seedfeeder illustration per visual key. Replaces the old
-// real-photo filmstrip sprites. Eight illustrations cover the 17 visual
-// families by closest match; the breath + recovery entries borrow the
-// nearest supine/side figure.
+// Static Seedfeeder illustration per visual key. Eleven illustrations
+// cover the 17 visual families by closest body geometry.
 const ENGINE_ILLUS = {
   'side-spoon':'spoon',
   'supine-support':'supine-knees-up',
@@ -1066,13 +1064,13 @@ const ENGINE_ILLUS = {
   'seated-upright':'seated-lap',
   'cowgirl-upright':'cowgirl-upright',
   'reverse-cowgirl':'cowgirl-upright',
-  'stirrup-missionary':'supine-knees-up',
-  'side-leg-held':'spoon',
+  'stirrup-missionary':'missionary',
+  'side-leg-held':'side-T',
   'quadruped-support':'doggy-supported',
   'edge-bed':'edge-bed',
-  'standing-support':'doggy-supported',
-  'standing-wall':'seated-lap',
-  'prone-pillow':'doggy-supported',
+  'standing-support':'standing',
+  'standing-wall':'standing',
+  'prone-pillow':'doggy-kneeling',
   'cradle-sitting':'seated-lap',
   'squat-over':'cowgirl-upright',
   'solo-side':'spoon',
@@ -1596,14 +1594,21 @@ function scorePos(pos, f, targetLoad) {
   if (f.goal === 'penetrative' && pos.thrust > 0 && pos.role === 'main') s += 3;
   return s;
 }
+// The rendered PNG, not the visual key. Several visual keys (side-spoon,
+// solo-side, side-leg-held) collapse to the same illustration, so we must
+// de-dupe on the image actually shown or the warm-up and main course end
+// up displaying the identical picture.
+function renderedImage(pos) {
+  return ENGINE_ILLUS[engineVisualKey(pos)] || 'supine-knees-up';
+}
 function freshVisualPool(candidates, excludeIds) {
-  const usedVisuals = new Set(
+  const usedImages = new Set(
     excludeIds
       .map(id => positions.find(p => p.id === id))
       .filter(Boolean)
-      .map(pos => engineVisualKey(pos))
+      .map(pos => renderedImage(pos))
   );
-  const fresh = candidates.filter(p => !usedVisuals.has(engineVisualKey(p)));
+  const fresh = candidates.filter(p => !usedImages.has(renderedImage(p)));
   return fresh.length ? fresh : candidates;
 }
 function pickPosition(role, f, targetLoad, excludeIds=[]) {
