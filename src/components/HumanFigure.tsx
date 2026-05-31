@@ -1,42 +1,35 @@
 /**
  * HumanFigure — used by /session.
  *
- * Was a passthrough to MovementDemo (the 3D rigged figure). The 3D
- * silhouette read as "Frankenstein in tactical gear" — the soldier
- * mesh bulges showed through as creepy outlines. Replaced with the
- * hand-authored SVG Pictogram, which the sex positions also use.
- * Same key mapping.
+ * DECISION (2026-05-31, Eric): use the REAL art, make it move. The hand-drawn
+ * AnimatedExercise / Mannequin figures were rejected as not good enough.
+ *
+ * The repo already ships professional 4-frame motion photography for all five
+ * moves at /public/demos/workout/<move>.jpg (rest → lift → hold → lower, on
+ * the brand cream background). PhotoFlipbook steps through those real frames so
+ * the move plays as a short looping clip of the actual movement. No drawing.
  */
 
 import type { CSSProperties } from "react";
-import { Pictogram, type PictogramKey } from "./Pictogram";
-import { AnimatedExercise, ANIMATED_KEYS } from "./AnimatedExercise";
+import { PhotoFlipbook, type FlipbookKey } from "./PhotoFlipbook";
+
+const FLIPBOOK_KEYS = new Set<FlipbookKey>(["curl-up", "side-plank", "bird-dog", "breath", "decomp"]);
 
 type Props = {
-  moveKey: PictogramKey; // curl-up | side-plank | bird-dog | breath | decomp
+  moveKey: FlipbookKey;
   paused?: boolean;
   className?: string;
   style?: CSSProperties;
 };
 
 export function HumanFigure({ moveKey, paused, className, style }: Props) {
-  // Curl-up (and any other key in ANIMATED_KEYS) renders as a real
-  // looping motion study instead of a static plate. Everything else
-  // falls through to the static Pictogram illustration.
-  if (ANIMATED_KEYS.has(moveKey)) {
-    return (
-      <AnimatedExercise
-        moveKey={moveKey}
-        paused={paused}
-        className={className}
-        style={style}
-      />
-    );
+  if (FLIPBOOK_KEYS.has(moveKey)) {
+    return <PhotoFlipbook moveKey={moveKey} paused={paused} className={className} style={style} />;
   }
-  return <Pictogram positionKey={moveKey} className={className} style={style} />;
+  // No photography for this key — render nothing rather than a broken figure.
+  return null;
 }
 
-// Re-export the type so the route's old import path still resolves.
-export type { PictogramKey as MoveKey };
+export type { FlipbookKey as MoveKey };
 
 export default HumanFigure;
