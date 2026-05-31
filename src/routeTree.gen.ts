@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StriptestRouteImport } from './routes/striptest'
 import { Route as SessionRouteImport } from './routes/session'
 import { Route as ScienceRouteImport } from './routes/science'
 import { Route as PositionsRouteImport } from './routes/positions'
@@ -24,6 +25,11 @@ import { Route as ShareTokenRouteImport } from './routes/share.$token'
 import { Route as BuySuccessRouteImport } from './routes/buy_.success'
 import { Route as BuyCancelRouteImport } from './routes/buy_.cancel'
 
+const StriptestRoute = StriptestRouteImport.update({
+  id: '/striptest',
+  path: '/striptest',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SessionRoute = SessionRouteImport.update({
   id: '/session',
   path: '/session',
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/positions': typeof PositionsRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
+  '/striptest': typeof StriptestRoute
   '/buy/cancel': typeof BuyCancelRoute
   '/buy/success': typeof BuySuccessRoute
   '/share/$token': typeof ShareTokenRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/positions': typeof PositionsRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
+  '/striptest': typeof StriptestRoute
   '/buy/cancel': typeof BuyCancelRoute
   '/buy/success': typeof BuySuccessRoute
   '/share/$token': typeof ShareTokenRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/positions': typeof PositionsRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
+  '/striptest': typeof StriptestRoute
   '/buy_/cancel': typeof BuyCancelRoute
   '/buy_/success': typeof BuySuccessRoute
   '/share/$token': typeof ShareTokenRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/positions'
     | '/science'
     | '/session'
+    | '/striptest'
     | '/buy/cancel'
     | '/buy/success'
     | '/share/$token'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/positions'
     | '/science'
     | '/session'
+    | '/striptest'
     | '/buy/cancel'
     | '/buy/success'
     | '/share/$token'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/positions'
     | '/science'
     | '/session'
+    | '/striptest'
     | '/buy_/cancel'
     | '/buy_/success'
     | '/share/$token'
@@ -207,6 +219,7 @@ export interface RootRouteChildren {
   PositionsRoute: typeof PositionsRoute
   ScienceRoute: typeof ScienceRoute
   SessionRoute: typeof SessionRoute
+  StriptestRoute: typeof StriptestRoute
   BuyCancelRoute: typeof BuyCancelRoute
   BuySuccessRoute: typeof BuySuccessRoute
   ShareTokenRoute: typeof ShareTokenRoute
@@ -214,6 +227,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/striptest': {
+      id: '/striptest'
+      path: '/striptest'
+      fullPath: '/striptest'
+      preLoaderRoute: typeof StriptestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/session': {
       id: '/session'
       path: '/session'
@@ -327,6 +347,7 @@ const rootRouteChildren: RootRouteChildren = {
   PositionsRoute: PositionsRoute,
   ScienceRoute: ScienceRoute,
   SessionRoute: SessionRoute,
+  StriptestRoute: StriptestRoute,
   BuyCancelRoute: BuyCancelRoute,
   BuySuccessRoute: BuySuccessRoute,
   ShareTokenRoute: ShareTokenRoute,
