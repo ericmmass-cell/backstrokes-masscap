@@ -57,6 +57,7 @@ const RULE = "rgba(42,38,32,0.22)";
 const MUTED = "rgba(42,38,32,0.55)";
 const FAINT = "rgba(42,38,32,0.40)";
 const AMBER = "#b07d2b";
+const TEACH = AMBER; /* clinical teaching overlay, distinct from the oxblood motion arc */
 const EDGE = "#43181a"; // self-contour hue
 const SKIN = "url(#bsSkin)";
 const SKIN_DEEP = "url(#bsSkinDeep)";
@@ -280,6 +281,14 @@ const CSS = `
 .bs-arc { opacity: 0; transition: opacity 300ms ease; }
 .bs-run .bs-arc { opacity: 0.4; }
 
+/* clinical teaching overlay: neutral spine, lumbar contact, ROM ceiling.
+   Amber, distinct from the oxblood motion arc. Always faintly present (it
+   teaches the held pose too), with a soft attention pulse on the key cue. */
+.bs-teach { opacity: 0.6; }
+.bs-run .bs-teach { opacity: 0.72; }
+@keyframes bsTeachPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 0.9; } }
+.bs-run .bs-teach-pulse { animation: bsTeachPulse var(--rep-dur) ease-in-out infinite; }
+
 /* ── player chrome ── */
 @keyframes bsScrub { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 .bs-scrub-fill { transform-box: view-box; transform-origin: left center; transform: scaleX(0); }
@@ -364,6 +373,11 @@ function CurlUp() {
           <circle cx="140" cy="226" r="22" fill={HEAD} stroke={EDGE} strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
         </g>
       </g>
+      {/* clinical: lumbar stays neutral and grounded; the lift stops at a small, safe ceiling */}
+      <g className="bs-teach bs-teach-curl">
+        <line x1="254" y1="248" x2="298" y2="248" stroke={TEACH} strokeWidth="2.4" strokeLinecap="round" />
+        <line className="bs-teach-pulse" x1="166" y1="176" x2="196" y2="176" stroke={TEACH} strokeWidth="2" strokeDasharray="2 4" strokeLinecap="round" />
+      </g>
     </svg>
   );
 }
@@ -392,6 +406,10 @@ function SidePlank() {
         <path d="M 300 236 L 344 250" stroke={SKIN} strokeWidth="25" strokeLinecap="round" />
         <circle cx="346" cy="250" r="12" fill={SKIN} />
         <path d="M 346 250 L 392 256" stroke={SKIN_DEEP} strokeWidth="19" strokeLinecap="round" />
+      </g>
+      {/* clinical: the body holds one straight line shoulder to foot; hips rise to it, not sag below */}
+      <g className="bs-teach bs-teach-plank">
+        <line className="bs-teach-pulse" x1="214" y1="199" x2="392" y2="256" stroke={TEACH} strokeWidth="1.8" strokeDasharray="3 5" strokeLinecap="round" />
       </g>
     </svg>
   );
@@ -426,6 +444,11 @@ function BirdDog() {
         <circle cx="300" cy="251" r="7.5" fill={SKIN} />
         <path d="M 300 251 L 326 251" stroke={SKIN} strokeWidth="13" strokeLinecap="round" />
       </g>
+      {/* clinical: the spine holds level and still while the opposite arm and leg reach */}
+      <g className="bs-teach bs-teach-dog">
+        <line x1="198" y1="197" x2="300" y2="197" stroke={TEACH} strokeWidth="1.8" strokeDasharray="3 5" strokeLinecap="round" />
+        <circle className="bs-teach-pulse" cx="249" cy="197" r="2.6" fill={TEACH} />
+      </g>
     </svg>
   );
 }
@@ -459,6 +482,13 @@ function DeadBug() {
         <path d="M 252 240 L 252 168" stroke={SKIN_DEEP} strokeWidth="16" strokeLinecap="round" />
         <circle cx="252" cy="166" r="7.5" fill={SKIN_DEEP} />
       </g>
+      {/* clinical: the lower back stays pinned to the mat while the limbs move */}
+      <g className="bs-teach bs-teach-deadbug">
+        <line className="bs-teach-pulse" x1="190" y1="251" x2="252" y2="251" stroke={TEACH} strokeWidth="2.6" strokeLinecap="round" />
+        <line x1="206" y1="246" x2="206" y2="251" stroke={TEACH} strokeWidth="1.3" strokeLinecap="round" />
+        <line x1="222" y1="246" x2="222" y2="251" stroke={TEACH} strokeWidth="1.3" strokeLinecap="round" />
+        <line x1="238" y1="246" x2="238" y2="251" stroke={TEACH} strokeWidth="1.3" strokeLinecap="round" />
+      </g>
     </svg>
   );
 }
@@ -486,6 +516,10 @@ function GluteBridge() {
         <g className="bs-bridge-lumbar">
           <Mass d="M 200 236 C 226 232 250 234 264 240 L 262 252 C 240 254 214 252 200 250 C 192 246 192 240 200 236 Z" />
         </g>
+      </g>
+      {/* clinical: shoulder, hip, knee stack in one line; the lift is glutes, not a lumbar arch */}
+      <g className="bs-teach bs-teach-bridge">
+        <line className="bs-teach-pulse" x1="210" y1="239" x2="300" y2="206" stroke={TEACH} strokeWidth="1.8" strokeDasharray="3 5" strokeLinecap="round" />
       </g>
     </svg>
   );
