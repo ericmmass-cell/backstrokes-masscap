@@ -203,8 +203,6 @@ function Spoon({ paused }: { paused: boolean }) {
         <Head x={198} y={216} r={14} tone={PT} facing={-1} />
         {/* one bent leg: thigh up-forward, shin tucks down (nested above front leg) */}
         <Bone pts={[324, 228, 282, 214, 276, 238]} w={16} tone={PT} />
-        {/* top arm draped over the receiver, hand resting on their hip */}
-        <Bone pts={[238, 222, 278, 236, 306, 248]} w={10} tone={PT} />
       </g>
 
       {/* FRONT figure — receiver (oxblood), nested in front and lower. Drawn
@@ -222,6 +220,14 @@ function Spoon({ paused }: { paused: boolean }) {
         <Bone pts={[300, 242, 258, 228, 252, 252]} w={16} tone={RX} />
         {/* forward arm resting along the mat */}
         <Bone pts={[208, 240, 238, 253]} w={9} tone={RX} />
+      </g>
+
+      {/* partner's top arm draped OVER the receiver — drawn last so it reads as
+          an embrace in front of the front body. Rides with the back figure. */}
+      <g className="mq-spoon-back">
+        <Bone pts={[240, 222, 280, 240, 308, 250]} w={10} tone={PT} />
+        {/* hand resting on the receiver's hip */}
+        <Bone pts={[306, 249, 314, 251]} w={9} tone={PT} />
       </g>
 
       <style>{CSS}</style>
