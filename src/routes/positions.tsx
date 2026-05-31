@@ -6,8 +6,11 @@ import {
   maxLoadForIndex,
   roleLoad,
   roleLoadNote,
+  conditionsFor,
+  CONDITIONS,
   type Position,
   type Role,
+  type Condition,
 } from "@/lib/position-library";
 
 const ROLES: { key: Role; label: string; short: string }[] = [
@@ -151,6 +154,10 @@ function PositionRow({ p, role }: { p: Position; role: Role }) {
   const cat = p.category.toUpperCase();
   const yourLoad = roleLoad(p, role);
   const loadLabel = role === "either" ? "Lumbar load" : "Your lumbar load";
+  const conds = conditionsFor(p);
+  const condLabels = conds
+    .map((k) => CONDITIONS.find((c) => c.key === k)?.label)
+    .filter(Boolean) as string[];
   return (
     <li className="bg-background flex flex-col overflow-hidden rounded-2xl border border-border">
       <div style={{ aspectRatio: "4 / 3" }}>
@@ -184,6 +191,26 @@ function PositionRow({ p, role }: { p: Position; role: Role }) {
         <p className="mt-4 font-mono-label text-[9px] tracking-[0.18em] uppercase leading-relaxed" style={{ color: "var(--brand-amber)" }}>
           {roleLoadNote(p, role)}
         </p>
+
+        {/* Condition suitability tags */}
+        {condLabels.length > 0 && (
+          <div className="mt-4">
+            <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase mb-1.5 text-muted-foreground">
+              Tends to spare
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {condLabels.map((label) => (
+                <span
+                  key={label}
+                  className="font-mono-label text-[9px] tracking-[0.12em] uppercase px-2 py-0.5 rounded-full"
+                  style={{ background: "color-mix(in oklch, var(--brand-amber) 18%, transparent)", color: "var(--brand-ink)" }}
+                >
+                  {label}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Score grid */}
         <div className="mt-5 grid grid-cols-2 gap-3 text-[11px]">
@@ -377,6 +404,7 @@ function PositionsPage() {
   const [category, setCategory] = useState<(typeof CATEGORIES)[number]>("all");
   const [sort, setSort] = useState<SortKey>("lumbarLoad");
   const [role, setRole] = useState<Role>("either");
+  const [condition, setCondition] = useState<Condition | "all">("all");
   const [showMatch, setShowMatch] = useState(false);
 
   const cap = maxLoadForIndex(index);
@@ -385,6 +413,7 @@ function PositionsPage() {
     if (showMatch) return matchToTodaysBack(index, 3, role);
     return [...POSITIONS]
       .filter((p) => (category === "all" ? true : p.category === category))
+      .filter((p) => (condition === "all" ? true : conditionsFor(p).includes(condition)))
       .filter((p) => roleLoad(p, role) <= cap)
       .sort((a, b) => {
         if (sort === "lumbarLoad") return roleLoad(a, role) - roleLoad(b, role);
@@ -392,7 +421,7 @@ function PositionsPage() {
         if (sort === "hipFlexion") return a.hipFlexion - b.hipFlexion;
         return a.partnerMobility - b.partnerMobility;
       });
-  }, [index, category, sort, role, showMatch, cap]);
+  }, [index, category, sort, role, condition, showMatch, cap]);
 
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
@@ -431,6 +460,66 @@ function PositionsPage() {
               Open the engine →
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* Condition encyclopedia — quick lookup by what your back is dealing with */}
+      <section className="px-6 md:px-10 py-7 border-b border-border" style={{ background: "var(--card)" }}>
+        <div className="max-w-[1280px] mx-auto">
+          <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-1" style={{ color: "var(--brand-amber)" }}>
+            Find what's good for your back
+          </p>
+          <p className="text-sm text-muted-foreground mb-3 max-w-2xl leading-relaxed">
+            Tap a condition to see the positions that tend to spare it. Informational, not a diagnosis. your body has the final say.
+          </p>
+          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Filter by back condition">
+            <button
+              type="button"
+              role="radio"
+              aria-checked={condition === "all"}
+              onClick={() => {
+                setShowMatch(false);
+                setCondition("all");
+              }}
+              className={`px-4 py-2 rounded-full font-mono-label text-[11px] tracking-[0.16em] uppercase transition ${
+                condition === "all"
+                  ? "text-background"
+                  : "border border-border text-muted-foreground hover:text-foreground"
+              }`}
+              style={condition === "all" ? { background: "var(--brand-amber)", color: "var(--brand-ink)" } : undefined}
+            >
+              All conditions
+            </button>
+            {CONDITIONS.map((c) => {
+              const active = condition === c.key;
+              return (
+                <button
+                  key={c.key}
+                  type="button"
+                  role="radio"
+                  aria-checked={active}
+                  title={c.blurb}
+                  onClick={() => {
+                    setShowMatch(false);
+                    setCondition(active ? "all" : c.key);
+                  }}
+                  className={`px-4 py-2 rounded-full font-mono-label text-[11px] tracking-[0.16em] uppercase transition ${
+                    active
+                      ? "text-background"
+                      : "border border-border text-muted-foreground hover:text-foreground"
+                  }`}
+                  style={active ? { background: "var(--brand-amber)", color: "var(--brand-ink)" } : undefined}
+                >
+                  {c.label}
+                </button>
+              );
+            })}
+          </div>
+          {condition !== "all" && (
+            <p className="mt-3 text-sm italic leading-relaxed max-w-2xl" style={{ color: "var(--brand-oxblood)" }}>
+              {CONDITIONS.find((c) => c.key === condition)?.blurb}
+            </p>
+          )}
         </div>
       </section>
 

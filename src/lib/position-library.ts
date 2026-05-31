@@ -62,6 +62,57 @@ export const POSITIONS: Position[] = [
   { id: "p39", name: "Standing, both face-to-face, low partner squat",   category: "moderate",  lumbarLoad: 3, hipFlexion: 4, breathAccess: 3, partnerMobility: 4, councilNote: "Partner with the more durable knees does the squat work. Decide who that is before, not during." },
 ];
 
+/* ───────── Condition encyclopedia ─────────
+ *
+ * "What's good for sciatica? For a disc? For standing-pain stenosis?"
+ * Each back condition has a direction it does NOT want loaded, and a
+ * geometry that spares it. These are mapped from each position's scored
+ * axes (lumbar load, hip flexion) plus its geometry (read from the name:
+ * prone, standing, deep-flexion). Informational, not prescriptive — it
+ * surfaces what tends to spare each condition; the body is the referee.
+ */
+export type Condition =
+  | "sciatica"
+  | "disc"
+  | "stenosis"
+  | "si-joint"
+  | "hip"
+  | "flare";
+
+export const CONDITIONS: { key: Condition; label: string; blurb: string }[] = [
+  { key: "sciatica", label: "Sciatica", blurb: "Radiating leg pain. Neutral spine, low rotation, no deep hip flexion." },
+  { key: "disc", label: "Disc / bending pain", blurb: "Worse bending forward. Keep the spine neutral; skip deep folding." },
+  { key: "stenosis", label: "Stenosis / standing pain", blurb: "Worse arching or standing. A little flexion helps; avoid prone extension." },
+  { key: "si-joint", label: "SI joint", blurb: "Favor symmetric, supported geometry; avoid one-sided and standing load." },
+  { key: "hip", label: "Hip / impingement", blurb: "Avoid deep hip flexion." },
+  { key: "flare", label: "Acute flare", blurb: "Contact and lowest load only." },
+];
+
+/** Which conditions a position tends to spare. Derived from its scored
+ *  axes + geometry. */
+export function conditionsFor(p: Position): Condition[] {
+  const n = p.name.toLowerCase();
+  const prone = /stomach|prone/.test(n);
+  const standing = /standing/.test(n);
+  const deepFlexion = p.hipFlexion >= 4 || /knees pulled to chest|stirrup/.test(n);
+  const out: Condition[] = [];
+
+  // Sciatica: neutral, supported, no deep flexion, low lumbar load.
+  if (p.lumbarLoad <= 2 && p.hipFlexion <= 3) out.push("sciatica");
+  // Disc / flexion-intolerant: avoid forward folding; neutral spine, shallow flexion.
+  if (p.lumbarLoad <= 2 && p.hipFlexion <= 2 && !deepFlexion) out.push("disc");
+  // Stenosis / extension-intolerant: flexion is fine, prone/standing extension is not.
+  if (p.lumbarLoad <= 3 && !prone && !(standing && p.lumbarLoad >= 4)) out.push("stenosis");
+  // SI joint: symmetric, supported, low load, off the feet.
+  if (p.lumbarLoad <= 2 && !standing) out.push("si-joint");
+  // Hip / impingement: shallow hip flexion only.
+  if (!deepFlexion && p.hipFlexion <= 3) out.push("hip");
+  // Acute flare: lowest load, contact-level only.
+  if (p.lumbarLoad <= 1) out.push("flare");
+
+  return out;
+}
+
 /**
  * Map a 0–100 Index score to a recommended max lumbar load.
  * Low Index = high pain = lower allowable load.
