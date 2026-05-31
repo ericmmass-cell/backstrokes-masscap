@@ -1,5 +1,5 @@
 /**
- * BackMap — the hero pain-area picker for the POP Atlas.
+ * BackMap, the hero pain-area picker for the POP Atlas.
  *
  * A tasteful inline-SVG posterior torso (a single oxblood line on paper, NOT a
  * redrawn couple) with five tappable regions. Tap where the back is loudest;
@@ -23,15 +23,15 @@ const OX = "#722B2B";
 
 /** region paths in a 0 0 200 260 viewBox (a simplified posterior torso) */
 const REGIONS: Record<PainArea, string> = {
-  // upper back / thoracic — shoulder yoke down to mid-back
+  // upper back / thoracic, shoulder yoke down to mid-back
   thoracic: "M64 70 Q100 60 136 70 L132 116 Q100 108 68 116 Z",
-  // lumbar — the low back band
+  // lumbar, the low back band
   lumbar: "M70 120 Q100 113 130 120 L126 156 Q100 150 74 156 Z",
-  // SI joint / pelvis seam — the sacral triangle
+  // SI joint / pelvis seam, the sacral triangle
   si: "M80 160 Q100 156 120 160 L110 192 Q100 198 90 192 Z",
-  // sciatic / glute — the two glutes
+  // sciatic / glute, the two glutes
   sciatic: "M70 166 Q84 162 96 168 L96 204 Q82 212 70 200 Z M104 168 Q116 162 130 166 L130 200 Q118 212 104 204 Z",
-  // hip / groin — the outer hip flares
+  // hip / groin, the outer hip flares
   hip: "M58 150 Q50 168 58 196 L70 192 Q64 168 70 150 Z M142 150 Q150 168 142 196 L130 192 Q136 168 130 150 Z",
 };
 

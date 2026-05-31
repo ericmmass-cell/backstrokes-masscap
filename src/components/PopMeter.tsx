@@ -1,9 +1,9 @@
 /**
- * PopMeter — the signature object of the POP Atlas.
+ * PopMeter, the signature object of the POP Atlas.
  *
  * One pill, two honest rows of dots:
- *   RELIEF (top, oxblood)  — the kind your back wants. Room for the spine.
- *   HEAT   (bottom, amber) — the good kind of pop. Worth doing.
+ *   RELIEF (top, oxblood), the kind your back wants. Room for the spine.
+ *   HEAT   (bottom, amber), the good kind of pop. Worth doing.
  *
  * The two bars are the SOURCE OF TRUTH on a card. The single combined POP
  * number is only ever the eyebrow glyph (popPips) elsewhere; here we never
@@ -11,8 +11,8 @@
  * "unsafe". A high relief + high heat position literally makes POP pop.
  *
  * Two sizes:
- *   card   — dots only, glanceable.
- *   detail — dots + the numbers spelled out + one plain line each.
+ *   card, dots only, glanceable.
+ *   detail, dots + the numbers spelled out + one plain line each.
  *
  * overCap (display-only) dims + desaturates the RELIEF row and shows a
  * tolerant note. It never hides, never zeroes, never feeds the sort. Inform,

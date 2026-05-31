@@ -14,7 +14,6 @@ import { Route as ScienceRouteImport } from './routes/science'
 import { Route as PositionsRouteImport } from './routes/positions'
 import { Route as PartnerRouteImport } from './routes/partner'
 import { Route as ManifestoRouteImport } from './routes/manifesto'
-import { Route as LabRouteImport } from './routes/lab'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConversationRouteImport } from './routes/conversation'
 import { Route as BuyRouteImport } from './routes/buy'
@@ -48,11 +47,6 @@ const PartnerRoute = PartnerRouteImport.update({
 const ManifestoRoute = ManifestoRouteImport.update({
   id: '/manifesto',
   path: '/manifesto',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LabRoute = LabRouteImport.update({
-  id: '/lab',
-  path: '/lab',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -108,7 +102,6 @@ export interface FileRoutesByFullPath {
   '/buy': typeof BuyRoute
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
-  '/lab': typeof LabRoute
   '/manifesto': typeof ManifestoRoute
   '/partner': typeof PartnerRoute
   '/positions': typeof PositionsRoute
@@ -125,7 +118,6 @@ export interface FileRoutesByTo {
   '/buy': typeof BuyRoute
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
-  '/lab': typeof LabRoute
   '/manifesto': typeof ManifestoRoute
   '/partner': typeof PartnerRoute
   '/positions': typeof PositionsRoute
@@ -143,7 +135,6 @@ export interface FileRoutesById {
   '/buy': typeof BuyRoute
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
-  '/lab': typeof LabRoute
   '/manifesto': typeof ManifestoRoute
   '/partner': typeof PartnerRoute
   '/positions': typeof PositionsRoute
@@ -162,7 +153,6 @@ export interface FileRouteTypes {
     | '/buy'
     | '/conversation'
     | '/dashboard'
-    | '/lab'
     | '/manifesto'
     | '/partner'
     | '/positions'
@@ -179,7 +169,6 @@ export interface FileRouteTypes {
     | '/buy'
     | '/conversation'
     | '/dashboard'
-    | '/lab'
     | '/manifesto'
     | '/partner'
     | '/positions'
@@ -196,7 +185,6 @@ export interface FileRouteTypes {
     | '/buy'
     | '/conversation'
     | '/dashboard'
-    | '/lab'
     | '/manifesto'
     | '/partner'
     | '/positions'
@@ -214,7 +202,6 @@ export interface RootRouteChildren {
   BuyRoute: typeof BuyRoute
   ConversationRoute: typeof ConversationRoute
   DashboardRoute: typeof DashboardRoute
-  LabRoute: typeof LabRoute
   ManifestoRoute: typeof ManifestoRoute
   PartnerRoute: typeof PartnerRoute
   PositionsRoute: typeof PositionsRoute
@@ -260,13 +247,6 @@ declare module '@tanstack/react-router' {
       path: '/manifesto'
       fullPath: '/manifesto'
       preLoaderRoute: typeof ManifestoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/lab': {
-      id: '/lab'
-      path: '/lab'
-      fullPath: '/lab'
-      preLoaderRoute: typeof LabRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -342,7 +322,6 @@ const rootRouteChildren: RootRouteChildren = {
   BuyRoute: BuyRoute,
   ConversationRoute: ConversationRoute,
   DashboardRoute: DashboardRoute,
-  LabRoute: LabRoute,
   ManifestoRoute: ManifestoRoute,
   PartnerRoute: PartnerRoute,
   PositionsRoute: PositionsRoute,
