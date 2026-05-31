@@ -1,51 +1,43 @@
 /**
- * Mannequin — ONE animated vector language for BOTH the exercises and the
- * sex positions. The brief, after the filled-figure attempt failed: the two
- * surfaces must share a design language, both must MOVE with motion you can
- * actually read, and the depictions must be correct.
+ * Mannequin — ONE animated vector language for BOTH the exercises and the sex
+ * positions. Third rendering pass. v1 (capsule + pins) read as a wooden robot;
+ * v2 (hand-rolled tapered limb paths) rendered as spiky self-intersecting
+ * garbage. This pass uses the ONE method that cannot produce those artifacts:
  *
- * The language is a jointed artist's-mannequin / instructional diagram:
- *   - BONES are round-capped capsules (a dark casing line + a tone fill line).
- *   - JOINTS are pinned dots where the body articulates.
- *   - Motion is real joint ROTATION and TRANSLATION at large, legible
- *     amplitude (a ~20° curl, a clear rhythmic rock) — never the sub-2%
- *     wobble that made the old version unreadable.
- *   - Two figure tones (A = oxblood, B = amber) so a couple stays legible and
- *     "whose back is working" reads at a glance.
- *   - The same cream studio stage under every figure, so a position and an
- *     exercise look like they came from the same studio.
+ *   A body = a group of ROUND-CAPPED STROKES + a head circle, all the SAME
+ *   flat fill color. Overlapping same-color strokes union seamlessly (no
+ *   internal seams, no arc math, no winding holes), so the result is a smooth
+ *   human SILHOUETTE — anatomical and clean, not a mannequin.
  *
- * Animation is CSS keyframes on nested <g> groups; each animated group sets
- * transform-box: view-box and a transform-origin AT its pivot joint (in
- * viewBox units) so rotation happens about the real anatomical hinge. All
- * motion is transform-only; prefers-reduced-motion freezes each figure at a
- * clear demonstrated pose.
+ * Depth: far-side limbs use a slightly darker shade of the same hue so the
+ * body reads three-dimensional without a second color.
+ * Couples: receiver = oxblood, partner = amber; the front body is drawn last
+ * so its silhouette occludes the back body and the pair never merges.
  *
- * This file is the shared primitive plus the first two figures (curl-up,
- * spoon) for direction approval. Once the language is signed off, every other
- * exercise and position is authored against these same helpers.
+ * Motion: the SAME working rig as before — nested <g> groups rotate/translate
+ * about real anatomical pivots (transform-box: view-box; transform-origin at
+ * the joint). Large, legible motion. prefers-reduced-motion freezes a clear
+ * demonstrated pose.
+ *
+ * /lab renders curl-up + spoon for direction approval before this scales.
  */
 
 import type { CSSProperties } from "react";
 
-/* ── palette (shared with the rest of the app) ── */
+/* ── stage palette ── */
 const PAPER_A = "#F7F2E7";
 const PAPER_B = "#F4EFE3";
 const PAPER_C = "#ECE4D2";
 const INK = "#2a2620";
 
-/* figure tone A — oxblood */
-const A_FILL = "#a24642";
-const A_CASE = "#5e2222";
-/* figure tone B — amber */
-const B_FILL = "#c79433";
-const B_CASE = "#7e561a";
+/* ── body tones: a main fill + a darker shade (depth) per body ── */
+const TONES = {
+  a: { fill: "#a8473f", shade: "#823029" }, // receiver — oxblood
+  b: { fill: "#c79235", shade: "#9c6f22" }, // partner — amber
+} as const;
+type Tone = keyof typeof TONES;
 
-type Tone = "a" | "b";
-const fillOf = (t: Tone) => (t === "a" ? A_FILL : B_FILL);
-const caseOf = (t: Tone) => (t === "a" ? A_CASE : B_CASE);
-
-/* ── shared paint servers (one instance per <svg>; ids resolve per-doc) ── */
+/* ── shared paint servers (one per <svg>; ids resolve per-doc) ── */
 function StageDefs() {
   return (
     <defs>
@@ -55,7 +47,7 @@ function StageDefs() {
         <stop offset="1" stopColor={PAPER_C} />
       </radialGradient>
       <radialGradient id="mqShadow" cx="50%" cy="50%" r="50%">
-        <stop offset="0" stopColor={INK} stopOpacity="0.20" />
+        <stop offset="0" stopColor={INK} stopOpacity="0.2" />
         <stop offset="0.55" stopColor={INK} stopOpacity="0.09" />
         <stop offset="1" stopColor={INK} stopOpacity="0" />
       </radialGradient>
@@ -67,114 +59,81 @@ function StageDefs() {
   );
 }
 
-/* studio floor: contact shadow + lit isometric mat */
-function Stage({ shadowCx = 248, shadowCy = 262 }: { shadowCx?: number; shadowCy?: number }) {
+function Stage({ shadowCx = 248, shadowCy = 264 }: { shadowCx?: number; shadowCy?: number }) {
   return (
     <>
       <rect width="480" height="360" fill="url(#mqPaper)" />
-      <ellipse cx={shadowCx} cy={shadowCy} rx="186" ry="15" fill="url(#mqShadow)" />
-      <polygon points="96,252 404,252 432,272 124,272" fill="url(#mqMat)" />
-      <polygon points="124,272 432,272 432,286 124,286" fill="#c0a338" />
-      <line x1="96" y1="252" x2="404" y2="252" stroke="rgba(42,38,32,0.20)" strokeWidth="1.1" />
+      <ellipse cx={shadowCx} cy={shadowCy} rx="190" ry="15" fill="url(#mqShadow)" />
+      <polygon points="92,254 408,254 436,274 120,274" fill="url(#mqMat)" />
+      <polygon points="120,274 436,274 436,288 120,288" fill="#c0a338" />
+      <line x1="92" y1="254" x2="408" y2="254" stroke="rgba(42,38,32,0.18)" strokeWidth="1.1" />
     </>
   );
 }
 
-/* ── mannequin primitives ── */
+/* ── silhouette primitives: round-capped strokes, one color ──────────────
+ * A "bone" is a polyline drawn as a single round-capped stroke. A limb with a
+ * joint is one polyline through [start, joint, end] so the elbow/knee is a
+ * smooth round bend, not a pin. Width tapers by drawing the distal half a hair
+ * thinner is unnecessary; one width per limb reads clean. */
+function Bone({ pts, w, tone, far }: { pts: number[]; w: number; tone: Tone; far?: boolean }) {
+  const t = TONES[tone];
+  const d = "M " + pts[0] + " " + pts[1] + pts.slice(2).reduce((s, _, i) => (i % 2 === 0 ? s + " L " + pts[i + 2] + " " + pts[i + 3] : s), "");
+  return <path d={d} fill="none" stroke={far ? t.shade : t.fill} strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" />;
+}
 
-/** a bone: round-capped capsule = dark casing line under a tone fill line */
-function Bone({
-  x1, y1, x2, y2, w, tone,
-}: { x1: number; y1: number; x2: number; y2: number; w: number; tone: Tone }) {
+/* a soft filled mass (torso/pelvis) as a closed round blob */
+function Mass({ d, tone, far }: { d: string; tone: Tone; far?: boolean }) {
+  const t = TONES[tone];
+  return <path d={d} fill={far ? t.shade : t.fill} stroke="none" />;
+}
+
+function Head({ x, y, r = 15, tone, facing = -1 }: { x: number; y: number; r?: number; tone: Tone; facing?: 1 | -1 }) {
+  const t = TONES[tone];
   return (
     <>
-      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={caseOf(tone)} strokeWidth={w + 2.6} strokeLinecap="round" />
-      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={fillOf(tone)} strokeWidth={w} strokeLinecap="round" />
+      <circle cx={x} cy={y} r={r} fill={t.fill} />
+      {/* subtle facing notch (nose/brow) so the head has a front */}
+      <circle cx={x + facing * r * 0.78} cy={y} r={r * 0.26} fill={t.fill} />
     </>
   );
 }
 
-/** a joint pin where the body articulates */
-function Pin({ x, y, r = 4, tone }: { x: number; y: number; r?: number; tone: Tone }) {
-  return (
-    <>
-      <circle cx={x} cy={y} r={r + 1.1} fill={caseOf(tone)} />
-      <circle cx={x} cy={y} r={r * 0.45} fill={fillOf(tone)} />
-    </>
-  );
-}
-
-/** the head: a clean ball with a contour casing */
-function Head({ x, y, r = 16, tone }: { x: number; y: number; r?: number; tone: Tone }) {
-  return (
-    <>
-      <circle cx={x} cy={y} r={r + 1.3} fill={caseOf(tone)} />
-      <circle cx={x} cy={y} r={r} fill={fillOf(tone)} />
-    </>
-  );
-}
-
-/* ── shared CSS (per-svg via <style>) ── */
+/* ── shared CSS ── */
 const CSS = `
-.mq-fig { --rep-dur: 4200ms; }
+.mq-fig { --rep-dur: 4200ms; display:block; }
 
-/* CURL-UP: the trunk hinges UP at the lumbar; the pelvis stays planted.
-   Four phase: settle (anticipation) → lift → hold → slow lower. */
 @keyframes mqCurl {
   0%   { transform: rotate(0deg); }
-  8%   { transform: rotate(2.5deg); }   /* anticipation: chest settles toward mat */
-  36%  { transform: rotate(-21deg); }   /* lift (concentric) */
-  42%  { transform: rotate(-22deg); }   /* follow-through */
-  60%  { transform: rotate(-21deg); }   /* hold (isometric) */
-  92%  { transform: rotate(0deg); }     /* slow lower (eccentric) */
+  8%   { transform: rotate(2deg); }
+  38%  { transform: rotate(-22deg); }
+  44%  { transform: rotate(-23deg); }
+  60%  { transform: rotate(-22deg); }
+  92%  { transform: rotate(0deg); }
   100% { transform: rotate(0deg); }
 }
-.mq-curl-torso { transform-box: view-box; transform-origin: 286px 236px; }
+.mq-curl-torso { transform-box: view-box; transform-origin: 296px 236px; }
 .mq-run .mq-curl-torso { animation: mqCurl var(--rep-dur) ease-in-out infinite; }
 
-/* the bent knee gives a small reciprocal nod so the figure reads alive */
-@keyframes mqCurlKnee {
-  0%,100% { transform: rotate(0deg); }
-  36%,60% { transform: rotate(-5deg); }
-}
-.mq-curl-knee { transform-box: view-box; transform-origin: 300px 238px; }
-.mq-run .mq-curl-knee { animation: mqCurlKnee var(--rep-dur) ease-in-out infinite; }
-
-/* breathing idle on the otherwise-static lower body */
-@keyframes mqBreathe { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-1.1px); } }
+@keyframes mqBreathe { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
 .mq-breathe { transform-box: view-box; transform-origin: 300px 240px; }
 .mq-run .mq-breathe { animation: mqBreathe 4600ms ease-in-out infinite; }
 
-/* SPOON: the back figure drives a clear, unhurried rhythmic rock toward the
-   front figure and back; the front figure answers at a fraction of the
-   amplitude. Tasteful, clinical, but unmistakably MOVING. */
-@keyframes mqThrustBack {
-  0%,100% { transform: translate(0px, 0px); }
-  50%     { transform: translate(-13px, 3px); }
-}
-@keyframes mqThrustFront {
-  0%,100% { transform: translate(0px, 0px); }
-  50%     { transform: translate(-4px, 1px); }
-}
-.mq-spoon-back  { transform-box: view-box; transform-origin: 320px 232px; }
-.mq-spoon-front { transform-box: view-box; transform-origin: 250px 240px; }
-.mq-run .mq-spoon-back  { animation: mqThrustBack  2300ms ease-in-out infinite; }
-.mq-run .mq-spoon-front { animation: mqThrustFront 2300ms ease-in-out infinite; }
-
-/* the neutral-spine teaching mark, shared visual grammar across surfaces */
-.mq-spine { opacity: 0.85; }
+@keyframes mqRockBack  { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-15px,3px); } }
+@keyframes mqRockFront { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-4px,1px); } }
+.mq-spoon-back  { transform-box: view-box; transform-origin: 318px 224px; }
+.mq-spoon-front { transform-box: view-box; transform-origin: 250px 236px; }
+.mq-run .mq-spoon-back  { animation: mqRockBack  2200ms ease-in-out infinite; }
+.mq-run .mq-spoon-front { animation: mqRockFront 2200ms ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   .mq-fig * { animation: none !important; }
-  .mq-curl-torso { transform: rotate(-16deg); }
-  .mq-curl-knee  { transform: rotate(-4deg); }
-  .mq-spoon-back { transform: translate(-7px, 2px); }
+  .mq-curl-torso { transform: rotate(-18deg); }
+  .mq-spoon-back { transform: translate(-9px,2px); }
 }
 `;
 
-function svgProps(label: string): {
-  viewBox: string; xmlns: string; role: "img"; "aria-label": string; style: CSSProperties;
-} {
+function svgProps(label: string): { viewBox: string; xmlns: string; role: "img"; "aria-label": string; style: CSSProperties } {
   return {
     viewBox: "0 0 480 360",
     xmlns: "http://www.w3.org/2000/svg",
@@ -185,49 +144,31 @@ function svgProps(label: string): {
 }
 
 /* ============================ CURL-UP ============================ */
-/* Supine, head at left. The trunk curls up at the waist a small, safe amount;
-   the lumbar/pelvis stays neutral and planted. This is not a sit-up. */
 function CurlUp({ paused }: { paused: boolean }) {
   const A: Tone = "a";
   return (
-    <svg {...svgProps("Curl-up: lying on the back with one knee bent, the head and shoulders lift a small amount by hinging at the waist, hold, then lower slowly. The lower back stays neutral and on the mat.")}
-      className={`mq-fig ${paused ? "" : "mq-run"}`}>
+    <svg {...svgProps("Curl-up: a person lying on their back with knees bent and feet flat, curling the head and shoulders up a small amount by hinging at the hips, holding, then lowering. The lower back stays neutral and down.")} className={`mq-fig ${paused ? "" : "mq-run"}`}>
       <StageDefs />
       <Stage />
 
-      {/* STATIC lower body (breathing): pelvis, one bent leg, one long leg */}
+      {/* STATIC lower body (breathes): far leg (shade) + near leg + foot + pelvis */}
       <g className="mq-breathe">
-        {/* long (straight) leg */}
-        <Bone x1={300} y1={240} x2={392} y2={250} w={15} tone={A} />
-        <Pin x={392} y={250} r={5} tone={A} />
-        {/* bent leg — thigh up, shin down to the mat */}
-        <g className="mq-curl-knee">
-          <Bone x1={300} y1={240} x2={330} y2={200} w={16} tone={A} />
-          <Bone x1={330} y1={200} x2={332} y2={250} w={13} tone={A} />
-          <Pin x={330} y={201} r={5} tone={A} />
-          <Pin x={332} y={251} r={4} tone={A} />
-        </g>
-        {/* pelvis block + hip pin (the anchor that must not move) */}
-        <Bone x1={286} y1={238} x2={306} y2={239} w={22} tone={A} />
-        <Pin x={300} y={239} r={5.5} tone={A} />
+        <Bone pts={[300, 244, 340, 208, 348, 250]} w={20} tone={A} far />
+        <Bone pts={[298, 246, 330, 206, 334, 250]} w={22} tone={A} />
+        <Bone pts={[334, 250, 352, 250]} w={13} tone={A} />
+        {/* pelvis mass — the planted anchor */}
+        <Mass d="M 276 230 q 18 -6 32 2 q 8 6 4 14 q -16 8 -36 2 q -8 -10 0 -18 Z" tone={A} />
       </g>
 
-      {/* MOVING trunk: hinges at the lumbar (286,236). Head + near arm ride with it. */}
+      {/* MOVING trunk: hinges at the hip (296,236) */}
       <g className="mq-curl-torso">
-        {/* torso: lumbar → shoulder */}
-        <Bone x1={286} y1={236} x2={196} y2={232} w={20} tone={A} />
-        {/* neutral-spine teaching line along the trunk (same grammar as positions) */}
-        <line className="mq-spine" x1={282} y1={231} x2={200} y2={227} stroke="#efe4cf" strokeWidth={2} strokeLinecap="round" strokeDasharray="2 5" />
-        {/* near arm folded across the chest, reaches toward the knees */}
-        <Bone x1={206} y1={232} x2={244} y2={244} w={11} tone={A} />
-        <Bone x1={244} y1={244} x2={284} y2={236} w={10} tone={A} />
-        <Pin x={206} y={232} r={4.5} tone={A} />
-        <Pin x={244} y={244} r={4} tone={A} />
+        {/* trunk as a tapering stroke hip→shoulder */}
+        <Bone pts={[294, 236, 250, 230, 206, 228]} w={30} tone={A} />
+        {/* near arm: shoulder → elbow → hand toward knees */}
+        <Bone pts={[212, 232, 250, 246, 286, 234]} w={11} tone={A} />
         {/* neck + head */}
-        <Bone x1={196} y1={232} x2={172} y2={228} w={12} tone={A} />
-        <Head x={150} y={224} r={16} tone={A} />
-        {/* lumbar pin sits last, on top of the hinge */}
-        <Pin x={286} y={236} r={5.5} tone={A} />
+        <Bone pts={[206, 228, 184, 224]} w={11} tone={A} />
+        <Head x={166} y={221} r={14} tone={A} facing={-1} />
       </g>
 
       <style>{CSS}</style>
@@ -236,59 +177,46 @@ function CurlUp({ paused }: { paused: boolean }) {
 }
 
 /* ============================ SPOON ============================ */
-/* Two figures lying on their sides, nested. Side view, both facing left, knees
-   drawn up. Front figure = receiver (oxblood); back figure = the partner
-   behind (amber). The back figure drives the rhythm; both spines stay in a
-   supported neutral curve — in spoon the load is shared, both backs are easy. */
 function Spoon({ paused }: { paused: boolean }) {
-  const RX: Tone = "a"; // receiver, front
-  const PT: Tone = "b"; // partner, back
+  const RX: Tone = "a";
+  const PT: Tone = "b";
   return (
-    <svg {...svgProps("Spooning: two people lying on their sides, the partner behind nested against the receiver in front, both with knees drawn up. A slow rhythmic motion. Both spines stay in a neutral, supported curve.")}
-      className={`mq-fig ${paused ? "" : "mq-run"}`}>
+    <svg {...svgProps("Spooning: two people lying on their sides, the partner behind nested against the receiver in front, both with knees drawn up, in a slow rhythmic motion.")} className={`mq-fig ${paused ? "" : "mq-run"}`}>
       <StageDefs />
-      <Stage shadowCy={266} />
+      <Stage shadowCy={268} />
+      <rect x={118} y={210} width={70} height={20} rx={10} fill="#efe6d2" stroke="#d9ccae" strokeWidth="1.2" />
 
-      {/* a soft pillow under both heads */}
-      <g>
-        <rect x={120} y={214} width={64} height={20} rx={10} fill="#efe6d2" stroke="#d9ccae" strokeWidth="1.2" />
-      </g>
-
-      {/* FRONT figure — receiver (oxblood), lying on side facing left, knees up */}
-      <g className="mq-spoon-front">
-        {/* curled torso: pelvis → lumbar → shoulder (a gentle C) */}
-        <Bone x1={300} y1={244} x2={252} y2={236} w={20} tone={RX} />
-        <Bone x1={252} y1={236} x2={200} y2={224} w={18} tone={RX} />
-        {/* neutral-spine teaching curve along the back */}
-        <path className="mq-spine" d="M 300 233 Q 252 224 202 214" fill="none" stroke="#5e2222" strokeOpacity="0.5" strokeWidth={2} strokeLinecap="round" strokeDasharray="2 5" />
-        {/* neck + head */}
-        <Bone x1={200} y1={224} x2={176} y2={222} w={12} tone={RX} />
-        <Head x={156} y={222} r={15} tone={RX} />
-        {/* thigh drawn forward + shin tucked under */}
-        <Bone x1={300} y1={244} x2={262} y2={284} w={17} tone={RX} />
-        <Bone x1={262} y1={284} x2={214} y2={296} w={14} tone={RX} />
-        <Pin x={300} y={244} r={5.5} tone={RX} />
-        <Pin x={262} y={284} r={5} tone={RX} />
-        {/* forward arm resting along the mat */}
-        <Bone x1={206} y1={228} x2={236} y2={252} w={9} tone={RX} />
-      </g>
-
-      {/* BACK figure — partner (amber), nested behind, pelvis to receiver's pelvis */}
+      {/* BACK figure — partner (amber), behind and lifted ~14px so two distinct
+          nested bodies read. Drawn FIRST so the receiver's silhouette occludes
+          it where they touch. ONE clean bent leg (knee up-forward), and the top
+          arm draped diagonally over the receiver — the "together" signal. */}
       <g className="mq-spoon-back">
-        {/* curled torso, shifted up + right so it reads as the body behind */}
-        <Bone x1={324} y1={232} x2={278} y2={222} w={20} tone={PT} />
-        <Bone x1={278} y1={222} x2={228} y2={210} w={18} tone={PT} />
-        <path className="mq-spine" d="M 324 221 Q 278 211 230 200" fill="none" stroke="#7e561a" strokeOpacity="0.55" strokeWidth={2} strokeLinecap="round" strokeDasharray="2 5" />
-        <Bone x1={228} y1={210} x2={206} y2={206} w={12} tone={PT} />
-        <Head x={188} y={204} r={15} tone={PT} />
-        {/* thigh forward, tucking behind the receiver's thigh */}
-        <Bone x1={324} y1={232} x2={288} y2={272} w={17} tone={PT} />
-        <Bone x1={288} y1={272} x2={242} y2={286} w={14} tone={PT} />
-        <Pin x={324} y={232} r={5.5} tone={PT} />
-        <Pin x={288} y={272} r={5} tone={PT} />
-        {/* top arm draped over the receiver */}
-        <Bone x1={236} y1={214} x2={272} y2={236} w={9} tone={PT} />
-        <Pin x={236} y={214} r={4} tone={PT} />
+        {/* trunk: shoulder → chest → hip, horizontal, slightly higher than front */}
+        <Bone pts={[236, 220, 284, 224, 324, 228]} w={26} tone={PT} />
+        {/* neck + head on the pillow, up-and-right of the receiver's head */}
+        <Bone pts={[236, 220, 218, 218]} w={11} tone={PT} />
+        <Head x={198} y={216} r={14} tone={PT} facing={-1} />
+        {/* one bent leg: thigh up-forward, shin tucks down (nested above front leg) */}
+        <Bone pts={[324, 228, 282, 214, 276, 238]} w={16} tone={PT} />
+        {/* top arm draped over the receiver, hand resting on their hip */}
+        <Bone pts={[238, 222, 278, 236, 306, 248]} w={10} tone={PT} />
+      </g>
+
+      {/* FRONT figure — receiver (oxblood), nested in front and lower. Drawn
+          LAST so its silhouette occludes the partner; the pair never merges.
+          ONE clean bent leg parallel to the partner's, plus the down-arm on the mat. */}
+      <g className="mq-spoon-front">
+        {/* short far-thigh stub (shade) for grounding, clearly behind */}
+        <Bone pts={[300, 244, 276, 234]} w={13} tone={RX} far />
+        {/* trunk: shoulder → chest → hip, horizontal */}
+        <Bone pts={[206, 238, 254, 240, 300, 242]} w={26} tone={RX} />
+        {/* neck + head on the pillow */}
+        <Bone pts={[206, 238, 188, 237]} w={11} tone={RX} />
+        <Head x={168} y={234} r={14} tone={RX} facing={-1} />
+        {/* one bent leg: thigh up-forward, shin to the mat */}
+        <Bone pts={[300, 242, 258, 228, 252, 252]} w={16} tone={RX} />
+        {/* forward arm resting along the mat */}
+        <Bone pts={[208, 240, 238, 253]} w={9} tone={RX} />
       </g>
 
       <style>{CSS}</style>
