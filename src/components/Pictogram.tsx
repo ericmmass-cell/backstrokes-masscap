@@ -70,8 +70,11 @@ const POSITION_TITLES: Partial<Record<PictogramKey, { title: string; sub: string
   "edge-bed":          { title: "Edge of bed",          sub: "Receiver supine at edge · Partner kneeling" },
   "cowgirl-upright":   { title: "Receiver on top",      sub: "Straddling · Partner supine" },
   "doggy-supported":   { title: "Supported rear-entry", sub: "Quadruped chest-down · Forearms supported" },
+  "doggy-kneeling":    { title: "Rear-entry, kneeling", sub: "Receiver on hands and knees · Partner kneeling behind" },
   scissor:             { title: "Side-lying scissor",   sub: "Perpendicular · Both partners side-lying" },
   "seated-lap":        { title: "Seated lap embrace",   sub: "Both upright · Face to face · Stacked spines" },
+  missionary:          { title: "Missionary",           sub: "Receiver supine · Partner above" },
+  standing:            { title: "Standing, rear",       sub: "Both upright · Partner behind" },
   "supine-bolster":    { title: "Solo supine",          sub: "Hips elevated · Knees up · Acute-day default" },
 };
 
@@ -92,8 +95,11 @@ const SEX_POSITION_KEYS: PictogramKey[] = [
   "edge-bed",
   "cowgirl-upright",
   "doggy-supported",
+  "doggy-kneeling",
   "scissor",
   "seated-lap",
+  "missionary",
+  "standing",
 ];
 
 export function getPositionMeta(
