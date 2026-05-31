@@ -280,7 +280,7 @@ function IllustratedPosition({
   const altText = `Illustration of the ${meta.title.toLowerCase()} position: ${meta.sub.toLowerCase()}.`;
 
   return (
-    <PictogramFrame caption={showCaption ? caption : undefined} attribution="Illus. Seedfeeder · CC-BY-SA 3.0">
+    <PictogramFrame caption={showCaption ? caption : undefined} attribution="Illus. BackStroke · AI-assisted">
       {state === "loading" && <Skeleton />}
       <img
         src={`/positions/${positionKey}.png`}
