@@ -89,16 +89,18 @@ const ILLUSTRATION_BY_ID: Record<string, PictogramKey> = {
   p28: "spoon",          // Side-by-side, facing same direction, spooning
   p36: "spoon",          // Side-lying, top leg straight back
 
-  // Supine on the back (missionary family, knees up, wedges, bolsters)
+  // True missionary — receiver supine, partner above
+  p03: "missionary",      // Supine, knees over pillow, missionary
+  p13: "missionary",      // Modified missionary, legs in stirrups
+  p34: "missionary",      // Supine, partner kneeling, no lumbar load
+
+  // Supine on the back (wedges, bolsters, knees-up — no partner shown above)
   p02: "supine-knees-up", // Supine with wedge under pelvis
-  p03: "supine-knees-up", // Supine, knees over pillow, missionary
   p06: "supine-knees-up", // Supine, hips elevated on bolster
-  p13: "supine-knees-up", // Modified missionary, legs in stirrups
   p22: "supine-knees-up", // Supine, double-pillow lumbar support
   p25: "supine-knees-up", // Supine, both knees pulled to chest
   p29: "supine-knees-up", // Supine, legs straight, ankles together
   p33: "supine-knees-up", // Lying on stomach, pillow under hips (nearest lying-flat)
-  p34: "supine-knees-up", // Supine, partner kneeling, no lumbar load
   p38: "supine-knees-up", // Supine, one knee bent and externally rotated
 
   // Side-lying T / lifted-leg geometry
@@ -115,26 +117,30 @@ const ILLUSTRATION_BY_ID: Record<string, PictogramKey> = {
   p27: "cowgirl-upright", // Cowgirl, leaning back on partner's thighs
   p37: "cowgirl-upright", // Squatting over partner
 
-  // Quadruped / rear-entry (hands-and-knees, bent over support)
-  p08: "doggy-supported", // Standing, receiving partner bent over support
+  // Quadruped, chest-down / forearms-supported
   p09: "doggy-supported", // Quadruped, forearms down
   p10: "doggy-supported", // Quadruped, chest on bolster
-  p19: "doggy-supported", // Doggy on the bed, knees on pillow
-  p30: "doggy-supported", // Quadruped, hands on headboard
-  p32: "doggy-supported", // Standing, hands on counter, partner behind
+
+  // Quadruped, upright kneeling rear-entry
+  p19: "doggy-kneeling",  // Doggy on the bed, knees on pillow
+  p30: "doggy-kneeling",  // Quadruped, hands on headboard
+
+  // Standing (both upright, partner behind or face-to-face)
+  p08: "standing",        // Standing, receiving partner bent over support
+  p15: "standing",        // Standing, both upright, back to wall
+  p24: "standing",        // Standing, supported squat with partner
+  p32: "standing",        // Standing, hands on counter, partner behind
+  p39: "standing",        // Standing, both face-to-face, low partner squat
 
   // Edge-of-bed / reclined-at-edge
   p16: "edge-bed",        // Edge-of-bed, receiving partner supine
   p26: "edge-bed",        // Edge-of-bed, receiver standing, partner kneeling
   p31: "edge-bed",        // Couch edge, receiving partner reclined
 
-  // Seated / upright face-to-face (lap, cradle, standing-upright)
+  // Seated / upright face-to-face (lap, cradle)
   p05: "seated-lap",      // Seated, partner on lap, both upright
-  p15: "seated-lap",      // Standing, both upright, back to wall
   p17: "seated-lap",      // Lap-sitting, facing, both upright
-  p24: "seated-lap",      // Standing, supported squat with partner
   p35: "seated-lap",      // Cradle-sitting, facing, both legs wrapped
-  p39: "seated-lap",      // Standing, both face-to-face, low partner squat
 };
 
 function illustrationFor(p: Position): PictogramKey {
