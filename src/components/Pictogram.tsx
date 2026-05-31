@@ -261,11 +261,13 @@ function IllustratedPosition({
   loading = "lazy",
   fetchPriority = "auto",
   showCaption = true,
+  annotate,
 }: {
   positionKey: PictogramKey;
   loading?: ImgHTMLAttributes<HTMLImageElement>["loading"];
   fetchPriority?: "high" | "low" | "auto";
   showCaption?: boolean;
+  annotate?: PositionAnnotateData;
 }) {
   const meta = POSITION_TITLES[positionKey];
   const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
@@ -310,6 +312,14 @@ function IllustratedPosition({
           filter: "saturate(0.96) contrast(1.02)",
         }}
       />
+      {annotate && state === "loaded" && (
+        <PositionAnnotation
+          positionKey={positionKey}
+          name={annotate.name}
+          load={annotate.load}
+          loadNote={annotate.loadNote}
+        />
+      )}
       <style>{SHIMMER_CSS}</style>
     </PictogramFrame>
   );
@@ -397,6 +407,7 @@ export function Pictogram({
   loading = "lazy",
   fetchPriority = "auto",
   showCaption = true,
+  annotate,
 }: PictogramProps) {
   const wrap = (child: React.ReactNode) => (
     <div className={className} style={{ width: "100%", height: "100%", ...style }}>
@@ -411,6 +422,7 @@ export function Pictogram({
         loading={loading}
         fetchPriority={fetchPriority}
         showCaption={showCaption}
+        annotate={annotate}
       />,
     );
   }
