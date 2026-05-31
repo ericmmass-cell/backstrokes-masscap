@@ -57,6 +57,7 @@ const RULE = "rgba(42,38,32,0.22)";
 const MUTED = "rgba(42,38,32,0.55)";
 const FAINT = "rgba(42,38,32,0.40)";
 const AMBER = "#b07d2b";
+const TEACH = AMBER; /* clinical teaching overlay, distinct from the oxblood motion arc */
 const EDGE = "#43181a"; // self-contour hue
 const SKIN = "url(#bsSkin)";
 const SKIN_DEEP = "url(#bsSkinDeep)";
@@ -280,6 +281,14 @@ const CSS = `
 .bs-arc { opacity: 0; transition: opacity 300ms ease; }
 .bs-run .bs-arc { opacity: 0.4; }
 
+/* clinical teaching overlay: neutral spine, lumbar contact, ROM ceiling.
+   Amber, distinct from the oxblood motion arc. Always faintly present (it
+   teaches the held pose too), with a soft attention pulse on the key cue. */
+.bs-teach { opacity: 0.6; }
+.bs-run .bs-teach { opacity: 0.72; }
+@keyframes bsTeachPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 0.9; } }
+.bs-run .bs-teach-pulse { animation: bsTeachPulse var(--rep-dur) ease-in-out infinite; }
+
 /* ── player chrome ── */
 @keyframes bsScrub { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 .bs-scrub-fill { transform-box: view-box; transform-origin: left center; transform: scaleX(0); }
@@ -458,6 +467,13 @@ function DeadBug() {
       <g className="bs-bug-leg">
         <path d="M 252 240 L 252 168" stroke={SKIN_DEEP} strokeWidth="16" strokeLinecap="round" />
         <circle cx="252" cy="166" r="7.5" fill={SKIN_DEEP} />
+      </g>
+      {/* clinical: the lower back stays pinned to the mat while the limbs move */}
+      <g className="bs-teach bs-teach-deadbug">
+        <line className="bs-teach-pulse" x1="190" y1="251" x2="252" y2="251" stroke={TEACH} strokeWidth="2.6" strokeLinecap="round" />
+        <line x1="206" y1="246" x2="206" y2="251" stroke={TEACH} strokeWidth="1.3" strokeLinecap="round" />
+        <line x1="222" y1="246" x2="222" y2="251" stroke={TEACH} strokeWidth="1.3" strokeLinecap="round" />
+        <line x1="238" y1="246" x2="238" y2="251" stroke={TEACH} strokeWidth="1.3" strokeLinecap="round" />
       </g>
     </svg>
   );
