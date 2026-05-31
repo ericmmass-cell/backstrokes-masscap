@@ -105,14 +105,14 @@ const CSS = `
 
 @keyframes mqCurl {
   0%   { transform: rotate(0deg); }
-  8%   { transform: rotate(2deg); }
-  38%  { transform: rotate(-22deg); }
-  44%  { transform: rotate(-23deg); }
-  60%  { transform: rotate(-22deg); }
-  92%  { transform: rotate(0deg); }
+  8%   { transform: rotate(-1.5deg); }   /* settle toward the mat */
+  38%  { transform: rotate(15deg); }     /* lift: head + shoulders rise */
+  44%  { transform: rotate(16deg); }
+  60%  { transform: rotate(15deg); }     /* hold */
+  92%  { transform: rotate(0deg); }      /* slow lower */
   100% { transform: rotate(0deg); }
 }
-.mq-curl-torso { transform-box: view-box; transform-origin: 296px 236px; }
+.mq-curl-torso { transform-box: view-box; transform-origin: 296px 240px; }
 .mq-run .mq-curl-torso { animation: mqCurl var(--rep-dur) ease-in-out infinite; }
 
 @keyframes mqBreathe { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
@@ -128,7 +128,7 @@ const CSS = `
 
 @media (prefers-reduced-motion: reduce) {
   .mq-fig * { animation: none !important; }
-  .mq-curl-torso { transform: rotate(-18deg); }
+  .mq-curl-torso { transform: rotate(15deg); }
   .mq-spoon-back { transform: translate(-9px,2px); }
 }
 `;
@@ -151,24 +151,29 @@ function CurlUp({ paused }: { paused: boolean }) {
       <StageDefs />
       <Stage />
 
-      {/* STATIC lower body (breathes): far leg (shade) + near leg + foot + pelvis */}
+      {/* STATIC lower body (breathes): one straight leg + one bent (foot flat) + pelvis.
+          This is the supine curl-up setup — not happy-baby. */}
       <g className="mq-breathe">
-        <Bone pts={[300, 244, 340, 208, 348, 250]} w={20} tone={A} far />
-        <Bone pts={[298, 246, 330, 206, 334, 250]} w={22} tone={A} />
-        <Bone pts={[334, 250, 352, 250]} w={13} tone={A} />
+        {/* straight leg (far, shade): hip → ankle along the mat */}
+        <Bone pts={[296, 244, 360, 248, 392, 249]} w={18} tone={A} far />
+        <Bone pts={[392, 249, 404, 244]} w={10} tone={A} far />
+        {/* bent leg (near): hip → knee up → foot flat on the mat */}
+        <Bone pts={[296, 244, 330, 216, 342, 249]} w={20} tone={A} />
+        <Bone pts={[342, 249, 360, 249]} w={11} tone={A} />
         {/* pelvis mass — the planted anchor */}
-        <Mass d="M 276 230 q 18 -6 32 2 q 8 6 4 14 q -16 8 -36 2 q -8 -10 0 -18 Z" tone={A} />
+        <Mass d="M 276 234 q 18 -6 32 2 q 8 6 4 14 q -16 8 -36 2 q -8 -10 0 -18 Z" tone={A} />
       </g>
 
-      {/* MOVING trunk: hinges at the hip (296,236) */}
+      {/* MOVING trunk: small rigid lift, hinging at the hip (296,240). McGill
+          curl-up = neutral spine, ~20° lift, head/shoulders come off the mat. */}
       <g className="mq-curl-torso">
-        {/* trunk as a tapering stroke hip→shoulder */}
-        <Bone pts={[294, 236, 250, 230, 206, 228]} w={30} tone={A} />
-        {/* near arm: shoulder → elbow → hand toward knees */}
-        <Bone pts={[212, 232, 250, 246, 286, 234]} w={11} tone={A} />
+        {/* near arm reaching toward the knees — darker shade so it reads apart from the trunk */}
+        <Bone pts={[210, 236, 248, 250, 286, 240]} w={10} tone={A} far />
+        {/* trunk: hip → chest → shoulder, lying just above the mat at rest */}
+        <Bone pts={[294, 240, 250, 238, 206, 236]} w={30} tone={A} />
         {/* neck + head */}
-        <Bone pts={[206, 228, 184, 224]} w={11} tone={A} />
-        <Head x={166} y={221} r={14} tone={A} facing={-1} />
+        <Bone pts={[206, 236, 184, 234]} w={11} tone={A} />
+        <Head x={166} y={232} r={14} tone={A} facing={-1} />
       </g>
 
       <style>{CSS}</style>
