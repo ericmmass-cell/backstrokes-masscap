@@ -4,23 +4,22 @@
  * Decision (Eric, 2026-05-31): use the real art, make it move. Three hand-drawn
  * attempts were rejected. The repo ships professional 4-frame motion sequences
  * for every move at /public/demos/workout/<move>.jpg — a 1920×640 strip of four
- * 480×640 frames (rest → lift → hold → lower), on the brand cream background.
+ * 480×640 frames (rest → lift → hold → return), on the brand cream background.
  *
- * v2 (this file): CROSSFADE, not hard steps. The four frames are stacked as
- * four layers (each a div showing one frame of the strip via background-position
- * on a 400%-wide background). Each layer's opacity runs the same keyframe,
- * offset by a quarter-cycle via negative animation-delay, so the move DISSOLVES
- * frame→frame and reads like footage instead of a slideshow. A subtle slow zoom
- * (the whole stack) adds life.
+ * v3 (this file): JS-DRIVEN frame index + CSS opacity crossfade. A setInterval
+ * advances `frame` 0→1→2→3→0; four stacked layers (each cropped to one frame of
+ * the strip via background-position) show opacity:1 only for the active frame,
+ * with a CSS opacity transition doing the dissolve. A gentle CSS zoom adds life.
  *
- * Respects prefers-reduced-motion: holds the single "lift" frame, no motion.
- *
- * VERIFY NOTE: the preview/headless browser reports prefers-reduced-motion:
- * reduce, which freezes these animations. To verify motion, force-drive a layer
- * via inline `style.animation` (inline beats the media query) and sample opacity
- * /transform over time — do NOT trust a static sample.
+ * Why JS instead of pure-CSS keyframe delays: the previous crossfade relied on
+ * negative animation-delay math that was easy to get wrong and impossible to
+ * verify in a headless browser that intermittently reports prefers-reduced-
+ * motion (which froze the keyframes). Here the active frame is React state, so
+ * it is deterministic and verifiable, and reduced-motion / paused simply stop
+ * the timer and hold a single frame.
  */
 
+import { useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 
 export type FlipbookKey = "curl-up" | "side-plank" | "bird-dog" | "breath" | "decomp";
@@ -33,17 +32,18 @@ const SRC: Record<FlipbookKey, string> = {
   decomp: "/demos/workout/decomp.jpg",
 };
 
-/* per-move loop duration (ms). A full cycle walks all four frames once. */
-const DUR: Record<FlipbookKey, number> = {
-  "curl-up": 5200,
-  "side-plank": 5600,
-  "bird-dog": 5600,
-  breath: 6400,
-  decomp: 5600,
+/* per-move dwell PER FRAME (ms). 4 frames → full loop ≈ 4×dwell. */
+const DWELL: Record<FlipbookKey, number> = {
+  "curl-up": 1100,
+  "side-plank": 1200,
+  "bird-dog": 1200,
+  breath: 1500,
+  decomp: 1200,
 };
 
-/* background-position-x for each of the 4 frames on a 400%-wide background */
-const FRAME_POS = ["0%", "33.3333%", "66.6667%", "100%"];
+const FRAMES = 4;
+const FRAME_POS = ["0%", "33.3333%", "66.6667%", "100%"]; // background-position-x on a 400%-wide bg
+const LIFT_FRAME = 1; // the frame to hold when paused / reduced-motion
 
 const CSS = `
 .pf-stage {
@@ -56,41 +56,23 @@ const CSS = `
   border-radius: 14px;
   background: #efe7d6;
 }
-.pf-zoom { position: absolute; inset: 0; }
-.pf-run .pf-zoom { animation: pf-zoom var(--pf-dur, 5200ms) ease-in-out infinite; }
+.pf-zoom { position: absolute; inset: 0; transform: scale(1.02); }
+.pf-zoom.pf-anim { animation: pf-zoom var(--pf-loop, 4400ms) ease-in-out infinite; }
 @keyframes pf-zoom {
   0%,100% { transform: scale(1.015); }
-  50%     { transform: scale(1.055); }   /* gentle push toward the held pose */
+  50%     { transform: scale(1.05); }
 }
-
 .pf-layer {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background-repeat: no-repeat;
-  background-size: 400% 100%;             /* 4 frames wide; one frame fills the box */
+  background-size: 400% 100%;     /* 4 frames wide; one fills the box */
   opacity: 0;
-  will-change: opacity;
+  transition: opacity 600ms ease-in-out;
 }
-/* each layer dissolves: fade in, hold, fade out, then stay off until next loop.
-   four layers at -0/-1/-2/-3 quarter-cycle delays tile the whole loop with a
-   short crossfade at every boundary. */
-@keyframes pf-cross {
-  0%   { opacity: 0; }
-  4%   { opacity: 1; }
-  25%  { opacity: 1; }
-  30%  { opacity: 0; }
-  100% { opacity: 0; }
-}
-.pf-run .pf-layer { animation: pf-cross var(--pf-dur, 5200ms) linear infinite; }
-.pf-run .pf-l0 { animation-delay: 0ms; }
-.pf-run .pf-l1 { animation-delay: calc(var(--pf-dur, 5200ms) * -0.75); }
-.pf-run .pf-l2 { animation-delay: calc(var(--pf-dur, 5200ms) * -0.50); }
-.pf-run .pf-l3 { animation-delay: calc(var(--pf-dur, 5200ms) * -0.25); }
-
+.pf-layer.pf-on { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
-  .pf-run .pf-zoom { animation: none; transform: scale(1.02); }
-  .pf-run .pf-layer { animation: none; }
-  .pf-run .pf-l1 { opacity: 1; }   /* hold the lift frame, statically */
+  .pf-zoom.pf-anim { animation: none; }
+  .pf-layer { transition: none; }
 }
 `;
 
@@ -103,24 +85,36 @@ type Props = {
 
 export function PhotoFlipbook({ moveKey, paused = false, className, style }: Props) {
   const src = SRC[moveKey];
-  const dur = DUR[moveKey];
-  const playState = paused ? "paused" : "running";
+  const dwell = DWELL[moveKey];
+  const [frame, setFrame] = useState(0);
+  const reduced = useRef(false);
+
+  useEffect(() => {
+    reduced.current =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (paused || reduced.current) {
+      setFrame(LIFT_FRAME); // hold a clear demonstrated frame
+      return;
+    }
+    const id = setInterval(() => setFrame((f) => (f + 1) % FRAMES), dwell);
+    return () => clearInterval(id);
+  }, [paused, dwell, moveKey]);
+
   return (
     <div className={`pf-wrap ${className ?? ""}`} style={style}>
-      <div
-        className={`pf-stage ${paused ? "" : "pf-run"}`}
-        style={{ ["--pf-dur" as string]: `${dur}ms` }}
-      >
-        <div className="pf-zoom" style={{ animationPlayState: playState }}>
+      <div className="pf-stage" style={{ ["--pf-loop" as string]: `${dwell * FRAMES}ms` }}>
+        <div className={`pf-zoom ${paused ? "" : "pf-anim"}`}>
           {FRAME_POS.map((posX, i) => (
             <div
               key={i}
-              className={`pf-layer pf-l${i}`}
+              className={`pf-layer ${i === frame ? "pf-on" : ""}`}
+              data-frame={i}
               style={{
                 backgroundImage: `url(${src})`,
                 backgroundPositionX: posX,
                 backgroundPositionY: "center",
-                animationPlayState: playState,
               }}
             />
           ))}
