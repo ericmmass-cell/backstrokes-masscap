@@ -373,6 +373,11 @@ function CurlUp() {
           <circle cx="140" cy="226" r="22" fill={HEAD} stroke={EDGE} strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
         </g>
       </g>
+      {/* clinical: lumbar stays neutral and grounded; the lift stops at a small, safe ceiling */}
+      <g className="bs-teach bs-teach-curl">
+        <line x1="254" y1="248" x2="298" y2="248" stroke={TEACH} strokeWidth="2.4" strokeLinecap="round" />
+        <line className="bs-teach-pulse" x1="166" y1="176" x2="196" y2="176" stroke={TEACH} strokeWidth="2" strokeDasharray="2 4" strokeLinecap="round" />
+      </g>
     </svg>
   );
 }
