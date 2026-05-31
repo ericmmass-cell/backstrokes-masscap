@@ -21,6 +21,7 @@ const ROLES: { key: Role; label: string; short: string }[] = [
 import { PositionDemo } from "@/components/PositionDemo";
 import { Pictogram, type PictogramKey, getIllustratedPositionUrls } from "@/components/Pictogram";
 import { SiteHeader } from "@/components/SiteHeader";
+import { PopAtlas } from "@/components/PopAtlas";
 
 export const Route = createFileRoute("/positions")({
   component: PositionsPage,
@@ -443,6 +444,8 @@ function PositionsPage() {
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
       <SiteHeader active="positions" />
+
+      <PopAtlas />
 
       <PositionShowcase />
 

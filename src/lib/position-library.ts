@@ -225,3 +225,100 @@ export function matchToTodaysBack(index: number, count = 3, role: Role = "either
     .sort((a, b) => roleLoad(a, role) - roleLoad(b, role) || b.breathAccess - a.breathAccess)
     .slice(0, count);
 }
+
+/* ═══════════════════════ THE POP ATLAS ═══════════════════════
+ *
+ * Two kinds of pop, scored honestly from the four axes already on every
+ * position. No new per-position data, no schema change. The double meaning
+ * is the whole feature:
+ *
+ *   RELIEF  — the kind your back wants. How much room the spine gets.
+ *   HEAT    — the good kind of pop. How much the geometry is worth doing.
+ *
+ * COPY FIREWALL (enforce in review on every UI string):
+ *   RELIEF may say: spares, eases, takes pressure off, lets the back stay
+ *     neutral, decompresses, gives the spine room.
+ *   RELIEF may NOT say: treats, heals, fixes, therapeutic, corrects,
+ *     realigns, cures, "good for your back". RELIEF is room, not therapy.
+ *   HEAT describes the SHAPE, never the user or the partner. A low heat
+ *     means "this shape is sleepy", never "you are".
+ *
+ * Safety always leads: matchToTodaysBack() stays the default order, POP only
+ * decorates and offers an optional sort, and no POP sort ever expands the
+ * allowed set (every sort is applied AFTER the load-cap partition).
+ */
+
+/** RELIEF, role-aware, 0-100. The relief pop: how much room the back gets.
+ *  Lower role-aware lumbar load + freer breath = more relief. */
+export function reliefFor(p: Position, role: Role = "either"): number {
+  const loadTerm = (5 - roleLoad(p, role)) / 4; // 0 (load 5) .. 1 (load 1)
+  const breathTerm = (p.breathAccess - 1) / 4; // 0 .. 1
+  return Math.round(100 * (0.65 * loadTerm + 0.35 * breathTerm));
+}
+
+/** HEAT, geometry-only, 0-100. The good pop: how dynamic/worth-doing the
+ *  shape is. Never role-aware, never a grade on a person. */
+export function heatFor(p: Position): number {
+  const mob = (p.partnerMobility - 1) / 4;
+  const flex = (p.hipFlexion - 1) / 4;
+  const catWeight = ({ "low-load": 0, moderate: 1, "high-load": 2 }[p.category] ?? 0) / 2;
+  const drive = loadBearerFor(p) !== "shared" ? 0.12 : 0;
+  return Math.round(100 * Math.min(1, 0.4 * mob + 0.28 * flex + 0.2 * catWeight + drive));
+}
+
+/** The single combined POP read, 0-100. A banded blend that keeps RELIEF the
+ *  heavier hand (this is a back app) while real HEAT genuinely lifts a
+ *  position. Nothing scores high unless it is both survivable AND hot. */
+export function popFor(p: Position, role: Role = "either"): number {
+  const relief = reliefFor(p, role) / 100;
+  const heat = heatFor(p) / 100;
+  return Math.round(100 * Math.sqrt(relief * (0.35 + 0.65 * heat)));
+}
+
+/** 0-3 "pops" — the literal pop pop pop, rendered as amber eyebrow glyphs. */
+export function popPips(p: Position, role: Role = "either"): 0 | 1 | 2 | 3 {
+  const pop = popFor(p, role);
+  if (pop >= 75) return 3;
+  if (pop >= 55) return 2;
+  if (pop >= 35) return 1;
+  return 0;
+}
+
+/** The rare both-at-once: survivable AND hot. Earns the oxblood pill. */
+export function popSweetSpot(p: Position, role: Role = "either"): boolean {
+  return reliefFor(p, role) >= 60 && heatFor(p) >= 45;
+}
+
+/* ───────── Back-pain AREA taxonomy ─────────
+ * Five clean regions the user can point at. Four derive straight from the
+ * existing conditionsFor() tags; only thoracic adds a one-line heuristic
+ * (no 39 hand values). Framed everywhere as "tends to spare", never as a
+ * diagnosis. */
+export type PainArea = "lumbar" | "si" | "sciatic" | "hip" | "thoracic";
+
+export const PAIN_AREAS: { key: PainArea; label: string; blurb: string }[] = [
+  { key: "lumbar", label: "Low back", blurb: "The lumbar itself. We sort toward the lowest load your role carries." },
+  { key: "si", label: "SI joint", blurb: "The pelvis seam. Symmetric, supported geometry tends to spare it." },
+  { key: "sciatic", label: "Sciatic / glute", blurb: "Radiating leg pain. Neutral, low-flexion shapes tend to spare it." },
+  { key: "hip", label: "Hip / groin", blurb: "Impingement and groin. Shallow hip flexion tends to spare it." },
+  { key: "thoracic", label: "Upper back", blurb: "The mid and upper back. Upright, breath-led shapes tend to spare it." },
+];
+
+/** Upright, breath-led geometry tends to spare the upper back; a headboard
+ *  or counter grip pulls the thoracic into extension. Heuristic, not a finding. */
+export function sparesThoracic(p: Position): boolean {
+  return p.breathAccess >= 4 && !/headboard|hands on (the )?(counter|headboard)/i.test(p.name);
+}
+
+/** Which back areas a position tends to spare. Derived from conditionsFor()
+ *  plus the one thoracic heuristic. */
+export function painAreasFor(p: Position): PainArea[] {
+  const conds = conditionsFor(p);
+  const out: PainArea[] = [];
+  if (conds.includes("disc") || conds.includes("flare")) out.push("lumbar");
+  if (conds.includes("si-joint")) out.push("si");
+  if (conds.includes("sciatica")) out.push("sciatic");
+  if (conds.includes("hip")) out.push("hip");
+  if (sparesThoracic(p)) out.push("thoracic");
+  return out;
+}
