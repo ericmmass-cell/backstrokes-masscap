@@ -407,6 +407,10 @@ function SidePlank() {
         <circle cx="346" cy="250" r="12" fill={SKIN} />
         <path d="M 346 250 L 392 256" stroke={SKIN_DEEP} strokeWidth="19" strokeLinecap="round" />
       </g>
+      {/* clinical: the body holds one straight line shoulder to foot; hips rise to it, not sag below */}
+      <g className="bs-teach bs-teach-plank">
+        <line className="bs-teach-pulse" x1="214" y1="199" x2="392" y2="256" stroke={TEACH} strokeWidth="1.8" strokeDasharray="3 5" strokeLinecap="round" />
+      </g>
     </svg>
   );
 }
@@ -439,6 +443,11 @@ function BirdDog() {
         <path d="M 300 206 L 300 250" stroke={SKIN} strokeWidth="20" strokeLinecap="round" />
         <circle cx="300" cy="251" r="7.5" fill={SKIN} />
         <path d="M 300 251 L 326 251" stroke={SKIN} strokeWidth="13" strokeLinecap="round" />
+      </g>
+      {/* clinical: the spine holds level and still while the opposite arm and leg reach */}
+      <g className="bs-teach bs-teach-dog">
+        <line x1="198" y1="197" x2="300" y2="197" stroke={TEACH} strokeWidth="1.8" strokeDasharray="3 5" strokeLinecap="round" />
+        <circle className="bs-teach-pulse" cx="249" cy="197" r="2.6" fill={TEACH} />
       </g>
     </svg>
   );
@@ -507,6 +516,10 @@ function GluteBridge() {
         <g className="bs-bridge-lumbar">
           <Mass d="M 200 236 C 226 232 250 234 264 240 L 262 252 C 240 254 214 252 200 250 C 192 246 192 240 200 236 Z" />
         </g>
+      </g>
+      {/* clinical: shoulder, hip, knee stack in one line; the lift is glutes, not a lumbar arch */}
+      <g className="bs-teach bs-teach-bridge">
+        <line className="bs-teach-pulse" x1="210" y1="239" x2="300" y2="206" stroke={TEACH} strokeWidth="1.8" strokeDasharray="3 5" strokeLinecap="round" />
       </g>
     </svg>
   );
