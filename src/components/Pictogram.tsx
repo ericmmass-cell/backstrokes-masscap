@@ -23,6 +23,7 @@
 
 import { useState, type CSSProperties, type ImgHTMLAttributes } from "react";
 import { PositionAnnotation, type PositionAnnotateData } from "./PositionAnnotation";
+import { PositionDiagram, hasDiagram } from "./PositionDiagram";
 
 const INK = "#2a2620";
 const OXBLOOD = "#722B2B";
@@ -114,11 +115,6 @@ export function getExerciseMeta(
 ): { title: string; sub: string } | undefined {
   const m = EXERCISE_META[key];
   return m ? { title: m.title, sub: m.sub } : undefined;
-}
-
-/** URLs for the illustrated (PNG-backed) positions — for <link rel="preload">. */
-export function getIllustratedPositionUrls(): string[] {
-  return SEX_POSITION_KEYS.map((k) => `/positions/${k}.png`);
 }
 
 /* ───────── shared chrome ───────── */
@@ -274,9 +270,31 @@ function IllustratedPosition({
   const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
 
   if (!meta) return <Fallback meta={{ title: positionKey, sub: "Unknown position key" }} />;
-  if (state === "error") return <Fallback meta={meta} />;
 
   const caption = `${meta.title} · ${meta.sub}`;
+
+  // Preferred path: our own hand-authored instructional SVG diagram — animated,
+  // unfilterable, fully under our control. It shows who goes where, the joining,
+  // the neutral-spine teaching line, and the motion. The PNG path below stays as
+  // a graceful fallback for any position key that lacks a diagram.
+  if (hasDiagram(positionKey)) {
+    return (
+      <PictogramFrame caption={showCaption ? caption : undefined} attribution="Diagram · BackStroke">
+        <PositionDiagram positionKey={positionKey} />
+        {annotate && (
+          <PositionAnnotation
+            positionKey={positionKey}
+            name={annotate.name}
+            load={annotate.load}
+            loadNote={annotate.loadNote}
+          />
+        )}
+      </PictogramFrame>
+    );
+  }
+
+  if (state === "error") return <Fallback meta={meta} />;
+
   const altText = `Illustration of the ${meta.title.toLowerCase()} position: ${meta.sub.toLowerCase()}.`;
 
   return (

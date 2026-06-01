@@ -19,7 +19,7 @@ const ROLES: { key: Role; label: string; short: string }[] = [
   { key: "receiver", label: "Receiving partner", short: "Receiving" },
 ];
 import { PositionDemo } from "@/components/PositionDemo";
-import { Pictogram, type PictogramKey, getIllustratedPositionUrls } from "@/components/Pictogram";
+import { Pictogram, type PictogramKey } from "@/components/Pictogram";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PopAtlas } from "@/components/PopAtlas";
 
@@ -34,14 +34,8 @@ export const Route = createFileRoute("/positions")({
           "Forty positions, each scored on lumbar load, hip flexion, breath access, and partner mobility. Filter by your current Index. Sort by what your back can sign off on.",
       },
     ],
-    // Preload all picker images so switching is instant. Each is
-    // ~300KB. The hero PNG (spoon) also gets fetchPriority="high"
-    // at the component level.
-    links: getIllustratedPositionUrls().map((href) => ({
-      rel: "preload",
-      as: "image",
-      href,
-    })),
+    // Position figures are now inline-SVG diagrams (PositionDiagram), drawn in
+    // the bundle. There is nothing to preload — switching is already instant.
   }),
 });
 
