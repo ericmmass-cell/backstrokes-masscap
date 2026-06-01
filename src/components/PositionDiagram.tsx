@@ -63,29 +63,6 @@ function Floor({ y = 250, shadow = true }: { y?: number; shadow?: boolean }) {
   );
 }
 
-/* a limb = dark contour stroke under a colored fill stroke (round caps). */
-function Limb({ pts, w, tone }: { pts: number[]; w: number; tone: Tone }) {
-  let d = `M ${pts[0]} ${pts[1]}`;
-  for (let i = 2; i < pts.length; i += 2) d += ` L ${pts[i]} ${pts[i + 1]}`;
-  const t = TONES[tone];
-  return (
-    <>
-      <path d={d} fill="none" stroke={t.line} strokeWidth={w + 3} strokeLinecap="round" strokeLinejoin="round" />
-      <path d={d} fill="none" stroke={t.fill} strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" />
-    </>
-  );
-}
-
-function Head({ x, y, r = 19, tone }: { x: number; y: number; r?: number; tone: Tone }) {
-  const t = TONES[tone];
-  return (
-    <>
-      <circle cx={x} cy={y} r={r + 1.5} fill={t.line} />
-      <circle cx={x} cy={y} r={r} fill={t.fill} />
-    </>
-  );
-}
-
 /* support props */
 function Bolster({ x, y, w = 64, h = 22 }: { x: number; y: number; w?: number; h?: number }) {
   return <rect x={x - w / 2} y={y - h / 2} width={w} height={h} rx={h / 2} fill="#e7d39a" stroke="#c9ab5e" strokeWidth="2" />;
@@ -101,22 +78,104 @@ function Bed({ x = 60, y = 196, w = 250, h = 58 }: { x?: number; y?: number; w?:
   );
 }
 
-/* neutral-spine teaching line (dashed) */
-function Spine({ pts }: { pts: number[] }) {
+/* ════════════════════════════════════════════════════════════════
+   figure engine — clean UNIFIED silhouettes.
+   The fix for "can't tell what's happening": draw each body as one
+   silhouette (all outline shapes first, then all fills) so the seams
+   between limbs vanish, give it a real pelvis + chest + hands + feet,
+   a hair-cap that shows which way the head faces, and a paper-colored
+   HALO on the front body so it lifts cleanly off the body behind it.
+   ════════════════════════════════════════════════════════════════ */
+
+const HALO = "#F5F0E4"; // paper-colored separation ring
+
+type Seg =
+  | { k: "bone"; pts: number[]; w: number } // limb / torso polyline (round caps)
+  | { k: "mass"; cx: number; cy: number; rx: number; ry?: number } // pelvis / chest / head
+  | { k: "dot"; cx: number; cy: number; r: number }; // hand / foot
+
+function segPath(pts: number[]) {
   let d = `M ${pts[0]} ${pts[1]}`;
   for (let i = 2; i < pts.length; i += 2) d += ` L ${pts[i]} ${pts[i + 1]}`;
-  return <path d={d} fill="none" stroke={SPINE} strokeWidth="2.4" strokeDasharray="2 6" strokeLinecap="round" />;
+  return d;
 }
 
-/* motion arc — a small curved arrow showing the rhythm direction */
-function MotionArc({ x, y, dir = 1 }: { x: number; y: number; dir?: 1 | -1 }) {
-  // a short double-headed horizontal arc centered at (x,y)
-  const r = 18;
+/* one full pass over a body's parts, in a single color, grown by `g` px */
+function pass(segs: Seg[], color: string, g: number) {
+  return segs.map((s, i) => {
+    if (s.k === "bone")
+      return (
+        <path key={i} d={segPath(s.pts)} fill="none" stroke={color} strokeWidth={s.w + g} strokeLinecap="round" strokeLinejoin="round" />
+      );
+    if (s.k === "mass")
+      return <ellipse key={i} cx={s.cx} cy={s.cy} rx={s.rx + g / 2} ry={(s.ry ?? s.rx) + g / 2} fill={color} />;
+    return <circle key={i} cx={s.cx} cy={s.cy} r={s.r + g / 2} fill={color} />;
+  });
+}
+
+/* hair-cap on the BACK hemisphere of the head -> shows facing (face = opposite) */
+function Hair({ x, y, r, face, tone }: { x: number; y: number; r: number; face: number; tone: Tone }) {
+  const back = face + 180;
+  const rr = r * 0.82;
+  const rad = (d: number) => (d * Math.PI) / 180;
+  const x0 = x + rr * Math.cos(rad(back - 95));
+  const y0 = y + rr * Math.sin(rad(back - 95));
+  const x1 = x + rr * Math.cos(rad(back + 95));
+  const y1 = y + rr * Math.sin(rad(back + 95));
   return (
-    <g className="pd-arc" opacity="0.7">
-      <path d={`M ${x - r} ${y} Q ${x} ${y - 10} ${x + r} ${y}`} fill="none" stroke={ARROW} strokeWidth="2.2" strokeLinecap="round" />
-      <path d={`M ${x + r - 5} ${y - 5} L ${x + r} ${y} L ${x + r - 6} ${y + 3}`} fill="none" stroke={ARROW} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d={`M ${x - r + 5} ${y - 5} L ${x - r} ${y} L ${x - r + 6} ${y + 3}`} fill="none" stroke={ARROW} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d={`M ${x0} ${y0} A ${rr} ${rr} 0 1 1 ${x1} ${y1}`} fill="none" stroke={TONES[tone].line} strokeWidth={r * 0.5} strokeLinecap="round" />
+  );
+}
+
+/* a whole person: unified silhouette + optional head + hair + halo */
+function Figure({
+  segs,
+  tone,
+  head,
+  halo = false,
+}: {
+  segs: Seg[];
+  tone: Tone;
+  head?: { x: number; y: number; r: number; face: number };
+  halo?: boolean;
+}) {
+  const t = TONES[tone];
+  const all: Seg[] = head ? [...segs, { k: "mass", cx: head.x, cy: head.y, rx: head.r }] : segs;
+  return (
+    <g>
+      {halo && <g>{pass(all, HALO, 13)}</g>}
+      <g>{pass(all, t.line, 4.5)}</g>
+      <g>{pass(all, t.fill, 0)}</g>
+      {head && <Hair x={head.x} y={head.y} r={head.r} face={head.face} tone={tone} />}
+    </g>
+  );
+}
+
+/* bold neutral-spine teaching line */
+function Spine2({ pts }: { pts: number[] }) {
+  return <path d={segPath(pts)} fill="none" stroke={SPINE} strokeWidth="3" strokeDasharray="1 7" strokeLinecap="round" opacity="0.9" />;
+}
+
+/* bold double-headed motion arrow (with paper halo so it reads over figures) */
+function MotionArrow({ x, y, axis = "h", len = 28 }: { x: number; y: number; axis?: "h" | "v"; len?: number }) {
+  const x0 = axis === "h" ? x - len : x;
+  const y0 = axis === "v" ? y - len : y;
+  const x1 = axis === "h" ? x + len : x;
+  const y1 = axis === "v" ? y + len : y;
+  const dx = axis === "h" ? 1 : 0;
+  const dy = axis === "v" ? 1 : 0;
+  const head = (hx: number, hy: number, sx: number, sy: number) => {
+    const s = 11, b = 8;
+    const bx = hx - sx * s, by = hy - sy * s;
+    const px = -sy, py = sx;
+    return `M ${hx} ${hy} L ${bx + px * b} ${by + py * b} L ${bx - px * b} ${by - py * b} Z`;
+  };
+  return (
+    <g className="pd-arc">
+      <line x1={x0} y1={y0} x2={x1} y2={y1} stroke={HALO} strokeWidth={12} strokeLinecap="round" />
+      <line x1={x0} y1={y0} x2={x1} y2={y1} stroke={ARROW} strokeWidth={5} strokeLinecap="round" />
+      <path d={head(x1, y1, dx, dy)} fill={ARROW} />
+      <path d={head(x0, y0, -dx, -dy)} fill={ARROW} />
     </g>
   );
 }
@@ -154,40 +213,48 @@ function svgWrap(label: string, paused: boolean, children: React.ReactNode) {
 
 /* SPOON — both side-lying, nested, facing left. Partner (amber) behind rocks in. */
 function Spoon(paused: boolean) {
-  return svgWrap("Spoon: both partners lie on their sides, the partner behind nested against the receiver in front, knees drawn up. The partner behind rocks gently.", paused, (
+  return svgWrap("Spoon: both partners lie on their sides facing the same way, the partner behind nested against the receiver's back with knees drawn up, the top arm draped over. The partner behind rocks gently.", paused, (
     <>
-      <Floor y={250} />
-      {/* pillow */}
-      <rect x={70} y={196} width={70} height={20} rx={10} fill="#efe6d2" stroke="#d9ccae" strokeWidth="2" />
-      {/* BACK figure = partner (amber), drawn first */}
+      <Floor y={255} />
+      {/* pillow under both heads */}
+      <rect x={74} y={210} width={84} height={22} rx={11} fill="#efe6d2" stroke="#d9ccae" strokeWidth="2" />
+      {/* RECEIVER — front comma (head left, horizontal trunk, knees curled up). Under. */}
+      <g className="pd-breathe">
+        <Figure
+          tone="rx"
+          head={{ x: 120, y: 214, r: 24, face: 180 }}
+          segs={[
+            { k: "mass", cx: 164, cy: 216, rx: 22, ry: 20 }, // chest
+            { k: "bone", pts: [158, 216, 224, 220, 282, 224], w: 27 }, // horizontal trunk
+            { k: "mass", cx: 290, cy: 226, rx: 27, ry: 23 }, // pelvis
+            { k: "bone", pts: [150, 220, 126, 240, 152, 252], w: 13 }, // front arm on floor
+            { k: "dot", cx: 154, cy: 253, r: 8 }, // hand
+            { k: "bone", pts: [288, 226, 248, 244], w: 24 }, // thigh (knee curls fwd-left)
+            { k: "bone", pts: [248, 244, 262, 272], w: 20 }, // shin (down to floor)
+            { k: "dot", cx: 264, cy: 273, r: 10 }, // foot
+          ]}
+        />
+        <Spine2 pts={[156, 206, 222, 210, 282, 215]} />
+      </g>
+      {/* PARTNER — same comma, nested directly behind+above (offset up+right). On top, halo. */}
       <g className="pd-rockh">
-        {/* top leg forward over receiver */}
-        <Limb pts={[322, 214, 290, 250, 250, 246]} w={20} tone="pt" />
-        {/* torso hip->shoulder */}
-        <Limb pts={[322, 212, 276, 202, 232, 196]} w={26} tone="pt" />
-        {/* neck + head */}
-        <Limb pts={[232, 196, 214, 193]} w={13} tone="pt" />
-        <Head x={196} y={190} r={18} tone="pt" />
-        {/* top arm draped over receiver */}
-        <Limb pts={[240, 200, 276, 220, 300, 238]} w={11} tone="pt" />
-        <Spine pts={[322, 203, 276, 193, 234, 187]} />
+        <Figure
+          tone="pt"
+          halo
+          head={{ x: 150, y: 168, r: 24, face: 180 }}
+          segs={[
+            { k: "mass", cx: 194, cy: 170, rx: 21, ry: 19 }, // chest
+            { k: "bone", pts: [188, 170, 254, 174, 312, 178], w: 26 }, // horizontal trunk
+            { k: "mass", cx: 320, cy: 180, rx: 26, ry: 22 }, // pelvis (behind receiver's)
+            { k: "bone", pts: [186, 178, 228, 202, 262, 216], w: 14 }, // top arm draped over receiver's waist
+            { k: "dot", cx: 264, cy: 217, r: 8 }, // hand
+            { k: "bone", pts: [314, 180, 280, 188], w: 23 }, // top thigh (knee tucks toward chest)
+            { k: "bone", pts: [280, 188, 306, 208], w: 19 }, // shin folds back, nested above receiver
+            { k: "dot", cx: 309, cy: 209, r: 10 }, // foot
+          ]}
+        />
       </g>
-      {/* FRONT figure = receiver (oxblood) */}
-      <g>
-        {/* top leg drawn up */}
-        <Limb pts={[300, 246, 262, 232, 232, 250]} w={20} tone="rx" />
-        {/* lower leg */}
-        <Limb pts={[300, 250, 268, 250]} w={16} tone="rx" />
-        {/* torso */}
-        <Limb pts={[300, 244, 254, 234, 206, 226]} w={26} tone="rx" />
-        {/* neck + head */}
-        <Limb pts={[206, 226, 186, 223]} w={13} tone="rx" />
-        <Head x={166} y={222} r={19} tone="rx" />
-        {/* arm resting forward */}
-        <Limb pts={[210, 230, 244, 250]} w={11} tone="rx" />
-        <Spine pts={[300, 233, 254, 224, 208, 217]} />
-      </g>
-      <g className="pd-rockh"><MotionArc x={300} y={150} /></g>
+      <g className="pd-rockh"><MotionArrow x={330} y={150} axis="h" len={26} /></g>
     </>
   ));
 }
@@ -196,31 +263,44 @@ function Spoon(paused: boolean) {
 function Missionary(paused: boolean) {
   return svgWrap("Missionary: the receiving partner lies on their back with knees bent, the other partner holds a plank above them and rocks gently. The receiver's lower back stays neutral on the floor.", paused, (
     <>
-      <Floor y={250} />
-      {/* RECEIVER supine (breathing) */}
+      <Floor y={252} />
+      {/* RECEIVER supine on the floor, knees bent up (face up). */}
       <g className="pd-breathe">
-        <Head x={96} y={236} r={18} tone="rx" />
-        <Limb pts={[114, 238, 210, 244]} w={26} tone="rx" />
-        {/* bent legs, knees up */}
-        <Limb pts={[210, 244, 250, 206, 286, 246]} w={22} tone="rx" />
-        <Limb pts={[206, 246, 240, 210, 270, 248]} w={20} tone="rx" />
-        <Spine pts={[120, 232, 175, 235, 208, 238]} />
+        <Figure
+          tone="rx"
+          head={{ x: 92, y: 238, r: 21, face: 270 }}
+          segs={[
+            { k: "mass", cx: 132, cy: 238, rx: 21, ry: 18 }, // chest
+            { k: "bone", pts: [116, 240, 172, 242, 210, 244], w: 26 }, // trunk on floor
+            { k: "mass", cx: 218, cy: 244, rx: 25, ry: 21 }, // pelvis
+            { k: "bone", pts: [216, 242, 248, 210], w: 23 }, // thigh up (knee bent)
+            { k: "bone", pts: [248, 210, 280, 240], w: 19 }, // shin down to floor
+            { k: "dot", cx: 282, cy: 241, r: 10 }, // foot
+            { k: "bone", pts: [118, 242, 92, 250], w: 11 }, // arm flat on floor
+            { k: "dot", cx: 90, cy: 251, r: 7 }, // hand
+          ]}
+        />
+        <Spine2 pts={[120, 233, 172, 236, 210, 239]} />
       </g>
-      {/* PARTNER plank above, rocks down/forward */}
+      {/* PARTNER in a plank/press over the receiver, rocking. On top + halo. */}
       <g className="pd-rockv">
-        {/* arms down to floor beside receiver shoulders */}
-        <Limb pts={[150, 250, 158, 206]} w={12} tone="pt" />
-        {/* torso shoulder->hip on a downward diagonal */}
-        <Limb pts={[158, 200, 226, 196, 286, 214]} w={26} tone="pt" />
-        {/* head over receiver */}
-        <Limb pts={[158, 202, 140, 208]} w={12} tone="pt" />
-        <Head x={123} y={210} r={17} tone="pt" />
-        {/* legs back to feet on floor */}
-        <Limb pts={[286, 214, 330, 248]} w={22} tone="pt" />
-        <Limb pts={[300, 220, 344, 250]} w={20} tone="pt" />
-        <Spine pts={[162, 192, 226, 188, 286, 206]} />
+        <Figure
+          tone="pt"
+          halo
+          head={{ x: 132, y: 208, r: 17, face: 200 }}
+          segs={[
+            { k: "bone", pts: [158, 202, 150, 250], w: 13 }, // arm straight to floor
+            { k: "dot", cx: 150, cy: 252, r: 8 }, // hand
+            { k: "mass", cx: 168, cy: 200, rx: 19, ry: 17 }, // chest/shoulders
+            { k: "bone", pts: [164, 200, 228, 202, 286, 212], w: 25 }, // plank trunk
+            { k: "mass", cx: 292, cy: 214, rx: 23, ry: 20 }, // pelvis
+            { k: "bone", pts: [290, 214, 322, 240], w: 21 }, // thigh back
+            { k: "bone", pts: [322, 240, 342, 250], w: 17 }, // shin to floor
+            { k: "dot", cx: 344, cy: 251, r: 9 }, // foot
+          ]}
+        />
       </g>
-      <g className="pd-rockv"><MotionArc x={236} y={150} /></g>
+      <g className="pd-rockv"><MotionArrow x={250} y={150} axis="v" len={22} /></g>
     </>
   ));
 }
@@ -229,25 +309,44 @@ function Missionary(paused: boolean) {
 function SupineKneesUp(paused: boolean) {
   return svgWrap("Modified missionary: the receiving partner lies on their back with knees bent over a bolster, the other partner kneels close. The bolster keeps the lower back neutral.", paused, (
     <>
-      <Floor y={250} />
-      <Bolster x={250} y={236} w={70} h={24} />
-      {/* RECEIVER supine, knees over bolster */}
+      <Floor y={252} />
+      <Bolster x={250} y={238} w={74} h={24} />
+      {/* RECEIVER supine, knees draped over the bolster (face up). */}
       <g className="pd-breathe">
-        <Head x={92} y={236} r={18} tone="rx" />
-        <Limb pts={[110, 238, 206, 244]} w={26} tone="rx" />
-        <Limb pts={[206, 244, 250, 220, 252, 246]} w={22} tone="rx" />
-        <Spine pts={[116, 232, 170, 235, 206, 238]} />
+        <Figure
+          tone="rx"
+          head={{ x: 90, y: 240, r: 21, face: 270 }}
+          segs={[
+            { k: "mass", cx: 130, cy: 240, rx: 21, ry: 18 }, // chest
+            { k: "bone", pts: [114, 242, 168, 244, 206, 246], w: 26 }, // trunk
+            { k: "mass", cx: 214, cy: 246, rx: 24, ry: 20 }, // pelvis
+            { k: "bone", pts: [212, 244, 250, 226], w: 22 }, // thigh up over bolster
+            { k: "bone", pts: [250, 226, 258, 248], w: 18 }, // shin down behind bolster
+            { k: "dot", cx: 259, cy: 249, r: 9 }, // foot
+            { k: "bone", pts: [116, 244, 92, 251], w: 11 }, // arm on floor
+            { k: "dot", cx: 90, cy: 252, r: 7 },
+          ]}
+        />
+        <Spine2 pts={[118, 235, 168, 238, 206, 241]} />
       </g>
-      {/* PARTNER kneeling, rocks */}
+      {/* PARTNER kneeling close at the receiver's hips, rocking. On top + halo. */}
       <g className="pd-rockh">
-        <Limb pts={[300, 250, 300, 214]} w={22} tone="pt" />
-        <Limb pts={[300, 250, 340, 250]} w={18} tone="pt" />
-        <Limb pts={[300, 214, 296, 178]} w={24} tone="pt" />
-        <Limb pts={[296, 182, 280, 206]} w={11} tone="pt" />
-        <Head x={296} y={160} r={18} tone="pt" />
-        <Spine pts={[300, 212, 297, 184]} />
+        <Figure
+          tone="pt"
+          halo
+          head={{ x: 298, y: 152, r: 20, face: 180 }}
+          segs={[
+            { k: "bone", pts: [340, 250, 300, 248], w: 18 }, // shin flat on floor
+            { k: "bone", pts: [300, 248, 300, 212], w: 23 }, // thigh vertical (kneeling)
+            { k: "mass", cx: 300, cy: 208, rx: 22, ry: 19 }, // pelvis
+            { k: "bone", pts: [300, 208, 298, 172], w: 24 }, // torso upright
+            { k: "mass", cx: 298, cy: 172, rx: 19, ry: 17 }, // chest
+            { k: "bone", pts: [299, 180, 266, 202], w: 12 }, // arm down to receiver
+            { k: "dot", cx: 264, cy: 203, r: 7 },
+          ]}
+        />
       </g>
-      <g className="pd-rockh"><MotionArc x={276} y={150} dir={-1} /></g>
+      <g className="pd-rockh"><MotionArrow x={272} y={150} axis="h" len={22} /></g>
     </>
   ));
 }
@@ -256,27 +355,44 @@ function SupineKneesUp(paused: boolean) {
 function SideT(paused: boolean) {
   return svgWrap("Side-lying T: the receiving partner lies on their side, the other partner kneels upright at a right angle. Side-lying keeps the spine neutral.", paused, (
     <>
-      <Floor y={250} />
-      <rect x={60} y={232} width={64} height={18} rx={9} fill="#efe6d2" stroke="#d9ccae" strokeWidth="2" />
-      {/* RECEIVER side-lying, facing up-right */}
+      <Floor y={252} />
+      <rect x={60} y={234} width={66} height={18} rx={9} fill="#efe6d2" stroke="#d9ccae" strokeWidth="2" />
+      {/* RECEIVER side-lying, head left, top leg lifted toward partner. */}
       <g className="pd-breathe">
-        <Head x={96} y={236} r={18} tone="rx" />
-        <Limb pts={[114, 235, 200, 240]} w={26} tone="rx" />
-        {/* legs: top leg lifted toward partner */}
-        <Limb pts={[200, 240, 244, 220, 256, 248]} w={22} tone="rx" />
-        <Limb pts={[200, 244, 250, 246]} w={18} tone="rx" />
-        <Spine pts={[118, 230, 200, 234]} />
+        <Figure
+          tone="rx"
+          head={{ x: 94, y: 236, r: 21, face: 180 }}
+          segs={[
+            { k: "mass", cx: 134, cy: 237, rx: 21, ry: 18 }, // chest
+            { k: "bone", pts: [114, 237, 168, 240, 200, 242], w: 26 }, // trunk
+            { k: "mass", cx: 208, cy: 244, rx: 24, ry: 20 }, // pelvis
+            { k: "bone", pts: [206, 246, 250, 248], w: 18 }, // bottom leg extended
+            { k: "dot", cx: 252, cy: 249, r: 9 },
+            { k: "bone", pts: [208, 238, 248, 216], w: 22 }, // top leg lifted (thigh)
+            { k: "bone", pts: [248, 216, 258, 244], w: 18 }, // shin
+            { k: "dot", cx: 260, cy: 245, r: 9 },
+          ]}
+        />
+        <Spine2 pts={[116, 231, 168, 234, 200, 237]} />
       </g>
-      {/* PARTNER kneeling upright perpendicular, behind the lifted legs */}
+      {/* PARTNER kneeling upright perpendicular at the receiver's hips. On top + halo. */}
       <g className="pd-rockh">
-        <Limb pts={[286, 250, 286, 214]} w={22} tone="pt" />
-        <Limb pts={[286, 250, 326, 250]} w={18} tone="pt" />
-        <Limb pts={[286, 214, 284, 176]} w={24} tone="pt" />
-        <Limb pts={[284, 182, 262, 214]} w={11} tone="pt" />
-        <Head x={284} y={158} r={18} tone="pt" />
-        <Spine pts={[286, 212, 284, 180]} />
+        <Figure
+          tone="pt"
+          halo
+          head={{ x: 286, y: 154, r: 20, face: 180 }}
+          segs={[
+            { k: "bone", pts: [326, 250, 288, 248], w: 18 }, // shin flat
+            { k: "bone", pts: [288, 248, 288, 212], w: 23 }, // thigh vertical
+            { k: "mass", cx: 288, cy: 210, rx: 22, ry: 19 }, // pelvis
+            { k: "bone", pts: [288, 210, 286, 174], w: 24 }, // torso
+            { k: "mass", cx: 286, cy: 174, rx: 19, ry: 17 }, // chest
+            { k: "bone", pts: [287, 182, 262, 206], w: 12 }, // arm to receiver's hips
+            { k: "dot", cx: 260, cy: 207, r: 7 },
+          ]}
+        />
       </g>
-      <g className="pd-rockh"><MotionArc x={262} y={150} dir={-1} /></g>
+      <g className="pd-rockh"><MotionArrow x={262} y={150} axis="h" len={22} /></g>
     </>
   ));
 }
@@ -285,27 +401,42 @@ function SideT(paused: boolean) {
 function EdgeBed(paused: boolean) {
   return svgWrap("Edge of bed: the receiving partner lies on their back with hips at the edge of the bed, the standing partner faces them. The mattress fully supports the spine.", paused, (
     <>
-      <Floor y={288} shadow={false} />
-      <Bed x={48} y={188} w={250} h={56} />
-      {/* RECEIVER supine on bed, hips at right edge, knees up */}
+      <Floor y={290} shadow={false} />
+      <Bed x={44} y={190} w={252} h={56} />
+      {/* RECEIVER supine on the bed, hips at the right edge, knees up toward partner. */}
       <g className="pd-breathe">
-        <Head x={84} y={176} r={17} tone="rx" />
-        <Limb pts={[101, 178, 210, 184]} w={25} tone="rx" />
-        {/* hips at edge ~ x=300; knees up/out toward partner */}
-        <Limb pts={[210, 184, 268, 158, 300, 188]} w={21} tone="rx" />
-        <Limb pts={[206, 186, 262, 162, 296, 190]} w={19} tone="rx" />
-        <Spine pts={[104, 172, 160, 176, 210, 180]} />
+        <Figure
+          tone="rx"
+          head={{ x: 82, y: 178, r: 18, face: 270 }}
+          segs={[
+            { k: "mass", cx: 120, cy: 178, rx: 19, ry: 16 }, // chest
+            { k: "bone", pts: [101, 180, 158, 182, 206, 184], w: 25 }, // trunk on bed
+            { k: "mass", cx: 214, cy: 186, rx: 24, ry: 20 }, // pelvis at edge
+            { k: "bone", pts: [214, 184, 256, 158], w: 22 }, // thigh up/out
+            { k: "bone", pts: [256, 158, 296, 182], w: 19 }, // shin toward partner
+            { k: "dot", cx: 298, cy: 183, r: 9 },
+          ]}
+        />
+        <Spine2 pts={[104, 174, 158, 177, 206, 180]} />
       </g>
-      {/* PARTNER standing on floor at the bed edge */}
+      {/* PARTNER standing on the floor at the bed edge, facing the receiver. On top + halo. */}
       <g className="pd-rockh">
-        <Limb pts={[340, 288, 336, 232]} w={20} tone="pt" />
-        <Limb pts={[340, 288, 360, 288]} w={16} tone="pt" />
-        <Limb pts={[336, 232, 338, 168]} w={24} tone="pt" />
-        <Limb pts={[338, 196, 312, 190]} w={12} tone="pt" />
-        <Head x={340} y={150} r={18} tone="pt" />
-        <Spine pts={[336, 230, 338, 172]} />
+        <Figure
+          tone="pt"
+          halo
+          head={{ x: 340, y: 150, r: 19, face: 180 }}
+          segs={[
+            { k: "bone", pts: [340, 290, 337, 230], w: 20 }, // leg to floor
+            { k: "dot", cx: 348, cy: 290, r: 9 }, // foot
+            { k: "mass", cx: 337, cy: 226, rx: 22, ry: 20 }, // pelvis
+            { k: "bone", pts: [337, 226, 339, 174], w: 24 }, // torso upright
+            { k: "mass", cx: 339, cy: 176, rx: 19, ry: 18 }, // chest
+            { k: "bone", pts: [338, 196, 310, 188], w: 12 }, // arm to receiver's legs
+            { k: "dot", cx: 308, cy: 187, r: 7 },
+          ]}
+        />
       </g>
-      <g className="pd-rockh"><MotionArc x={312} y={150} dir={-1} /></g>
+      <g className="pd-rockh"><MotionArrow x={310} y={150} axis="h" len={22} /></g>
     </>
   ));
 }
@@ -314,28 +445,42 @@ function EdgeBed(paused: boolean) {
 function CowgirlUpright(paused: boolean) {
   return svgWrap("Receiver on top: the partner lies on their back, the receiving partner sits upright straddling them and controls the rhythm. The upright spine stays tall and neutral.", paused, (
     <>
-      <Floor y={250} />
-      {/* PARTNER supine underneath (breathing) */}
+      <Floor y={252} />
+      {/* PARTNER supine underneath, head right, knees bent up under the receiver. */}
       <g className="pd-breathe">
-        <Head x={392} y={236} r={18} tone="pt" />
-        <Limb pts={[374, 238, 280, 244]} w={26} tone="pt" />
-        {/* bent knees up under the receiver */}
-        <Limb pts={[280, 244, 250, 214, 222, 246]} w={22} tone="pt" />
-        <Spine pts={[374, 232, 320, 236, 286, 240]} />
+        <Figure
+          tone="pt"
+          head={{ x: 392, y: 238, r: 21, face: 270 }}
+          segs={[
+            { k: "mass", cx: 352, cy: 238, rx: 21, ry: 18 }, // chest
+            { k: "bone", pts: [374, 240, 320, 242, 286, 244], w: 26 }, // trunk
+            { k: "mass", cx: 280, cy: 244, rx: 24, ry: 20 }, // pelvis
+            { k: "bone", pts: [282, 242, 250, 214], w: 22 }, // thigh up
+            { k: "bone", pts: [250, 214, 224, 240], w: 19 }, // shin down
+            { k: "dot", cx: 222, cy: 241, r: 10 },
+          ]}
+        />
+        <Spine2 pts={[374, 233, 320, 237, 286, 240]} />
       </g>
-      {/* RECEIVER straddling upright, rocks up/down */}
+      {/* RECEIVER sitting upright astride the partner's hips, riding. On top + halo. */}
       <g className="pd-rockup">
-        {/* shins folded down beside partner hips */}
-        <Limb pts={[252, 248, 270, 222]} w={18} tone="rx" />
-        <Limb pts={[252, 248, 232, 222]} w={18} tone="rx" />
-        {/* hips -> tall torso */}
-        <Limb pts={[252, 224, 252, 162]} w={26} tone="rx" />
-        {/* arms reaching down to partner chest */}
-        <Limb pts={[252, 180, 288, 210]} w={11} tone="rx" />
-        <Head x={252} y={142} r={19} tone="rx" />
-        <Spine pts={[252, 220, 252, 166]} />
+        <Figure
+          tone="rx"
+          halo
+          head={{ x: 256, y: 150, r: 20, face: 0 }}
+          segs={[
+            { k: "bone", pts: [256, 232, 234, 248], w: 17 }, // shin folded down (near)
+            { k: "dot", cx: 232, cy: 249, r: 8 },
+            { k: "bone", pts: [256, 232, 282, 246], w: 16 }, // other knee fwd
+            { k: "mass", cx: 256, cy: 228, rx: 22, ry: 19 }, // hips
+            { k: "bone", pts: [256, 226, 256, 168], w: 25 }, // tall torso
+            { k: "mass", cx: 256, cy: 174, rx: 19, ry: 18 }, // chest
+            { k: "bone", pts: [256, 182, 290, 206], w: 12 }, // arm down to partner chest
+            { k: "dot", cx: 292, cy: 207, r: 7 },
+          ]}
+        />
       </g>
-      <g className="pd-rockup"><MotionArc x={210} y={150} /></g>
+      <g className="pd-rockup"><MotionArrow x={214} y={160} axis="v" len={24} /></g>
     </>
   ));
 }
@@ -344,31 +489,46 @@ function CowgirlUpright(paused: boolean) {
 function DoggySupported(paused: boolean) {
   return svgWrap("Supported rear-entry: the receiving partner rests chest-down on a stack of pillows with forearms on the floor, the other partner kneels behind. The chest support keeps the lower back neutral.", paused, (
     <>
-      <Floor y={250} />
-      {/* pillow stack under chest */}
-      <rect x={86} y={214} width={70} height={20} rx={8} fill="#efe6d2" stroke="#d9ccae" strokeWidth="2" />
-      <rect x={92} y={228} width={64} height={20} rx={8} fill="#e7d39a" stroke="#c9ab5e" strokeWidth="2" />
-      {/* RECEIVER chest-down: head low on pillow, hips high */}
+      <Floor y={252} />
+      {/* pillow stack under the chest */}
+      <rect x={84} y={216} width={72} height={20} rx={8} fill="#efe6d2" stroke="#d9ccae" strokeWidth="2" />
+      <rect x={90} y={230} width={66} height={20} rx={8} fill="#e7d39a" stroke="#c9ab5e" strokeWidth="2" />
+      {/* RECEIVER chest-down on the pillows, hips high, forearms on floor. */}
       <g className="pd-breathe">
-        <Head x={92} y={214} r={17} tone="rx" />
-        {/* forearms on floor */}
-        <Limb pts={[108, 220, 132, 248]} w={11} tone="rx" />
-        {/* torso rising from chest(low) to hips(high) */}
-        <Limb pts={[120, 216, 190, 196, 232, 206]} w={26} tone="rx" />
-        {/* thighs down to knees */}
-        <Limb pts={[232, 206, 236, 248]} w={22} tone="rx" />
-        <Spine pts={[126, 210, 190, 190, 232, 200]} />
+        <Figure
+          tone="rx"
+          head={{ x: 90, y: 216, r: 17, face: 200 }}
+          segs={[
+            { k: "bone", pts: [106, 222, 130, 248], w: 11 }, // forearm to floor
+            { k: "dot", cx: 132, cy: 249, r: 7 },
+            { k: "mass", cx: 124, cy: 216, rx: 18, ry: 15 }, // chest low on pillow
+            { k: "bone", pts: [122, 216, 186, 198, 230, 206], w: 26 }, // back rising to hips
+            { k: "mass", cx: 236, cy: 208, rx: 25, ry: 22 }, // pelvis high
+            { k: "bone", pts: [236, 210, 240, 246], w: 22 }, // thigh down
+            { k: "bone", pts: [240, 246, 270, 250], w: 18 }, // shin on floor
+            { k: "dot", cx: 272, cy: 250, r: 9 },
+          ]}
+        />
+        <Spine2 pts={[128, 210, 186, 193, 230, 201]} />
       </g>
-      {/* PARTNER kneeling behind, rocks */}
+      {/* PARTNER kneeling behind, rocking. On top + halo. */}
       <g className="pd-rockh">
-        <Limb pts={[286, 250, 286, 216]} w={22} tone="pt" />
-        <Limb pts={[286, 250, 326, 250]} w={18} tone="pt" />
-        <Limb pts={[286, 216, 282, 180]} w={24} tone="pt" />
-        <Limb pts={[284, 200, 250, 206]} w={11} tone="pt" />
-        <Head x={282} y={162} r={18} tone="pt" />
-        <Spine pts={[286, 214, 283, 184]} />
+        <Figure
+          tone="pt"
+          halo
+          head={{ x: 288, y: 158, r: 19, face: 180 }}
+          segs={[
+            { k: "bone", pts: [326, 250, 288, 248], w: 18 }, // shin flat
+            { k: "bone", pts: [288, 248, 288, 212], w: 23 }, // thigh vertical
+            { k: "mass", cx: 288, cy: 210, rx: 22, ry: 19 }, // pelvis
+            { k: "bone", pts: [288, 210, 286, 176], w: 24 }, // torso
+            { k: "mass", cx: 286, cy: 176, rx: 19, ry: 17 }, // chest
+            { k: "bone", pts: [287, 184, 254, 200], w: 12 }, // arm to receiver's hips
+            { k: "dot", cx: 252, cy: 201, r: 7 },
+          ]}
+        />
       </g>
-      <g className="pd-rockh"><MotionArc x={252} y={150} dir={-1} /></g>
+      <g className="pd-rockh"><MotionArrow x={256} y={150} axis="h" len={22} /></g>
     </>
   ));
 }
@@ -377,28 +537,43 @@ function DoggySupported(paused: boolean) {
 function DoggyKneeling(paused: boolean) {
   return svgWrap("Rear-entry, kneeling: the receiving partner is on hands and knees with a level back, the other partner kneels upright behind. Keep the back level and neutral, not sagging.", paused, (
     <>
-      <Floor y={250} />
-      {/* RECEIVER hands and knees */}
+      <Floor y={252} />
+      {/* RECEIVER on hands and knees, level back, head left. */}
       <g className="pd-breathe">
-        {/* arms down */}
-        <Limb pts={[120, 196, 120, 248]} w={12} tone="rx" />
-        <Head x={104} y={194} r={17} tone="rx" />
-        {/* neck + level back */}
-        <Limb pts={[118, 192, 232, 192]} w={26} tone="rx" />
-        {/* thighs down to knees */}
-        <Limb pts={[232, 192, 236, 248]} w={22} tone="rx" />
-        <Spine pts={[122, 184, 180, 183, 232, 184]} />
+        <Figure
+          tone="rx"
+          head={{ x: 100, y: 194, r: 17, face: 180 }}
+          segs={[
+            { k: "bone", pts: [120, 198, 120, 248], w: 12 }, // arm to floor
+            { k: "dot", cx: 120, cy: 250, r: 8 }, // hand
+            { k: "mass", cx: 130, cy: 194, rx: 18, ry: 16 }, // shoulders
+            { k: "bone", pts: [124, 193, 182, 192, 234, 193], w: 26 }, // level back
+            { k: "mass", cx: 240, cy: 194, rx: 24, ry: 21 }, // pelvis
+            { k: "bone", pts: [240, 196, 244, 246], w: 22 }, // thigh down
+            { k: "bone", pts: [244, 246, 268, 250], w: 18 }, // shin on floor
+            { k: "dot", cx: 270, cy: 250, r: 9 },
+          ]}
+        />
+        <Spine2 pts={[126, 185, 182, 184, 234, 185]} />
       </g>
-      {/* PARTNER kneeling behind */}
+      {/* PARTNER kneeling behind, rocking. On top + halo. */}
       <g className="pd-rockh">
-        <Limb pts={[286, 250, 286, 212]} w={22} tone="pt" />
-        <Limb pts={[286, 250, 326, 250]} w={18} tone="pt" />
-        <Limb pts={[286, 212, 282, 174]} w={24} tone="pt" />
-        <Limb pts={[284, 194, 252, 192]} w={11} tone="pt" />
-        <Head x={282} y={156} r={18} tone="pt" />
-        <Spine pts={[286, 210, 283, 178]} />
+        <Figure
+          tone="pt"
+          halo
+          head={{ x: 290, y: 154, r: 19, face: 180 }}
+          segs={[
+            { k: "bone", pts: [328, 250, 290, 248], w: 18 }, // shin flat
+            { k: "bone", pts: [290, 248, 290, 210], w: 23 }, // thigh vertical
+            { k: "mass", cx: 290, cy: 208, rx: 22, ry: 19 }, // pelvis
+            { k: "bone", pts: [290, 208, 288, 172], w: 24 }, // torso
+            { k: "mass", cx: 288, cy: 172, rx: 19, ry: 17 }, // chest
+            { k: "bone", pts: [289, 180, 256, 192], w: 12 }, // arm to receiver's hips
+            { k: "dot", cx: 254, cy: 193, r: 7 },
+          ]}
+        />
       </g>
-      <g className="pd-rockh"><MotionArc x={254} y={150} dir={-1} /></g>
+      <g className="pd-rockh"><MotionArrow x={258} y={150} axis="h" len={22} /></g>
     </>
   ));
 }
@@ -407,23 +582,44 @@ function DoggyKneeling(paused: boolean) {
 function Scissor(paused: boolean) {
   return svgWrap("Side-lying scissor: both partners lie on their sides with legs interleaved. Side-lying keeps spinal load low for both.", paused, (
     <>
-      <Floor y={250} />
-      {/* RECEIVER side-lying, head left */}
+      <Floor y={252} />
+      {/* RECEIVER side-lying, head left; hips meet partner's in the centre. */}
       <g className="pd-breathe">
-        <Head x={84} y={232} r={18} tone="rx" />
-        <Limb pts={[102, 234, 196, 240]} w={26} tone="rx" />
-        {/* one leg angled up (interleave) */}
-        <Limb pts={[196, 240, 248, 224, 300, 244]} w={22} tone="rx" />
-        <Spine pts={[106, 228, 196, 234]} />
+        <Figure
+          tone="rx"
+          head={{ x: 80, y: 230, r: 19, face: 180 }}
+          segs={[
+            { k: "mass", cx: 120, cy: 232, rx: 20, ry: 17 }, // chest
+            { k: "bone", pts: [100, 232, 156, 236, 196, 240], w: 25 }, // trunk
+            { k: "mass", cx: 204, cy: 242, rx: 23, ry: 19 }, // pelvis (centre)
+            { k: "bone", pts: [204, 240, 250, 224], w: 21 }, // top leg toward partner
+            { k: "bone", pts: [250, 224, 296, 240], w: 17 }, // shin crossing
+            { k: "dot", cx: 298, cy: 241, r: 9 },
+            { k: "bone", pts: [206, 244, 258, 248], w: 15 }, // bottom leg
+            { k: "dot", cx: 260, cy: 249, r: 7 },
+          ]}
+        />
+        <Spine2 pts={[102, 226, 156, 230, 196, 234]} />
       </g>
-      {/* PARTNER side-lying, head right, mirrored, legs cross */}
+      {/* PARTNER side-lying, head right (mirrored), legs interleave. On top + halo. */}
       <g className="pd-rockh">
-        <Head x={396} y={232} r={18} tone="pt" />
-        <Limb pts={[378, 234, 284, 240]} w={26} tone="pt" />
-        <Limb pts={[284, 240, 232, 228, 180, 246]} w={22} tone="pt" />
-        <Spine pts={[374, 228, 284, 234]} />
+        <Figure
+          tone="pt"
+          halo
+          head={{ x: 400, y: 230, r: 19, face: 0 }}
+          segs={[
+            { k: "mass", cx: 360, cy: 232, rx: 20, ry: 17 }, // chest
+            { k: "bone", pts: [380, 232, 324, 236, 284, 240], w: 25 }, // trunk
+            { k: "mass", cx: 276, cy: 242, rx: 23, ry: 19 }, // pelvis (centre)
+            { k: "bone", pts: [276, 240, 230, 224], w: 21 }, // top leg toward receiver
+            { k: "bone", pts: [230, 224, 184, 240], w: 17 }, // shin crossing
+            { k: "dot", cx: 182, cy: 241, r: 9 },
+            { k: "bone", pts: [274, 244, 222, 248], w: 15 }, // bottom leg
+            { k: "dot", cx: 220, cy: 249, r: 7 },
+          ]}
+        />
       </g>
-      <g className="pd-rockh"><MotionArc x={240} y={150} /></g>
+      <g className="pd-rockh"><MotionArrow x={240} y={150} axis="h" len={24} /></g>
     </>
   ));
 }
@@ -432,28 +628,45 @@ function Scissor(paused: boolean) {
 function SeatedLap(paused: boolean) {
   return svgWrap("Seated lap embrace: one partner sits upright, the other straddles their lap facing them, both spines stacked and tall. Good for a neutral, upright back.", paused, (
     <>
-      <Floor y={250} />
-      {/* simple seat block */}
-      <rect x={250} y={216} width={86} height={34} rx={4} fill="#e7d39a" stroke="#c9ab5e" strokeWidth="2" />
-      {/* PARTNER seated upright (amber), facing left */}
+      <Floor y={252} />
+      {/* seat */}
+      <rect x={280} y={220} width={84} height={32} rx={4} fill="#e7d39a" stroke="#c9ab5e" strokeWidth="2" />
+      {/* PARTNER seated upright on the seat, facing left toward the receiver. */}
       <g className="pd-breathe">
-        {/* lower legs down off seat */}
-        <Limb pts={[300, 248, 300, 250]} w={18} tone="pt" />
-        <Limb pts={[300, 216, 300, 160]} w={26} tone="pt" />
-        <Limb pts={[300, 184, 264, 196]} w={12} tone="pt" />
-        <Head x={300} y={140} r={19} tone="pt" />
-        <Spine pts={[300, 214, 300, 164]} />
+        <Figure
+          tone="pt"
+          head={{ x: 304, y: 142, r: 20, face: 180 }}
+          segs={[
+            { k: "bone", pts: [304, 218, 266, 236], w: 22 }, // thigh forward
+            { k: "bone", pts: [266, 236, 252, 250], w: 18 }, // shin to floor
+            { k: "dot", cx: 250, cy: 251, r: 9 },
+            { k: "mass", cx: 304, cy: 216, rx: 22, ry: 19 }, // pelvis on seat
+            { k: "bone", pts: [304, 214, 304, 162], w: 24 }, // torso upright
+            { k: "mass", cx: 304, cy: 172, rx: 19, ry: 18 }, // chest
+            { k: "bone", pts: [304, 182, 272, 196], w: 12 }, // arm around receiver
+            { k: "dot", cx: 270, cy: 197, r: 7 },
+          ]}
+        />
+        <Spine2 pts={[304, 210, 304, 166]} />
       </g>
-      {/* RECEIVER straddling lap, facing partner, upright, rocks */}
+      {/* RECEIVER astride the partner's lap, facing them, upright, rocking. On top + halo. */}
       <g className="pd-rockup">
-        {/* knees tucked beside partner hips */}
-        <Limb pts={[258, 226, 232, 244]} w={18} tone="rx" />
-        <Limb pts={[258, 200, 258, 150]} w={26} tone="rx" />
-        <Limb pts={[258, 172, 292, 184]} w={12} tone="rx" />
-        <Head x={258} y={130} r={19} tone="rx" />
-        <Spine pts={[258, 204, 258, 154]} />
+        <Figure
+          tone="rx"
+          halo
+          head={{ x: 264, y: 138, r: 19, face: 0 }}
+          segs={[
+            { k: "bone", pts: [266, 222, 240, 240], w: 17 }, // knee tucked beside partner
+            { k: "dot", cx: 238, cy: 241, r: 7 },
+            { k: "mass", cx: 266, cy: 220, rx: 20, ry: 18 }, // hips on lap
+            { k: "bone", pts: [266, 218, 264, 160], w: 24 }, // torso upright
+            { k: "mass", cx: 264, cy: 170, rx: 18, ry: 17 }, // chest
+            { k: "bone", pts: [264, 178, 296, 192], w: 11 }, // arm around partner
+            { k: "dot", cx: 298, cy: 193, r: 7 },
+          ]}
+        />
       </g>
-      <g className="pd-rockup"><MotionArc x={210} y={138} /></g>
+      <g className="pd-rockup"><MotionArrow x={224} y={150} axis="v" len={20} /></g>
     </>
   ));
 }
@@ -462,31 +675,46 @@ function SeatedLap(paused: boolean) {
 function StandingRear(paused: boolean) {
   return svgWrap("Standing, rear: both partners stand, the front partner braces forward with hands on a surface, the other stands close behind. Bracing keeps the front partner's spine supported.", paused, (
     <>
-      <Floor y={288} />
+      <Floor y={290} />
       {/* brace surface (counter) */}
-      <rect x={40} y={214} width={96} height={14} rx={3} fill="#e7d39a" stroke="#c9ab5e" strokeWidth="2" />
-      <rect x={46} y={228} width={10} height={60} fill="#d9ccae" />
-      <rect x={120} y={228} width={10} height={60} fill="#d9ccae" />
-      {/* FRONT partner braced forward (receiver, oxblood) */}
+      <rect x={36} y={216} width={100} height={14} rx={3} fill="#e7d39a" stroke="#c9ab5e" strokeWidth="2" />
+      <rect x={44} y={230} width={10} height={60} fill="#d9ccae" />
+      <rect x={120} y={230} width={10} height={60} fill="#d9ccae" />
+      {/* FRONT partner (receiver) braced forward, hands on the counter. */}
       <g className="pd-breathe">
-        {/* legs */}
-        <Limb pts={[176, 288, 168, 234]} w={20} tone="rx" />
-        {/* torso leaning forward toward counter */}
-        <Limb pts={[168, 234, 130, 210]} w={26} tone="rx" />
-        {/* arms to counter */}
-        <Limb pts={[140, 216, 108, 220]} w={12} tone="rx" />
-        <Head x={112} y={206} r={18} tone="rx" />
-        <Spine pts={[170, 232, 134, 208]} />
+        <Figure
+          tone="rx"
+          head={{ x: 116, y: 206, r: 17, face: 180 }}
+          segs={[
+            { k: "bone", pts: [178, 290, 170, 236], w: 20 }, // leg to floor
+            { k: "dot", cx: 180, cy: 291, r: 9 },
+            { k: "mass", cx: 168, cy: 234, rx: 22, ry: 20 }, // hips (pushed back)
+            { k: "bone", pts: [166, 232, 136, 212], w: 25 }, // torso leaning fwd
+            { k: "mass", cx: 132, cy: 210, rx: 18, ry: 16 }, // chest
+            { k: "bone", pts: [140, 214, 112, 222], w: 12 }, // arm to counter
+            { k: "dot", cx: 110, cy: 223, r: 7 },
+          ]}
+        />
+        <Spine2 pts={[166, 228, 140, 212]} />
       </g>
-      {/* BACK partner standing close behind, rocks */}
+      {/* BACK partner standing close behind, rocking. On top + halo. */}
       <g className="pd-rockh">
-        <Limb pts={[226, 288, 220, 232]} w={20} tone="pt" />
-        <Limb pts={[220, 232, 214, 172]} w={24} tone="pt" />
-        <Limb pts={[216, 200, 184, 212]} w={12} tone="pt" />
-        <Head x={214} y={152} r={18} tone="pt" />
-        <Spine pts={[220, 230, 214, 176]} />
+        <Figure
+          tone="pt"
+          halo
+          head={{ x: 214, y: 152, r: 19, face: 180 }}
+          segs={[
+            { k: "bone", pts: [228, 290, 222, 232], w: 20 }, // leg to floor
+            { k: "dot", cx: 230, cy: 291, r: 9 },
+            { k: "mass", cx: 221, cy: 230, rx: 22, ry: 20 }, // pelvis
+            { k: "bone", pts: [221, 230, 216, 174], w: 24 }, // torso upright
+            { k: "mass", cx: 216, cy: 178, rx: 19, ry: 18 }, // chest
+            { k: "bone", pts: [218, 200, 186, 210], w: 12 }, // arm to receiver's hips
+            { k: "dot", cx: 184, cy: 211, r: 7 },
+          ]}
+        />
       </g>
-      <g className="pd-rockh"><MotionArc x={186} y={150} dir={-1} /></g>
+      <g className="pd-rockh"><MotionArrow x={186} y={150} axis="h" len={22} /></g>
     </>
   ));
 }
