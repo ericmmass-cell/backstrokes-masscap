@@ -22,8 +22,11 @@
  */
 
 import { useState, type CSSProperties, type ImgHTMLAttributes } from "react";
-import { PositionAnnotation, type PositionAnnotateData } from "./PositionAnnotation";
+import { PositionAnnotation, type PositionAnnotationProps } from "./PositionAnnotation";
 import { PositionDiagram, hasDiagram } from "./PositionDiagram";
+
+/** The teaching-overlay payload (subset of the annotation component's props). */
+type PositionAnnotateData = Pick<PositionAnnotationProps, "name" | "load" | "loadNote">;
 
 const INK = "#2a2620";
 const OXBLOOD = "#722B2B";
@@ -61,6 +64,10 @@ type PictogramProps = {
   loading?: ImgHTMLAttributes<HTMLImageElement>["loading"];
   /** "high" for the hero image. Default "auto". */
   fetchPriority?: "high" | "low" | "auto";
+  /** Hide the typographic caption strip (used in dense grids). Default true. */
+  showCaption?: boolean;
+  /** Optional teaching overlay (name + spinal-load note). */
+  annotate?: PositionAnnotateData;
 };
 
 /* ───────── metadata ───────── */
