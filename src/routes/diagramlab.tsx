@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { PositionGuide, type Role } from "@/components/PositionGuide";
-import { PositionImage } from "@/components/PositionImage";
+import { PositionImage, DuotoneFilter } from "@/components/PositionImage";
 import type { PictogramKey } from "@/components/Pictogram";
 
 /** which keys have a verified, accurate illustration */
@@ -45,6 +45,7 @@ function DiagramLab() {
 
   return (
     <main style={{ minHeight: "100vh", background: "var(--brand-paper, #F4EFE3)", color: "var(--brand-paper-ink, #2a2620)" }}>
+      <DuotoneFilter />
       <div className="mx-auto px-6 md:px-10 py-12 md:py-16" style={{ maxWidth: 1180 }}>
         {/* ── header ── */}
         <header style={{ maxWidth: 760 }}>
