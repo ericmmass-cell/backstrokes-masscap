@@ -20,6 +20,7 @@ const ROLES: { key: Role; label: string; short: string }[] = [
 ];
 import { PositionDemo } from "@/components/PositionDemo";
 import { Pictogram, type PictogramKey } from "@/components/Pictogram";
+import { PositionGuide } from "@/components/PositionGuide";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PopAtlas } from "@/components/PopAtlas";
 
@@ -331,6 +332,7 @@ function PositionShowcase() {
               })()}
             />
           </div>
+          <PositionGuide pkey={pick.key} role="both" />
         </div>
         <div className="lg:col-span-5 flex flex-col min-w-0">
           <p

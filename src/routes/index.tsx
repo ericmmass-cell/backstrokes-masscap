@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { WorkSchematic } from "@/components/Schematic";
-import { Pictogram } from "@/components/Pictogram";
+import { PositionScene3D } from "@/components/PositionScene3D";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -118,7 +118,7 @@ function Index() {
                 aspectRatio: "4 / 5",
               }}
             >
-              <Pictogram positionKey="spoon" loading="eager" fetchPriority="high" />
+              <PositionScene3D positionKey="spoon" />
               <span
                 className="absolute -top-6 -right-3 font-script text-3xl rotate-[5deg] hidden md:block"
                 style={{ color: "var(--brand-oxblood)" }}
