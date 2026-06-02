@@ -211,6 +211,113 @@ function Vulva({ x, y, angle = 0, r = 9 }: { x: number; y: number; angle?: numbe
   );
 }
 
+/* ════════════════════════════════════════════════════════════════
+   STICK-SKELETON engine — the biomechanics view.
+   The point of BackStroke is the spine: you have to see the hip drive
+   and the SI joint / lumbar while the couple moves. A filled blob hides
+   all of that. A line skeleton shows it: a visible spine, a pelvis that
+   tilts at the hip, marked hip + SI joints. Thin colored bones (dark
+   edge for contrast), joint dots, an open skull.
+   ════════════════════════════════════════════════════════════════ */
+type J = [number, number];
+const PAPER_HALO = "#efe7d4";
+const JOINTCOL = "#2a2620";
+const SICOL = "#9a2f2f"; // SI joint highlight — the thing to watch
+
+function jpath(pts: J[]) {
+  return pts.map((p, i) => `${i ? "L" : "M"} ${p[0]} ${p[1]}`).join(" ");
+}
+
+/* a thin limb bone: paper halo + dark edge + colored core */
+function Bone({ pts, tone, w = 5, halo = true }: { pts: J[]; tone: Tone; w?: number; halo?: boolean }) {
+  const t = TONES[tone];
+  const d = jpath(pts);
+  return (
+    <g>
+      {halo && <path d={d} fill="none" stroke={PAPER_HALO} strokeWidth={w + 5} strokeLinecap="round" strokeLinejoin="round" />}
+      <path d={d} fill="none" stroke={t.line} strokeWidth={w + 2} strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke={t.fill} strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" />
+    </g>
+  );
+}
+
+/* a joint dot (knee, elbow, hip…) */
+function Joint({ p, r = 3.5 }: { p: J; r?: number }) {
+  return (
+    <>
+      <circle cx={p[0]} cy={p[1]} r={r + 1.6} fill={PAPER_HALO} />
+      <circle cx={p[0]} cy={p[1]} r={r} fill={JOINTCOL} />
+    </>
+  );
+}
+
+/* the SI joint — highlighted ring at the sacrum, the back-safety focus */
+function SINode({ p }: { p: J }) {
+  return (
+    <g className="pd-si">
+      <circle cx={p[0]} cy={p[1]} r={8} fill={PAPER_HALO} />
+      <circle cx={p[0]} cy={p[1]} r={6.5} fill="none" stroke={SICOL} strokeWidth={3} />
+      <circle cx={p[0]} cy={p[1]} r={1.6} fill={SICOL} />
+    </g>
+  );
+}
+
+/* open skull */
+function Skull({ p, r = 12, tone }: { p: J; r?: number; tone: Tone }) {
+  const t = TONES[tone];
+  return (
+    <>
+      <circle cx={p[0]} cy={p[1]} r={r + 1.6} fill={PAPER_HALO} />
+      <circle cx={p[0]} cy={p[1]} r={r + 1} fill={t.line} />
+      <circle cx={p[0]} cy={p[1]} r={r} fill={t.fill} />
+    </>
+  );
+}
+
+/* the spine as a visible articulated line with vertebra ticks; the
+   lower (lumbar) third is drawn heavier — that is the at-risk segment */
+function SpineLine({ pts, tone }: { pts: J[]; tone: Tone }) {
+  const t = TONES[tone];
+  const d = jpath(pts);
+  // vertebra ticks along the polyline
+  const ticks = [];
+  for (let i = 0; i < pts.length - 1; i++) {
+    const [ax, ay] = pts[i];
+    const [bx, by] = pts[i + 1];
+    for (let s = 0; s <= 1; s += 0.34) {
+      const x = ax + (bx - ax) * s;
+      const y = ay + (by - ay) * s;
+      const nx = -(by - ay), ny = bx - ax;
+      const L = Math.hypot(nx, ny) || 1;
+      const ux = (nx / L) * 3.2, uy = (ny / L) * 3.2;
+      ticks.push(`M ${x - ux} ${y - uy} L ${x + ux} ${y + uy}`);
+    }
+  }
+  return (
+    <g>
+      <path d={d} fill="none" stroke={PAPER_HALO} strokeWidth={11} strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke={t.line} strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke={t.fill} strokeWidth={4.5} strokeLinecap="round" strokeLinejoin="round" />
+      <path d={ticks.join(" ")} fill="none" stroke={t.line} strokeWidth={1.4} strokeLinecap="round" opacity={0.7} />
+    </g>
+  );
+}
+
+/* pelvis: a small wedge from sacrum to hip socket (it tilts at the hip) */
+function Pelvis({ sacrum, hip, tone }: { sacrum: J; hip: J; tone: Tone }) {
+  const t = TONES[tone];
+  // third point makes the bowl: behind+below the sacrum
+  const bx = sacrum[0] + (sacrum[0] - hip[0]) * 0.35;
+  const by = sacrum[1] + 10;
+  const d = `M ${sacrum[0]} ${sacrum[1]} L ${hip[0]} ${hip[1]} L ${bx} ${by} Z`;
+  return (
+    <g>
+      <path d={d} fill={PAPER_HALO} stroke={PAPER_HALO} strokeWidth={5} strokeLinejoin="round" />
+      <path d={d} fill={t.fill} stroke={t.line} strokeWidth={2.5} strokeLinejoin="round" />
+    </g>
+  );
+}
+
 const CSS = `
 .pd-svg { display:block; width:100%; height:100%; }
 .pd-move { transform-box: view-box; }
@@ -218,15 +325,30 @@ const CSS = `
 @keyframes pdRockV { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-9px); } }
 @keyframes pdRockUp { 0%,100%{ transform: translateY(0) rotate(0deg);} 50%{ transform: translateY(-7px) rotate(-2deg);} }
 @keyframes pdBreathe { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-1.5px);} }
+/* the PELVIS thrusts (the driver) while the spine stays still. Each pose
+   sets its own thrust vector via CSS custom props --tx/--ty. */
+@keyframes pdThrust { 0%,100%{ transform: translate(0,0);} 45%{ transform: translate(var(--tx,-7px), var(--ty,3px));} }
+@keyframes pdThrustRot { 0%,100%{ transform: rotate(0deg);} 45%{ transform: rotate(var(--rot,-7deg));} }
+@keyframes pdHipDrive { 0%,100%{ transform: rotate(0deg);} 50%{ transform: rotate(-9deg);} }
+@keyframes pdHipV { 0%,100%{ transform: rotate(0deg);} 50%{ transform: rotate(8deg);} }
+@keyframes pdSiPulse { 0%,100%{ opacity:0.6; } 50%{ opacity:1; } }
+.pd-hipdrive, .pd-hipv, .pd-thrustrot { transform-box: view-box; }
+.pd-run .pd-thrust { animation: pdThrust 1400ms ease-in-out infinite; }
+.pd-run .pd-thrustrot { animation: pdThrustRot 1400ms ease-in-out infinite; }
+.pd-run .pd-hipdrive { animation: pdHipDrive 1900ms ease-in-out infinite; }
+.pd-run .pd-hipv { animation: pdHipV 1900ms ease-in-out infinite; }
 .pd-run .pd-rockh { animation: pdRockH 2200ms ease-in-out infinite; }
 .pd-run .pd-rockv { animation: pdRockV 2200ms ease-in-out infinite; }
 .pd-run .pd-rockup { animation: pdRockUp 2600ms ease-in-out infinite; }
 .pd-run .pd-breathe { animation: pdBreathe 4200ms ease-in-out infinite; }
+.pd-run .pd-si { animation: pdSiPulse 1900ms ease-in-out infinite; }
 .pd-arc { opacity:0; transition: opacity 300ms ease; }
-.pd-run .pd-arc { opacity:0.7; }
+.pd-run .pd-arc { opacity:0.85; }
 @media (prefers-reduced-motion: reduce){
-  .pd-run .pd-rockh,.pd-run .pd-rockv,.pd-run .pd-rockup,.pd-run .pd-breathe{ animation:none; transform:none; }
-  .pd-arc{ opacity:0.7; }
+  .pd-run .pd-rockh,.pd-run .pd-rockv,.pd-run .pd-rockup,.pd-run .pd-breathe,
+  .pd-run .pd-hipdrive,.pd-run .pd-hipv,.pd-run .pd-si,
+  .pd-run .pd-thrust,.pd-run .pd-thrustrot{ animation:none; transform:none; opacity:1; }
+  .pd-arc{ opacity:0.85; }
 }
 `;
 
@@ -240,54 +362,115 @@ function svgWrap(label: string, paused: boolean, children: React.ReactNode) {
   );
 }
 
+/* ════════════════════════════════════════════════════════════════
+   2.5D OBLIQUE PROJECTION — gives orientation (side-lying vs prone).
+   World coords: X along the bed (screen right), Y height off the bed,
+   Z depth into the scene. A point farther back projects up-and-right and
+   draws lighter, so the roll of the body is readable. The stick-skeleton
+   primitives above are reused; these wrappers just project + depth-fade.
+   ════════════════════════════════════════════════════════════════ */
+type P3 = [number, number, number];
+const OX3 = 58, OY3 = 250, KZX = 0.5, KZY = 0.34;
+function prj(p: P3): J {
+  return [OX3 + p[0] + p[2] * KZX, OY3 - p[1] - p[2] * KZY];
+}
+function fade(z: number) {
+  return Math.max(0.5, Math.min(1, 1.08 - z / 165));
+}
+function zAvg(pts: P3[]) {
+  return pts.reduce((s, p) => s + p[2], 0) / pts.length;
+}
+function Bone3({ pts, tone, w = 5, halo = true }: { pts: P3[]; tone: Tone; w?: number; halo?: boolean }) {
+  return <g opacity={fade(zAvg(pts))}><Bone pts={pts.map(prj)} tone={tone} w={w} halo={halo} /></g>;
+}
+function Joint3({ p, r = 3.5 }: { p: P3; r?: number }) {
+  return <g opacity={fade(p[2])}><Joint p={prj(p)} r={r} /></g>;
+}
+function Skull3({ p, r = 12, tone }: { p: P3; r?: number; tone: Tone }) {
+  return <g opacity={fade(p[2])}><Skull p={prj(p)} r={r} tone={tone} /></g>;
+}
+function Spine3({ pts, tone }: { pts: P3[]; tone: Tone }) {
+  return <g opacity={fade(zAvg(pts))}><SpineLine pts={pts.map(prj)} tone={tone} /></g>;
+}
+function Pelvis3({ sacrum, hip, tone }: { sacrum: P3; hip: P3; tone: Tone }) {
+  return <g opacity={fade((sacrum[2] + hip[2]) / 2)}><Pelvis sacrum={prj(sacrum)} hip={prj(hip)} tone={tone} /></g>;
+}
+function SINode3({ p }: { p: P3 }) {
+  return <g opacity={fade(p[2])}><SINode p={prj(p)} /></g>;
+}
+/* a bed/floor plane drawn in the same projection (a receding parallelogram) */
+function BedPlane({ x0, x1, z0, z1, h = 0 }: { x0: number; x1: number; z0: number; z1: number; h?: number }) {
+  const A = prj([x0, h, z0]), B = prj([x1, h, z0]), C = prj([x1, h, z1]), D = prj([x0, h, z1]);
+  const poly = `${A[0]},${A[1]} ${B[0]},${B[1]} ${C[0]},${C[1]} ${D[0]},${D[1]}`;
+  return (
+    <g>
+      <polygon points={`${A[0]},${A[1]} ${B[0]},${B[1]} ${B[0]},${B[1] + 12} ${A[0]},${A[1] + 12}`} fill="#e2d4b6" stroke="#d4c4a2" strokeWidth={1.5} />
+      <polygon points={poly} fill="#efe6d2" stroke="#d9ccae" strokeWidth={2} />
+    </g>
+  );
+}
+/* compute the projected screen-delta of a thrust vector (for CSS --tx/--ty) */
+function thrustDelta(from: P3, to: P3, scale = 0.3): { tx: string; ty: string } {
+  const a = prj(from), b = prj(to);
+  return { tx: `${((b[0] - a[0]) * scale).toFixed(1)}px`, ty: `${((b[1] - a[1]) * scale).toFixed(1)}px` };
+}
+
 /* ════════════════ POSES ════════════════ */
 
-/* SPOON — both side-lying, nested, facing left. Partner (amber) behind rocks in. */
+/* SPOON — 2.5D. Both side-lying (you can read the roll), nested. The
+   partner behind drives the PELVIS while the spine stays neutral; SI marked. */
 function Spoon(paused: boolean) {
-  return svgWrap("Spoon: both partners lie on their sides facing the same way, the partner behind nested against the receiver's back with knees drawn up, the top arm draped over. The partner behind rocks gently.", paused, (
+  const th = thrustDelta([176, 36, 84], [158, 28, 52], 0.34); // partner pelvis -> receiver
+  return svgWrap("Spoon: both lie on their sides, shown at an angle so you can see they are side-lying, not face-down. The partner behind drives from the pelvis while keeping the spine neutral. The sacroiliac joint is marked on both.", paused, (
     <>
-      <Floor y={255} />
-      {/* pillow under both heads */}
-      <rect x={74} y={210} width={84} height={22} rx={11} fill="#efe6d2" stroke="#d9ccae" strokeWidth="2" />
-      {/* RECEIVER — front comma (head left, horizontal trunk, knees curled up). Under. */}
+      <Floor y={255} shadow={false} />
+      <BedPlane x0={-14} x1={210} z0={6} z1={110} />
+
+      {/* PARTNER — behind (higher Z + higher Y, draws lighter). Spine neutral + still. */}
+      <g>
+        <Spine3 pts={[[78, 46, 90], [116, 45, 90], [150, 44, 90], [170, 44, 90]]} tone="pt" />
+        <Bone3 pts={[[78, 46, 90], [54, 46, 90]]} tone="pt" w={6} halo={false} />
+        <Skull3 p={[48, 46, 90]} tone="pt" />
+        <Joint3 p={[78, 46, 90]} />
+        <SINode3 p={[170, 44, 90]} />
+      </g>
+
+      {/* RECEIVER — front (low Z, solid). Side-lying: the raised TOP leg is the tell. */}
       <g className="pd-breathe">
-        <Figure
-          tone="rx"
-          head={{ x: 120, y: 214, r: 24, face: 180 }}
-          segs={[
-            { k: "mass", cx: 164, cy: 216, rx: 22, ry: 20 }, // chest
-            { k: "bone", pts: [158, 216, 224, 220, 282, 224], w: 27 }, // horizontal trunk
-            { k: "mass", cx: 290, cy: 226, rx: 27, ry: 23 }, // pelvis
-            { k: "bone", pts: [150, 220, 126, 240, 152, 252], w: 13 }, // front arm on floor
-            { k: "dot", cx: 154, cy: 253, r: 8 }, // hand
-            { k: "bone", pts: [288, 226, 248, 244], w: 24 }, // thigh (knee curls fwd-left)
-            { k: "bone", pts: [248, 244, 262, 272], w: 20 }, // shin (down to floor)
-            { k: "dot", cx: 264, cy: 273, r: 10 }, // foot
-          ]}
-        />
-        <Spine2 pts={[156, 206, 222, 210, 282, 215]} />
+        {/* spine + skull, gentle line */}
+        <Spine3 pts={[[44, 30, 42], [86, 30, 43], [126, 30, 44], [150, 30, 44]]} tone="rx" />
+        <Bone3 pts={[[44, 30, 42], [22, 30, 42]]} tone="rx" w={6} halo={false} />
+        <Skull3 p={[16, 30, 42]} tone="rx" />
+        <Pelvis3 sacrum={[150, 30, 44]} hip={[160, 27, 44]} tone="rx" />
+        {/* down leg resting on the bed (low, slightly back) */}
+        <Bone3 pts={[[160, 27, 44], [132, 8, 58], [158, 4, 64]]} tone="rx" w={5} />
+        {/* top leg RAISED + forward — the side-lying tell */}
+        <Bone3 pts={[[160, 27, 44], [128, 48, 22]]} tone="rx" w={6} />
+        <Bone3 pts={[[128, 48, 22], [156, 24, 16]]} tone="rx" w={5} />
+        {/* top arm forward on the bed */}
+        <Bone3 pts={[[48, 31, 42], [74, 14, 28], [100, 8, 26]]} tone="rx" w={4.5} />
+        <Joint3 p={[48, 31, 42]} />
+        <Joint3 p={[160, 27, 44]} />
+        <Joint3 p={[128, 48, 22]} />
+        <Joint3 p={[156, 24, 16]} r={3} />
+        <SINode3 p={[150, 30, 44]} />
       </g>
-      {/* PARTNER — same comma, nested directly behind+above (offset up+right). On top, halo. */}
-      <g className="pd-rockh">
-        <Figure
-          tone="pt"
-          halo
-          head={{ x: 150, y: 168, r: 24, face: 180 }}
-          segs={[
-            { k: "mass", cx: 194, cy: 170, rx: 21, ry: 19 }, // chest
-            { k: "bone", pts: [188, 170, 254, 174, 312, 178], w: 26 }, // horizontal trunk
-            { k: "mass", cx: 320, cy: 180, rx: 26, ry: 22 }, // pelvis (behind receiver's)
-            { k: "bone", pts: [186, 178, 228, 202, 262, 216], w: 14 }, // top arm draped over receiver's waist
-            { k: "dot", cx: 264, cy: 217, r: 8 }, // hand
-            { k: "bone", pts: [314, 180, 280, 188], w: 23 }, // top thigh (knee tucks toward chest)
-            { k: "bone", pts: [280, 188, 306, 208], w: 19 }, // shin folds back, nested above receiver
-            { k: "dot", cx: 309, cy: 209, r: 10 }, // foot
-          ]}
-        />
-        {/* rear-entry connection: partner enters from behind */}
-        <Member base={[316, 198]} tip={[294, 216]} w={11} />
+
+      {/* PARTNER's draped top arm + thrusting PELVIS + top leg — on top at the contact */}
+      <g>
+        <Bone3 pts={[[80, 47, 88], [108, 28, 56], [138, 14, 48]]} tone="pt" w={4.5} />
+        <Joint3 p={[80, 47, 88]} />
       </g>
-      <g className="pd-rockh"><MotionArrow x={330} y={150} axis="h" len={26} /></g>
+      <g className="pd-thrust" style={{ ["--tx" as string]: th.tx, ["--ty" as string]: th.ty }}>
+        <Pelvis3 sacrum={[170, 44, 90]} hip={[180, 41, 88]} tone="pt" />
+        {/* top leg draped over the receiver */}
+        <Bone3 pts={[[180, 41, 88], [146, 40, 40]]} tone="pt" w={6} />
+        <Bone3 pts={[[146, 40, 40], [172, 24, 34]]} tone="pt" w={5} />
+        <Joint3 p={[180, 41, 88]} />
+        <Joint3 p={[146, 40, 40]} />
+        <Joint3 p={[172, 24, 34]} r={3} />
+      </g>
+      <g className="pd-arc"><MotionArrow x={300} y={150} axis="h" len={16} /></g>
     </>
   ));
 }
