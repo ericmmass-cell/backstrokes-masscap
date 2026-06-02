@@ -180,35 +180,15 @@ function MotionArrow({ x, y, axis = "h", len = 28 }: { x: number; y: number; axi
   );
 }
 
-/* ── anatomy: the connection (what makes the position legible) ──
-   The penetrating member bridges the two pelvises so you can see who
-   enters whom and where. Drawn in the penetrator's tone (it is their
-   body). Clinical, not lurid — just the point of contact. */
-const FLESH = { fill: "#cf8b78", line: "#8a4a3b" }; // genital flesh, distinct from both bodies
-
-function Member({ base, tip, w = 11 }: { base: [number, number]; tip: [number, number]; w?: number }) {
-  const d = `M ${base[0]} ${base[1]} L ${tip[0]} ${tip[1]}`;
-  const g = w / 2 + 2; // glans radius
-  return (
-    <g className="pd-member">
-      <path d={d} fill="none" stroke={FLESH.line} strokeWidth={w + 3} strokeLinecap="round" />
-      <circle cx={tip[0]} cy={tip[1]} r={g + 1.5} fill={FLESH.line} />
-      <path d={d} fill="none" stroke={FLESH.fill} strokeWidth={w} strokeLinecap="round" />
-      <circle cx={tip[0]} cy={tip[1]} r={g} fill={FLESH.fill} />
-    </g>
-  );
+/* Anatomy intentionally omitted. These are abstract diagrams: two-tone
+   figure silhouettes that show the arrangement and the motion, with no
+   genitals, faces, or skin. The point of contact is implied by the pose,
+   not drawn. Member/Vulva are no-ops so the pose code can stay unchanged. */
+function Member(_props: { base: [number, number]; tip: [number, number]; w?: number }) {
+  return null;
 }
-
-/* the receiver's vulva — a small cleft mark at the point of entry */
-function Vulva({ x, y, angle = 0, r = 9 }: { x: number; y: number; angle?: number; r?: number }) {
-  const a = (angle * Math.PI) / 180;
-  const dx = Math.cos(a) * r, dy = Math.sin(a) * r;
-  return (
-    <g>
-      <path d={`M ${x - dx} ${y - dy} L ${x + dx} ${y + dy}`} stroke={FLESH.line} strokeWidth="6" strokeLinecap="round" />
-      <path d={`M ${x - dx * 0.7} ${y - dy * 0.7} L ${x + dx * 0.7} ${y + dy * 0.7}`} stroke="#5e2a26" strokeWidth="2.5" strokeLinecap="round" />
-    </g>
-  );
+function Vulva(_props: { x: number; y: number; angle?: number; r?: number }) {
+  return null;
 }
 
 /* ════════════════════════════════════════════════════════════════
