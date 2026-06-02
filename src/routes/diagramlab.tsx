@@ -9,23 +9,23 @@ const HAS_IMAGE = new Set<PictogramKey>([
   "spoon", "cowgirl-upright", "doggy-kneeling", "scissor", "seated-lap", "side-T",
 ]);
 
-/** /diagramlab — throwaway review page. NOT in nav. Deleted before ship. */
+/** /diagramlab — polished position-library review page. NOT in nav. */
 export const Route = createFileRoute("/diagramlab")({
   component: DiagramLab,
-  head: () => ({ meta: [{ title: "Position card lab" }] }),
+  head: () => ({ meta: [{ title: "Position library · BackStroke" }] }),
 });
 
 const ALL: { key: PictogramKey; label: string }[] = [
   { key: "spoon", label: "Spoon" },
-  { key: "supine-knees-up", label: "Modified missionary (bolster)" },
-  { key: "missionary", label: "Missionary" },
-  { key: "side-T", label: "Side-lying T" },
-  { key: "edge-bed", label: "Edge of bed" },
   { key: "cowgirl-upright", label: "Receiver on top" },
-  { key: "doggy-supported", label: "Supported rear-entry" },
-  { key: "doggy-kneeling", label: "Rear-entry kneeling" },
+  { key: "doggy-kneeling", label: "Rear-entry, kneeling" },
   { key: "scissor", label: "Side-lying scissor" },
   { key: "seated-lap", label: "Seated lap" },
+  { key: "side-T", label: "Side-lying T" },
+  { key: "supine-knees-up", label: "Modified missionary" },
+  { key: "missionary", label: "Missionary" },
+  { key: "edge-bed", label: "Edge of bed" },
+  { key: "doggy-supported", label: "Supported rear-entry" },
   { key: "standing", label: "Standing, rear" },
 ];
 
@@ -42,82 +42,111 @@ function DiagramLab() {
       ? new URLSearchParams(window.location.search).get("only")
       : null;
   const keys = only ? ALL.filter((k) => only.split(",").includes(k.key)) : ALL;
+
   return (
-    <div style={{ minHeight: "100vh", background: "#F4EFE3", color: "#2a2620", padding: "28px 20px" }}>
-      <div style={{ maxWidth: 680, margin: "0 auto" }}>
-        <p
-          style={{
-            fontFamily: "ui-monospace, monospace",
-            fontSize: 11,
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: "#8a4a3b",
-            marginBottom: 14,
-          }}
-        >
-          Position cards · whose back are we protecting?
-        </p>
-        {/* the dependency path: pick the role, the cards tailor to it */}
-        <div style={{ display: "flex", gap: 8, marginBottom: 28, position: "sticky", top: 0, paddingTop: 6, paddingBottom: 10, background: "#F4EFE3", zIndex: 2 }}>
-          {ROLES.map((r) => {
-            const active = role === r.id;
-            return (
-              <button
-                key={r.id}
-                type="button"
-                onClick={() => setRole(r.id)}
-                style={{
-                  fontFamily: "ui-monospace, monospace",
-                  fontSize: 12,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  padding: "9px 18px",
-                  borderRadius: 999,
-                  cursor: "pointer",
-                  border: `1px solid ${active ? "#722B2B" : "#cdbf9f"}`,
-                  background: active ? "#722B2B" : "transparent",
-                  color: active ? "#F4EFE3" : "#6b5d48",
-                }}
-              >
-                {r.label}
-              </button>
-            );
-          })}
+    <main style={{ minHeight: "100vh", background: "var(--brand-paper, #F4EFE3)", color: "var(--brand-paper-ink, #2a2620)" }}>
+      <div className="mx-auto px-6 md:px-10 py-12 md:py-16" style={{ maxWidth: 1180 }}>
+        {/* ── header ── */}
+        <header style={{ maxWidth: 760 }}>
+          <p className="font-mono-label text-[11px] tracking-[0.28em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
+            The position library
+          </p>
+          <h1
+            className="font-serif-display italic mt-4 leading-[0.98] tracking-[-0.02em]"
+            style={{ fontSize: "clamp(34px, 6vw, 64px)" }}
+          >
+            Sex, ranked by what your spine will sign off on.
+          </h1>
+          <p className="mt-5 text-base md:text-lg leading-relaxed" style={{ color: "oklch(0.42 0.02 40)" }}>
+            Everyone knows the positions. Nobody tells you which ones quietly wreck a lower back,
+            or how to run the good ones so they stay good. We do. And because the same position is
+            a gift for one of you and a trap for the other, you tell us whose back is the problem.
+          </p>
+        </header>
+
+        {/* ── role control ── */}
+        <div className="mt-9 flex flex-col gap-3">
+          <p className="font-mono-label text-[10px] tracking-[0.24em] uppercase" style={{ color: "oklch(0.5 0.02 40)" }}>
+            Whose back are we saving?
+          </p>
+          <div
+            role="radiogroup"
+            aria-label="Whose back to protect"
+            className="inline-flex p-1 rounded-full w-fit"
+            style={{ border: "1px solid var(--brand-rule, #cdbf9f)", background: "rgba(255,255,255,0.4)" }}
+          >
+            {ROLES.map((r) => {
+              const active = role === r.id;
+              return (
+                <button
+                  key={r.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={active}
+                  onClick={() => setRole(r.id)}
+                  className="font-mono-label text-[12px] tracking-[0.14em] uppercase rounded-full transition-all"
+                  style={{
+                    padding: "10px 22px",
+                    cursor: "pointer",
+                    border: "none",
+                    background: active ? "var(--brand-oxblood, #722B2B)" : "transparent",
+                    color: active ? "#F4EFE3" : "oklch(0.45 0.02 40)",
+                  }}
+                >
+                  {r.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 36 }}>
+
+        {/* ── cards ── */}
+        <div className="mt-12 grid gap-7" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(330px, 1fr))" }}>
           {keys.map(({ key, label }) => (
             <article
               key={key}
-              style={{ border: "1px solid #d9ccae", borderRadius: 16, background: "#FBF7EC", padding: 24 }}
+              className="group flex flex-col overflow-hidden rounded-2xl transition-transform duration-200 hover:-translate-y-1"
+              style={{
+                border: "1px solid var(--brand-rule, #d9ccae)",
+                background: "#FBF7EC",
+                boxShadow: "0 1px 0 rgba(0,0,0,0.03)",
+              }}
             >
-              <h2
-                style={{
-                  fontFamily: "Georgia, 'Times New Roman', serif",
-                  fontStyle: "italic",
-                  fontSize: 30,
-                  lineHeight: 1,
-                  margin: "0 0 16px",
-                }}
-              >
-                {label}.
-              </h2>
+              {/* banner */}
               {HAS_IMAGE.has(key) ? (
-                <div style={{ maxWidth: 360, marginBottom: 20 }}>
-                  <PositionImage
-                    src={`/positions/${key}.png`}
-                    alt={`${label} illustration`}
-                  />
-                </div>
+                <PositionImage src={`/positions/${key}.png`} alt={`${label} illustration`} style={{ borderRadius: 0, border: "none", borderBottom: "1px solid var(--brand-rule, #e2d7bf)" }} />
               ) : (
-                <p style={{ fontFamily: "ui-monospace, monospace", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "#9a7a5a", marginBottom: 20 }}>
-                  Illustration: sourcing accurate art · placeholder removed
-                </p>
+                <div
+                  className="flex items-center justify-center"
+                  style={{ aspectRatio: "4 / 3", background: "linear-gradient(135deg, #efe7d2, #e6dcc7)", borderBottom: "1px solid var(--brand-rule, #e2d7bf)" }}
+                >
+                  <span className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-center px-6" style={{ color: "#9a7a5a" }}>
+                    Illustration in sourcing
+                  </span>
+                </div>
               )}
-              <PositionGuide pkey={key} role={role} />
+
+              {/* body */}
+              <div className="p-6 flex flex-col">
+                <h2 className="font-serif-display italic leading-none tracking-[-0.01em]" style={{ fontSize: 26 }}>
+                  {label}.
+                </h2>
+                <div className="mt-5">
+                  <PositionGuide pkey={key} role={role} />
+                </div>
+              </div>
             </article>
           ))}
         </div>
+
+        {/* ── footer ── */}
+        <footer className="mt-14 pt-6" style={{ borderTop: "1px solid var(--brand-rule, #d9ccae)" }}>
+          <p className="text-xs italic leading-relaxed" style={{ color: "oklch(0.5 0.02 40)", maxWidth: 620 }}>
+            Illustrations: Seedfeeder, via Wikimedia Commons, CC BY-SA. Information, not a diagnosis.
+            Your body keeps the gavel. If a position hurts, it is a no, and no amount of pillow geometry overrides that.
+          </p>
+        </footer>
       </div>
-    </div>
+    </main>
   );
 }
