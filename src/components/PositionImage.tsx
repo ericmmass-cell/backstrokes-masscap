@@ -43,6 +43,29 @@ export function useExplicitOk(): [boolean, () => void] {
   return [ok, setOkGlobal];
 }
 
+/** A brand duotone filter (oxblood -> cream) that stylizes the illustrations
+ * into tasteful editorial art instead of raw photorealistic nudity. Render
+ * once per page. */
+export function DuotoneFilter() {
+  return (
+    <svg aria-hidden width="0" height="0" style={{ position: "absolute" }}>
+      <defs>
+        <filter id="bs-duotone" colorInterpolationFilters="sRGB">
+          <feColorMatrix
+            type="matrix"
+            values="0.34 0.34 0.34 0 0  0.34 0.34 0.34 0 0  0.34 0.34 0.34 0 0  0 0 0 1 0"
+          />
+          <feComponentTransfer>
+            <feFuncR type="table" tableValues="0.37 0.96" />
+            <feFuncG type="table" tableValues="0.13 0.94" />
+            <feFuncB type="table" tableValues="0.13 0.89" />
+          </feComponentTransfer>
+        </filter>
+      </defs>
+    </svg>
+  );
+}
+
 export function PositionImage({
   src,
   alt,
@@ -77,7 +100,8 @@ export function PositionImage({
           height: "100%",
           objectFit: "cover",
           display: "block",
-          filter: ok ? "none" : "blur(26px) saturate(0.7)",
+          // revealed: tasteful brand duotone, not raw nudity. gated: blurred cover.
+          filter: ok ? "url(#bs-duotone)" : "blur(26px) saturate(0.7)",
           transform: ok ? "none" : "scale(1.08)", // hide blurred edges
           transition: "filter 260ms ease",
         }}
