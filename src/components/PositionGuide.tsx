@@ -207,15 +207,20 @@ function loadLevel(load: string): number {
   if (s.startsWith("high")) return 4;
   return 2;
 }
-/** spinal-load gauge: four segments, green to oxblood */
+/** spinal-load gauge: four segments, green to oxblood, with a label */
 function LoadMeter({ load }: { load: string }) {
   const lvl = loadLevel(load);
   const color = (i: number) => (i <= 2 ? "#6b8f5e" : i === 3 ? "#cf9a3f" : "#9a2f2f");
   return (
-    <span style={{ display: "inline-flex", gap: 3, alignItems: "center" }} aria-label={`spinal load ${lvl} of 4`}>
-      {[1, 2, 3, 4].map((i) => (
-        <span key={i} style={{ width: 20, height: 6, borderRadius: 3, background: i <= lvl ? color(i) : "rgba(42,38,32,0.12)" }} />
-      ))}
+    <span style={{ display: "inline-flex", gap: 7, alignItems: "center" }} aria-label={`spinal load ${lvl} of 4`}>
+      <span className="font-mono-label text-[9px] tracking-[0.18em] uppercase" style={{ color: "oklch(0.5 0.02 40)" }}>
+        Spine load
+      </span>
+      <span style={{ display: "inline-flex", gap: 3 }}>
+        {[1, 2, 3, 4].map((i) => (
+          <span key={i} style={{ width: 16, height: 6, borderRadius: 3, background: i <= lvl ? color(i) : "rgba(42,38,32,0.12)", transition: "background 200ms" }} />
+        ))}
+      </span>
     </span>
   );
 }
