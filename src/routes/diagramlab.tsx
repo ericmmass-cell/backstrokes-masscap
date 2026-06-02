@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { PositionGuide, type Role } from "@/components/PositionGuide";
-import { PositionImage, DuotoneFilter } from "@/components/PositionImage";
+import { PositionDiagram } from "@/components/PositionDiagram";
 import type { PictogramKey } from "@/components/Pictogram";
-
-/** which keys have a verified, accurate illustration */
-const HAS_IMAGE = new Set<PictogramKey>([
-  "spoon", "cowgirl-upright", "doggy-kneeling", "scissor", "seated-lap", "side-T",
-]);
 
 /** /diagramlab — polished position-library review page. NOT in nav. */
 export const Route = createFileRoute("/diagramlab")({
@@ -45,7 +40,6 @@ function DiagramLab() {
 
   return (
     <main style={{ minHeight: "100vh", background: "var(--brand-paper, #F4EFE3)", color: "var(--brand-paper-ink, #2a2620)" }}>
-      <DuotoneFilter />
       <div className="mx-auto px-6 md:px-10 py-12 md:py-16" style={{ maxWidth: 1180 }}>
         {/* ── header ── */}
         <header style={{ maxWidth: 760 }}>
@@ -113,19 +107,16 @@ function DiagramLab() {
                 boxShadow: "0 1px 0 rgba(0,0,0,0.03)",
               }}
             >
-              {/* banner */}
-              {HAS_IMAGE.has(key) ? (
-                <PositionImage src={`/positions/${key}.png`} alt={`${label} illustration`} style={{ borderRadius: 0, border: "none", borderBottom: "1px solid var(--brand-rule, #e2d7bf)" }} />
-              ) : (
-                <div
-                  className="flex items-center justify-center"
-                  style={{ aspectRatio: "4 / 3", background: "linear-gradient(135deg, #efe7d2, #e6dcc7)", borderBottom: "1px solid var(--brand-rule, #e2d7bf)" }}
-                >
-                  <span className="font-mono-label text-[10px] tracking-[0.2em] uppercase text-center px-6" style={{ color: "#9a7a5a" }}>
-                    Illustration in sourcing
-                  </span>
-                </div>
-              )}
+              {/* banner: abstract diagram, no depiction */}
+              <div
+                style={{
+                  aspectRatio: "4 / 3",
+                  background: "linear-gradient(135deg, #f7f2e7, #efe6d2)",
+                  borderBottom: "1px solid var(--brand-rule, #e2d7bf)",
+                }}
+              >
+                <PositionDiagram positionKey={key} />
+              </div>
 
               {/* body */}
               <div className="p-6 flex flex-col">
@@ -143,7 +134,7 @@ function DiagramLab() {
         {/* ── footer ── */}
         <footer className="mt-14 pt-6" style={{ borderTop: "1px solid var(--brand-rule, #d9ccae)" }}>
           <p className="text-xs italic leading-relaxed" style={{ color: "oklch(0.5 0.02 40)", maxWidth: 620 }}>
-            Illustrations: Seedfeeder, via Wikimedia Commons, CC BY-SA. Information, not a diagnosis.
+            Diagrams are schematic: they show arrangement and motion, not anatomy. Information, not a diagnosis.
             Your body keeps the gavel. If a position hurts, it is a no, and no amount of pillow geometry overrides that.
           </p>
         </footer>
