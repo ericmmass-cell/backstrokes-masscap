@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SessionRouteImport } from './routes/session'
 import { Route as ScienceRouteImport } from './routes/science'
+import { Route as RankRouteImport } from './routes/rank'
 import { Route as PositionsRouteImport } from './routes/positions'
 import { Route as PartnerRouteImport } from './routes/partner'
 import { Route as ManifestoRouteImport } from './routes/manifesto'
@@ -33,6 +34,11 @@ const SessionRoute = SessionRouteImport.update({
 const ScienceRoute = ScienceRouteImport.update({
   id: '/science',
   path: '/science',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RankRoute = RankRouteImport.update({
+  id: '/rank',
+  path: '/rank',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PositionsRoute = PositionsRouteImport.update({
@@ -112,6 +118,7 @@ export interface FileRoutesByFullPath {
   '/manifesto': typeof ManifestoRoute
   '/partner': typeof PartnerRoute
   '/positions': typeof PositionsRoute
+  '/rank': typeof RankRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
   '/buy/cancel': typeof BuyCancelRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/manifesto': typeof ManifestoRoute
   '/partner': typeof PartnerRoute
   '/positions': typeof PositionsRoute
+  '/rank': typeof RankRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
   '/buy/cancel': typeof BuyCancelRoute
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   '/manifesto': typeof ManifestoRoute
   '/partner': typeof PartnerRoute
   '/positions': typeof PositionsRoute
+  '/rank': typeof RankRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
   '/buy_/cancel': typeof BuyCancelRoute
@@ -166,6 +175,7 @@ export interface FileRouteTypes {
     | '/manifesto'
     | '/partner'
     | '/positions'
+    | '/rank'
     | '/science'
     | '/session'
     | '/buy/cancel'
@@ -183,6 +193,7 @@ export interface FileRouteTypes {
     | '/manifesto'
     | '/partner'
     | '/positions'
+    | '/rank'
     | '/science'
     | '/session'
     | '/buy/cancel'
@@ -200,6 +211,7 @@ export interface FileRouteTypes {
     | '/manifesto'
     | '/partner'
     | '/positions'
+    | '/rank'
     | '/science'
     | '/session'
     | '/buy_/cancel'
@@ -218,6 +230,7 @@ export interface RootRouteChildren {
   ManifestoRoute: typeof ManifestoRoute
   PartnerRoute: typeof PartnerRoute
   PositionsRoute: typeof PositionsRoute
+  RankRoute: typeof RankRoute
   ScienceRoute: typeof ScienceRoute
   SessionRoute: typeof SessionRoute
   BuyCancelRoute: typeof BuyCancelRoute
@@ -239,6 +252,13 @@ declare module '@tanstack/react-router' {
       path: '/science'
       fullPath: '/science'
       preLoaderRoute: typeof ScienceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rank': {
+      id: '/rank'
+      path: '/rank'
+      fullPath: '/rank'
+      preLoaderRoute: typeof RankRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/positions': {
@@ -346,6 +366,7 @@ const rootRouteChildren: RootRouteChildren = {
   ManifestoRoute: ManifestoRoute,
   PartnerRoute: PartnerRoute,
   PositionsRoute: PositionsRoute,
+  RankRoute: RankRoute,
   ScienceRoute: ScienceRoute,
   SessionRoute: SessionRoute,
   BuyCancelRoute: BuyCancelRoute,
