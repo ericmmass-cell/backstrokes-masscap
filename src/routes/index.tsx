@@ -75,7 +75,7 @@ function Index() {
               className="mt-9 font-serif-display italic leading-snug max-w-xl"
               style={{ fontSize: "clamp(19px, 1.9vw, 25px)", color: PAPER_INK, opacity: 0.86 }}
             >
-              For the back that came home loud, and the couple that stopped trying because trying got expensive. One daily protocol, a smarter position plan, and the words nobody taught you.
+              Somewhere after the herniated disc and before the fourth unread pelvic-floor PDF, you quietly stopped starting things. This is the fix: a daily protocol for the back, a smarter plan for the bed, and the words nobody ever coached you through.
             </p>
             <p
               className="mt-5 font-serif-display italic leading-snug max-w-xl"
