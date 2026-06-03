@@ -86,11 +86,11 @@ function Index() {
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
-                to="/dashboard"
+                to="/rank"
                 className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold transition hover:opacity-90"
                 style={{ background: "var(--brand-oxblood)", color: PAPER, boxShadow: "0 12px 30px -10px oklch(0.18 0.01 40 / 0.4)" }}
               >
-                Run the baseline · 7 min <ArrowUpRight className="w-4 h-4" />
+                Rank my positions · free <ArrowUpRight className="w-4 h-4" />
               </Link>
               <a
                 href="/engine.html"
