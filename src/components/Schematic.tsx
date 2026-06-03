@@ -556,9 +556,9 @@ function BedroomPlate({ className }: Props) {
 
       {/* Three lumbar-disc icons in a column, each with a load gauge */}
       {[
-        { y: 110, label: "Spoon",        sub: "lateral · low spinal load",            level: 0.22, tone: "green" as const },
-        { y: 200, label: "Missionary",   sub: "supine receiver · moderate load",       level: 0.55, tone: "amber" as const },
-        { y: 290, label: "Cowgirl back-leaning", sub: "extension · highest disc load", level: 0.92, tone: "red"   as const },
+        { y: 100, label: "Spoon",        sub: "lateral · low spinal load",            level: 0.22, tone: "green" as const },
+        { y: 170, label: "Missionary",   sub: "supine receiver · moderate load",       level: 0.55, tone: "amber" as const },
+        { y: 240, label: "Cowgirl back-leaning", sub: "extension · highest disc load", level: 0.92, tone: "red"   as const },
       ].map((row) => (
         <g key={row.label} transform={`translate(0, ${row.y})`}>
           {/* Mini-disc icon: oval annulus + nucleus dot */}
@@ -588,14 +588,6 @@ function BedroomPlate({ className }: Props) {
           />
         </g>
       ))}
-
-      {/* Bottom note */}
-      <text x="24" y={H - 32} fontFamily="Spectral, Georgia, serif" fontStyle="italic" fontSize="12" fill={INK}>
-        The position your spine <tspan fill={OX} fontStyle="italic">can actually hold.</tspan>
-      </text>
-      <text x="24" y={H - 16} fontFamily="JetBrains Mono, monospace" fontSize="8" letterSpacing="0.22em" fill={MUTED}>
-        FORTY POSITIONS RANKED. THE INDEX SETS THE LOAD CAP.
-      </text>
 
       <PlateCaption fig="III" label="lumbar load by sex position &middot; Sidorkewicz / McGill" w={W} h={H} />
     </svg>
