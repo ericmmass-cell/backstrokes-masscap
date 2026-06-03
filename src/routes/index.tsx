@@ -87,6 +87,7 @@ function Index() {
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
                 to="/rank"
+                search={{ t: undefined, r: undefined }}
                 className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold transition hover:opacity-90"
                 style={{ background: "var(--brand-oxblood)", color: PAPER, boxShadow: "0 12px 30px -10px oklch(0.18 0.01 40 / 0.4)" }}
               >
