@@ -61,25 +61,27 @@ function Index() {
               className="font-serif-display leading-[0.94] tracking-[-0.025em]"
               style={{ fontSize: "clamp(52px, 8vw, 116px)", color: PAPER_INK }}
             >
-              Don't let a herniated disc
+              Don't let your back
               <br />
-              become your{" "}
+              be the reason you{" "}
               <span className="italic" style={{ color: "var(--brand-oxblood)" }}>
-                safe word.
+                scream
               </span>
+              <br />
+              in bed.
             </h1>
 
             <p
               className="mt-9 font-serif-display italic leading-snug max-w-xl"
               style={{ fontSize: "clamp(19px, 1.9vw, 25px)", color: PAPER_INK, opacity: 0.86 }}
             >
-              This is the cable nobody else would send: the back work, a bed plan that forks by who is doing what to whom, and the script your providers treated like the Voynich manuscript. The sad part is not the pain. It is that you started declining the evening before it could decline you.
+              Your back used to be a body part. Now it runs the place. It ends the night early, kills the good ideas, and bills you in the morning. BackStroke is how you get a vote back: a few minutes of daily work, a position plan built around whichever spine is the actual problem, and the words nobody ever walked you through.
             </p>
             <p
               className="mt-5 font-serif-display italic leading-snug max-w-xl"
               style={{ fontSize: "clamp(16px, 1.4vw, 19px)", color: PAPER_INK, opacity: 0.7 }}
             >
-              A few honest minutes a day. No gummies, no Goop, and the candle industry will simply have to grieve.
+              Three minutes on a bad day, eight on a good one. No gummies, no candle, no influencer explaining your pelvis from a ring light.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -104,7 +106,7 @@ function Index() {
             </div>
 
             <p className="mt-8 text-sm italic max-w-md leading-relaxed" style={{ color: PAPER_MUTED }}>
-              Public-source biomechanics, not medical care or sex therapy. Not a retreat with bad WiFi and worse boundaries, and emphatically not a man named Lance explaining your fascia from a yurt.
+              Public-source biomechanics, not medical care or sex therapy. And not a retreat with bad WiFi and worse boundaries.
             </p>
           </div>
 
