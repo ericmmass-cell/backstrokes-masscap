@@ -75,13 +75,13 @@ function Index() {
               className="mt-9 font-serif-display italic leading-snug max-w-xl"
               style={{ fontSize: "clamp(19px, 1.9vw, 25px)", color: PAPER_INK, opacity: 0.86 }}
             >
-              For the back that came home from work loud. For the hip flexor that has been rehearsing the same complaint since the second move. For the couple that stopped trying because the cost of trying kept going up. One daily protocol, a smarter position plan, and the words for the conversation nobody was taught to have.
+              For the back that came home loud, and the couple that stopped trying because trying got expensive. One daily protocol, a smarter position plan, and the words nobody taught you.
             </p>
             <p
               className="mt-5 font-serif-display italic leading-snug max-w-xl"
               style={{ fontSize: "clamp(16px, 1.4vw, 19px)", color: PAPER_INK, opacity: 0.7 }}
             >
-              Three minutes if that is all today has. Eight when it does not. No gummies. No candle. No influencer explaining your pelvis from a ring light.
+              Three minutes on a bad day, eight on a good one. No gummies, no candle, no influencer explaining your pelvis from a ring light.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -106,7 +106,7 @@ function Index() {
             </div>
 
             <p className="mt-8 text-sm italic max-w-md leading-relaxed" style={{ color: PAPER_MUTED }}>
-              Built from public-source biomechanics and practical movement logic. Not medical care. Not sex therapy. Not a retreat with bad WiFi and worse boundaries.
+              Public-source biomechanics, not medical care or sex therapy. And not a retreat with bad WiFi and worse boundaries.
             </p>
           </div>
 
