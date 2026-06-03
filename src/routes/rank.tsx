@@ -16,17 +16,35 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PositionDiagram } from "@/components/PositionDiagram";
 import { POSITION_GUIDE } from "@/components/PositionGuide";
 import type { PictogramKey } from "@/components/Pictogram";
+import ogImage from "@/assets/og-rank.png";
+
+const SITE = "https://backstroke.mass-cap.com";
+const OG = `${SITE}${ogImage}`;
+const OG_TITLE = "Which positions will your back forgive?";
+const OG_DESC =
+  "Two questions. We rank them against your actual spine: the green list and the ones that end the night early. Free, no login.";
 
 export const Route = createFileRoute("/rank")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    t: typeof search.t === "string" ? search.t : undefined,
+    r: typeof search.r === "string" ? search.r : undefined,
+  }),
   component: RankTool,
   head: () => ({
     meta: [
-      { title: "Which positions will your back forgive? · BackStroke" },
-      {
-        name: "description",
-        content:
-          "Free. Two questions. We rank sex positions against your actual lower back: the green-light list and the ones that end the night early. No login.",
-      },
+      { title: `${OG_TITLE} · BackStroke` },
+      { name: "description", content: OG_DESC },
+      { property: "og:title", content: OG_TITLE },
+      { property: "og:description", content: OG_DESC },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE}/rank` },
+      { property: "og:image", content: OG },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: OG_TITLE },
+      { name: "twitter:description", content: OG_DESC },
+      { name: "twitter:image", content: OG },
     ],
   }),
 });
@@ -35,6 +53,9 @@ export const Route = createFileRoute("/rank")({
 type Trigger = "flexion" | "extension" | "irritable";
 type URole = "receiver" | "giver" | "switch";
 type Provoke = "flexion" | "extension" | "compression" | "neutral";
+
+const isTrigger = (v: unknown): v is Trigger => v === "flexion" || v === "extension" || v === "irritable";
+const isURole = (v: unknown): v is URole => v === "receiver" || v === "giver" || v === "switch";
 
 /* ── the scoring table: per position, per role, a load (1-4) and what it provokes ──
    Loads track the load reads in POSITION_GUIDE; provoke tags track the "watch out" notes. */
@@ -137,21 +158,15 @@ const ROLES: { id: URole; label: string; sub: string }[] = [
 ];
 
 function RankTool() {
-  const [step, setStep] = useState<0 | 1 | 2 | 3>(0);
-  const [trigger, setTrigger] = useState<Trigger | null>(null);
-  const [role, setRole] = useState<URole | null>(null);
+  const sp = Route.useSearch();
+  const initT = isTrigger(sp.t) ? sp.t : null;
+  const initR = isURole(sp.r) ? sp.r : null;
+  // initialize from the shared-link params during render (SSR + client), so a
+  // forwarded ?t=&r= link lands straight on the result with no intro flash.
+  const [step, setStep] = useState<0 | 1 | 2 | 3>(initT && initR ? 3 : 0);
+  const [trigger, setTrigger] = useState<Trigger | null>(initT);
+  const [role, setRole] = useState<URole | null>(initR);
   const [copied, setCopied] = useState(false);
-
-  // read shared link state on mount (?t=&r=)
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const q = new URLSearchParams(window.location.search);
-    const t = q.get("t") as Trigger | null;
-    const r = q.get("r") as URole | null;
-    if (t && r && ["flexion", "extension", "irritable"].includes(t) && ["receiver", "giver", "switch"].includes(r)) {
-      setTrigger(t); setRole(r); setStep(3);
-    }
-  }, []);
 
   // sync URL when results show
   useEffect(() => {
