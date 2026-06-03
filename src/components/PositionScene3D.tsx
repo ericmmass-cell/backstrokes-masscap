@@ -15,15 +15,11 @@
 
 import { useEffect, useRef, type CSSProperties } from "react";
 import * as THREE from "three";
-import { OrbitControls } from "three-stdlib";
+import { OrbitControls, RoomEnvironment } from "three-stdlib";
 import type { PictogramKey } from "./Pictogram";
 
-const CREAM = "#F4EFE3";
-const PAPER = "#EFE7D2";
-const JOINTCOL = "#2a2620";
-const SICOL = "#9a2f2f";
 const TONE = {
-  rx: "#b5524a", // receiver, oxblood
+  rx: "#b0463f", // receiver, oxblood
   pt: "#cf9a3f", // partner, amber
 } as const;
 type ToneKey = keyof typeof TONE;
@@ -107,28 +103,50 @@ function poseFor(_key: PictogramKey): PoseSpec {
 
 /* ───────── three.js skeleton builders ───────── */
 const UP = new THREE.Vector3(0, 1, 0);
-function addBone(group: THREE.Object3D, a: V3, b: V3, radius: number, color: string) {
+
+/** Premium matte-clay material with a soft porcelain sheen. One per figure, shared. */
+function bodyMat(color: string) {
+  return new THREE.MeshPhysicalMaterial({
+    color,
+    roughness: 0.46,
+    metalness: 0,
+    clearcoat: 0.3,
+    clearcoatRoughness: 0.62,
+    sheen: 0.5,
+    sheenColor: new THREE.Color(color).offsetHSL(0, 0, 0.08),
+    sheenRoughness: 0.7,
+    envMapIntensity: 0.9,
+  });
+}
+
+/** A limb as a rounded capsule. Caps overlap the joints, so the body reads as one continuous piece. */
+function addBone(group: THREE.Object3D, a: V3, b: V3, radius: number, mat: THREE.Material) {
   const av = new THREE.Vector3(...a);
   const bv = new THREE.Vector3(...b);
   const len = av.distanceTo(bv) || 0.001;
-  const geo = new THREE.CylinderGeometry(radius, radius, len, 12);
-  const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color, roughness: 0.78, metalness: 0 }));
+  // capsule middle = len, caps add radius at each end -> slight overlap into the joint = smooth blend
+  const geo = new THREE.CapsuleGeometry(radius, len, 6, 18);
+  const mesh = new THREE.Mesh(geo, mat);
   mesh.position.copy(av).add(bv).multiplyScalar(0.5);
   const dir = bv.clone().sub(av).normalize();
   if (dir.lengthSq() > 0) mesh.quaternion.setFromUnitVectors(UP, dir);
   mesh.castShadow = true;
+  mesh.receiveShadow = true;
   group.add(mesh);
 }
-function addSphere(group: THREE.Object3D, p: V3, radius: number, color: string) {
-  const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 16, 16), new THREE.MeshStandardMaterial({ color, roughness: 0.7 }));
+
+function addSphere(group: THREE.Object3D, p: V3, radius: number, mat: THREE.Material, scale?: V3) {
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 24, 20), mat);
   mesh.position.set(...p);
+  if (scale) mesh.scale.set(...scale);
   mesh.castShadow = true;
+  mesh.receiveShadow = true;
   group.add(mesh);
 }
 
 /** build a figure; returns the pelvis sub-group (for thrust animation) */
 function buildFigure(parent: THREE.Object3D, spec: FigureSpec): THREE.Group {
-  const color = TONE[spec.tone];
+  const mat = bodyMat(TONE[spec.tone]);
   const pelvisSet = new Set(spec.pelvis ?? []);
   const pelvisGroup = new THREE.Group();
   parent.add(pelvisGroup);
@@ -136,33 +154,23 @@ function buildFigure(parent: THREE.Object3D, spec: FigureSpec): THREE.Group {
   const target = (j: string) => (pelvisSet.has(j) ? pelvisGroup : parent);
   const J = spec.joints;
 
-  // spine (heavier)
+  // spine (a touch heavier than the limbs)
   (spec.spineBones ?? []).forEach(([a, b]) => {
     const g = pelvisSet.has(a) && pelvisSet.has(b) ? pelvisGroup : parent;
-    addBone(g, J[a], J[b], 0.055, color);
+    addBone(g, J[a], J[b], 0.06, mat);
   });
   // limb bones
   spec.bones.forEach(([a, b, r]) => {
     const g = pelvisSet.has(a) && pelvisSet.has(b) ? pelvisGroup : parent;
-    addBone(g, J[a], J[b], r ?? 0.04, color);
+    addBone(g, J[a], J[b], r ?? 0.04, mat);
   });
-  // joints (spheres at every joint)
+  // joints: same-tone fills so the body reads as one sculpted piece (no clinical dots or rings)
   Object.entries(J).forEach(([name, p]) => {
-    if (name === "head") return; // head drawn larger below
-    const isSI = name === spec.si;
-    addSphere(target(name), p, isSI ? 0.05 : 0.028, isSI ? SICOL : JOINTCOL);
-    if (isSI) {
-      // bright outer ring for the SI joint
-      const ring = new THREE.Mesh(
-        new THREE.TorusGeometry(0.07, 0.012, 10, 24),
-        new THREE.MeshStandardMaterial({ color: SICOL, emissive: SICOL, emissiveIntensity: 0.5, roughness: 0.5 }),
-      );
-      ring.position.set(...p);
-      target(name).add(ring);
-    }
+    if (name === "head") return; // head drawn below
+    addSphere(target(name), p, 0.05, mat);
   });
-  // head
-  addSphere(parent, J.head, 0.1, color);
+  // head — a soft faceless ovoid
+  addSphere(parent, J.head, 0.108, mat, [0.92, 1.12, 0.92]);
   return pelvisGroup;
 }
 
@@ -191,15 +199,25 @@ export function PositionScene3D({
     const height = container.clientHeight || 320;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(CREAM);
+    scene.background = null; // transparent canvas; the CSS radial gradient shows through
 
     const camera = new THREE.PerspectiveCamera(34, width / height, 0.1, 100);
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(width, height);
+    renderer.setClearColor(0x000000, 0);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.08;
     container.appendChild(renderer.domElement);
+
+    // image-based lighting: soft studio reflections for a premium clay look
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    const RoomEnv = RoomEnvironment as unknown as new () => THREE.Scene;
+    const envRT = pmrem.fromScene(new RoomEnv(), 0.04);
+    scene.environment = envRT.texture;
+    pmrem.dispose();
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
@@ -212,25 +230,33 @@ export function PositionScene3D({
     let userInteracting = false;
     controls.addEventListener("start", () => { userInteracting = true; });
 
-    scene.add(new THREE.AmbientLight(0xfff3df, 1.05));
-    const key = new THREE.DirectionalLight(0xfff1dc, 1.45);
+    // env handles the soft ambient; a low hemisphere just warms it
+    scene.add(new THREE.HemisphereLight(0xfff3df, 0xb89a78, 0.35));
+    const key = new THREE.DirectionalLight(0xfff1dc, 2.1);
     key.position.set(2.4, 4.4, 2.8);
     key.castShadow = true;
-    key.shadow.mapSize.set(1024, 1024);
+    key.shadow.mapSize.set(2048, 2048);
     key.shadow.bias = -0.0004;
+    key.shadow.normalBias = 0.02;
+    key.shadow.radius = 6;
     key.shadow.camera.left = -2; key.shadow.camera.right = 2;
     key.shadow.camera.top = 2; key.shadow.camera.bottom = -2;
     scene.add(key);
-    const fill = new THREE.DirectionalLight(0xb88d7a, 0.4);
+    const fill = new THREE.DirectionalLight(0xb88d7a, 0.5);
     fill.position.set(-2.2, 2, -1.6);
     scene.add(fill);
+    // rim/back light to separate the figures from the cream background
+    const rim = new THREE.DirectionalLight(0xfff6ea, 1.1);
+    rim.position.set(-1.4, 2.6, -3.0);
+    scene.add(rim);
 
-    // bed/floor
+    // invisible shadow-catcher: the figures float in the gradient with just a soft contact shadow
     const floor = new THREE.Mesh(
-      new THREE.PlaneGeometry(8, 6),
-      new THREE.MeshStandardMaterial({ color: PAPER, roughness: 1, metalness: 0 }),
+      new THREE.PlaneGeometry(12, 10),
+      new THREE.ShadowMaterial({ opacity: 0.16 }),
     );
     floor.rotation.x = -Math.PI / 2;
+    floor.position.y = 0.04;
     floor.receiveShadow = true;
     scene.add(floor);
 
@@ -313,6 +339,8 @@ export function PositionScene3D({
       cancelAnimationFrame(raf);
       ro.disconnect();
       controls.dispose();
+      scene.environment = null;
+      envRT.dispose();
       renderer.dispose();
       if (renderer.domElement.parentNode === container) container.removeChild(renderer.domElement);
       scene.traverse((o) => {
