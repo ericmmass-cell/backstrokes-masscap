@@ -9,12 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StudyRouteImport } from './routes/study'
 import { Route as SessionRouteImport } from './routes/session'
 import { Route as ScienceRouteImport } from './routes/science'
 import { Route as RankRouteImport } from './routes/rank'
 import { Route as PositionsRouteImport } from './routes/positions'
 import { Route as PartnerRouteImport } from './routes/partner'
 import { Route as ManifestoRouteImport } from './routes/manifesto'
+import { Route as GuideRouteImport } from './routes/guide'
+import { Route as ForCliniciansRouteImport } from './routes/for-clinicians'
 import { Route as DiagramlabRouteImport } from './routes/diagramlab'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConversationRouteImport } from './routes/conversation'
@@ -23,9 +26,15 @@ import { Route as BedroomRouteImport } from './routes/bedroom'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShareTokenRouteImport } from './routes/share.$token'
+import { Route as GuideSlugRouteImport } from './routes/guide_.$slug'
 import { Route as BuySuccessRouteImport } from './routes/buy_.success'
 import { Route as BuyCancelRouteImport } from './routes/buy_.cancel'
 
+const StudyRoute = StudyRouteImport.update({
+  id: '/study',
+  path: '/study',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SessionRoute = SessionRouteImport.update({
   id: '/session',
   path: '/session',
@@ -54,6 +63,16 @@ const PartnerRoute = PartnerRouteImport.update({
 const ManifestoRoute = ManifestoRouteImport.update({
   id: '/manifesto',
   path: '/manifesto',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuideRoute = GuideRouteImport.update({
+  id: '/guide',
+  path: '/guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForCliniciansRoute = ForCliniciansRouteImport.update({
+  id: '/for-clinicians',
+  path: '/for-clinicians',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DiagramlabRoute = DiagramlabRouteImport.update({
@@ -96,6 +115,11 @@ const ShareTokenRoute = ShareTokenRouteImport.update({
   path: '/share/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuideSlugRoute = GuideSlugRouteImport.update({
+  id: '/guide_/$slug',
+  path: '/guide/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BuySuccessRoute = BuySuccessRouteImport.update({
   id: '/buy_/success',
   path: '/buy/success',
@@ -115,14 +139,18 @@ export interface FileRoutesByFullPath {
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
   '/diagramlab': typeof DiagramlabRoute
+  '/for-clinicians': typeof ForCliniciansRoute
+  '/guide': typeof GuideRoute
   '/manifesto': typeof ManifestoRoute
   '/partner': typeof PartnerRoute
   '/positions': typeof PositionsRoute
   '/rank': typeof RankRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
+  '/study': typeof StudyRoute
   '/buy/cancel': typeof BuyCancelRoute
   '/buy/success': typeof BuySuccessRoute
+  '/guide/$slug': typeof GuideSlugRoute
   '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRoutesByTo {
@@ -133,14 +161,18 @@ export interface FileRoutesByTo {
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
   '/diagramlab': typeof DiagramlabRoute
+  '/for-clinicians': typeof ForCliniciansRoute
+  '/guide': typeof GuideRoute
   '/manifesto': typeof ManifestoRoute
   '/partner': typeof PartnerRoute
   '/positions': typeof PositionsRoute
   '/rank': typeof RankRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
+  '/study': typeof StudyRoute
   '/buy/cancel': typeof BuyCancelRoute
   '/buy/success': typeof BuySuccessRoute
+  '/guide/$slug': typeof GuideSlugRoute
   '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRoutesById {
@@ -152,14 +184,18 @@ export interface FileRoutesById {
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
   '/diagramlab': typeof DiagramlabRoute
+  '/for-clinicians': typeof ForCliniciansRoute
+  '/guide': typeof GuideRoute
   '/manifesto': typeof ManifestoRoute
   '/partner': typeof PartnerRoute
   '/positions': typeof PositionsRoute
   '/rank': typeof RankRoute
   '/science': typeof ScienceRoute
   '/session': typeof SessionRoute
+  '/study': typeof StudyRoute
   '/buy_/cancel': typeof BuyCancelRoute
   '/buy_/success': typeof BuySuccessRoute
+  '/guide_/$slug': typeof GuideSlugRoute
   '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRouteTypes {
@@ -172,14 +208,18 @@ export interface FileRouteTypes {
     | '/conversation'
     | '/dashboard'
     | '/diagramlab'
+    | '/for-clinicians'
+    | '/guide'
     | '/manifesto'
     | '/partner'
     | '/positions'
     | '/rank'
     | '/science'
     | '/session'
+    | '/study'
     | '/buy/cancel'
     | '/buy/success'
+    | '/guide/$slug'
     | '/share/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -190,14 +230,18 @@ export interface FileRouteTypes {
     | '/conversation'
     | '/dashboard'
     | '/diagramlab'
+    | '/for-clinicians'
+    | '/guide'
     | '/manifesto'
     | '/partner'
     | '/positions'
     | '/rank'
     | '/science'
     | '/session'
+    | '/study'
     | '/buy/cancel'
     | '/buy/success'
+    | '/guide/$slug'
     | '/share/$token'
   id:
     | '__root__'
@@ -208,14 +252,18 @@ export interface FileRouteTypes {
     | '/conversation'
     | '/dashboard'
     | '/diagramlab'
+    | '/for-clinicians'
+    | '/guide'
     | '/manifesto'
     | '/partner'
     | '/positions'
     | '/rank'
     | '/science'
     | '/session'
+    | '/study'
     | '/buy_/cancel'
     | '/buy_/success'
+    | '/guide_/$slug'
     | '/share/$token'
   fileRoutesById: FileRoutesById
 }
@@ -227,19 +275,30 @@ export interface RootRouteChildren {
   ConversationRoute: typeof ConversationRoute
   DashboardRoute: typeof DashboardRoute
   DiagramlabRoute: typeof DiagramlabRoute
+  ForCliniciansRoute: typeof ForCliniciansRoute
+  GuideRoute: typeof GuideRoute
   ManifestoRoute: typeof ManifestoRoute
   PartnerRoute: typeof PartnerRoute
   PositionsRoute: typeof PositionsRoute
   RankRoute: typeof RankRoute
   ScienceRoute: typeof ScienceRoute
   SessionRoute: typeof SessionRoute
+  StudyRoute: typeof StudyRoute
   BuyCancelRoute: typeof BuyCancelRoute
   BuySuccessRoute: typeof BuySuccessRoute
+  GuideSlugRoute: typeof GuideSlugRoute
   ShareTokenRoute: typeof ShareTokenRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/study': {
+      id: '/study'
+      path: '/study'
+      fullPath: '/study'
+      preLoaderRoute: typeof StudyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/session': {
       id: '/session'
       path: '/session'
@@ -280,6 +339,20 @@ declare module '@tanstack/react-router' {
       path: '/manifesto'
       fullPath: '/manifesto'
       preLoaderRoute: typeof ManifestoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guide': {
+      id: '/guide'
+      path: '/guide'
+      fullPath: '/guide'
+      preLoaderRoute: typeof GuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/for-clinicians': {
+      id: '/for-clinicians'
+      path: '/for-clinicians'
+      fullPath: '/for-clinicians'
+      preLoaderRoute: typeof ForCliniciansRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/diagramlab': {
@@ -338,6 +411,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShareTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guide_/$slug': {
+      id: '/guide_/$slug'
+      path: '/guide/$slug'
+      fullPath: '/guide/$slug'
+      preLoaderRoute: typeof GuideSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/buy_/success': {
       id: '/buy_/success'
       path: '/buy/success'
@@ -363,14 +443,18 @@ const rootRouteChildren: RootRouteChildren = {
   ConversationRoute: ConversationRoute,
   DashboardRoute: DashboardRoute,
   DiagramlabRoute: DiagramlabRoute,
+  ForCliniciansRoute: ForCliniciansRoute,
+  GuideRoute: GuideRoute,
   ManifestoRoute: ManifestoRoute,
   PartnerRoute: PartnerRoute,
   PositionsRoute: PositionsRoute,
   RankRoute: RankRoute,
   ScienceRoute: ScienceRoute,
   SessionRoute: SessionRoute,
+  StudyRoute: StudyRoute,
   BuyCancelRoute: BuyCancelRoute,
   BuySuccessRoute: BuySuccessRoute,
+  GuideSlugRoute: GuideSlugRoute,
   ShareTokenRoute: ShareTokenRoute,
 }
 export const routeTree = rootRouteImport

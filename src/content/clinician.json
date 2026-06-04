@@ -1,0 +1,31 @@
+{
+  "seoTitle": "BackStroke for Clinicians: The Take-Home Answer",
+  "seoDescription": "Patients ask if they can still have sex with this. BackStroke is the free, biomechanics-based resource you hand them between visits. Defers to you.",
+  "eyebrow": "FOR PRACTITIONERS",
+  "h1": "The back people and the sex people share a building and never share an elevator.",
+  "dek": "BackStroke is the resource you hand a patient when they ask the question you were never given a way to answer. Not medical care. A bridge between the visit and the rest of their life.",
+  "body": [
+    {"type":"h2","text":"The question you keep getting, with no good way to answer it"},
+    {"type":"p","text":"Somewhere near the end of the visit, often half out the door, a patient asks whether they can still have sex with this back. It is a reasonable question, and one most of us were never handed a real protocol for, so it tends to get a careful nonanswer or a redirect to someone else. The patient hears the pause more than the words. The loop is familiar: you suggest they ask their doctor, and you are the doctor, or the PT, the chiropractor, the therapist they were already sitting in front of. The referral has nowhere to go, so the topic quietly closes and they leave with the same worry they walked in with."},
+    {"type":"h2","text":"What BackStroke is, and what it is not"},
+    {"type":"p","text":"BackStroke organizes the public biomechanics literature into something a patient can use at home. It draws on the spine research most of us already trust, including Sidorkewicz and McGill (2014), which measured lumbar motion during sex and ranked positions by spine load, finding the right answer depends on the patient: flexion intolerant or extension intolerant, and which role they are in. We turn that into a free position ranker, a daily protocol built around endurance over range and McGill-style spine-sparing principles, and a role-forked position library. It is not a replacement for your plan of care and is not trying to be. It does not diagnose, it does not contradict your instructions, and it tells patients plainly that you are the one who knows their case."},
+    {"type":"callout","text":"BackStroke is information, not medical care. No supplements, no devices, no diagnosis. It is a take-home resource for between visits, and it defers to you on anything specific to your patient. If general guidance and your instructions ever disagree, the page sends them back to you."},
+    {"type":"h2","text":"How it fits a plan of care"},
+    {"type":"p","text":"Most clinicians use it as a take-home handout. You already know from the exam whether the patient is flexion intolerant or extension intolerant. You name that, point them to the ranker, and let them work out the specifics in private, which is where this subject mostly belongs anyway. It gives the patient something concrete to do with the awkward part of the conversation, and it gives you a way to address it without turning the room into a seminar."},
+    {"type":"h2","text":"What the patient walks away with"},
+    {"type":"list","items":["A free position ranker, sorted by spine load and forked by directional preference and role.","A daily protocol grounded in endurance and spine-sparing movement, not heroic stretching.","A role-forked position library, so the guidance fits the person and not a generic diagram.","Plain, non-clinical language that consistently points back to their own clinician."]}
+  ],
+  "pullquote": "You diagnose the spine. We translate it into the one room nobody briefed the patient on.",
+  "handout": {
+    "title": "What to tell the patient",
+    "lines": [
+      "Yes, this is a normal question, and there is a real answer for it.",
+      "Your back has a direction it prefers, and we already know yours from your exam.",
+      "There is a free tool called BackStroke that ranks positions by how much they load the spine.",
+      "Go to the ranker, choose your preference and your role, and start from the lower-load options.",
+      "It is general information, not a prescription. If anything there clashes with what I told you, mine wins.",
+      "Try it, and bring back anything that hurts or any question at your next visit."
+    ]
+  },
+  "cta": "Point your patients to the free ranker, then keep doing the part only you can do."
+}
