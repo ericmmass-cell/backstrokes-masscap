@@ -1,0 +1,40 @@
+{
+  "seoTitle": "The Number Nobody Measured | BackStroke Study",
+  "seoDescription": "Science measured the spine during sex. Nobody published what back pain does to real relationships. We are collecting that number. Anonymous, never sold.",
+  "eyebrow": "STUDY // IN PROGRESS",
+  "h1": "Somebody measured the spine. Nobody asked the person attached to it.",
+  "dek": "Researchers mapped the exact mechanics of sex and lower-back pain. What they never published is the human number: how often it changes what people do, avoid, and say to each other. We are collecting that number, and we will publish it.",
+  "thesis": [
+    {"type": "p", "text": "In 2014, McGill and Sidorkewicz put couples in a lab, wired them to motion-capture, and documented which positions load the spine and which spare it. It is genuinely good work. It tells you, with real precision, what your vertebrae are doing in the moment."},
+    {"type": "p", "text": "Here is the part the literature skips. After the lab coats go home, the data stops. There is no published number for how many people quietly stopped initiating. No figure for how many couples reorganized their entire intimate life around a flare and never said the word out loud. No count of how many people brought it up with a doctor and got a shrug, or never brought it up at all because the appointment was eleven minutes long and the gown had no back."},
+    {"type": "p", "text": "We think that number matters more than the angle of anyone's pelvis. So we are going to find it. Not to scold anyone, not to sell anyone a cushion shaped like hope. Just to count something that has gone uncounted, and then to say it out loud."},
+    {"type": "callout", "text": "The biomechanics of sex and back pain have been measured. The human cost has not. That is the gap. This is the survey that closes it."}
+  ],
+  "method": [
+    "We ask a short set of plain questions about how back pain has affected your sex life and your relationship. No clinical jargon, no trick wording.",
+    "It is anonymous by design. We do not ask for your name, and you are not required to give us any way to identify you.",
+    "Most questions are multiple choice so you can answer honestly in a few minutes. A couple are open text if you want to say more, and you can leave those blank.",
+    "We aggregate every response into totals and percentages. We are reporting the pattern across many people, never any single person's answers.",
+    "When we have enough responses to mean something, we publish the findings openly and show our work, including how many people answered and what we asked."
+  ],
+  "privacy": [
+    "Your answers are anonymous. We do not ask who you are, and we do not need to.",
+    "We will never sell, rent, or trade your responses. Not to advertisers, not to insurers, not to anyone. There is no asterisk on that.",
+    "This is sensitive health and relationship data, and we treat it that way: stored securely, seen only by the small team running the study, used only for the published finding.",
+    "Every question is optional. Skip anything that feels like too much. A partial answer still helps, and a blank is always a valid answer.",
+    "We report only totals and patterns across the whole group. Nothing we publish can be traced back to you."
+  ],
+  "survey": [
+    {"q": "In the last year, how often has back pain affected your sex life?", "options": ["Never", "Rarely", "Sometimes", "Often", "Most of the time", "I would rather not say"]},
+    {"q": "Have you ever avoided or turned down sex specifically because of back pain or fear of triggering it?", "options": ["Never", "Once or twice", "Several times", "Regularly", "It is a constant factor", "Prefer not to answer"]},
+    {"q": "When back pain has gotten in the way of sex, what has been the main effect?", "options": ["Changed which positions or activities we do", "Made sex less frequent", "Made it shorter or more cautious", "Made it more stressful or less enjoyable", "Largely stopped that part of my life for now", "It has not really had an effect"]},
+    {"q": "Have you and a partner talked openly about how back pain affects your sex life?", "options": ["Yes, openly and more than once", "Yes, but only briefly or awkwardly", "We have hinted at it without really saying it", "No, but I wish we could", "No, and I would rather not", "Not applicable right now"]},
+    {"q": "Have you ever raised the sexual side of back pain with a doctor or other healthcare provider?", "options": ["Yes, and it was a genuinely helpful conversation", "Yes, but it was brushed off or rushed", "I tried, but I could not really bring myself to be direct", "No, it never came up", "No, I did not feel comfortable raising it", "Prefer not to answer"]},
+    {"q": "If a provider did discuss sex and back pain with you, what did they actually offer?", "options": ["Specific, useful guidance", "General advice to be careful", "A referral to someone else", "Nothing concrete", "It never came up", "Prefer not to answer"]},
+    {"q": "Where have you mostly turned for information on sex and back pain?", "options": ["A doctor or physical therapist", "The internet or forums", "A partner or friend", "Trial and error on my own", "I have not really looked", "Prefer not to answer"]},
+    {"q": "Overall, how much has back pain affected your sense of intimacy or closeness in your relationship?", "options": ["Not at all", "A little", "A moderate amount", "A lot", "It has been a major strain", "Prefer not to answer"]},
+    {"q": "If you want, tell us in your own words what back pain has changed about your sex life or relationship. Anything you share here is optional.", "options": []}
+  ],
+  "resultsNote": "There are no results to report yet, and we are not going to pretend otherwise. Collection is in progress. When we have enough responses to say something true, we will publish the findings in the open, along with how many people answered and exactly what we asked.",
+  "cta": "Take five quiet minutes and be counted. Nobody else has bothered to ask, so we are asking you."
+}
