@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { WorkSchematic } from "@/components/Schematic";
-import { PositionScene3D } from "@/components/PositionScene3D";
+import heroCouple from "@/assets/hero-couple.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -117,9 +117,16 @@ function Index() {
               style={{
                 boxShadow: "0 40px 80px -20px oklch(0.18 0.01 40 / 0.18)",
                 aspectRatio: "4 / 5",
+                borderRadius: 16,
+                overflow: "hidden",
               }}
             >
-              <PositionScene3D positionKey="spoon" />
+              <img
+                src={heroCouple}
+                alt="A couple resting together on a bed in warm evening light."
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              />
+              <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 55%, oklch(0.18 0.01 40 / 0.28))" }} />
               <span
                 className="absolute -top-6 -right-3 font-script text-3xl rotate-[5deg] hidden md:block"
                 style={{ color: "var(--brand-oxblood)" }}
