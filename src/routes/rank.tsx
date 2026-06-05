@@ -13,7 +13,7 @@
  */
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PositionDiagram } from "@/components/PositionDiagram";
+import { PositionVisual } from "@/components/PositionVisual";
 import { POSITION_GUIDE } from "@/components/PositionGuide";
 import type { PictogramKey } from "@/components/Pictogram";
 import ogImage from "@/assets/og-rank.png";
@@ -374,7 +374,7 @@ function ResultCard({
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl" style={{ border: `1px solid ${RULE}`, background: "#FBF7EC" }}>
       <div style={{ aspectRatio: "4 / 3", background: "linear-gradient(135deg, #f7f2e7, #efe6d2)", borderBottom: `1px solid ${RULE}`, position: "relative" }}>
-        <PositionDiagram positionKey={x.key as PictogramKey} paused />
+        <PositionVisual positionKey={x.key as PictogramKey} paused />
         {rank && (
           <span className="font-mono-label" style={{ position: "absolute", top: 10, left: 12, fontSize: 11, letterSpacing: "0.1em", color: accent }}>
             №{rank}

@@ -23,7 +23,7 @@
 
 import { useState, type CSSProperties, type ImgHTMLAttributes } from "react";
 import { PositionAnnotation, type PositionAnnotationProps } from "./PositionAnnotation";
-import { PositionDiagram, hasDiagram } from "./PositionDiagram";
+import { PositionVisual } from "./PositionVisual";
 
 /** The teaching-overlay payload (subset of the annotation component's props). */
 type PositionAnnotateData = Pick<PositionAnnotationProps, "name" | "load" | "loadNote">;
@@ -284,61 +284,12 @@ function IllustratedPosition({
   // unfilterable, fully under our control. It shows who goes where, the joining,
   // the neutral-spine teaching line, and the motion. The PNG path below stays as
   // a graceful fallback for any position key that lacks a diagram.
-  if (hasDiagram(positionKey)) {
-    return (
-      <PictogramFrame caption={showCaption ? caption : undefined} attribution="Diagram · BackStroke">
-        <PositionDiagram positionKey={positionKey} />
-        {annotate && (
-          <PositionAnnotation
-            positionKey={positionKey}
-            name={annotate.name}
-            load={annotate.load}
-            loadNote={annotate.loadNote}
-          />
-        )}
-      </PictogramFrame>
-    );
-  }
-
-  if (state === "error") return <Fallback meta={meta} />;
-
-  const altText = `Illustration of the ${meta.title.toLowerCase()} position: ${meta.sub.toLowerCase()}.`;
-
+  // Asset-backed: a real external illustration / loop when present, otherwise a
+  // calm figure-free placeholder. No body is drawn in code.
   return (
-    <PictogramFrame caption={showCaption ? caption : undefined} attribution="Illus. BackStroke · AI-assisted">
-      {state === "loading" && <Skeleton />}
-      <img
-        src={`/positions/${positionKey}.png`}
-        alt={altText}
-        loading={loading}
-        // @ts-expect-error — fetchpriority is the lowercase HTML attribute
-        fetchpriority={fetchPriority}
-        decoding="async"
-        width={800}
-        height={600}
-        // Cache race: a cached image can finish loading before React
-        // attaches onLoad, so onLoad never fires and the figure stays
-        // at opacity 0. Resolve completeness on the ref instead.
-        ref={(el) => {
-          if (el && el.complete && el.naturalWidth > 0) setState("loaded");
-        }}
-        onLoad={() => setState("loaded")}
-        onError={() => setState("error")}
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "contain",
-          opacity: state === "loaded" ? 1 : 0,
-          transition: "opacity 280ms ease",
-          // Show the artwork CLEAN — a heavy grayscale+sepia+multiply
-          // treatment previously muddied it into a brown swamp. A hair
-          // of restraint only, so it doesn't fight the cream page.
-          filter: "saturate(0.96) contrast(1.02)",
-        }}
-      />
-      {annotate && state === "loaded" && (
+    <PictogramFrame caption={showCaption ? caption : undefined} attribution="Illustration · BackStroke">
+      <PositionVisual positionKey={positionKey} />
+      {annotate && (
         <PositionAnnotation
           positionKey={positionKey}
           name={annotate.name}
@@ -346,7 +297,6 @@ function IllustratedPosition({
           loadNote={annotate.loadNote}
         />
       )}
-      <style>{SHIMMER_CSS}</style>
     </PictogramFrame>
   );
 }
