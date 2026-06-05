@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
+import intimateImg from "@/assets/intimate.jpg";
 
 export const Route = createFileRoute("/partner")({
   component: Partner,
@@ -53,6 +54,25 @@ function Partner() {
           </p>
         </div>
       </section>
+
+      {/* EDITORIAL BAND — partnership, in one image */}
+      <figure
+        className="w-full"
+        style={{ borderTop: `1px solid ${RULE}`, borderBottom: `1px solid ${RULE}` }}
+      >
+        <img
+          src={intimateImg}
+          alt="A couple resting close in low light, one hand resting over the other."
+          className="w-full object-cover"
+          style={{ height: "clamp(300px, 44vh, 560px)", objectPosition: "center 38%", display: "block" }}
+        />
+        <figcaption
+          className="max-w-[820px] mx-auto px-6 md:px-10 py-4 font-mono-label text-[10px] tracking-[0.22em] uppercase"
+          style={{ color: PAPER_MUTED }}
+        >
+          Being in the room, more reliably · the partner's whole job
+        </figcaption>
+      </figure>
 
       {/* WHAT THIS IS */}
       <section
