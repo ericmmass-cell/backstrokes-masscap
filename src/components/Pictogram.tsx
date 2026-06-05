@@ -68,6 +68,8 @@ type PictogramProps = {
   showCaption?: boolean;
   /** Optional teaching overlay (name + spinal-load note). */
   annotate?: PositionAnnotateData;
+  /** Library position id (p01..); when given, the card shows that position's own photo (no repeats). */
+  assetId?: string;
 };
 
 /* ───────── metadata ───────── */
@@ -262,33 +264,28 @@ function Fallback({ meta }: { meta: { title: string; sub: string } }) {
 
 function IllustratedPosition({
   positionKey,
-  loading = "lazy",
-  fetchPriority = "auto",
+  assetId,
   showCaption = true,
   annotate,
 }: {
   positionKey: PictogramKey;
+  assetId?: string;
   loading?: ImgHTMLAttributes<HTMLImageElement>["loading"];
   fetchPriority?: "high" | "low" | "auto";
   showCaption?: boolean;
   annotate?: PositionAnnotateData;
 }) {
   const meta = POSITION_TITLES[positionKey];
-  const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
 
   if (!meta) return <Fallback meta={{ title: positionKey, sub: "Unknown position key" }} />;
 
   const caption = `${meta.title} · ${meta.sub}`;
 
-  // Preferred path: our own hand-authored instructional SVG diagram — animated,
-  // unfilterable, fully under our control. It shows who goes where, the joining,
-  // the neutral-spine teaching line, and the motion. The PNG path below stays as
-  // a graceful fallback for any position key that lacks a diagram.
-  // Asset-backed: a real external illustration / loop when present, otherwise a
-  // calm figure-free placeholder. No body is drawn in code.
+  // Asset-backed: a real clothed photo (animated flipbook) when present,
+  // otherwise a calm figure-free placeholder. No body is drawn in code.
   return (
-    <PictogramFrame caption={showCaption ? caption : undefined} attribution="Illustration · BackStroke">
-      <PositionVisual positionKey={positionKey} />
+    <PictogramFrame caption={showCaption ? caption : undefined} attribution="Photograph · BackStroke">
+      <PositionVisual positionKey={positionKey} assetId={assetId} />
       {annotate && (
         <PositionAnnotation
           positionKey={positionKey}
@@ -384,6 +381,7 @@ export function Pictogram({
   fetchPriority = "auto",
   showCaption = true,
   annotate,
+  assetId,
 }: PictogramProps) {
   const wrap = (child: React.ReactNode) => (
     <div className={className} style={{ width: "100%", height: "100%", ...style }}>
@@ -395,6 +393,7 @@ export function Pictogram({
     return wrap(
       <IllustratedPosition
         positionKey={positionKey}
+        assetId={assetId}
         loading={loading}
         fetchPriority={fetchPriority}
         showCaption={showCaption}

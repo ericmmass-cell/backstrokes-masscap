@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
-import { WorkSchematic } from "@/components/Schematic";
+import backStudy from "@/assets/back-study.jpg";
+import bedroomStudy from "@/assets/bedroom-study.jpg";
 import heroCouple from "@/assets/hero-couple.jpg";
 
 export const Route = createFileRoute("/")({
@@ -516,7 +517,13 @@ function Index() {
                 background: PAPER,
               }}
             >
-              <WorkSchematic variant={c.variant} />
+              <div style={{ aspectRatio: "4 / 3", overflow: "hidden" }}>
+                <img
+                  src={c.variant === "back" ? backStudy : bedroomStudy}
+                  alt=""
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                />
+              </div>
               <div className="px-7 py-7 border-t" style={{ borderColor: "oklch(0.86 0.025 70)" }}>
                 <h3 className="font-serif-display text-2xl md:text-3xl italic leading-[1.05]" style={{ color: PAPER_INK }}>
                   {c.head}

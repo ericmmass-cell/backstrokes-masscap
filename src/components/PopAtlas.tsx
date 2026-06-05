@@ -150,7 +150,7 @@ function PopCard({ p, role, overCap, index }: { p: Position; role: Role; overCap
       {/* still with ken-burns life on hover/focus */}
       <div style={{ aspectRatio: "4 / 3", overflow: "hidden" }}>
         <div className="pop-ken" style={{ width: "100%", height: "100%" }}>
-          <Pictogram positionKey={illustrationFor(p)} showCaption={false} />
+          <Pictogram positionKey={illustrationFor(p)} assetId={p.id} showCaption={false} />
         </div>
       </div>
 

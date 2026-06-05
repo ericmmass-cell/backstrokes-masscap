@@ -1,10 +1,15 @@
 /**
- * Position art registry. Each position points to a real, externally-produced
- * asset. The clothed photo motion strips (8 frames, neutral set, grey
- * loungewear) live in /public/demos/positions/ and animate as a flipbook.
+ * Position art registry. Real, externally-produced assets per position.
+ * Clothed photo motion strips (8 frames, neutral set) live in
+ * /public/demos/positions/ and animate as a crossfading flipbook.
  *
- * To add or change art: drop the file in /public/positions-art/ (or reuse the
- * demo strips) and add/adjust an entry here. Quality is set by the asset.
+ * Two lookups:
+ *  - POSITION_ASSETS_BY_ID: the Pop Atlas keys by library position id (p01..),
+ *    so every card gets a DISTINCT photo (each strip used at most once). A
+ *    position with no dedicated strip falls back to the clean placeholder
+ *    rather than repeating another position's photo.
+ *  - POSITION_ASSETS: keyed by the collapsed PictogramKey, for surfaces that
+ *    only know the category (the ranker, etc.).
  */
 import type { PictogramKey } from "@/components/Pictogram";
 
@@ -17,10 +22,29 @@ const strip = (name: string): PositionAsset => ({
   kind: "strip",
   src: `/demos/positions/${name}.jpg`,
   frames: 8,
-  dwell: 720,
+  dwell: 560,
 });
 
-/** PictogramKey -> real clothed photo strip. */
+/** Library position id -> its own photo. Each strip used once (no repeats). */
+export const POSITION_ASSETS_BY_ID: Record<string, PositionAsset> = {
+  p01: strip("side-spoon"),
+  p02: strip("supine-support"),
+  p05: strip("seated-upright"),
+  p07: strip("side-facing"),
+  p08: strip("standing-support"),
+  p10: strip("quadruped-support"),
+  p11: strip("reverse-cowgirl"),
+  p12: strip("cowgirl-upright"),
+  p13: strip("stirrup-missionary"),
+  p15: strip("standing-wall"),
+  p16: strip("edge-bed"),
+  p18: strip("side-leg-held"),
+  p33: strip("prone-pillow"),
+  p35: strip("cradle-sitting"),
+  p37: strip("squat-over"),
+};
+
+/** PictogramKey -> a representative photo (used where only the category is known). */
 export const POSITION_ASSETS: Partial<Record<PictogramKey, PositionAsset>> = {
   spoon: strip("side-spoon"),
   "supine-knees-up": strip("supine-support"),
