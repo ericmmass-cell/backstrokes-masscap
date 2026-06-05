@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { PositionGuide, type Role } from "@/components/PositionGuide";
-import { PositionDiagram } from "@/components/PositionDiagram";
+import { PositionVisual } from "@/components/PositionVisual";
 import type { PictogramKey } from "@/components/Pictogram";
 
 /** /diagramlab — polished position-library review page. NOT in nav. */
@@ -115,7 +115,7 @@ function DiagramLab() {
                   borderBottom: "1px solid var(--brand-rule, #e2d7bf)",
                 }}
               >
-                <PositionDiagram positionKey={key} />
+                <PositionVisual positionKey={key} />
               </div>
 
               {/* body */}
