@@ -14,7 +14,7 @@
  */
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { PictogramKey } from "./Pictogram";
-import { POSITION_ASSETS } from "@/lib/position-assets";
+import { POSITION_ASSETS, POSITION_ASSETS_BY_ID } from "@/lib/position-assets";
 
 const PAPER_GRADIENT = "linear-gradient(135deg, #f7f2e7, #efe6d2)";
 
@@ -49,7 +49,8 @@ function StripFlipbook({ src, frames, dwell = 720, paused = false }: { src: stri
               backgroundPositionX: `${(i / (frames - 1)) * 100}%`,
               backgroundPositionY: "center",
               opacity: i === frame ? 1 : 0,
-              transition: "opacity 480ms ease-in-out",
+              transition: "opacity 700ms ease-in-out",
+              willChange: "opacity",
             }}
           />
         ))}
@@ -78,14 +79,17 @@ function Placeholder() {
 
 export function PositionVisual({
   positionKey,
+  assetId,
   paused = false,
   style,
 }: {
   positionKey: PictogramKey;
+  /** library position id (p01..); when given, looks up the per-position photo so cards never repeat */
+  assetId?: string;
   paused?: boolean;
   style?: CSSProperties;
 }) {
-  const asset = POSITION_ASSETS[positionKey];
+  const asset = assetId !== undefined ? POSITION_ASSETS_BY_ID[assetId] : POSITION_ASSETS[positionKey];
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", ...style }}>
