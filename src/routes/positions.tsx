@@ -167,7 +167,7 @@ function PositionRow({ p, role }: { p: Position; role: Role }) {
     .filter(Boolean) as string[];
   return (
     <li className="bg-background flex flex-col overflow-hidden rounded-2xl border border-border">
-      <div style={{ aspectRatio: "4 / 3" }}>
+      <div style={{ aspectRatio: "3 / 4" }}>
         <Pictogram positionKey={illustrationFor(p)} showCaption={false} annotate={annotateData(p, role)} />
       </div>
 

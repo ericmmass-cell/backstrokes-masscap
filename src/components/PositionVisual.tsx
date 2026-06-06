@@ -106,7 +106,11 @@ export function PositionVisual({
   paused?: boolean;
   style?: CSSProperties;
 }) {
-  const asset = assetId !== undefined ? POSITION_ASSETS_BY_ID[assetId] : POSITION_ASSETS[positionKey];
+  // Prefer the per-position photo; fall back to the position's family strip so a
+  // card shows relevant motion instead of a bare placeholder.
+  const asset =
+    (assetId !== undefined ? POSITION_ASSETS_BY_ID[assetId] : undefined) ??
+    POSITION_ASSETS[positionKey];
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", ...style }}>
