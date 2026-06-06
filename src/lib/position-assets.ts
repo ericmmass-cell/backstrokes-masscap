@@ -1,7 +1,9 @@
 /**
  * Position art registry. Real, externally-produced assets per position.
  * Clothed photo motion strips (8 frames, neutral set) live in
- * /public/demos/positions/ and animate as a crossfading flipbook.
+ * /public/demos/positions/ and animate as a crossfading flipbook. The strips
+ * carry 4 sharp key poses on the even frames (0,2,4,6) with ghosted motion-blur
+ * tweens on the odd frames; the player plays only the sharp keys.
  *
  * Two lookups:
  *  - POSITION_ASSETS_BY_ID: the Pop Atlas keys by library position id (p01..),
@@ -22,7 +24,6 @@ const strip = (name: string): PositionAsset => ({
   kind: "strip",
   src: `/demos/positions/${name}.jpg`,
   frames: 8,
-  dwell: 560,
 });
 
 /** Library position id -> its own photo. Each strip used once (no repeats). */
