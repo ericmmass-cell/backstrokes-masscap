@@ -420,10 +420,24 @@ function PositionsPage() {
   const [role, setRole] = useState<Role>("either");
   const [condition, setCondition] = useState<Condition | "all">("all");
   const [showMatch, setShowMatch] = useState(false);
+  const [query, setQuery] = useState("");
 
   const cap = maxLoadForIndex(index);
 
   const rows = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (q) {
+      // Text lookup runs across the whole library and ignores the load cap, so a
+      // search always finds the position even on a flared-back day.
+      return [...POSITIONS]
+        .filter(
+          (p) =>
+            p.name.toLowerCase().includes(q) ||
+            p.category.replace(/-/g, " ").toLowerCase().includes(q) ||
+            (p.councilNote ?? "").toLowerCase().includes(q),
+        )
+        .sort((a, b) => roleLoad(a, role) - roleLoad(b, role));
+    }
     if (showMatch) return matchToTodaysBack(index, 3, role);
     return [...POSITIONS]
       .filter((p) => (category === "all" ? true : p.category === category))
@@ -435,7 +449,7 @@ function PositionsPage() {
         if (sort === "hipFlexion") return a.hipFlexion - b.hipFlexion;
         return a.partnerMobility - b.partnerMobility;
       });
-  }, [index, category, sort, role, condition, showMatch, cap]);
+  }, [index, category, sort, role, condition, showMatch, cap, query]);
 
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
@@ -655,11 +669,28 @@ function PositionsPage() {
       {/* Results */}
       <section className="px-6 md:px-10 py-12">
         <div className="max-w-[1280px] mx-auto">
+          {/* Text search across the whole library (ignores the load cap) */}
+          <div className="mb-6">
+            <label htmlFor="pos-search" className="sr-only">Search positions by name</label>
+            <input
+              id="pos-search"
+              type="search"
+              value={query}
+              onChange={(e) => { setShowMatch(false); setQuery(e.target.value); }}
+              placeholder="Search positions: spoon, standing, edge of bed..."
+              className="w-full md:max-w-md px-4 py-3 rounded-full bg-background border border-border text-sm outline-none transition focus:border-[var(--brand-amber)]"
+            />
+          </div>
+
           <div className="flex items-baseline justify-between mb-6">
             <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-[var(--brand-amber)]">
-              {showMatch ? "Top 3 for tonight" : `${rows.length} of ${POSITIONS.length} positions`}
+              {query.trim()
+                ? `${rows.length} match${rows.length === 1 ? "" : "es"} for "${query.trim()}"`
+                : showMatch
+                ? "Top 3 for tonight"
+                : `${rows.length} of ${POSITIONS.length} positions`}
             </p>
-            {showMatch && (
+            {showMatch && !query.trim() && (
               <p className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground">
                 Ranked by lumbar load + breath access · Index {index}
               </p>
@@ -668,7 +699,9 @@ function PositionsPage() {
 
           {rows.length === 0 ? (
             <p className="font-serif-display text-xl italic text-muted-foreground max-w-md">
-              Nothing in this slice clears today's load cap. Lower the filter, or come back on a quieter-back day.
+              {query.trim()
+                ? `Nothing matches "${query.trim()}". Try a plainer word: spoon, standing, seated, edge.`
+                : "Nothing in this slice clears today's load cap. Lower the filter, or come back on a quieter-back day."}
             </p>
           ) : (
             <ul className="grid md:grid-cols-2 gap-px bg-border border border-border">
