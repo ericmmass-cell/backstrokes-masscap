@@ -168,7 +168,7 @@ function PositionRow({ p, role }: { p: Position; role: Role }) {
   return (
     <li className="bg-background flex flex-col overflow-hidden rounded-2xl border border-border">
       <div style={{ aspectRatio: "3 / 4" }}>
-        <Pictogram positionKey={illustrationFor(p)} showCaption={false} annotate={annotateData(p, role)} />
+        <Pictogram positionKey={illustrationFor(p)} assetId={p.id} showCaption={false} annotate={annotateData(p, role)} />
       </div>
 
       <div className="p-6 md:p-7 flex flex-col">

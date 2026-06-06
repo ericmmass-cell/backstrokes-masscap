@@ -18,6 +18,13 @@ import { POSITION_ASSETS, POSITION_ASSETS_BY_ID } from "@/lib/position-assets";
 
 const PAPER_GRADIENT = "linear-gradient(135deg, #f7f2e7, #efe6d2)";
 
+/** Stable per-string hash (deterministic, SSR-safe; no Math.random). */
+const hashStr = (s: string): number => {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (Math.imul(h, 31) + s.charCodeAt(i)) >>> 0;
+  return h;
+};
+
 /**
  * Crossfading flipbook over a horizontal photo strip.
  *
@@ -27,7 +34,7 @@ const PAPER_GRADIENT = "linear-gradient(135deg, #f7f2e7, #efe6d2)";
  * (0→2→4→6→4→2→…) so the loop never hard-cuts from the last pose back to the
  * first. Each step is a slow ease-in-out cross-dissolve.
  */
-function StripFlipbook({ src, frames, dwell = 1500, fade = 850, paused = false }: { src: string; frames: number; dwell?: number; fade?: number; paused?: boolean }) {
+function StripFlipbook({ src, frames, dwell = 1500, fade = 850, paused = false, variant = 0 }: { src: string; frames: number; dwell?: number; fade?: number; paused?: boolean; variant?: number }) {
   const { keys, seq } = useMemo(() => {
     const evens = Array.from({ length: frames }, (_, i) => i).filter((i) => i % 2 === 0);
     const k = evens.length >= 2 ? evens : Array.from({ length: frames }, (_, i) => i);
@@ -35,7 +42,11 @@ function StripFlipbook({ src, frames, dwell = 1500, fade = 850, paused = false }
     return { keys: k, seq: [...k, ...back] };
   }, [frames]);
 
-  const [step, setStep] = useState(0);
+  // Per-card variation so two cards that share a strip (same-family positions)
+  // never read as the same clip: mirror the facing and phase-offset the start.
+  // A horizontal mirror is anatomically valid for every one of these poses.
+  const mirror = (variant & 1) === 1;
+  const [step, setStep] = useState(() => variant % seq.length);
 
   useEffect(() => {
     const reduced =
@@ -52,7 +63,7 @@ function StripFlipbook({ src, frames, dwell = 1500, fade = 850, paused = false }
 
   return (
     <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: PAPER_GRADIENT }}>
-      <div style={{ position: "relative", height: "100%", aspectRatio: "480 / 640", overflow: "hidden" }}>
+      <div style={{ position: "relative", height: "100%", aspectRatio: "480 / 640", overflow: "hidden", transform: mirror ? "scaleX(-1)" : undefined }}>
         {keys.map((frameIndex) => (
           <div
             key={frameIndex}
@@ -112,10 +123,14 @@ export function PositionVisual({
     (assetId !== undefined ? POSITION_ASSETS_BY_ID[assetId] : undefined) ??
     POSITION_ASSETS[positionKey];
 
+  // Stable per-card seed (the position id when present) so same-strip cards get
+  // distinct mirror/phase and stop reading as duplicates.
+  const variant = hashStr(assetId ?? positionKey);
+
   return (
     <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", ...style }}>
       {asset?.kind === "strip" ? (
-        <StripFlipbook src={asset.src} frames={asset.frames} dwell={asset.dwell} paused={paused} />
+        <StripFlipbook src={asset.src} frames={asset.frames} dwell={asset.dwell} paused={paused} variant={variant} />
       ) : asset?.kind === "image" ? (
         <img src={asset.src} alt="" loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
       ) : asset?.kind === "video" ? (
