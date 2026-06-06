@@ -643,6 +643,7 @@ function PositionsPage() {
             </p>
             <select
               value={sort}
+              aria-label="Sort positions"
               onChange={(e) => {
                 setShowMatch(false);
                 setSort(e.target.value as SortKey);
