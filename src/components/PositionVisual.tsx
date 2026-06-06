@@ -12,33 +12,50 @@
  *
  * No human body is ever drawn in code here.
  */
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import type { PictogramKey } from "./Pictogram";
 import { POSITION_ASSETS, POSITION_ASSETS_BY_ID } from "@/lib/position-assets";
 
 const PAPER_GRADIENT = "linear-gradient(135deg, #f7f2e7, #efe6d2)";
 
-function StripFlipbook({ src, frames, dwell = 720, paused = false }: { src: string; frames: number; dwell?: number; paused?: boolean }) {
-  const [frame, setFrame] = useState(0);
-  const reduced = useRef(false);
+/**
+ * Crossfading flipbook over a horizontal photo strip.
+ *
+ * The strips carry 4 sharp KEY poses on the even frames (0,2,4,6) and ghosted
+ * motion-blur tweens on the odd frames (1,3,5,7). Playing all 8 looks janky and
+ * double-exposed, so we play only the sharp keys and BOOMERANG through them
+ * (0→2→4→6→4→2→…) so the loop never hard-cuts from the last pose back to the
+ * first. Each step is a slow ease-in-out cross-dissolve.
+ */
+function StripFlipbook({ src, frames, dwell = 1500, fade = 850, paused = false }: { src: string; frames: number; dwell?: number; fade?: number; paused?: boolean }) {
+  const { keys, seq } = useMemo(() => {
+    const evens = Array.from({ length: frames }, (_, i) => i).filter((i) => i % 2 === 0);
+    const k = evens.length >= 2 ? evens : Array.from({ length: frames }, (_, i) => i);
+    const back = k.slice(1, -1).reverse(); // boomerang return leg, no endpoint repeats
+    return { keys: k, seq: [...k, ...back] };
+  }, [frames]);
+
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
-    reduced.current =
+    const reduced =
       typeof window !== "undefined" && !!window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (paused || reduced.current) {
-      setFrame(Math.floor(frames / 3)); // hold a clear, demonstrated frame
+    if (paused || reduced) {
+      setStep(keys.length - 1); // hold the fullest expression of the pose
       return;
     }
-    const id = setInterval(() => setFrame((f) => (f + 1) % frames), dwell);
+    const id = setInterval(() => setStep((s) => (s + 1) % seq.length), dwell);
     return () => clearInterval(id);
-  }, [paused, frames, dwell]);
+  }, [paused, keys, seq, dwell]);
+
+  const activeFrame = seq[step] ?? keys[0];
 
   return (
     <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: PAPER_GRADIENT }}>
       <div style={{ position: "relative", height: "100%", aspectRatio: "480 / 640", overflow: "hidden" }}>
-        {Array.from({ length: frames }).map((_, i) => (
+        {keys.map((frameIndex) => (
           <div
-            key={i}
+            key={frameIndex}
             aria-hidden
             style={{
               position: "absolute",
@@ -46,10 +63,10 @@ function StripFlipbook({ src, frames, dwell = 720, paused = false }: { src: stri
               backgroundImage: `url(${src})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: `${frames * 100}% 100%`,
-              backgroundPositionX: `${(i / (frames - 1)) * 100}%`,
+              backgroundPositionX: `${(frameIndex / (frames - 1)) * 100}%`,
               backgroundPositionY: "center",
-              opacity: i === frame ? 1 : 0,
-              transition: "opacity 700ms ease-in-out",
+              opacity: frameIndex === activeFrame ? 1 : 0,
+              transition: `opacity ${fade}ms ease-in-out`,
               willChange: "opacity",
             }}
           />
