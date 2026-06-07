@@ -109,4 +109,24 @@ export const POSES: Record<string, Pose> = {
       { color: OX, headR: 38, joints: { head: [128, 342], neck: [200, 352], elbow: [216, 398], wrist: [266, 420], pelvis: [318, 358], knee: [384, 360], ankle: [434, 392] } },
     ],
   },
+
+  // hard contact poses (triage candidates)
+  // p27 cowgirl, receiver astride reclined partner, leaning back
+  p27: {
+    motion: { figure: 1, dx: 0, dy: -6, period: 2.4 },
+    props: [{ kind: "surface", y: 452 }],
+    figures: [
+      { color: INK, headR: 38, joints: { head: [96, 404], neck: [168, 396], elbow: [150, 424], wrist: [122, 446], pelvis: [300, 392], knee: [360, 330], ankle: [346, 398] } },
+      { color: OX, headR: 38, joints: { head: [372, 250], neck: [346, 300], elbow: [322, 336], wrist: [336, 372], pelvis: [300, 366], knee: [256, 392], ankle: [232, 430] } },
+    ],
+  },
+  // p39 standing, face to face, one in a low squat
+  p39: {
+    motion: { figure: 1, dx: 0, dy: -6, period: 2.4 },
+    props: [{ kind: "surface", y: 556 }],
+    figures: [
+      { color: OX, headR: 36, joints: { head: [168, 148], neck: [176, 214], elbow: [206, 280], wrist: [240, 322], pelvis: [188, 360], knee: [182, 460], ankle: [188, 548] } },
+      { color: INK, headR: 36, joints: { head: [306, 300], neck: [300, 354], elbow: [266, 380], wrist: [234, 402], pelvis: [292, 426], knee: [314, 490], ankle: [296, 548] } },
+    ],
+  },
 };
