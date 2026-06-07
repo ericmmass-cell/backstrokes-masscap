@@ -129,4 +129,42 @@ export const POSES: Record<string, Pose> = {
       { color: INK, headR: 36, joints: { head: [306, 300], neck: [300, 354], elbow: [266, 380], wrist: [234, 402], pelvis: [292, 426], knee: [314, 490], ankle: [296, 548] } },
     ],
   },
+
+  // p05 seated, partner on lap, both upright (dark = the seat, light = astride, offset so both read)
+  p05: {
+    motion: { figure: 1, dx: 0, dy: -5, period: 2.4 },
+    props: [{ kind: "surface", y: 472 }],
+    figures: [
+      { color: INK, headR: 36, joints: { head: [232, 244], neck: [240, 300], elbow: [276, 344], wrist: [318, 372], pelvis: [250, 420], knee: [322, 442], ankle: [366, 462] } },
+      { color: OX, headR: 36, joints: { head: [300, 214], neck: [292, 272], elbow: [256, 318], wrist: [228, 352], pelvis: [276, 398], knee: [214, 430], ankle: [196, 462] } },
+    ],
+  },
+  // p07 side-by-side, facing, knees interlocked (heads at opposite ends, legs cross in the middle)
+  p07: {
+    motion: { figure: 1, dx: -6, dy: 0, period: 2.6 },
+    props: [{ kind: "surface", y: 452 }],
+    figures: [
+      { color: OX, headR: 36, joints: { head: [108, 352], neck: [184, 358], elbow: [156, 392], wrist: [126, 416], pelvis: [298, 366], knee: [360, 352], ankle: [422, 372] } },
+      { color: INK, headR: 36, joints: { head: [424, 318], neck: [348, 326], elbow: [388, 360], wrist: [414, 386], pelvis: [236, 332], knee: [300, 350], ankle: [238, 372] } },
+    ],
+  },
+};
+
+/**
+ * One representative diagram per illustration family (PictogramKey). Used so
+ * EVERY position renders a code-drawn diagram: bespoke pose if the position has
+ * one, otherwise its family's base. No position falls back to a photo.
+ */
+export const FAMILY_POSE: Record<string, Pose> = {
+  "spoon": POSES.p28,
+  "supine-knees-up": POSES.p03,
+  "missionary": POSES.p03,
+  "side-T": POSES.p04,
+  "scissor": POSES.p07,
+  "cowgirl-upright": POSES.p27,
+  "doggy-supported": POSES.p09,
+  "doggy-kneeling": POSES.p19,
+  "standing": POSES.p32,
+  "edge-bed": POSES.p26,
+  "seated-lap": POSES.p05,
 };
