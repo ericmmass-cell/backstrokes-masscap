@@ -75,4 +75,22 @@ export const POSES: Record<string, Pose> = {
       { color: INK, headR: 38, joints: { head: [368, 212], neck: [364, 262], elbow: [336, 308], wrist: [322, 352], pelvis: [360, 364], knee: [372, 436], ankle: [400, 448] } },
     ],
   },
+
+  // ---- standing / reclined: figures kept separated by height ----
+  // p26 edge of bed, receiver standing, partner kneeling on the floor in front
+  p26: {
+    props: [{ kind: "surface", y: 556 }],
+    figures: [
+      { color: OX, headR: 36, joints: { head: [318, 132], neck: [322, 198], elbow: [300, 268], wrist: [292, 330], pelvis: [330, 356], knee: [326, 458], ankle: [330, 548] } },
+      { color: INK, headR: 36, joints: { head: [178, 300], neck: [190, 350], elbow: [228, 384], wrist: [272, 404], pelvis: [212, 446], knee: [196, 548], ankle: [166, 556] } },
+    ],
+  },
+  // p32 standing, receiver hands on a counter, partner standing behind
+  p32: {
+    props: [{ kind: "surface", y: 556 }, { kind: "pillow", x: 78, y: 286, w: 96, h: 16 }],
+    figures: [
+      { color: INK, headR: 36, joints: { head: [300, 150], neck: [304, 214], elbow: [274, 268], wrist: [250, 320], pelvis: [296, 360], knee: [300, 458], ankle: [296, 548] } },
+      { color: OX, headR: 36, joints: { head: [182, 178], neck: [196, 236], elbow: [158, 262], wrist: [118, 286], pelvis: [236, 360], knee: [230, 460], ankle: [236, 548] } },
+    ],
+  },
 };
