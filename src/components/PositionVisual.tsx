@@ -15,6 +15,8 @@
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import type { PictogramKey } from "./Pictogram";
 import { POSITION_ASSETS, POSITION_ASSETS_BY_ID } from "@/lib/position-assets";
+import { POSES } from "@/lib/position-poses";
+import { PoseFigure } from "./PoseFigure";
 
 const PAPER_GRADIENT = "linear-gradient(135deg, #f7f2e7, #efe6d2)";
 
@@ -117,11 +119,11 @@ export function PositionVisual({
   paused?: boolean;
   style?: CSSProperties;
 }) {
-  // Prefer the per-position photo; fall back to the position's family strip so a
-  // card shows relevant motion instead of a bare placeholder.
-  const asset =
-    (assetId !== undefined ? POSITION_ASSETS_BY_ID[assetId] : undefined) ??
-    POSITION_ASSETS[positionKey];
+  // Priority: the per-position photo strip, then a code-drawn diagram for
+  // positions without a strip, then the family-strip fallback, then placeholder.
+  const byId = assetId !== undefined ? POSITION_ASSETS_BY_ID[assetId] : undefined;
+  const pose = assetId !== undefined ? POSES[assetId] : undefined;
+  const asset = byId ?? (pose ? undefined : POSITION_ASSETS[positionKey]);
 
   // Stable per-card seed (the position id when present) so same-strip cards get
   // distinct mirror/phase and stop reading as duplicates.
@@ -135,6 +137,8 @@ export function PositionVisual({
         <img src={asset.src} alt="" loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
       ) : asset?.kind === "video" ? (
         <video src={asset.src} poster={asset.poster} autoPlay={!paused} loop muted playsInline preload="metadata" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+      ) : pose ? (
+        <PoseFigure pose={pose} paused={paused} />
       ) : (
         <Placeholder />
       )}
