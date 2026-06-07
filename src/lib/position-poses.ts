@@ -83,4 +83,30 @@ export const POSES: Record<string, Pose> = {
       { color: OX, headR: 36, joints: { head: [182, 178], neck: [196, 236], elbow: [158, 262], wrist: [118, 286], pelvis: [236, 360], knee: [230, 460], ankle: [236, 548] } },
     ],
   },
+
+  // spoon family: back partner DARK (behind/above), front receiver LIGHT (curled)
+  p28: {
+    motion: { figure: 0, dx: 6, dy: 0, period: 2.6 },
+    props: [{ kind: "surface", y: 452 }, { kind: "pillow", x: 338, y: 330, w: 56, h: 26, rot: -10 }],
+    figures: [
+      { color: INK, headR: 38, joints: { head: [112, 296], neck: [186, 308], elbow: [226, 344], wrist: [300, 374], pelvis: [312, 316], knee: [378, 288], ankle: [352, 366] } },
+      { color: OX, headR: 38, joints: { head: [128, 342], neck: [200, 352], elbow: [216, 398], wrist: [266, 420], pelvis: [318, 358], knee: [384, 320], ankle: [356, 404] } },
+    ],
+  },
+  p23: {
+    motion: { figure: 0, dx: 6, dy: 0, period: 2.6 },
+    props: [{ kind: "surface", y: 452 }, { kind: "wedge", x: 150, y: 336, w: 110, h: 44 }, { kind: "pillow", x: 338, y: 330, w: 56, h: 26, rot: -10 }],
+    figures: [
+      { color: INK, headR: 38, joints: { head: [112, 296], neck: [186, 308], elbow: [226, 344], wrist: [300, 374], pelvis: [312, 316], knee: [378, 288], ankle: [352, 366] } },
+      { color: OX, headR: 38, joints: { head: [128, 336], neck: [202, 346], elbow: [216, 396], wrist: [266, 418], pelvis: [320, 352], knee: [386, 314], ankle: [358, 398] } },
+    ],
+  },
+  p36: {
+    motion: { figure: 0, dx: 6, dy: 0, period: 2.6 },
+    props: [{ kind: "surface", y: 452 }],
+    figures: [
+      { color: INK, headR: 38, joints: { head: [112, 296], neck: [186, 308], elbow: [226, 344], wrist: [300, 374], pelvis: [312, 316], knee: [372, 300], ankle: [432, 326] } },
+      { color: OX, headR: 38, joints: { head: [128, 342], neck: [200, 352], elbow: [216, 398], wrist: [266, 420], pelvis: [318, 358], knee: [384, 360], ankle: [434, 392] } },
+    ],
+  },
 };
