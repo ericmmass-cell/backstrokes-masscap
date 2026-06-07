@@ -15,8 +15,6 @@
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import type { PictogramKey } from "./Pictogram";
 import { POSITION_ASSETS, POSITION_ASSETS_BY_ID } from "@/lib/position-assets";
-import { POSES, FAMILY_POSE } from "@/lib/position-poses";
-import { PoseFigure } from "./PoseFigure";
 
 const PAPER_GRADIENT = "linear-gradient(135deg, #f7f2e7, #efe6d2)";
 
@@ -119,18 +117,15 @@ export function PositionVisual({
   paused?: boolean;
   style?: CSSProperties;
 }) {
-  // One consistent visual language: every position is a code-drawn diagram.
-  // Bespoke pose if the position has one, otherwise its illustration family's
-  // base. The old photo strips remain in the repo but are no longer rendered.
-  const pose = (assetId !== undefined ? POSES[assetId] : undefined) ?? FAMILY_POSE[positionKey];
+  // Real photo strips: the position's own (15) or its family's, with mirror +
+  // phase variety so shared strips read as distinct. (The code-drawn diagram
+  // experiment was reverted; it looked worse than the photography.)
   const asset = (assetId !== undefined ? POSITION_ASSETS_BY_ID[assetId] : undefined) ?? POSITION_ASSETS[positionKey];
   const variant = hashStr(assetId ?? positionKey);
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", ...style }}>
-      {pose ? (
-        <PoseFigure pose={pose} paused={paused} />
-      ) : asset?.kind === "strip" ? (
+      {asset?.kind === "strip" ? (
         <StripFlipbook src={asset.src} frames={asset.frames} dwell={asset.dwell} paused={paused} variant={variant} />
       ) : asset?.kind === "image" ? (
         <img src={asset.src} alt="" loading="lazy" decoding="async" style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
