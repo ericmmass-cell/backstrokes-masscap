@@ -1,4 +1,4 @@
-/** /guide/$slug — a cornerstone article. Escapes the /guide hub layout (guide_.). */
+/** /guide/$slug · a cornerstone article. Escapes the /guide hub layout (guide_.). */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ARTICLES, ARTICLE_ORDER } from "@/content/guide";
 import { GuideShell, PageEyebrow, PageTitle, Dek, Blocks, Faqs, Sources, RankerCTA, OX, RULE, INK } from "@/components/GuideKit";

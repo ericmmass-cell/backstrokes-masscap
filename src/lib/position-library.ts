@@ -1,13 +1,13 @@
 /**
- * Position library — 40 entries, each scored on four axes plus a clinical note.
+ * Position library · 40 entries, each scored on four axes plus a clinical note.
  *
  * Scoring scale, 1–5:
- *   lumbarLoad        — how much load the lumbar takes. 1 = none, 5 = high.
- *   hipFlexion        — depth of hip flexion required. 1 = neutral, 5 = deep.
- *   breathAccess      — how easy it is to breathe diaphragmatically. 1 = poor, 5 = full.
- *   partnerMobility   — mobility demand on the partner. 1 = none, 5 = high.
+ *   lumbarLoad        · how much load the lumbar takes. 1 = none, 5 = high.
+ *   hipFlexion        · depth of hip flexion required. 1 = neutral, 5 = deep.
+ *   breathAccess      · how easy it is to breathe diaphragmatically. 1 = poor, 5 = full.
+ *   partnerMobility   · mobility demand on the partner. 1 = none, 5 = high.
  *
- * Council note is written in brand voice — observational, never coy.
+ * Council note is written in brand voice · observational, never coy.
  * Real anatomical names; we are not a dating app.
  */
 
@@ -68,7 +68,7 @@ export const POSITIONS: Position[] = [
  * Each back condition has a direction it does NOT want loaded, and a
  * geometry that spares it. These are mapped from each position's scored
  * axes (lumbar load, hip flexion) plus its geometry (read from the name:
- * prone, standing, deep-flexion). Informational, not prescriptive — it
+ * prone, standing, deep-flexion). Informational, not prescriptive · it
  * surfaces what tends to spare each condition; the body is the referee.
  */
 export type Condition =
@@ -142,42 +142,42 @@ export function maxLoadForIndex(index: number): number {
 export type Role = "penetrator" | "receiver" | "either";
 
 const LOAD_BEARER: Record<string, "penetrator" | "receiver" | "shared"> = {
-  p01: "shared",     // side-lying spoons — both side-lying, both quiet
-  p02: "penetrator", // supine wedge — receiver supported
-  p03: "penetrator", // supine missionary — receiver supine
-  p04: "penetrator", // side-lying T — partner kneeling does the work
+  p01: "shared",     // side-lying spoons · both side-lying, both quiet
+  p02: "penetrator", // supine wedge · receiver supported
+  p03: "penetrator", // supine missionary · receiver supine
+  p04: "penetrator", // side-lying T · partner kneeling does the work
   p05: "shared",     // seated lap, both upright
-  p06: "penetrator", // supine on bolster — receiver supported
+  p06: "penetrator", // supine on bolster · receiver supported
   p07: "shared",     // side-by-side facing
   p08: "receiver",   // standing, receiver bent over support
   p09: "receiver",   // quadruped, forearms down
   p10: "receiver",   // quadruped, chest on bolster
-  p11: "receiver",   // reverse cowgirl — receiver on top
-  p12: "receiver",   // cowgirl upright — receiver on top
-  p13: "penetrator", // modified missionary, stirrups — receiver supine
+  p11: "receiver",   // reverse cowgirl · receiver on top
+  p12: "receiver",   // cowgirl upright · receiver on top
+  p13: "penetrator", // modified missionary, stirrups · receiver supine
   p14: "shared",     // side-lying scissor
   p15: "shared",     // standing, both upright, wall
   p16: "penetrator", // edge-of-bed, receiver supine
   p17: "shared",     // lap-sitting, both upright
-  p18: "penetrator", // side-lying stirrup — receiver side-lying quiet
-  p19: "receiver",   // doggy on the bed — receiver in quadruped
-  p22: "penetrator", // supine double-pillow — receiver supported
-  p23: "shared",     // side-lying, receiver wedge — both side-lying
-  p24: "shared",     // standing supported squat — both work
-  p25: "receiver",   // supine knees-to-chest — receiver's deep flexion
+  p18: "penetrator", // side-lying stirrup · receiver side-lying quiet
+  p19: "receiver",   // doggy on the bed · receiver in quadruped
+  p22: "penetrator", // supine double-pillow · receiver supported
+  p23: "shared",     // side-lying, receiver wedge · both side-lying
+  p24: "shared",     // standing supported squat · both work
+  p25: "receiver",   // supine knees-to-chest · receiver's deep flexion
   p26: "penetrator", // edge-of-bed, receiver standing, partner kneels
-  p27: "receiver",   // cowgirl leaning back — receiver on top
+  p27: "receiver",   // cowgirl leaning back · receiver on top
   p28: "shared",     // side-by-side spooning
-  p29: "penetrator", // supine legs straight — receiver supine
+  p29: "penetrator", // supine legs straight · receiver supine
   p30: "receiver",   // quadruped, hands on headboard
   p31: "penetrator", // couch edge, receiver reclined
   p32: "receiver",   // standing, receiver bent over counter
-  p33: "receiver",   // prone, pillow under hips — receiver prone
-  p34: "penetrator", // supine, partner kneeling — receiver does nothing
+  p33: "receiver",   // prone, pillow under hips · receiver prone
+  p34: "penetrator", // supine, partner kneeling · receiver does nothing
   p35: "shared",     // cradle-sitting, both wrapped
   p36: "shared",     // side-lying, top leg back
-  p37: "receiver",   // squatting over partner — receiver on top
-  p38: "penetrator", // supine one knee bent — receiver supine
+  p37: "receiver",   // squatting over partner · receiver on top
+  p38: "penetrator", // supine one knee bent · receiver supine
   p39: "shared",     // standing face-to-face, low squat
 };
 
@@ -263,8 +263,8 @@ export function matchToTodaysBack(index: number, count = 3, role: Role = "either
  * position. No new per-position data, no schema change. The double meaning
  * is the whole feature:
  *
- *   RELIEF  — the kind your back wants. How much room the spine gets.
- *   HEAT    — the good kind of pop. How much the geometry is worth doing.
+ *   RELIEF  · the kind your back wants. How much room the spine gets.
+ *   HEAT    · the good kind of pop. How much the geometry is worth doing.
  *
  * COPY FIREWALL (enforce in review on every UI string):
  *   RELIEF may say: spares, eases, takes pressure off, lets the back stay
@@ -306,7 +306,7 @@ export function popFor(p: Position, role: Role = "either"): number {
   return Math.round(100 * Math.sqrt(relief * (0.35 + 0.65 * heat)));
 }
 
-/** 0-3 "pops" — the literal pop pop pop, rendered as amber eyebrow glyphs. */
+/** 0-3 "pops" · the literal pop pop pop, rendered as amber eyebrow glyphs. */
 export function popPips(p: Position, role: Role = "either"): 0 | 1 | 2 | 3 {
   const pop = popFor(p, role);
   if (pop >= 75) return 3;

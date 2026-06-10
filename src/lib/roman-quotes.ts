@@ -1,9 +1,9 @@
 /**
- * Weird quotes from Roman rulers — and a few anecdotes about them — used to
+ * Weird quotes from Roman rulers · and a few anecdotes about them · used to
  * distract the user during their eight-minute session.
  *
  * Voice rule for new entries: the joke is in the framing, not the punchline.
- * Quotations are accurate (Suetonius, Tacitus, Dio Cassius, the SHA — caveat
+ * Quotations are accurate (Suetonius, Tacitus, Dio Cassius, the SHA · caveat
  * for ancient sourcing). Anecdotes are reported, not invented. We are not
  * making fun of the emperor. We are making fun of the wellness industry's
  * conviction that you must be Present during a curl-up.

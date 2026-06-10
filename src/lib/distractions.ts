@@ -1,5 +1,5 @@
 /**
- * Distractions — short, dry, observational entries used to keep the user's
+ * Distractions · short, dry, observational entries used to keep the user's
  * mind occupied during the eight-minute session.
  *
  * Four rotating themes. The brand voice does not change between them. The

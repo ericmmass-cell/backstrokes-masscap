@@ -1,5 +1,5 @@
 /**
- * PositionScene3D — biomechanics view in REAL 3D (raw three.js).
+ * PositionScene3D · biomechanics view in REAL 3D (raw three.js).
  *
  * Why raw three.js: R3F's <Canvas> does not run its render loop in this
  * TanStack Start + Cloudflare setup (see MovementDemo.tsx). Raw three.js
@@ -52,7 +52,7 @@ function poseFor(_key: PictogramKey): PoseSpec {
     ["shoulder", "elbow", 0.034],
     ["elbow", "wrist", 0.03],
   ];
-  // RECEIVER — front, on left side, head -X, knees drawn up and forward (+Z).
+  // RECEIVER · front, on left side, head -X, knees drawn up and forward (+Z).
   const receiver: FigureSpec = {
     tone: "rx",
     si: "sacrum",
@@ -72,7 +72,7 @@ function poseFor(_key: PictogramKey): PoseSpec {
       wrist: [-0.06, 0.10, 0.26],
     },
   };
-  // PARTNER — behind (−Z) and a touch higher, nested. Top arm + leg draped
+  // PARTNER · behind (−Z) and a touch higher, nested. Top arm + leg draped
   // forward over the receiver. The PELVIS group drives.
   const partner: FigureSpec = {
     tone: "pt",
@@ -169,7 +169,7 @@ function buildFigure(parent: THREE.Object3D, spec: FigureSpec): THREE.Group {
     if (name === "head") return; // head drawn below
     addSphere(target(name), p, 0.05, mat);
   });
-  // head — a soft faceless ovoid
+  // head · a soft faceless ovoid
   addSphere(parent, J.head, 0.108, mat, [0.92, 1.12, 0.92]);
   return pelvisGroup;
 }

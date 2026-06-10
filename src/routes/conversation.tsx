@@ -106,24 +106,34 @@ const TOPICS: Topic[] = [
 function ConversationPage() {
   const [topic, setTopic] = useState<Topic>(TOPICS[0]);
   const [variant, setVariant] = useState(0);
-  const [saved, setSaved] = useState(false);
+  const [savedLink, setSavedLink] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const line = topic.lines[variant % topic.lines.length];
 
   const save = () => {
     try {
+      // The payload travels IN the link (base64url JSON in the hash), so it
+      // never touches a server or a log and opens on any device. localStorage
+      // keeps sender-side history only.
+      const payload = { kind: "conversation", topicLabel: topic.label, line, t: Date.now() };
+      const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(payload))))
+        .replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+      const url = `${window.location.origin}/share/v1#${b64}`;
       const list = JSON.parse(localStorage.getItem("bs.partnerLinks") ?? "[]");
-      list.push({
-        kind: "conversation",
-        topicId: topic.id,
-        topicLabel: topic.label,
-        line,
-        t: Date.now(),
-        token: Math.random().toString(36).slice(2, 10),
-      });
+      list.push({ ...payload, topicId: topic.id, token: "v1" });
       localStorage.setItem("bs.partnerLinks", JSON.stringify(list));
-      setSaved(true);
-      setTimeout(() => setSaved(false), 2400);
+      setSavedLink(url);
+      setCopied(false);
+    } catch {}
+  };
+
+  const copyShareLink = async () => {
+    if (!savedLink) return;
+    try {
+      await navigator.clipboard.writeText(savedLink);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2400);
     } catch {}
   };
 
@@ -208,7 +218,7 @@ function ConversationPage() {
                 onClick={save}
                 className="px-5 py-3 rounded-full font-mono-label text-[10px] tracking-[0.22em] uppercase bg-foreground text-background hover:opacity-90 transition"
               >
-                {saved ? "✓ Saved to partner queue" : "Save to partner queue"}
+                {savedLink ? "↻ Remake the link" : "Make a partner link"}
               </button>
               <button
                 type="button"
@@ -218,6 +228,21 @@ function ConversationPage() {
                 Print a nightstand card
               </button>
             </div>
+
+            {savedLink && (
+              <div className="mt-5 flex flex-wrap items-center gap-3 print:hidden">
+                <code className="px-4 py-2.5 rounded-md border border-border text-[11px] break-all max-w-full" style={{ color: "var(--brand-amber)" }}>
+                  {savedLink}
+                </code>
+                <button
+                  type="button"
+                  onClick={copyShareLink}
+                  className="px-5 py-2.5 rounded-full font-mono-label text-[10px] tracking-[0.22em] uppercase border border-border hover:bg-card/40 transition"
+                >
+                  {copied ? "Copied. Text it, do not explain it." : "Copy the link"}
+                </button>
+              </div>
+            )}
 
             <p className="mt-8 text-xs text-muted-foreground italic leading-relaxed print:hidden">
               Specific, never coy. The line names the situation, not the partner. Use 'I notice' not 'you always.' Education and coaching, not therapy.

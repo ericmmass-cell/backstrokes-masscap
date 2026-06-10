@@ -1,7 +1,7 @@
-# Movements — pose-data pipeline
+# Movements · pose-data pipeline
 
-One humanoid skeleton, twenty bones, JSON poses. Adding any new movement — an
-exercise or a sex position — is a data file. The renderer never changes.
+One humanoid skeleton, twenty bones, JSON poses. Adding any new movement · an
+exercise or a sex position · is a data file. The renderer never changes.
 
 ## Bone schema
 
@@ -24,8 +24,8 @@ Each bone has a 3-axis euler rotation (radians). The full set is defined in
 
 Plus per-subject root transform:
 
-- `rootPosition: [x, y, z]` — world position of the pelvis
-- `rootRotation: [x, y, z]` — orientation of the whole figure
+- `rootPosition: [x, y, z]` · world position of the pelvis
+- `rootRotation: [x, y, z]` · orientation of the whole figure
 
 ## Authoring a single-subject movement (an exercise)
 
@@ -104,7 +104,7 @@ the two subjects relative to each other via their `rootPosition` fields.
 
 The position library at `/positions` should eventually read from this registry
 so each position card renders its actual 3D pose alongside the scored
-attributes — but that's a wiring step, not a pipeline change.
+attributes · but that's a wiring step, not a pipeline change.
 
 ## Coordinate system
 
@@ -138,7 +138,7 @@ When a real GLB lands in `src/assets/3d/`:
 2. Walk the skeleton, capture a `Record<BoneName, Bone>` map
 3. In `applyPose`, set `bone.rotation` instead of the `<group>` rotation
 
-The pose data — every keyframe in every Movement — works unchanged.
+The pose data · every keyframe in every Movement · works unchanged.
 
 ## Future: a pose editor
 

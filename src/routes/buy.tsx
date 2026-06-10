@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { createCheckout, type Sku } from "@/lib/stripe-checkout";
 
 /**
- * /buy — the only place money changes hands.
+ * /buy · the only place money changes hands.
  *
  * Three SKUs:
  *   1. Founding member.  $199 one-time, lifetime. 200 spots.

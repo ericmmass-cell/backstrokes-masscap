@@ -1,5 +1,5 @@
 /**
- * PositionDiagram — clean, instructional SVG diagrams of each sex position.
+ * PositionDiagram · clean, instructional SVG diagrams of each sex position.
  *
  * The brief (Eric, 2026-06-01): stop chasing realistic art and stop fighting a
  * censored image generator. Draw the positions ourselves as clear, good-looking
@@ -79,7 +79,7 @@ function Bed({ x = 60, y = 196, w = 250, h = 58 }: { x?: number; y?: number; w?:
 }
 
 /* ════════════════════════════════════════════════════════════════
-   figure engine — clean UNIFIED silhouettes.
+   figure engine · clean UNIFIED silhouettes.
    The fix for "can't tell what's happening": draw each body as one
    silhouette (all outline shapes first, then all fills) so the seams
    between limbs vanish, give it a real pelvis + chest + hands + feet,
@@ -192,7 +192,7 @@ function Vulva(_props: { x: number; y: number; angle?: number; r?: number }) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   STICK-SKELETON engine — the biomechanics view.
+   STICK-SKELETON engine · the biomechanics view.
    The point of BackStroke is the spine: you have to see the hip drive
    and the SI joint / lumbar while the couple moves. A filled blob hides
    all of that. A line skeleton shows it: a visible spine, a pelvis that
@@ -202,7 +202,7 @@ function Vulva(_props: { x: number; y: number; angle?: number; r?: number }) {
 type J = [number, number];
 const PAPER_HALO = "#efe7d4";
 const JOINTCOL = "#2a2620";
-const SICOL = "#9a2f2f"; // SI joint highlight — the thing to watch
+const SICOL = "#9a2f2f"; // SI joint highlight · the thing to watch
 
 function jpath(pts: J[]) {
   return pts.map((p, i) => `${i ? "L" : "M"} ${p[0]} ${p[1]}`).join(" ");
@@ -231,7 +231,7 @@ function Joint({ p, r = 3.5 }: { p: J; r?: number }) {
   );
 }
 
-/* the SI joint — highlighted ring at the sacrum, the back-safety focus */
+/* the SI joint · highlighted ring at the sacrum, the back-safety focus */
 function SINode({ p }: { p: J }) {
   return (
     <g className="pd-si">
@@ -255,7 +255,7 @@ function Skull({ p, r = 12, tone }: { p: J; r?: number; tone: Tone }) {
 }
 
 /* the spine as a visible articulated line with vertebra ticks; the
-   lower (lumbar) third is drawn heavier — that is the at-risk segment */
+   lower (lumbar) third is drawn heavier · that is the at-risk segment */
 function SpineLine({ pts, tone }: { pts: J[]; tone: Tone }) {
   const t = TONES[tone];
   const d = jpath(pts);
@@ -343,7 +343,7 @@ function svgWrap(label: string, paused: boolean, children: React.ReactNode) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   2.5D OBLIQUE PROJECTION — gives orientation (side-lying vs prone).
+   2.5D OBLIQUE PROJECTION · gives orientation (side-lying vs prone).
    World coords: X along the bed (screen right), Y height off the bed,
    Z depth into the scene. A point farther back projects up-and-right and
    draws lighter, so the roll of the body is readable. The stick-skeleton
@@ -397,7 +397,7 @@ function thrustDelta(from: P3, to: P3, scale = 0.3): { tx: string; ty: string } 
 
 /* ════════════════ POSES ════════════════ */
 
-/* SPOON — 2.5D. Both side-lying (you can read the roll), nested. The
+/* SPOON · 2.5D. Both side-lying (you can read the roll), nested. The
    partner behind drives the PELVIS while the spine stays neutral; SI marked. */
 function Spoon(paused: boolean) {
   const th = thrustDelta([176, 36, 84], [158, 28, 52], 0.34); // partner pelvis -> receiver
@@ -406,7 +406,7 @@ function Spoon(paused: boolean) {
       <Floor y={255} shadow={false} />
       <BedPlane x0={-14} x1={210} z0={6} z1={110} />
 
-      {/* PARTNER — behind (higher Z + higher Y, draws lighter). Spine neutral + still. */}
+      {/* PARTNER · behind (higher Z + higher Y, draws lighter). Spine neutral + still. */}
       <g>
         <Spine3 pts={[[78, 46, 90], [116, 45, 90], [150, 44, 90], [170, 44, 90]]} tone="pt" />
         <Bone3 pts={[[78, 46, 90], [54, 46, 90]]} tone="pt" w={6} halo={false} />
@@ -415,7 +415,7 @@ function Spoon(paused: boolean) {
         <SINode3 p={[170, 44, 90]} />
       </g>
 
-      {/* RECEIVER — front (low Z, solid). Side-lying: the raised TOP leg is the tell. */}
+      {/* RECEIVER · front (low Z, solid). Side-lying: the raised TOP leg is the tell. */}
       <g className="pd-breathe">
         {/* spine + skull, gentle line */}
         <Spine3 pts={[[44, 30, 42], [86, 30, 43], [126, 30, 44], [150, 30, 44]]} tone="rx" />
@@ -424,7 +424,7 @@ function Spoon(paused: boolean) {
         <Pelvis3 sacrum={[150, 30, 44]} hip={[160, 27, 44]} tone="rx" />
         {/* down leg resting on the bed (low, slightly back) */}
         <Bone3 pts={[[160, 27, 44], [132, 8, 58], [158, 4, 64]]} tone="rx" w={5} />
-        {/* top leg RAISED + forward — the side-lying tell */}
+        {/* top leg RAISED + forward · the side-lying tell */}
         <Bone3 pts={[[160, 27, 44], [128, 48, 22]]} tone="rx" w={6} />
         <Bone3 pts={[[128, 48, 22], [156, 24, 16]]} tone="rx" w={5} />
         {/* top arm forward on the bed */}
@@ -436,7 +436,7 @@ function Spoon(paused: boolean) {
         <SINode3 p={[150, 30, 44]} />
       </g>
 
-      {/* PARTNER's draped top arm + thrusting PELVIS + top leg — on top at the contact */}
+      {/* PARTNER's draped top arm + thrusting PELVIS + top leg · on top at the contact */}
       <g>
         <Bone3 pts={[[80, 47, 88], [108, 28, 56], [138, 14, 48]]} tone="pt" w={4.5} />
         <Joint3 p={[80, 47, 88]} />
@@ -455,7 +455,7 @@ function Spoon(paused: boolean) {
   ));
 }
 
-/* MISSIONARY — receiver supine (oxblood), partner above in plank (amber). */
+/* MISSIONARY · receiver supine (oxblood), partner above in plank (amber). */
 function Missionary(paused: boolean) {
   return svgWrap("Missionary: the receiving partner lies on their back with knees bent, the other partner holds a plank above them and rocks gently. The receiver's lower back stays neutral on the floor.", paused, (
     <>
@@ -504,7 +504,7 @@ function Missionary(paused: boolean) {
   ));
 }
 
-/* SUPINE KNEES UP (modified missionary) — receiver supine knees over bolster, partner kneeling. */
+/* SUPINE KNEES UP (modified missionary) · receiver supine knees over bolster, partner kneeling. */
 function SupineKneesUp(paused: boolean) {
   return svgWrap("Modified missionary: the receiving partner lies on their back with knees bent over a bolster, the other partner kneels close. The bolster keeps the lower back neutral.", paused, (
     <>
@@ -553,7 +553,7 @@ function SupineKneesUp(paused: boolean) {
   ));
 }
 
-/* SIDE-T — receiver side-lying, partner kneeling perpendicular. */
+/* SIDE-T · receiver side-lying, partner kneeling perpendicular. */
 function SideT(paused: boolean) {
   return svgWrap("Side-lying T: the receiving partner lies on their side, the other partner kneels upright at a right angle. Side-lying keeps the spine neutral.", paused, (
     <>
@@ -602,7 +602,7 @@ function SideT(paused: boolean) {
   ));
 }
 
-/* EDGE OF BED — receiver supine at edge of a bed, partner standing. */
+/* EDGE OF BED · receiver supine at edge of a bed, partner standing. */
 function EdgeBed(paused: boolean) {
   return svgWrap("Edge of bed: the receiving partner lies on their back with hips at the edge of the bed, the standing partner faces them. The mattress fully supports the spine.", paused, (
     <>
@@ -648,7 +648,7 @@ function EdgeBed(paused: boolean) {
   ));
 }
 
-/* COWGIRL UPRIGHT — partner supine (amber), receiver straddling upright (oxblood). */
+/* COWGIRL UPRIGHT · partner supine (amber), receiver straddling upright (oxblood). */
 function CowgirlUpright(paused: boolean) {
   return svgWrap("Receiver on top: the partner lies on their back, the receiving partner sits upright straddling them and controls the rhythm. The upright spine stays tall and neutral.", paused, (
     <>
@@ -694,7 +694,7 @@ function CowgirlUpright(paused: boolean) {
   ));
 }
 
-/* DOGGY SUPPORTED — receiver chest-down on pillow stack, partner kneeling behind. */
+/* DOGGY SUPPORTED · receiver chest-down on pillow stack, partner kneeling behind. */
 function DoggySupported(paused: boolean) {
   return svgWrap("Supported rear-entry: the receiving partner rests chest-down on a stack of pillows with forearms on the floor, the other partner kneels behind. The chest support keeps the lower back neutral.", paused, (
     <>
@@ -744,7 +744,7 @@ function DoggySupported(paused: boolean) {
   ));
 }
 
-/* DOGGY KNEELING — receiver hands+knees level, partner kneeling behind. */
+/* DOGGY KNEELING · receiver hands+knees level, partner kneeling behind. */
 function DoggyKneeling(paused: boolean) {
   return svgWrap("Rear-entry, kneeling: the receiving partner is on hands and knees with a level back, the other partner kneels upright behind. Keep the back level and neutral, not sagging.", paused, (
     <>
@@ -791,7 +791,7 @@ function DoggyKneeling(paused: boolean) {
   ));
 }
 
-/* SCISSOR — both side-lying, legs interleaved. */
+/* SCISSOR · both side-lying, legs interleaved. */
 function Scissor(paused: boolean) {
   return svgWrap("Side-lying scissor: both partners lie on their sides with legs interleaved. Side-lying keeps spinal load low for both.", paused, (
     <>
@@ -839,7 +839,7 @@ function Scissor(paused: boolean) {
   ));
 }
 
-/* SEATED LAP — partner seated upright, receiver straddling facing, both upright. */
+/* SEATED LAP · partner seated upright, receiver straddling facing, both upright. */
 function SeatedLap(paused: boolean) {
   return svgWrap("Seated lap embrace: one partner sits upright, the other straddles their lap facing them, both spines stacked and tall. Good for a neutral, upright back.", paused, (
     <>
@@ -888,7 +888,7 @@ function SeatedLap(paused: boolean) {
   ));
 }
 
-/* STANDING REAR — both standing, partner behind, front braced forward. */
+/* STANDING REAR · both standing, partner behind, front braced forward. */
 function StandingRear(paused: boolean) {
   return svgWrap("Standing, rear: both partners stand, the front partner braces forward with hands on a surface, the other stands close behind. Bracing keeps the front partner's spine supported.", paused, (
     <>

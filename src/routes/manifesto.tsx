@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 /**
- * /manifesto — the screenshot page.
+ * /manifesto: the screenshot page.
  *
  * No nav. No buttons. No card chrome. Full-bleed cream paper. Full-bleed type.
  * Designed to be photographed, posted, sent to a friend, opened on a phone
@@ -247,7 +247,7 @@ function Manifesto() {
             className="mt-8 font-mono-label text-[10px] tracking-[0.22em] uppercase"
             style={{ color: PAPER_MUTED }}
           >
-            — BackStroke. Cambridge, Massachusetts. {new Date().getFullYear()}.
+            BackStroke. Cambridge, Massachusetts. {new Date().getFullYear()}.
           </p>
         </div>
 

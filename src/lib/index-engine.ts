@@ -36,7 +36,7 @@ export interface IndexReading {
 /* Per-event signed contribution to the daily score. Calibrated against
  * Eric's own beta cohort. Recalibrate after the next 100 users. */
 const CONTRIBUTIONS: Record<string, number> = {
-  "checkin.submitted": 0, // handled specially — uses props
+  "checkin.submitted": 0, // handled specially · uses props
   "move.completed": +6,
   "move.skipped": -2,
   "session.completed": +12,

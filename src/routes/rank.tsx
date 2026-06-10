@@ -1,5 +1,5 @@
 /**
- * /rank — the free, ungated position ranker. The front door.
+ * /rank · the free, ungated position ranker. The front door.
  *
  * Two questions (what sets your back off + which role you usually play), then
  * we score every position against YOUR spine: the green-light list and the

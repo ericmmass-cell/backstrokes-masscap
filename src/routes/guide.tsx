@@ -1,4 +1,4 @@
-/** /guide — the public content hub. Cornerstone articles + the clinician and study pages. */
+/** /guide · the public content hub. Cornerstone articles + the clinician and study pages. */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ARTICLES, ARTICLE_ORDER, CLINICIAN, STUDY } from "@/content/guide";
 import { GuideShell, PageEyebrow, PageTitle, Dek, RankerCTA, OX, RULE, INK } from "@/components/GuideKit";

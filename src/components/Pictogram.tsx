@@ -1,5 +1,5 @@
 /**
- * Pictogram — sex-position + exercise visualization.
+ * Pictogram · sex-position + exercise visualization.
  *
  * Sex positions: real CC-BY-SA 3.0 illustrations by User:Seedfeeder
  * (Wikimedia Commons), shown clean on a cream card. Files at
@@ -9,7 +9,7 @@
  * (Wikimedia Commons), recolored to BackStroke's cream mat + brand
  * ink. Files at /public/exercises/<File>.svg.
  *
- * Solo position (supine-bolster): one hand-authored SVG — the set has
+ * Solo position (supine-bolster): one hand-authored SVG · the set has
  * no rest-pose illustration.
  *
  * Both image families render through the same <PictogramFrame> chrome
@@ -320,7 +320,7 @@ function IllustratedExercise({ exerciseKey }: { exerciseKey: PictogramKey }) {
         decoding="async"
         width={800}
         height={520}
-        // Cache race fix — resolve completeness on ref attach in case
+        // Cache race fix · resolve completeness on ref attach in case
         // the SVG loads before React binds onLoad.
         ref={(el) => {
           if (el && el.complete && el.naturalWidth > 0) setState("loaded");

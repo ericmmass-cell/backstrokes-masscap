@@ -1,5 +1,5 @@
 /**
- * BackStroke copy library — empty, error, and notification states.
+ * BackStroke copy library · empty, error, and notification states.
  *
  * Voice rule (read this before adding entries):
  *   Dry, observational, never punishing. The brand surrounds clinicians and

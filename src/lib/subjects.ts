@@ -4,14 +4,14 @@ import juneImg from "@/assets/meditation.jpg";
 import theoImg from "@/assets/testimonial-3.jpg";
 
 /**
- * BackStroke "subjects" — the people you do the protocol alongside.
+ * BackStroke "subjects" · the people you do the protocol alongside.
  *
  * They are not fitness influencers, gurus, or stock-photo amateurs. They are
  * real-feeling adults who happen to be doing this work too, and they look like
  * it: warm light, no leggings logos, no thumbs up.
  *
  * Each subject has one portrait now (the chooser image). In production each
- * gets three additional shots — curl-up, side-plank, bird-dog — and three more
+ * gets three additional shots · curl-up, side-plank, bird-dog · and three more
  * for the down-train. For now the portrait stands in for every move.
  */
 
@@ -25,7 +25,7 @@ export type Subject = {
   detail: string;
   /** Chooser portrait. */
   image: string;
-  /** Per-move images — placeholder for now, all set to the portrait. */
+  /** Per-move images · placeholder for now, all set to the portrait. */
   moves: { curlUp: string; sidePlank: string; birdDog: string };
   accent: "amber" | "blush";
 };

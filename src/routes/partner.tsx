@@ -55,7 +55,7 @@ function Partner() {
         </div>
       </section>
 
-      {/* EDITORIAL BAND — partnership, in one image */}
+      {/* EDITORIAL BAND: partnership, in one image */}
       <figure
         className="w-full"
         style={{ borderTop: `1px solid ${RULE}`, borderBottom: `1px solid ${RULE}` }}
@@ -168,7 +168,7 @@ function Partner() {
             No push notifications about sex, ever. Never a surveillance vector.
           </h2>
           <p className="mt-6 text-lg leading-relaxed" style={{ color: PAPER_INK, opacity: 0.85 }}>
-            Push notifications about intimate content on a phone that may not be your sole device, on a phone that may be on a kitchen counter or in a meeting or in a car with a child in the back seat, is a customer-service incident waiting to happen. We have written this category as containing exactly zero acceptable notifications. In-app surfacing only. No badge counts on the app icon either.
+            A push notification about intimate content, on a phone that may not be your sole device, on a phone that may be on a kitchen counter or in a meeting or in a car with a child in the back seat, is a customer-service incident waiting to happen. We have written this category as containing exactly zero acceptable notifications. In-app surfacing only. No badge counts on the app icon either.
           </p>
           <p className="mt-5 text-lg leading-relaxed" style={{ color: PAPER_INK, opacity: 0.85 }}>
             Your partner can revoke your access at any time without notifying you. This is a safety feature, not a politeness feature. It exists because relationships change, and the product must not become a surveillance vector. Mental-health context and any body-scan assessment are private by default and stay private until they change that.

@@ -1,4 +1,4 @@
-/** /study — the number nobody measured. Thesis + method + privacy + the real survey instrument. */
+/** /study · the number nobody measured. Thesis + method + privacy + the real survey instrument. */
 import { createFileRoute } from "@tanstack/react-router";
 import { STUDY } from "@/content/guide";
 import { GuideShell, PageEyebrow, PageTitle, Dek, Blocks, OX, RULE, INK, MUTED, PAPER } from "@/components/GuideKit";

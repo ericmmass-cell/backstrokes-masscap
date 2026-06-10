@@ -6,13 +6,13 @@
  * (keyframes) with timing; the player interpolates between them.
  *
  * Adding a new exercise or sex position never requires touching the renderer.
- * You add a `Movement` to `src/lib/movements/` — the player reads it.
+ * You add a `Movement` to `src/lib/movements/` · the player reads it.
  *
  *   For exercises:  one subject, `a`. Subject `b` left undefined.
  *   For positions:  both `a` and `b` populated, positioned relative.
  *
  * The renderer is bone-compatible with Mixamo / Ready Player Me skeletons.
- * Drop in a real rigged GLB and the same Movement JSONs drive it — see
+ * Drop in a real rigged GLB and the same Movement JSONs drive it · see
  * `src/components/MovementDemo.tsx` for the swap path.
  */
 
@@ -50,7 +50,7 @@ export type SubjectPose = Partial<Record<BoneName, Rot>> & {
   rootRotation?: Rot;
 };
 
-/** A pose for the scene — at minimum subject `a`. */
+/** A pose for the scene · at minimum subject `a`. */
 export type Pose = {
   a: SubjectPose;
   b?: SubjectPose;

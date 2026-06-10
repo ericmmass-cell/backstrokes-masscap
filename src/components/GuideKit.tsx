@@ -1,5 +1,5 @@
 /**
- * GuideKit — shared building blocks for the public guide / clinician / study
+ * GuideKit · shared building blocks for the public guide / clinician / study
  * pages. One brand surface: paper, oxblood, serif-display headings, mono labels.
  * (Separate from the legacy Editorial.tsx, which uses the older dark vocabulary.)
  */

@@ -13,11 +13,11 @@ const RESTING: SubjectPose = {
   spineThoracic: [0, 0, 0],
   spineCervical: [0, 0, 0],
   head: [0, 0, 0],
-  // Support arm — left, forearm flat on floor (the elbow is the pivot)
+  // Support arm · left, forearm flat on floor (the elbow is the pivot)
   upperArmL: [0, 0, deg(-90)],
   forearmL: [0, 0, deg(70)],
   handL: [0, 0, 0],
-  // Top arm — right, resting on side
+  // Top arm · right, resting on side
   upperArmR: [0, 0, deg(-15)],
   forearmR: [0, 0, deg(20)],
   handR: [0, 0, 0],

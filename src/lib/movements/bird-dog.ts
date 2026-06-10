@@ -12,14 +12,14 @@ const QUAD: SubjectPose = {
   spineThoracic: [0, 0, 0],
   spineCervical: [deg(-20), 0, 0],
   head: [deg(10), 0, 0],
-  // Arms — straight down to floor, supporting
+  // Arms · straight down to floor, supporting
   upperArmL: [deg(-90), 0, 0],
   forearmL: [0, 0, 0],
   handL: [0, 0, 0],
   upperArmR: [deg(-90), 0, 0],
   forearmR: [0, 0, 0],
   handR: [0, 0, 0],
-  // Legs — bent at 90 (knees on floor, shins back)
+  // Legs · bent at 90 (knees on floor, shins back)
   thighL: [deg(90), 0, 0],
   shinL: [deg(90), 0, 0],
   footL: [0, 0, 0],

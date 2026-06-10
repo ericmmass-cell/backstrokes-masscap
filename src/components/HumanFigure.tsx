@@ -1,5 +1,5 @@
 /**
- * HumanFigure — used by /session.
+ * HumanFigure · used by /session.
  *
  * DECISION (2026-05-31, Eric): use the REAL art, make it move. Several
  * hand-drawn figure attempts were rejected as not good enough.
@@ -26,7 +26,7 @@ export function HumanFigure({ moveKey, paused, className, style }: Props) {
   if (FLIPBOOK_KEYS.has(moveKey)) {
     return <PhotoFlipbook moveKey={moveKey} paused={paused} className={className} style={style} />;
   }
-  // No photography for this key — render nothing rather than a broken figure.
+  // No photography for this key · render nothing rather than a broken figure.
   return null;
 }
 

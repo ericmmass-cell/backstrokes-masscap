@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 
 /**
- * /about — the founder page.
+ * /about: the founder page.
  *
  * Built for press, investors, and the user who Googles "who made BackStroke"
  * at 11pm and wants to know it is a real person with a name and a face and a
@@ -101,7 +101,7 @@ function About() {
           </P>
         </Section>
 
-        <Section eyebrow="2015 — 2022">
+        <Section eyebrow="2015 – 2022">
           <H2>The tour.</H2>
           <P>
             Over the next eight years I saw three surgeons, four PTs, two
