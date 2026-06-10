@@ -90,6 +90,22 @@ function reliefCaption(p: Position, role: Role): string {
   return youBearIt ? "Release is rented, not owned: your back is the one working." : "Release is yours to claim here.";
 }
 
+/** Prominent, role-framed load status: is THIS position easy or hard on the
+ * back of whoever the user said they are tonight? */
+function roleStatus(p: Position, role: Role): { label: string; tone: "relief" | "load" | "shared" } | null {
+  if (role === "either") return null; // no role chosen yet, no claim about "your" back
+  const load = roleLoad(p, role); // per-role: the load on the back of whoever you said you are
+  if (load <= 2) return { label: "Easy on your back", tone: "relief" };
+  if (load === 3) return { label: "Moderate for your back", tone: "shared" };
+  return { label: "Hard on your back", tone: "load" };
+}
+
+const STATUS_STYLE: Record<"relief" | "load" | "shared", { bg: string; fg: string }> = {
+  relief: { bg: "color-mix(in oklch, #3f7a57 18%, transparent)", fg: "#356b4b" },
+  load: { bg: "color-mix(in oklch, var(--brand-oxblood) 16%, transparent)", fg: OX },
+  shared: { bg: "color-mix(in oklch, var(--brand-amber) 20%, transparent)", fg: "var(--brand-ink)" },
+};
+
 function Pips({ n }: { n: number }) {
   return (
     <span className="inline-flex items-center gap-[3px]" aria-label={`${n} of 3 pops`}>
@@ -165,6 +181,18 @@ function PopCard({ p, role, overCap, index }: { p: Position; role: Role; overCap
 
         <h3 className="font-serif-display text-xl md:text-2xl italic mt-2.5 leading-tight">{p.name}</h3>
 
+        {/* role-framed load status: leads with whether this is easy/hard on YOUR back */}
+        {(() => {
+          const st = roleStatus(p, role);
+          if (!st) return null;
+          const s = STATUS_STYLE[st.tone];
+          return (
+            <span className="self-start mt-3 font-mono-label text-[10px] tracking-[0.16em] uppercase px-2.5 py-1 rounded-full" style={{ background: s.bg, color: s.fg }}>
+              {st.label}
+            </span>
+          );
+        })()}
+
         {/* the signature meter */}
         <div className="mt-4">
           <PopMeter relief={relief} heat={heat} size="card" overCap={overCap} style={{ width: "100%" }} />
@@ -175,11 +203,6 @@ function PopCard({ p, role, overCap, index }: { p: Position; role: Role; overCap
             <span style={{ width: 6, height: 6, borderRadius: 999, background: OX }} /> POP sweet spot. hot and survivable at once.
           </p>
         )}
-
-        {/* whose back works */}
-        <p className="mt-3 font-mono-label text-[9px] tracking-[0.16em] uppercase leading-relaxed" style={{ color: AMBER }}>
-          {whoseBack(p, role)}
-        </p>
 
         <CondPills p={p} activeArea={null} />
 
