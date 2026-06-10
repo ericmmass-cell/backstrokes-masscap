@@ -195,7 +195,7 @@ export function loadBearerFor(p: Position): "penetrator" | "receiver" | "shared"
  * "penetrating + bad back" rank by the PENETRATOR's spine. Worth an advisor pass.
  */
 const PER_ROLE_LOAD: Record<string, [number, number]> = {
-  p01: [2, 2], p02: [3, 1], p03: [3, 1], p04: [3, 2], p05: [3, 3], p06: [3, 1],
+  p01: [1, 1], p02: [3, 1], p03: [3, 1], p04: [3, 2], p05: [3, 3], p06: [3, 1],
   p07: [2, 2], p08: [3, 4], p09: [3, 3], p10: [3, 2], p11: [1, 3], p12: [1, 3],
   p13: [3, 3], p14: [2, 2], p15: [3, 3], p16: [3, 1], p17: [3, 3], p18: [3, 2],
   p19: [3, 3], p22: [3, 1], p23: [2, 2], p24: [4, 4], p25: [3, 4], p26: [3, 2],
@@ -204,9 +204,18 @@ const PER_ROLE_LOAD: Record<string, [number, number]> = {
   p39: [4, 3],
 };
 
+/** Both sides of a position's load, [penetrator, receiver]. Null when unmapped. */
+export function perRoleLoad(p: Position): [number, number] | null {
+  return PER_ROLE_LOAD[p.id] ?? null;
+}
+
 export function roleLoad(p: Position, role: Role): number {
-  if (role === "either") return p.lumbarLoad;
   const pr = PER_ROLE_LOAD[p.id];
+  if (role === "either") {
+    // Cautious by contract: with no role chosen we gate on the HEAVIER side,
+    // so nothing unsafe slips through the default view.
+    return pr ? Math.max(pr[0], pr[1]) : p.lumbarLoad;
+  }
   if (pr) return role === "penetrator" ? pr[0] : pr[1];
   // fallback to the older bearer model for any unmapped position
   const bearer = loadBearerFor(p);
@@ -217,20 +226,22 @@ export function roleLoad(p: Position, role: Role): number {
   return youBearIt ? p.lumbarLoad : Math.max(1, p.lumbarLoad - 2);
 }
 
-/** One-line, role-aware read on whose back is working. */
+/** One-line, role-aware read on whose back is working. Derived from the same
+ * per-role loads the ranking uses, so the sentence can never contradict the
+ * number printed beside it. */
 export function roleLoadNote(p: Position, role: Role): string {
-  const bearer = loadBearerFor(p);
-  if (bearer === "shared") return "Shared load. both spines work here.";
+  const pr = PER_ROLE_LOAD[p.id];
+  const [pen, rec] = pr ?? [p.lumbarLoad, p.lumbarLoad];
+  if (pen === rec) return "Shared load. Both spines work here.";
+  const bearer = pen > rec ? "penetrator" : "receiver";
   if (role === "either") {
     return bearer === "penetrator"
       ? "The penetrating partner's back carries this one."
       : "The receiving partner's back carries this one.";
   }
-  const youBearIt =
-    (role === "penetrator" && bearer === "penetrator") ||
-    (role === "receiver" && bearer === "receiver");
+  const youBearIt = role === bearer;
   return youBearIt
-    ? "Your back is the one working here. mind the cap."
+    ? "Your back is the one working here. Mind the cap."
     : "Your back gets the easier side here.";
 }
 

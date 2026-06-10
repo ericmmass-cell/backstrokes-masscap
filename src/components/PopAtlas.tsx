@@ -20,8 +20,6 @@ import {
   POSITIONS,
   maxLoadForIndex,
   roleLoad,
-  roleLoadNote,
-  loadBearerFor,
   conditionsFor,
   reliefFor,
   heatFor,
@@ -73,30 +71,21 @@ const ILLUSTRATION_BY_ID: Record<string, PictogramKey> = {
 const illustrationFor = (p: Position): PictogramKey => ILLUSTRATION_BY_ID[p.id] ?? "supine-knees-up";
 
 /** whose back works, one short line with a role glyph */
-function whoseBack(p: Position, role: Role): string {
-  const bearer = loadBearerFor(p);
-  if (bearer === "shared") return "Shared load. both spines work here.";
-  if (role === "either") return bearer === "penetrator" ? "The penetrating partner's back carries this." : "The receiving partner's back carries this.";
-  const youBearIt = (role === "penetrator" && bearer === "penetrator") || (role === "receiver" && bearer === "receiver");
-  return youBearIt ? "Your back is the one working. mind the cap." : "Your back gets the easier side here.";
-}
-
-/** role-aware RELIEF caption for the detail line */
-function reliefCaption(p: Position, role: Role): string {
-  const bearer = loadBearerFor(p);
-  if (bearer === "shared") return "Room is shared here. both spines get the same deal.";
-  const youBearIt = (role === "penetrator" && bearer === "penetrator") || (role === "receiver" && bearer === "receiver");
-  if (role === "either") return "How much room the easier role gets here.";
-  return youBearIt ? "Release is rented, not owned: your back is the one working." : "Release is yours to claim here.";
-}
-
 /** Prominent, role-framed load status: is THIS position easy or hard on the
- * back of whoever the user said they are tonight? */
+ * back of whoever the user said they are tonight? The green "easy" claim is
+ * suppressed when the shape is high-load overall or the partner's side is
+ * heavy, so a 1/5 split can never wear an unqualified safety badge. */
 function roleStatus(p: Position, role: Role): { label: string; tone: "relief" | "load" | "shared" } | null {
   if (role === "either") return null; // no role chosen yet, no claim about "your" back
-  const load = roleLoad(p, role); // per-role: the load on the back of whoever you said you are
-  if (load <= 2) return { label: "Easy on your back", tone: "relief" };
-  if (load === 3) return { label: "Moderate for your back", tone: "shared" };
+  const load = roleLoad(p, role);
+  const partner = roleLoad(p, role === "penetrator" ? "receiver" : "penetrator");
+  if (load <= 2) {
+    if (p.category === "high-load" || partner >= 4) {
+      return { label: "Easy on yours · heavy on your partner's", tone: "shared" };
+    }
+    return { label: "Easy on your back", tone: "relief" };
+  }
+  if (load === 3) return { label: "Moderate on your back", tone: "shared" };
   return { label: "Hard on your back", tone: "load" };
 }
 
@@ -186,10 +175,20 @@ function PopCard({ p, role, overCap, index }: { p: Position; role: Role; overCap
           const st = roleStatus(p, role);
           if (!st) return null;
           const s = STATUS_STYLE[st.tone];
+          const partnerRole = role === "penetrator" ? "receiver" : "penetrator";
+          const mine = roleLoad(p, role);
+          const partner = roleLoad(p, partnerRole);
           return (
-            <span className="self-start mt-3 font-mono-label text-[10px] tracking-[0.16em] uppercase px-2.5 py-1 rounded-full" style={{ background: s.bg, color: s.fg }}>
-              {st.label}
-            </span>
+            <>
+              <span className="self-start mt-3 font-mono-label text-[10px] tracking-[0.16em] uppercase px-2.5 py-1 rounded-full" style={{ background: s.bg, color: s.fg }}>
+                {st.label}
+              </span>
+              {Math.abs(mine - partner) >= 2 && (
+                <p className="mt-2 font-mono-label text-[9px] tracking-[0.16em] uppercase text-muted-foreground">
+                  Your side {mine}/5 · your partner's {partner}/5
+                </p>
+              )}
+            </>
           );
         })()}
 
@@ -215,9 +214,25 @@ function PopCard({ p, role, overCap, index }: { p: Position; role: Role; overCap
   );
 }
 
-export function PopAtlas() {
-  const [role, setRole] = useState<Role>("either");
-  const [index, setIndex] = useState(67);
+export function PopAtlas({
+  role: roleProp,
+  index: indexProp,
+  onRoleChange,
+  onIndexChange,
+}: {
+  /** When provided, the Atlas is controlled by the page so one role/Index
+   * answer governs every section instead of two silently-divergent sets. */
+  role?: Role;
+  index?: number;
+  onRoleChange?: (r: Role) => void;
+  onIndexChange?: (n: number) => void;
+} = {}) {
+  const [roleLocal, setRoleLocal] = useState<Role>("either");
+  const [indexLocal, setIndexLocal] = useState(67);
+  const role = roleProp ?? roleLocal;
+  const index = indexProp ?? indexLocal;
+  const setRole = (r: Role) => (onRoleChange ? onRoleChange(r) : setRoleLocal(r));
+  const setIndex = (n: number) => (onIndexChange ? onIndexChange(n) : setIndexLocal(n));
   const [area, setArea] = useState<PainArea | null>(null);
   const [sort, setSort] = useState<AtlasSort>("match");
 
@@ -313,6 +328,10 @@ export function PopAtlas() {
               className="w-full mt-3 accent-[var(--brand-amber)]"
               aria-label="Today's Index"
             />
+            <div className="flex justify-between font-mono-label text-[8px] tracking-[0.16em] uppercase text-muted-foreground mt-1">
+              <span>← rough day</span>
+              <span>quiet day →</span>
+            </div>
             <p className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground mt-1">
               We would cap the load around {cap}/5 tonight
             </p>
