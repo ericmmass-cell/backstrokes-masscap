@@ -229,7 +229,7 @@ function Index() {
             Open the app to act, not browse. Each module answers a specific question your spine, your bedroom, or your skepticism has been asking. The default state is action. Education is there when you ask for it.
           </p>
 
-          {/* Five modules — typographically dominant, the largest type on the page after the hero */}
+          {/* Five modules · typographically dominant, the largest type on the page after the hero */}
           <ol className="mt-16 divide-y" style={{ borderColor: "oklch(0.86 0.025 70)" }}>
             {[
               {
@@ -268,7 +268,7 @@ function Index() {
                 className="grid grid-cols-12 gap-6 md:gap-10 py-10 md:py-14 items-start"
                 style={{ borderColor: "oklch(0.86 0.025 70)", borderTopWidth: i === 0 ? 1 : 0 }}
               >
-                {/* Roman numeral — large italic serif, the largest type after the hero */}
+                {/* Roman numeral · large italic serif, the largest type after the hero */}
                 <div className="col-span-2 md:col-span-1">
                   <span
                     className="font-serif-display italic block leading-none"
@@ -281,7 +281,7 @@ function Index() {
                   </span>
                 </div>
 
-                {/* Module name — also editorial, second weight in the hierarchy */}
+                {/* Module name · also editorial, second weight in the hierarchy */}
                 <div className="col-span-10 md:col-span-3">
                   <h3
                     className="font-serif-display leading-[0.95] tracking-tight"
@@ -301,7 +301,7 @@ function Index() {
                   </p>
                 </div>
 
-                {/* Value line — small mono, oxblood, far right */}
+                {/* Value line · small mono, oxblood, far right */}
                 <div className="col-span-12 md:col-span-3 md:pt-5">
                   <p
                     className="font-mono-label text-[10px] tracking-[0.22em] uppercase leading-relaxed"
@@ -320,7 +320,7 @@ function Index() {
         </div>
       </section>
 
-      {/* ───────── POSITION ENGINE — the money feature ───────── */}
+      {/* ───────── POSITION ENGINE · the money feature ───────── */}
       <section id="engine" className="px-6 md:px-10 py-28 md:py-36 relative" style={{ background: PAPER }}>
         <div className="max-w-[1180px] mx-auto">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
@@ -344,7 +344,7 @@ function Index() {
                 The engine asks where the pain lives, how the hips feel, what you have time for, and what kind of evening this is supposed to be. It returns a three-act plan: a warm-up, a main course, and a dessert option, ranked by lumbar load, hip demand, and breath access. You decide escalate, hold, or de-escalate at every act. The plan reroutes around what your back said, not what the magazine intern guessed.
               </p>
 
-              {/* HOW IT WORKS — three steps */}
+              {/* HOW IT WORKS · three steps */}
               <div className="mt-12">
                 <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: PAPER_MUTED }}>
                   How it works

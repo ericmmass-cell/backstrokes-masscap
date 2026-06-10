@@ -1,5 +1,5 @@
 /**
- * Anatomical engravings — vintage medical-plate style.
+ * Anatomical engravings · vintage medical-plate style.
  *
  * After three rounds of trying to draw procedural humans out of primitives,
  * we stopped. SVG-composed people will always read as clip art. The right
@@ -14,9 +14,9 @@
  *
  * Two exports preserved for the rest of the app:
  *
- *   <HeroSchematic />            — sagittal lumbar spine + sacrum + psoas.
+ *   <HeroSchematic />            · sagittal lumbar spine + sacrum + psoas.
  *                                  Used on /dashboard and homepage hero.
- *   <WorkSchematic variant=… />  — exercise-specific anatomical diagram.
+ *   <WorkSchematic variant=… />  · exercise-specific anatomical diagram.
  *                                  "back"    → lumbar spine in protective
  *                                              endurance position with load
  *                                              vectors.
@@ -37,7 +37,7 @@ const PAPER_2 = "#EFE7D2";
 type Props = { className?: string };
 
 /* ============================================================
-   SHARED PRIMITIVES — vintage engraving toolkit
+   SHARED PRIMITIVES · vintage engraving toolkit
    ============================================================ */
 
 /**
@@ -62,7 +62,7 @@ function EngravingDefs({ id }: { id: string }) {
         <circle cx="1" cy="1" r="0.45" fill={INK} />
         <circle cx="3" cy="3" r="0.45" fill={INK} />
       </pattern>
-      {/* Oxblood crosshatch — used to mark the L4-L5 disc, the injury */}
+      {/* Oxblood crosshatch · used to mark the L4-L5 disc, the injury */}
       <pattern id={`hatch-ox-${id}`} patternUnits="userSpaceOnUse" width="3" height="3" patternTransform="rotate(45)">
         <line x1="0" y1="0" x2="0" y2="3" stroke={OX} strokeWidth="0.7" />
       </pattern>
@@ -111,7 +111,7 @@ function Callout({
   );
 }
 
-/** Plate caption — bottom-right, italic, like an old textbook figure number. */
+/** Plate caption · bottom-right, italic, like an old textbook figure number. */
 function PlateCaption({ fig, label, w, h }: { fig: string; label: string; w: number; h: number }) {
   return (
     <g>
@@ -135,7 +135,7 @@ function PlateCaption({ fig, label, w, h }: { fig: string; label: string; w: num
 }
 
 /* ============================================================
-   LUMBAR SPINE — sagittal cross-section, vintage plate
+   LUMBAR SPINE · sagittal cross-section, vintage plate
    Used by <HeroSchematic />
    ============================================================ */
 
@@ -162,7 +162,7 @@ function VertebraSagittal({
         fill="url(#hatch-sparse-hero)"
         opacity="0.5"
       />
-      {/* Spinous process — points posterior (left of column) */}
+      {/* Spinous process · points posterior (left of column) */}
       <path
         d={`M ${left} ${cy - 4} L ${left - 22} ${cy - 2} L ${left - 22} ${cy + 4} L ${left} ${cy + 4} Z`}
         fill={PAPER_2}
@@ -217,7 +217,7 @@ function Disc({
       />
       {herniated && (
         <>
-          {/* Posterior bulge — the herniation */}
+          {/* Posterior bulge · the herniation */}
           <path
             d={`M ${left + 2} ${cy} Q ${left - 6} ${cy + 1} ${left - 10} ${cy + 4} Q ${left - 6} ${cy + 6} ${left + 2} ${cy + 3} Z`}
             fill={OX}
@@ -267,7 +267,7 @@ export function HeroSchematic({ className }: Props) {
       </text>
       <line x1="80" y1="68" x2={W - 80} y2="68" stroke={INK} strokeWidth="0.6" />
 
-      {/* Sacrum — wedge below L5 */}
+      {/* Sacrum · wedge below L5 */}
       <g transform={`translate(0, 0)`}>
         <path
           d={`M ${sx - 22} ${startY + 5 * vSpacing - 10} L ${sx + 18} ${startY + 5 * vSpacing - 12} L ${sx + 28} ${startY + 5 * vSpacing + 50} L ${sx - 8} ${startY + 5 * vSpacing + 60} Z`}
@@ -315,10 +315,10 @@ export function HeroSchematic({ className }: Props) {
         />
       ))}
 
-      {/* Pubic bone stub — kept for hip-girdle context */}
+      {/* Pubic bone stub · kept for hip-girdle context */}
       <ellipse cx={sx + 64} cy={startY + 5 * vSpacing + 28} rx="6" ry="3" fill={PAPER_2} stroke={INK} strokeWidth="1" />
 
-      {/* Psoas attachment line — runs anterior from T12 down to lesser trochanter */}
+      {/* Psoas attachment line · runs anterior from T12 down to lesser trochanter */}
       <g>
         <path
           d={`M ${sx + 22} ${startY - 8} Q ${sx + 38} ${startY + 70} ${sx + 52} ${startY + 5 * vSpacing + 24}`}
@@ -369,13 +369,13 @@ export function HeroSchematic({ className }: Props) {
       />
 
       {/* Plate caption */}
-      <PlateCaption fig="I" label="after gray, modified — backstroke ℠" w={W} h={H} />
+      <PlateCaption fig="I" label="after gray, modified · backstroke ℠" w={W} h={H} />
     </svg>
   );
 }
 
 /* ============================================================
-   WORK SCHEMATIC — exercise / anatomy diagrams for homepage cards
+   WORK SCHEMATIC · exercise / anatomy diagrams for homepage cards
    variant="back"     → spine + pelvis in supine endurance position
                         with load vectors and "30/3" annotation.
    variant="bedroom"  → lumbar-load-by-position chart (three small
@@ -420,7 +420,7 @@ function BackPlate({ className }: Props) {
       </text>
       <line x1="24" y1="60" x2={W - 24} y2="60" stroke={INK} strokeWidth="0.5" opacity="0.4" />
 
-      {/* Spine column — side view, gently lordotic curve */}
+      {/* Spine column · side view, gently lordotic curve */}
       <g transform="translate(120, 90)">
         {/* Five lumbar vertebrae with discs */}
         {[0, 1, 2, 3, 4].map((i) => {
@@ -490,7 +490,7 @@ function BackPlate({ className }: Props) {
         />
       </g>
 
-      {/* Load vectors — vertical compressive arrow on top of spine */}
+      {/* Load vectors · vertical compressive arrow on top of spine */}
       <g>
         <line x1={120} y1={56} x2={120} y2={80} stroke={OX} strokeWidth="1.6" />
         <path d={`M ${120 - 4} ${78} L ${120} ${86} L ${120 + 4} ${78} Z`} fill={OX} />
@@ -499,7 +499,7 @@ function BackPlate({ className }: Props) {
         </text>
       </g>
 
-      {/* Annotation block — protocol summary */}
+      {/* Annotation block · protocol summary */}
       <g transform={`translate(${W - 220}, 110)`}>
         <line x1="0" y1="0" x2="200" y2="0" stroke={INK} strokeWidth="0.5" />
         <text x="0" y="16" fontFamily="JetBrains Mono, monospace" fontSize="8" letterSpacing="0.22em" fill={OX}>

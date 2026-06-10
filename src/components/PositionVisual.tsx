@@ -1,5 +1,5 @@
 /**
- * PositionVisual — the asset-backed position visual. Drop-in for the old
+ * PositionVisual · the asset-backed position visual. Drop-in for the old
  * code-drawn PositionDiagram (same props).
  *
  * Renders a real, externally-produced asset:

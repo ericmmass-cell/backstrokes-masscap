@@ -151,7 +151,7 @@ function HeroCard({ state }: { state: SessionState }) {
         </div>
       </div>
 
-      {/* Single-sentence letter — one line, no P.S., no signer crowding the action */}
+      {/* Single-sentence letter: one line, no P.S., no signer crowding the action */}
       <p className="mt-7 font-serif-display italic leading-snug max-w-3xl" style={{ fontSize: "clamp(19px, 1.9vw, 25px)" }}>
         {state.name && <span style={{ color: "var(--brand-oxblood)" }}>{state.name}. </span>}
         {letter.lede.split(". ")[0]}.
@@ -222,7 +222,7 @@ function BelowStrip({ state }: { state: SessionState }) {
   );
 }
 
-/* ───────── Engine card — push the money feature on the daily home ───────── */
+/* ───────── Engine card: push the money feature on the daily home ───────── */
 
 function EngineCard({ state }: { state: SessionState }) {
   // Tag the recommendation by the user's current Index band
@@ -309,7 +309,7 @@ function EngineCard({ state }: { state: SessionState }) {
   );
 }
 
-/* ───────── Today's distraction — Roman quote teaser ───────── */
+/* ───────── Today's distraction: Roman quote teaser ───────── */
 
 function DistractionTeaser() {
   const d = todaysDistraction();
@@ -478,7 +478,7 @@ function Dashboard() {
               <button
                 onClick={state.signedIn ? signOut : signIn}
                 className="opacity-60 hover:opacity-100 transition"
-                title="Demo controls — real auth ships before launch"
+                title="Demo controls · real auth ships before launch"
               >
                 {state.signedIn ? "demo · sign out" : "demo · sign in"}
               </button>

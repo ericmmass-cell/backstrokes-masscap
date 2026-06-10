@@ -1,5 +1,5 @@
 /**
- * PoseFigure — deterministic, code-drawn position diagrams you can actually read.
+ * PoseFigure · deterministic, code-drawn position diagrams you can actually read.
  *
  * Clarity rules (the whole point):
  *  - the two people are high-contrast: one LIGHT (receiver), one DARK (partner),

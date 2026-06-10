@@ -286,7 +286,7 @@ export function PopAtlas({
             Where is it today?
           </p>
           <p className="text-sm text-muted-foreground mb-5 max-w-xl leading-relaxed">
-            Tap where your back is loudest. Information, not a diagnosis. your body keeps the gavel.
+            Tap where your back is loudest. Information, not a diagnosis. Your body keeps the gavel.
           </p>
           <BackMap value={area} onChange={setArea} counts={counts} />
         </div>
@@ -366,7 +366,7 @@ export function PopAtlas({
         </p>
         {allowed.length === 0 ? (
           <p className="font-serif-display text-xl italic text-muted-foreground max-w-md">
-            Nothing in this slice clears today's line. Lower the read, or come back on a quieter-back day. The Atlas will still be here, unlike the optimism.
+            Nothing in this slice clears today's line. Lower the read, or come back on a quieter-back day. The Atlas will still be here. It has nowhere else to be.
           </p>
         ) : (
           <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">

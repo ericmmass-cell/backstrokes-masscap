@@ -1,5 +1,5 @@
 /**
- * Position3D — sex position visualization. Two figures, raw three.js.
+ * Position3D · sex position visualization. Two figures, raw three.js.
  *
  * Same architecture as MovementDemo (raw three.js because R3F's Canvas
  * doesn't render in this TanStack Start setup). Loads the soldier rig
@@ -20,7 +20,7 @@
  *   - Dignified enough to read as adult health content
  *   - Brand-aware: cream paper, oxblood, magazine-editorial register
  *
- * (Different file from PositionDemo.tsx — that one is sprite-based and
+ * (Different file from PositionDemo.tsx · that one is sprite-based and
  * powers the /positions library route. This one is the 3D version for
  * hero placements where the rendered figure is part of the pitch.)
  */
@@ -49,8 +49,8 @@ const MODEL_URL = "/3d/soldier.glb";
 const CREAM = "#F4EFE3";
 const PAPER = "#EFE7D2";
 const OXBLOOD = "#722B2B";
-const FIGURE_A = "#2a2620"; // deep ink — back partner
-const FIGURE_B = "#722B2B"; // oxblood — front partner (brand accent)
+const FIGURE_A = "#2a2620"; // deep ink · back partner
+const FIGURE_B = "#722B2B"; // oxblood · front partner (brand accent)
 
 const BONES = {
   hips: "mixamorigHips",
@@ -155,7 +155,7 @@ function subjectPoseFor(
           spine2: [0, 0, 0],
           leftArm: [0, 0, 0.15],
           rightArm: [0, 0, -0.15],
-          // Both knees bent up — feet off floor, bolster under
+          // Both knees bent up · feet off floor, bolster under
           leftUpLeg: [-1.4, 0, 0],
           leftLeg: [1.5, 0, 0],
           rightUpLeg: [-1.4, 0, 0],
@@ -320,7 +320,7 @@ function subjectPoseFor(
   }
   if (positionKey === "supine-bolster") {
     if (subject === "b") {
-      // No second subject for solo — hide off-screen
+      // No second subject for solo · hide off-screen
       return { rootPosition: [0, -10, 0], rootRotation: [0, 0, 0], bones: {} };
     }
     return {
@@ -347,7 +347,7 @@ function subjectPoseFor(
         bones: {
           leftArm: [0, 0, 0.2],
           rightArm: [0, 0, -0.2],
-          // Knees bent up over the edge — feet hanging
+          // Knees bent up over the edge · feet hanging
           leftUpLeg: [-1.5, 0, 0],
           leftLeg: [1.4, 0, 0],
           rightUpLeg: [-1.5, 0, 0],
@@ -529,7 +529,7 @@ export function Position3D({
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
-    // OrbitControls — let the user drag to rotate, scroll to zoom.
+    // OrbitControls · let the user drag to rotate, scroll to zoom.
     // Constrained: no panning, polar angle limited to keep the
     // camera from going under the floor.
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -608,7 +608,7 @@ export function Position3D({
         // Pure silhouette rendering. Flat MeshBasicMaterial, no
         // lighting interaction, no surface detail visible. The
         // soldier's gear (helmet, vest, pockets) disappears into
-        // the outline — what reads is the body's contour against
+        // the outline · what reads is the body's contour against
         // cream paper. Apple-iPod-ad approach: the shape carries
         // the meaning. Two figures get slightly different inks so
         // they're distinguishable when overlapping.

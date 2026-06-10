@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 
 /**
- * /buy/cancel — Stripe's redirect target when the user closes the
+ * /buy/cancel · Stripe's redirect target when the user closes the
  * Checkout window or hits "back" before paying. No moralizing. No
  * "are you sure?" pop-up. We just say: the door is still open.
  */

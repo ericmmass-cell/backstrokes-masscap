@@ -494,7 +494,7 @@ function Citations() {
       ],
     },
     {
-      head: "Sex and chronic low back pain — clinical and biomechanical",
+      head: "Sex and chronic low back pain: clinical and biomechanical",
       items: [
         "Sidorkewicz N, McGill SM. Documenting female spine motion during coitus with a commentary on the implications for the low back pain patient. European Spine Journal, 2014.",
         "Sidorkewicz N, McGill SM. Male spine motion during coitus: implications for the low back pain patient. Spine, 2014.",

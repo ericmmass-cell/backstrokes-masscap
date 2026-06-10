@@ -1,4 +1,4 @@
-/** /for-clinicians — the practitioner bridge. The thing a PT / therapist hands the patient. */
+/** /for-clinicians · the practitioner bridge. The thing a PT / therapist hands the patient. */
 import { createFileRoute } from "@tanstack/react-router";
 import { CLINICIAN } from "@/content/guide";
 import { GuideShell, PageEyebrow, PageTitle, Dek, Blocks, RankerCTA, OX, RULE, INK } from "@/components/GuideKit";

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 
 /**
- * /buy/success — Stripe's redirect target on successful payment.
+ * /buy/success: Stripe's redirect target on successful payment.
  *
  * Stripe appends ?session_id=cs_test_... and our ?sku=... query string.
  * We fire a `checkout.completed` event with both so the event store has
@@ -83,7 +83,7 @@ function Success() {
         >
           Confirmation reference:{" "}
           <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: 12 }}>
-            {session_id ?? "—"}
+            {session_id ?? "·"}
           </span>
         </p>
 

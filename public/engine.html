@@ -743,7 +743,7 @@ svg .receiver.has-breathe { animation: breathe 4.2s ease-in-out infinite; transf
         <div class="flag" data-flag="pregnancy"><div class="box"></div><div class="text">Pregnancy with bleeding, severe pain, or any complication your OB has flagged.</div></div>
       </div>
       <div class="gate-actions">
-        <button class="gate-confirm" id="gateConfirm">None of these — continue</button>
+        <button class="gate-confirm" id="gateConfirm">None of these · continue</button>
         <button class="gate-redirect" id="gateRedirect">Take me to a contact-only option</button>
       </div>
       <div class="gate-flag-msg" id="gateFlagMsg">
@@ -773,7 +773,7 @@ svg .receiver.has-breathe { animation: breathe 4.2s ease-in-out infinite; transf
     </div>
     <div class="stop-rule">
       <div class="lbl">Stop rule, every act</div>
-      <div class="body">Stop if pain travels farther down a leg, turns sharp, becomes electrical, or starts writing legal correspondence. Quiet means quiet — not still technically able to continue, which is how men invented half of orthopaedics.</div>
+      <div class="body">Stop if pain travels farther down a leg, turns sharp, becomes electrical, or starts writing legal correspondence. Quiet means quiet: not still technically able to continue, which is how men invented half of orthopaedics.</div>
     </div>
   </section>
 
@@ -902,7 +902,7 @@ const positions = [
     why:'Stable. Adjustable. The feet in contact with the bed give the receiver proprioceptive ground that calms the lower back.',
     contra:[], partnerLine:'Feet are staying on the bed. That is the anchor.' },
   { id:'doggy_supp', name:'Supported rear-entry, chest down', role:'dessert', stick:'rear_entry', load:2, flex:0, ext:1, rot:1, thrust:2, hip:1, floor:2, climax:true,
-    geometry:'Receiver on knees with chest and forearms on a pile of pillows, hips elevated, spine neutral — not arched. Partner behind, low amplitude.',
+    geometry:'Receiver on knees with chest and forearms on a pile of pillows, hips elevated, spine neutral, not arched. Partner behind, low amplitude.',
     why:'Lets the receiver progress without loading lumbar extension. The pillows do the lordosis prevention.',
     contra:['extension','si_joint'], partnerLine:'Chest down. The pillows are doing my arching for me.' },
   { id:'cowgirl_up', name:'Receiver-on-top, upright', role:'dessert', stick:'on_top', load:3, flex:1, ext:1, rot:1, thrust:2, hip:1, floor:3, climax:true,
@@ -1122,7 +1122,7 @@ const RULE_C = 'rgba(42,38,32,0.22)';  // hairline ink rule
 const RULE_S = 'rgba(42,38,32,0.40)';  // strong ink rule
 
 // =====================================================================
-// SILHOUETTE PATHS — each function returns <path> SVG for one figure
+// SILHOUETTE PATHS · each function returns <path> SVG for one figure
 // =====================================================================
 
 // Side-lying figure curled on its side, head LEFT, feet RIGHT.
@@ -1152,7 +1152,7 @@ function silSideLying(color, tx=0, ty=0, scale=1, mirror=false, className='') {
   </g>`;
 }
 
-// Supine figure (lying flat on back) — top-down view, head LEFT
+// Supine figure (lying flat on back) · top-down view, head LEFT
 function silSupine(color, tx=0, ty=0, scale=1, mirror=false, className='') {
   const transform = `translate(${tx},${ty})${mirror?' scale(-1,1)':''} scale(${scale})`;
   return `<g class="${className}" transform="${transform}">
@@ -2103,7 +2103,7 @@ function buildHumanText() {
   const blocks = $$('#actContainer .act-block');
   const lines = [];
   lines.push('Tonight\'s plan from BackStroke');
-  lines.push('—');
+  lines.push('----------');
   lines.push(ps.instructions);
   lines.push(ps.closer);
   lines.push('');
@@ -2117,7 +2117,7 @@ function buildHumanText() {
     const approach = card.querySelector('.approach')?.textContent.trim() || '';
     lines.push(lbl);
     if (approach) lines.push(approach);
-    lines.push(`— ${pos.name}`);
+    lines.push(`- ${pos.name}`);
     lines.push(pos.geometry);
     lines.push(`Partner line: "${pos.partnerLine}"`);
     lines.push('');
@@ -2206,14 +2206,14 @@ function sharePlan() {
   bsTrack('engine.plan.shared', {});
   const text = buildHumanText();
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => showToast('Copied — paste into a message')).catch(() => fallbackCopy(text));
+    navigator.clipboard.writeText(text).then(() => showToast('Copied. Paste it into a message.')).catch(() => fallbackCopy(text));
   } else fallbackCopy(text);
 }
 function fallbackCopy(text) {
   const ta = document.createElement('textarea');
   ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
   document.body.appendChild(ta); ta.select();
-  try { document.execCommand('copy'); showToast('Copied — paste into a message'); }
+  try { document.execCommand('copy'); showToast('Copied. Paste it into a message.'); }
   catch (e) { showToast('Copy failed'); }
   document.body.removeChild(ta);
 }

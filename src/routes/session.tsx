@@ -73,7 +73,7 @@ const PROTOCOL: Move[] = [
 
 /* Spine-neutral core + posterior chain. moveKey stays breath/decomp
  * (the Pictogram art keys); the displayed moves are Dead bug and Glute
- * bridge — McGill-family back-rehab moves with clean matching
+ * bridge · McGill-family back-rehab moves with clean matching
  * illustrations. The old reverse-kegel down-train move was removed
  * with the pelvic-floor scope cut. */
 const DOWN_TRAIN: Move[] = [
@@ -131,7 +131,7 @@ function DemoPanel({
         <HumanFigure moveKey={move.moveKey} paused={paused} />
       </div>
 
-      {/* Form notes column — separated from the 3D viewport, no overlap */}
+      {/* Form notes column · separated from the 3D viewport, no overlap */}
       <aside className="col-span-12 md:col-span-4 border-l border-border bg-card/30 px-5 py-6 flex flex-col gap-3">
         <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-amber)" }}>
           ◆ Form notes · {move.ref}
@@ -207,7 +207,7 @@ function DistractionsPanel({
         minHeight: 280,
       }}
     >
-      {/* Header — small, single line */}
+      {/* Header · small, single line */}
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-amber)" }}>
           ◆ The distraction · {THEME_LABEL[d.theme]}

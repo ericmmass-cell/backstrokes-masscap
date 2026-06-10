@@ -6,10 +6,10 @@ import { Eyebrow, MonoTag } from "@/components/editorial";
  * Daily check-in. Six targeted questions, tap-only.
  *
  * Design rule: every option is observational, never moralizing. The chip text
- * is the chip — no follow-up "are you sure?" screen, no judgement copy when
+ * is the chip · no follow-up "are you sure?" screen, no judgement copy when
  * "stomach" is picked. The Index moves on the answer; the brand stays quiet.
  *
- * Index math is intentionally simple — coherent feedback first, accurate
+ * Index math is intentionally simple · coherent feedback first, accurate
  * second. Replace with the clinician-derived weights when the council signs
  * off.
  */

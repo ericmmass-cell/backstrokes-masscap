@@ -29,7 +29,7 @@ const SUPINE_EXHALE: SubjectPose = {
 
 const SUPINE_INHALE: SubjectPose = {
   ...SUPINE_EXHALE,
-  // Subtle breath expansion — head settles back slightly
+  // Subtle breath expansion · head settles back slightly
   spineCervical: [deg(-3), 0, 0],
   spineThoracic: [deg(-1), 0, 0],
 };

@@ -36,7 +36,7 @@ export const Route = createFileRoute("/positions")({
       },
     ],
     // Position figures are now inline-SVG diagrams (PositionDiagram), drawn in
-    // the bundle. There is nothing to preload — switching is already instant.
+    // the bundle. There is nothing to preload · switching is already instant.
   }),
 });
 
@@ -88,12 +88,12 @@ const ILLUSTRATION_BY_ID: Record<string, PictogramKey> = {
   p28: "spoon",          // Side-by-side, facing same direction, spooning
   p36: "spoon",          // Side-lying, top leg straight back
 
-  // True missionary — receiver supine, partner above
+  // True missionary · receiver supine, partner above
   p03: "missionary",      // Supine, knees over pillow, missionary
   p13: "missionary",      // Modified missionary, legs in stirrups
   p34: "missionary",      // Supine, partner kneeling, no lumbar load
 
-  // Supine on the back (wedges, bolsters, knees-up — no partner shown above)
+  // Supine on the back (wedges, bolsters, knees-up · no partner shown above)
   p02: "supine-knees-up", // Supine with wedge under pelvis
   p06: "supine-knees-up", // Supine, hips elevated on bolster
   p22: "supine-knees-up", // Supine, double-pillow lumbar support
@@ -146,7 +146,7 @@ function illustrationFor(p: Position): PictogramKey {
   return ILLUSTRATION_BY_ID[p.id] ?? "supine-knees-up";
 }
 
-/** First library position that renders with a given illustration family —
+/** First library position that renders with a given illustration family ·
  *  used to feed the showcase annotation layer representative clinical data. */
 function representativeFor(key: PictogramKey): Position | undefined {
   return POSITIONS.find((p) => illustrationFor(p) === key);
@@ -188,7 +188,7 @@ function PositionRow({ p, role }: { p: Position; role: Role }) {
           )}
         </div>
 
-        {/* Title — serif italic editorial */}
+        {/* Title · serif italic editorial */}
         <h3 className="font-serif-display text-2xl md:text-[26px] italic mt-3 leading-tight">
           {p.name}
         </h3>
@@ -198,7 +198,7 @@ function PositionRow({ p, role }: { p: Position; role: Role }) {
           {p.councilNote}
         </p>
 
-        {/* Role-aware lumbar read — whose back is working */}
+        {/* Role-aware lumbar read · whose back is working */}
         <p className="mt-4 font-mono-label text-[9px] tracking-[0.18em] uppercase leading-relaxed" style={{ color: "var(--brand-amber)" }}>
           {roleLoadNote(p, role)}
         </p>
@@ -514,7 +514,7 @@ function PositionsPage() {
         </div>
       </section>
 
-      {/* Condition encyclopedia — quick lookup by what your back is dealing with */}
+      {/* Condition encyclopedia · quick lookup by what your back is dealing with */}
       <section className="px-6 md:px-10 py-7 border-b border-border" style={{ background: "var(--card)" }}>
         <div className="max-w-[1280px] mx-auto">
           <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-1" style={{ color: "var(--brand-amber)" }}>
@@ -576,7 +576,7 @@ function PositionsPage() {
 
       {/* Controls */}
       <section className="px-6 md:px-10 py-8 border-b border-border bg-card/30 sticky top-16 z-20 backdrop-blur-xl">
-        {/* Role picker — whose back is working tonight */}
+        {/* Role picker · whose back is working tonight */}
         <div className="max-w-[1280px] mx-auto mb-7">
           <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase mb-1" style={{ color: "var(--brand-oxblood)" }}>
             Tonight you're the . . .

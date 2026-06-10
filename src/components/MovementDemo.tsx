@@ -1,7 +1,7 @@
 /**
- * MovementDemo — clinical pose system, RAW three.js edition.
+ * MovementDemo · clinical pose system, RAW three.js edition.
  *
- * Background: Perplexity recommended option (f) — a real Mixamo soldier
+ * Background: Perplexity recommended option (f) · a real Mixamo soldier
  * rig, posed not animated, with calibrated bone offsets per move and a
  * restrained loop layer for breath-driven moves. The recommended
  * implementation used @react-three/fiber.
@@ -11,8 +11,8 @@
  * DOM, the WebGL context initializes, but the render loop never starts
  * (verified by readPixels returning [0,0,0,0] indefinitely on a scene
  * with mesh primitives). Raw three.js with the same scene contents
- * renders correctly. So we use raw three.js — verbose but actually
- * working — to drive the GLB, the bones, the lights, and the camera.
+ * renders correctly. So we use raw three.js · verbose but actually
+ * working · to drive the GLB, the bones, the lights, and the camera.
  *
  * Reuses the existing /public/3d/soldier.glb.
  *
@@ -110,7 +110,7 @@ function poseFor(moveKey: MoveKey): PoseSpec {
         leftForeArm: [0, -0.1, 0],
         rightArm: [0, 0, -0.05],
         rightForeArm: [0, 0.1, 0],
-        // Right knee bent up — hip flex + knee flex
+        // Right knee bent up · hip flex + knee flex
         rightUpLeg: [-1.5, 0, 0],
         rightLeg: [1.6, 0, 0],
         // Left leg long
@@ -467,7 +467,7 @@ export function MovementDemo({
         const clone = SkeletonUtils.clone(sourceScene);
         // Pure silhouette: flat MeshBasicMaterial in deep ink, no
         // lighting interaction. Soldier's tactical gear disappears
-        // into the outline. Apple-iPod-ad approach — the body
+        // into the outline. Apple-iPod-ad approach · the body
         // contour does the work, surface detail is killed.
         clone.traverse((o) => {
           const mesh = o as THREE.Mesh;
@@ -488,7 +488,7 @@ export function MovementDemo({
         console.error("[MovementDemo] GLB load failed", err);
       });
 
-    // Resize observer — keep canvas matching the container
+    // Resize observer · keep canvas matching the container
     const ro = new ResizeObserver(() => {
       const w = container.clientWidth || 480;
       const h = container.clientHeight || 360;

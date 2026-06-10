@@ -1,5 +1,5 @@
 /**
- * PositionGuide — back-first guidance, FORKED BY ROLE.
+ * PositionGuide · back-first guidance, FORKED BY ROLE.
  *
  * The core insight: the same position loads the giver and the receiver
  * completely differently. Missionary is fine for the receiver and the worst

@@ -1,11 +1,11 @@
 /**
- * PositionAnnotation — a timed teaching overlay drawn ON TOP of the real
+ * PositionAnnotation · a timed teaching overlay drawn ON TOP of the real
  * Seedfeeder position illustration. The council's positions strategy lead
  * was decisive: do NOT redraw the couples (that path produced "swamp
  * thing" twice). Instead, animate the *teaching* over the photo-grade
  * illustration we already own.
  *
- * A position is a held geometry, not a rep — so this is a narrated diagram,
+ * A position is a held geometry, not a rep · so this is a narrated diagram,
  * not a loop. A 4-beat reveal plays once when the figure enters view, then
  * rests on the fully-assembled diagram:
  *
@@ -85,9 +85,9 @@ function supportFromName(name: string): { kind: SupportKind; label: string } {
 
 export type PositionAnnotationProps = {
   positionKey: PictogramKey;
-  /** position display name — drives the support glyph + label */
+  /** position display name · drives the support glyph + label */
   name: string;
-  /** 1-5, role-aware lumbar load — drives the arrow weight */
+  /** 1-5, role-aware lumbar load · drives the arrow weight */
   load: number;
   /** the dry "whose back is working" read */
   loadNote: string;
@@ -111,7 +111,7 @@ const CSS = `
 .pa-tag     { opacity: 0; animation: paRise 0.5s ease-out 4.2s forwards; }
 .pa-label   { opacity: 0; animation: paRise 0.5s ease-out 1.7s forwards; }
 
-/* breathing pulse on the breath glyph only — the one B-borrow */
+/* breathing pulse on the breath glyph only · the one B-borrow */
 @keyframes paBreath { 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.12);} }
 .pa-breath { transform-box: fill-box; transform-origin:center; opacity:0;
   animation: paFade 0.5s ease-out 2.4s forwards, paBreath 4s ease-in-out 2.9s infinite; }
@@ -143,7 +143,7 @@ export function PositionAnnotation({ positionKey, name, load, loadNote, paused =
     return () => io.disconnect();
   }, []);
 
-  if (!a) return null; // unknown family — no overlay, the clean PNG stands alone
+  if (!a) return null; // unknown family · no overlay, the clean PNG stands alone
 
   const support = supportFromName(name);
   const [lx, ly] = a.lumbar;
@@ -219,7 +219,7 @@ export function PositionAnnotation({ positionKey, name, load, loadNote, paused =
                 />
               </g>
             )}
-            {/* breath glyph — the one moving element */}
+            {/* breath glyph · the one moving element */}
             <circle className="pa-breath" cx={a.tagAt[0]} cy={a.tagAt[1] - 8} r={2.2} fill="none" stroke={AMBER} strokeWidth={0.8} vectorEffect="non-scaling-stroke" />
           </svg>
 

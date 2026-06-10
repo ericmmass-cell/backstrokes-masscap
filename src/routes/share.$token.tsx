@@ -33,6 +33,27 @@ const FALLBACK: SharedItem = {
   token: "demo",
 };
 
+/** Payload-in-the-link: decode base64url JSON from the hash fragment. The
+ * fragment never reaches a server, which is the privacy point. */
+function readFromHash(): SharedItem | null {
+  try {
+    const h = window.location.hash.slice(1);
+    if (!h) return null;
+    const b64 = h.replace(/-/g, "+").replace(/_/g, "/");
+    const obj = JSON.parse(decodeURIComponent(escape(atob(b64))));
+    if (obj && typeof obj.line === "string") {
+      return {
+        kind: obj.kind ?? "conversation",
+        topicLabel: typeof obj.topicLabel === "string" ? obj.topicLabel : undefined,
+        line: obj.line,
+        t: typeof obj.t === "number" ? obj.t : Date.now(),
+        token: "v1",
+      };
+    }
+  } catch {}
+  return null;
+}
+
 function readShared(token: string): SharedItem | null {
   try {
     const list = JSON.parse(localStorage.getItem("bs.partnerLinks") ?? "[]") as SharedItem[];
@@ -51,7 +72,9 @@ function SharePage() {
     if (token === "demo") {
       setItem(FALLBACK);
     } else {
-      setItem(readShared(token));
+      // Prefer the self-contained link payload; fall back to sender-side
+      // storage for legacy links opened on the device that made them.
+      setItem(readFromHash() ?? readShared(token));
     }
   }, [token]);
 

@@ -1,9 +1,9 @@
 /**
- * PhotoFlipbook — plays the REAL workout photography as motion.
+ * PhotoFlipbook · plays the REAL workout photography as motion.
  *
  * Decision (Eric, 2026-05-31): use the real art, make it move. Three hand-drawn
  * attempts were rejected. The repo ships professional 4-frame motion sequences
- * for every move at /public/demos/workout/<move>.jpg — a 1920×640 strip of four
+ * for every move at /public/demos/workout/<move>.jpg · a 1920×640 strip of four
  * 480×640 frames (rest → lift → hold → return), on the brand cream background.
  *
  * v3 (this file): JS-DRIVEN frame index + CSS opacity crossfade. A setInterval

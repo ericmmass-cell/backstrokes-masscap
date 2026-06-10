@@ -4,7 +4,7 @@ import { PositionGuide, type Role } from "@/components/PositionGuide";
 import { PositionVisual } from "@/components/PositionVisual";
 import type { PictogramKey } from "@/components/Pictogram";
 
-/** /diagramlab — polished position-library review page. NOT in nav. */
+/** /diagramlab · polished position-library review page. NOT in nav. */
 export const Route = createFileRoute("/diagramlab")({
   component: DiagramLab,
   head: () => ({ meta: [{ title: "Position library · BackStroke" }] }),
