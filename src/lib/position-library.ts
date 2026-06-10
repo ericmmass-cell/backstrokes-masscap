@@ -187,8 +187,28 @@ export function loadBearerFor(p: Position): "penetrator" | "receiver" | "shared"
 
 /** Lumbar load for a given role. "either" (depends on the day) returns
  *  the cautious headline load so nothing unsafe slips through. */
+/**
+ * Per-role lumbar load: [penetrator, receiver], 1 (easy) .. 5 (heavy). A
+ * heuristic read from each position's geometry, NOT one number fudged by role:
+ * the supported / lying-down partner scores low; the kneeling, standing,
+ * squatting, or on-top working partner scores higher. This is what lets
+ * "penetrating + bad back" rank by the PENETRATOR's spine. Worth an advisor pass.
+ */
+const PER_ROLE_LOAD: Record<string, [number, number]> = {
+  p01: [2, 2], p02: [3, 1], p03: [3, 1], p04: [3, 2], p05: [3, 3], p06: [3, 1],
+  p07: [2, 2], p08: [3, 4], p09: [3, 3], p10: [3, 2], p11: [1, 3], p12: [1, 3],
+  p13: [3, 3], p14: [2, 2], p15: [3, 3], p16: [3, 1], p17: [3, 3], p18: [3, 2],
+  p19: [3, 3], p22: [3, 1], p23: [2, 2], p24: [4, 4], p25: [3, 4], p26: [3, 2],
+  p27: [2, 3], p28: [1, 1], p29: [3, 2], p30: [3, 4], p31: [3, 2], p32: [3, 4],
+  p33: [3, 3], p34: [3, 1], p35: [3, 3], p36: [2, 2], p37: [1, 5], p38: [3, 2],
+  p39: [4, 3],
+};
+
 export function roleLoad(p: Position, role: Role): number {
   if (role === "either") return p.lumbarLoad;
+  const pr = PER_ROLE_LOAD[p.id];
+  if (pr) return role === "penetrator" ? pr[0] : pr[1];
+  // fallback to the older bearer model for any unmapped position
   const bearer = loadBearerFor(p);
   if (bearer === "shared") return p.lumbarLoad;
   const youBearIt =
