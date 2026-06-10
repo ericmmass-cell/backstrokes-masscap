@@ -58,11 +58,10 @@ const SKUS: Array<{
   pitch: string;
   fine: string;
   primary?: boolean;
-  spotsLeft?: number;
 }> = [
   {
     sku: "founding",
-    eyebrow: "Founding member · 200 spots · 174 left",
+    eyebrow: "Founding member · 200 spots",
     name: "$199",
     price: "$199",
     cadence: "once. forever.",
@@ -70,7 +69,6 @@ const SKUS: Array<{
       "Locks in the lifetime price for the first 200 humans to read this page and decide. No renewal. No fee creep. Founder mark on your account.",
     fine: "One-time payment. Full lifetime access including everything in the next two years.",
     primary: true,
-    spotsLeft: 174,
   },
   {
     sku: "annual",

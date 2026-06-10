@@ -105,20 +105,20 @@ function Partner() {
             className="font-mono-label text-[10px] tracking-[0.22em] uppercase"
             style={{ color: OXBLOOD }}
           >
-            §2 · The four things
+            §2 · The four things · the build order, in writing
           </p>
           <h2
             className="font-serif-display leading-[1.05] tracking-[-0.02em] mt-4"
             style={{ fontSize: "clamp(28px, 3.4vw, 42px)", color: PAPER_INK }}
           >
-            The partner home, the plan view, the partner-line library, and the partner-first filter.
+            The partner home, the plan view, the partner-line library, and the partner-first filter. Described in present tense because the design is settled; labeled a roadmap because honesty is the brand.
           </h2>
 
           <div className="mt-12 space-y-10">
             {[
               {
                 head: "Tonight's line, on the home card",
-                body: "The first thing you see is the sentence for tonight. Save, screenshot, or open the full plan. If your partner has not built one yet, the home card shows the most recent line as evergreen reference. This is the most-opened surface in the product.",
+                body: "The first thing you see is the sentence for tonight. Save, screenshot, or open the full plan. If your partner has not built one yet, the home card shows the most recent line as evergreen reference. We built it to be the surface you open most.",
               },
               {
                 head: "The plan, from your side",
@@ -200,14 +200,14 @@ function Partner() {
               className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold transition hover:opacity-90"
               style={{ background: OXBLOOD, color: PAPER }}
             >
-              Use the partner-first filter →
+              Open the engine →
             </a>
             <Link
               to="/conversation"
               className="font-mono-label text-[10px] tracking-[0.22em] uppercase hover:opacity-80 transition"
               style={{ color: PAPER_MUTED }}
             >
-              Browse the partner-line library →
+              Browse the conversation scripts →
             </Link>
           </div>
           <p className="mt-12 text-xs italic max-w-md mx-auto leading-relaxed" style={{ color: PAPER_MUTED }}>
