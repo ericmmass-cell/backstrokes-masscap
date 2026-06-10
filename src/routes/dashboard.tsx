@@ -106,7 +106,7 @@ function letterFor(state: SessionState): { lede: string; signer: string; role: s
 
 /* ───────── Hero card ───────── */
 
-function HeroCard({ state }: { state: SessionState }) {
+function HeroCard({ state, sample = false }: { state: SessionState; sample?: boolean }) {
   const letter = letterFor(state);
   const diff = state.index - state.prevIndex;
   const trend = diff > 0 ? "+" + diff : diff < 0 ? String(diff) : "·";
@@ -147,13 +147,13 @@ function HeroCard({ state }: { state: SessionState }) {
         </div>
         <div className="text-right">
           <Eyebrow>Index · {dayName}</Eyebrow>
-          <MonoTag muted>Day {state.streak + 1}</MonoTag>
+          <MonoTag muted>{sample ? "Sample day · yours starts at the first check-in" : `Day ${state.streak + 1}`}</MonoTag>
         </div>
       </div>
 
       {/* Single-sentence letter: one line, no P.S., no signer crowding the action */}
       <p className="mt-7 font-serif-display italic leading-snug max-w-3xl" style={{ fontSize: "clamp(19px, 1.9vw, 25px)" }}>
-        {state.name && <span style={{ color: "var(--brand-oxblood)" }}>{state.name}. </span>}
+        {!sample && state.name && <span style={{ color: "var(--brand-oxblood)" }}>{state.name}. </span>}
         {letter.lede.split(". ")[0]}.
       </p>
 
@@ -259,7 +259,7 @@ function EngineCard({ state }: { state: SessionState }) {
         </p>
         <div className="mt-7 flex flex-wrap items-center gap-4">
           <a
-            href="/engine.html"
+            href={`/engine.html?index=${indexBand}`}
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold transition hover:opacity-90"
             style={{ background: "var(--brand-oxblood)", color: "var(--brand-paper)" }}
           >
@@ -393,6 +393,7 @@ function Shelf() {
 function Dashboard() {
   const [state, setState] = useState<SessionState>(PREVIEW);
   const [hydrated, setHydrated] = useState(false);
+  const [firstRun, setFirstRun] = useState(false);
 
   useEffect(() => {
     const loaded = loadState();
@@ -407,10 +408,13 @@ function Dashboard() {
       const events = allEvents();
       // Threshold: only flip to real Index after at least one check-in.
       const hasRealData = events.some((e) => e.event_name === "checkin.submitted");
+      setFirstRun(!hasRealData && !loaded.signedIn);
       // The streak is earned, not seeded: once any session has been
       // completed, the count derives from the event ledger.
       const hasSessions = events.some((e) => e.event_name === "session.completed");
-      const streak = hasSessions ? streakFrom(events) : loaded.streak;
+      // Fresh visitors earn the streak from zero; the demo sign-in keeps its
+      // seeded numbers; real sessions always win.
+      const streak = hasSessions ? streakFrom(events) : loaded.signedIn ? loaded.streak : 0;
       if (hasRealData) {
         const reading = computeIndex();
         setState({
@@ -446,7 +450,7 @@ function Dashboard() {
 
       <main className="px-6 md:px-10 py-8 md:py-12">
         <div className="max-w-[1280px] mx-auto space-y-8">
-          <HeroCard state={state} />
+          {!firstRun && <HeroCard state={state} />}
           <CheckIn
             baselineIndex={state.prevIndex}
             onSubmit={(r: CheckInResult) => {
@@ -460,6 +464,7 @@ function Dashboard() {
               } catch {}
             }}
           />
+          {firstRun && <HeroCard state={state} sample />}
           <BelowStrip state={state} />
           <EngineCard state={state} />
           <DistractionTeaser />
