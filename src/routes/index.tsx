@@ -500,7 +500,7 @@ function Index() {
             {
               variant: "back" as const,
               head: "A quieter lumbar in two weeks.",
-              body: "Endurance, not range. The protocol that beat lumbar surgery in head-to-head trials, finally taught at the dose the trials actually used.",
+              body: "Endurance, not range. The protocol that went toe-to-toe with lumbar surgery in randomized trials, finally taught at the dose the trials actually used.",
             },
             {
               variant: "bedroom" as const,
@@ -589,7 +589,7 @@ function Index() {
             </span>
           </h2>
           <p className="mt-8 max-w-xl mx-auto text-lg leading-relaxed italic" style={{ color: PAPER_INK, opacity: 0.82 }}>
-            Two weeks free. $39 a month after, or $399 a year. Cancel any time. Less than one drawer-abandoned supplement. More useful than pretending the pain in bed is just part of the arrangement.
+            $39 a month, or $399 a year. Cancel any time. Less than one drawer-abandoned supplement. More useful than pretending the pain in bed is just part of the arrangement.
           </p>
 
           {/* Founding-member scarcity block */}
@@ -604,7 +604,7 @@ function Index() {
               className="font-mono-label text-[10px] tracking-[0.28em] uppercase"
               style={{ color: "var(--brand-oxblood)" }}
             >
-              ◆ FOUNDING MEMBERS · 200 SPOTS · 174 LEFT
+              ◆ FOUNDING MEMBERS · 200 SPOTS · NO FAKE COUNTER
             </p>
             <p
               className="mt-3 font-serif-display italic leading-snug"
@@ -613,7 +613,7 @@ function Index() {
               $199 once. Forever. Full Position Intelligence Engine, partner pairing, every future module shipped at no extra charge.
             </p>
             <p className="mt-3 text-sm leading-relaxed italic" style={{ color: PAPER_MUTED }}>
-              The price exists because the brand survives by being uncheapened, and because the people who buy a serious product on day one deserve to be paid back when it works. After the two hundred, the price returns to $39 a month and stays there.
+              The price exists because the brand survives by being uncheapened, and because the people who buy a serious product on day one deserve to be paid back when it works. After the two hundred, the founding price is gone for good; the steady state is $39 a month or $399 a year.
             </p>
           </div>
 
@@ -627,7 +627,7 @@ function Index() {
                 boxShadow: "0 14px 36px -12px oklch(0.18 0.01 40 / 0.45)",
               }}
             >
-              Run the 7-minute baseline <ArrowUpRight className="w-5 h-5" />
+              Claim a founding spot <ArrowUpRight className="w-5 h-5" />
             </Link>
             <Link
               to="/science"

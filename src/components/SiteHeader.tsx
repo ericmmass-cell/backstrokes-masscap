@@ -109,7 +109,7 @@ export function SiteHeader({ active }: { active?: string }) {
                 color: "var(--brand-paper)",
               }}
             >
-              Begin
+              Begin · $199 founding
             </Link>
             {/* Mobile burger: hidden at md and up. */}
             <button

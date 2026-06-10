@@ -137,7 +137,7 @@ function S1() {
         <Eyebrow>§1 · The thesis</Eyebrow>
         <H2>The back is the silent variable in adult sex, and nobody is paid to admit it.</H2>
         <P>
-          The thesis is anatomical and it is unromantic. The lumbar spine, the iliopsoas, the hip joint, and the thoracolumbar fascia carry essentially every load involved in adult sex. When any of those four structures is compromised, sex is compromised. The published cohort data on chronic low back pain shows that between half and two thirds of adults with chronic low back pain report that pain regularly interferes with sex (Bahouq 2013, Sidorkewicz and McGill 2014). The same cohort data shows that fewer than one in ten of those adults has ever raised the topic with the clinician treating their back. The number is consistent across countries, surgeons, and decades. Nobody asks. The patient does not volunteer.
+          The thesis is anatomical and it is unromantic. The lumbar spine, the iliopsoas, the hip joint, and the thoracolumbar fascia carry essentially every load involved in adult sex. When any of those four structures is compromised, sex is compromised. In the cohort that has looked hardest at the question, most adults with chronic low back pain reported that pain interferes with sex, and fewer than one in five had discussed it with the clinician treating their back (Bahouq 2013). Sidorkewicz and McGill 2014 supplied the other half: the first direct biomechanical measurements of how spines actually move during sex. One prevalence study and one biomechanics study is a thin literature. That is the point. Nobody asks. The patient does not volunteer.
         </P>
         <P>
           The spine clinic treats the back. The urology and gynecology clinics treat sex. The two systems are mechanically and autonomically connected. Their billing codes are not. Their notes do not cross. The patient walks out of the spine appointment with a discharge note that says 'doing well' and walks into a separate appointment, eighteen months later, after sex has become something they audit instead of something they do, because nobody in the first building was paid to ask the second question.
@@ -168,7 +168,7 @@ function S2() {
         </P>
         <PullQuote>Flexibility is a virtue in conversation. In a lumbar disc it is a structural failure.</PullQuote>
         <P>
-          There is a separate body of literature comparing conservative endurance programmes to lumbar discectomy. The most cited is Weinstein et al, the SPORT trial, NEJM 2006, which found that two-year outcomes for surgery and non-operative care converged for many disc-pattern patients, with non-operative care delivering similar pain reduction at materially lower risk. The point is not that surgery is wrong. The point is that the endurance approach is not the consolation prize the influencer category presents it as. It is, for a large subset of disc cases, the equal of the surgical option, with fewer scars and a shorter follow-up appointment.
+          There is a separate body of literature comparing conservative endurance programmes to lumbar discectomy. The most cited is Weinstein et al, the SPORT trial, NEJM 2006, which found that two-year outcomes for surgery and non-operative care converged for many disc-pattern patients, with non-operative care delivering similar pain reduction at materially lower risk. Brox 2003 and Fairbank 2005 found the same rough equivalence for fusion versus structured rehabilitation. The point is not that surgery is wrong. The point is that the endurance approach is not the consolation prize the influencer category presents it as. It is, for a large subset of disc cases, the equal of the surgical option, with fewer scars and a shorter follow-up appointment.
         </P>
       </div>
     </section>
@@ -201,12 +201,12 @@ function S4() {
 
 function S5() {
   return (
-    <section id="s5" className="px-6 md:px-10 py-16 md:py-24" style={{ background: PAPER_2, borderTop: `1px solid ${RULE}`, borderBottom: `1px solid ${RULE}` }}>
+    <section id="s4" className="px-6 md:px-10 py-16 md:py-24" style={{ background: PAPER_2, borderTop: `1px solid ${RULE}`, borderBottom: `1px solid ${RULE}` }}>
       <div className="max-w-[820px] mx-auto">
-        <Eyebrow>§5 · The chair</Eyebrow>
+        <Eyebrow>§4 · The chair</Eyebrow>
         <H2>Why sitting hours are dosage, and why eight minutes cannot beat eight hours.</H2>
         <P>
-          The lumbar disc is loaded most heavily at approximately 90° of hip flexion, which is the approximate angle of a person seated at a desk in a standard office chair. Intradiscal pressure in this seated, slightly flexed posture is roughly 140 to 200 percent of standing pressure, depending on whether the person is supported, leaning forward, or in the slumped 'thinking' posture nobody photographs (Nachemson 1966, refined by Wilke et al 1999 with in-vivo telemetry). The number that matters: eight hours of sitting applies lumbar load roughly equivalent to a low-intensity workout, every weekday, to the structure the protocol is trying to unload.
+          The classic disc-pressure work (Nachemson 1966) put seated pressure well above standing: the famous 140-to-200-percent figures. Wilke's 1999 in-vivo telemetry complicated that picture, finding relaxed upright sitting roughly comparable to standing. What survives both datasets is the part that matters for a desk worker: flexed, slumped, unsupported sitting raises disc load, and duration multiplies whatever the posture is doing. The protocol hangs its argument on the flexion and the hours, not on a single decimal from 1966.
         </P>
         <P>
           This is why the protocol treats sitting hours as dosage and not as background. Eight minutes of correct geometry cannot override eight hours of incorrect geometry. The 30/3 rule (stand for three minutes every thirty, walk if there is a corridor, hip-hinge once if there is not) is the only intervention that touches the cumulative load. Standing desks help only if the user uses them; the published compliance data is consistent with the experience that owning a standing desk and using one are different variables (Buckley et al 2015).
@@ -222,7 +222,7 @@ function S5() {
 
 function S6() {
   return (
-    <section id="s6" className="px-6 md:px-10 py-16 md:py-24">
+    <section id="s5" className="px-6 md:px-10 py-16 md:py-24">
       <div className="max-w-[820px] mx-auto">
         <Eyebrow>§5 · The boundary</Eyebrow>
         <H2>When the protocol stops being the right tool, and where to go instead.</H2>
@@ -230,7 +230,7 @@ function S6() {
           The most consequential decision in the product is not what the protocol teaches. It is when the protocol stops teaching and routes to a clinician. The criteria built into the assessment flow, the daily check-in, and the in-session pain reporting are not novel. They are the published red-flag criteria from the spine guideline literature, copied into the code without invention. The list below is drawn from those guidelines. The exact phrasing in the app is editorial; the substance is everyone's who has ever published on the relevant question.
         </P>
         <P>
-          <strong style={{ color: OXBLOOD }}>Spine red flags</strong> that route immediately (from the JOSPT clinical practice guideline series and the NICE NG59 update on low back pain and sciatica): cauda equina symptoms (saddle anaesthesia, bladder or bowel changes, progressive bilateral leg weakness), new neurological deficits, fever with back pain, unexplained weight loss, history of cancer with new back pain, recent significant trauma. These are spine emergencies. The product asks about each of them in the baseline. The product surfaces a 'see a doctor today' card if any appear during a session. The card has no dismiss button. It is the only screen in the product without a path forward inside the product.
+          <strong style={{ color: OXBLOOD }}>Spine red flags</strong> that route immediately (from the JOSPT clinical practice guideline series and the NICE NG59 update on low back pain and sciatica): cauda equina symptoms (saddle anaesthesia, bladder or bowel changes, progressive bilateral leg weakness), new neurological deficits, fever with back pain, unexplained weight loss, history of cancer with new back pain, recent significant trauma. These are spine emergencies. The daily check-in asks about this list. Flag any of them and the product drops the humor, routes you to a clinician-first card, and swaps the session to the breath-only decompression track. It does not lock the door, because we inform rather than enforce; it does put the phone call ahead of the protocol, in writing, every time.
         </P>
         <P>
           <strong style={{ color: OXBLOOD }}>Sexual-function red flags</strong> that route to a urologist, gynecologist, or sex therapist (from the AUA Erectile Dysfunction Guideline and the ISSWSH consensus papers): erectile dysfunction with cardiovascular risk factors, ejaculatory dysfunction that is new and unexplained, loss of libido with mood symptoms, any sexual symptom in a relationship where coercion or harm is present. The product is not a substitute for a doctor, a therapist, or a witness, and it does not pretend to be.
@@ -243,7 +243,7 @@ function S6() {
 
 function S7() {
   return (
-    <section id="s7" className="px-6 md:px-10 py-16 md:py-24" style={{ background: PAPER_2, borderTop: `1px solid ${RULE}`, borderBottom: `1px solid ${RULE}` }}>
+    <section id="s6" className="px-6 md:px-10 py-16 md:py-24" style={{ background: PAPER_2, borderTop: `1px solid ${RULE}`, borderBottom: `1px solid ${RULE}` }}>
       <div className="max-w-[820px] mx-auto">
         <Eyebrow>§6 · Why this has never been one chart</Eyebrow>
         <H2>The structural reasons two industries did not collaborate, and what was waiting in the gap.</H2>
@@ -261,7 +261,7 @@ function S7() {
         </P>
         <PullQuote>Medicine bills by visit. It cannot afford to ask what nobody is paying it to ask.</PullQuote>
         <P>
-          The protocol is built into that gap. Not by replacing either system, but by sitting in the space neither system staffs, with the literature on the same page, a route-to-clinician button that actually fires, and a price point that does not impress the supplement aisle. Eight minutes a day, $39 a month, or $199 once if you are among the first two hundred. Less than a single supplement that would not have been bought twice.
+          The protocol is built into that gap. Not by replacing either system, but by sitting in the space neither system staffs, with the literature on the same page, a daily check-in that routes red flags to a clinician-first card, and a price point that does not impress the supplement aisle. Eight minutes a day, $39 a month, or $199 once if you are among the first two hundred. Less than a single supplement that would not have been bought twice.
         </P>
       </div>
     </section>
