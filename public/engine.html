@@ -723,6 +723,10 @@ svg .receiver.has-breathe { animation: breathe 4.2s ease-in-out infinite; transf
 </div>
 
 <div class="wrap">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0 0;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.22em;text-transform:uppercase;">
+    <a href="/dashboard" style="color:inherit;opacity:.65;text-decoration:none;">← BackStroke · Today</a>
+    <a href="/positions" style="color:inherit;opacity:.65;text-decoration:none;">The library →</a>
+  </div>
   <header class="hero">
     <div class="eyebrow">BackStroke · Position Intelligence Engine · v6</div>
     <h1 class="title">Don't let your back be<br><em>the reason you scream in bed.</em></h1>
@@ -770,6 +774,13 @@ svg .receiver.has-breathe { animation: breathe 4.2s ease-in-out infinite; transf
       <button id="saveBtn">Save tonight's plan</button>
       <button id="printBtn">Print the nightstand card</button>
       <button id="shareBtn" class="primary">Share the human version</button>
+    </div>
+    <div class="stop-rule" style="border-color:rgba(176,125,43,.5)">
+      <div class="lbl">The part that compounds</div>
+      <div class="body">The free engine buys you tonight. The daily protocol that shrinks tomorrow's red list lives in the full product.
+        <a href="/buy" style="color:inherit;font-weight:600;text-decoration:underline;text-underline-offset:3px;">See the founding offer →</a>
+        <a href="/dashboard" style="color:inherit;opacity:.7;text-decoration:none;margin-left:14px;">← back to Today</a>
+      </div>
     </div>
     <div class="stop-rule">
       <div class="lbl">Stop rule, every act</div>
@@ -1559,8 +1570,18 @@ function svgFor(pos) { return (STICK_RENDERERS[pos.stick] || fig_spoon_still)();
 const state = {
   filter: { painVector:null, painBehavior:null, floorState:null, index:null, goal:null, time:null },
   flags: {}, step: 0, currentAct: 0, currentLoad: 0,
-  shown: [], history: [], planSummary: null, planTiles: []
+  shown: [], history: [], planSummary: null, planTiles: [],
+  prefilledIndex: false
 };
+// Dashboard hand-off: /engine.html?index=green|amber|red|flare prefills Q3
+// visibly and editably. Inform, don't enforce.
+try {
+  const qIndex = new URLSearchParams(location.search).get('index');
+  if (['green','amber','red','flare'].includes(qIndex)) {
+    state.filter.index = qIndex;
+    state.prefilledIndex = true;
+  }
+} catch (e) {}
 const indexCap = { green:3, amber:2, red:1, flare:0 };
 
 function exclude(pos, f) {
@@ -1702,6 +1723,7 @@ function renderStep() {
     <div class="step-eyebrow">${q.eyebrow}</div>
     <div class="step-question">${q.q}</div>
     <div class="step-help">${q.help}</div>
+    ${q.key==='index' && state.prefilledIndex ? `<div class="step-help" style="opacity:.75">Prefilled from this morning's check-in. Tap to change; your read wins.</div>` : ``}
     <div class="step-chips">
       ${q.options.map(([val, label]) =>
         `<button class="step-chip" data-val="${val}" aria-pressed="${currentVal===val?'true':'false'}">${label}</button>`
