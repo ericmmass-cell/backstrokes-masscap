@@ -47,6 +47,24 @@ function loadState(): SessionState {
   }
 }
 
+/** Consecutive days with a completed session, counting back from today
+ * (today not yet done doesn't break the chain until tomorrow). */
+function streakFrom(events: Array<{ event_name: string; client_ts: string }>): number {
+  const days = new Set(
+    events.filter((e) => e.event_name === "session.completed").map((e) => e.client_ts.slice(0, 10)),
+  );
+  if (days.size === 0) return 0;
+  const d = new Date();
+  const iso = (x: Date) => x.toISOString().slice(0, 10);
+  if (!days.has(iso(d))) d.setDate(d.getDate() - 1);
+  let streak = 0;
+  while (days.has(iso(d))) {
+    streak++;
+    d.setDate(d.getDate() - 1);
+  }
+  return streak;
+}
+
 /** Rotating P.S. line. Eight variants, picks one by day-of-year. */
 function ps(): string {
   const day = Math.floor(
@@ -389,15 +407,20 @@ function Dashboard() {
       const events = allEvents();
       // Threshold: only flip to real Index after at least one check-in.
       const hasRealData = events.some((e) => e.event_name === "checkin.submitted");
+      // The streak is earned, not seeded: once any session has been
+      // completed, the count derives from the event ledger.
+      const hasSessions = events.some((e) => e.event_name === "session.completed");
+      const streak = hasSessions ? streakFrom(events) : loaded.streak;
       if (hasRealData) {
         const reading = computeIndex();
         setState({
           ...loaded,
+          streak,
           index: reading.value,
           prevIndex: Math.max(0, Math.min(100, reading.value - reading.delta)),
         });
       } else {
-        setState(loaded);
+        setState({ ...loaded, streak });
       }
       setHydrated(true);
     }).catch(() => {
@@ -427,7 +450,10 @@ function Dashboard() {
           <CheckIn
             baselineIndex={state.prevIndex}
             onSubmit={(r: CheckInResult) => {
-              const next = { ...state, index: r.newIndex };
+              // Red flags swap the session to the breath-only decompression
+              // track and switch the hero letter to the flare lede. A clean
+              // check-in clears the swap.
+              const next = { ...state, index: r.newIndex, flareSwapped: r.redFlags.length > 0 };
               setState(next);
               try {
                 localStorage.setItem("bs.user", JSON.stringify(next));

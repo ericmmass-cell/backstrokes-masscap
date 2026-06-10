@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Eyebrow, MonoTag } from "@/components/editorial";
 
 /**
@@ -108,14 +109,30 @@ const QUESTIONS: Question[] = [
       { value: "weight", label: "Unexplained weight loss", delta: -8 },
       { value: "bladder", label: "Loss of bladder or bowel control", delta: -8 },
       { value: "surgery", label: "Recent surgery", delta: -8 },
+      { value: "cancer", label: "History of cancer", delta: -8 },
+      { value: "trauma", label: "Recent fall or hard impact", delta: -8 },
     ],
   },
 ];
+
+/** Red-flag picks that are actual flags (not the "None" chip). */
+function realFlags(answers: Record<string, string[]>): string[] {
+  return (answers.redflags ?? []).filter((v) => !v.startsWith("none"));
+}
+
+function flagLabels(values: string[]): string {
+  const q = QUESTIONS.find((x) => x.id === "redflags");
+  return values
+    .map((v) => q?.options.find((o) => o.value === v)?.label.toLowerCase() ?? v)
+    .join(", ");
+}
 
 export type CheckInResult = {
   answers: Record<string, string[]>;
   delta: number;
   newIndex: number;
+  /** Red-flag values actually selected (empty when "None" or unanswered). */
+  redFlags: string[];
 };
 
 function computeDelta(
@@ -157,11 +174,14 @@ export function CheckIn({
       const current = prev[q.id] ?? [];
       let next: string[];
       if (q.multi) {
-        // If "none" picked, clear; if other picked, drop "none" first
-        if (value === "none") {
-          next = current.includes("none") ? [] : ["none"];
+        // Any "none*" option is the exclusive clear chip for its question
+        // (back-zone uses "none", red flags use "none-rf"; both must evict
+        // the others and be evicted by them).
+        const isNone = (v: string) => v.startsWith("none");
+        if (isNone(value)) {
+          next = current.includes(value) ? [] : [value];
         } else {
-          const without = current.filter((v) => v !== "none");
+          const without = current.filter((v) => !isNone(v));
           next = current.includes(value)
             ? without.filter((v) => v !== value)
             : [...without, value];
@@ -176,8 +196,9 @@ export function CheckIn({
   const submit = () => {
     const delta = computeDelta(answers);
     const newIndex = Math.max(0, Math.min(100, baselineIndex + delta));
+    const flagged = realFlags(answers);
     setSubmitted(true);
-    onSubmit({ answers, delta, newIndex });
+    onSubmit({ answers, delta, newIndex, redFlags: flagged });
     try {
       const key = `bs.checkin.${new Date().toISOString().slice(0, 10)}`;
       localStorage.setItem(key, JSON.stringify({ answers, delta, newIndex, t: Date.now() }));
@@ -187,23 +208,52 @@ export function CheckIn({
     try {
       // Lazy import so SSR / first paint isn't blocked.
       import("@/lib/events").then(({ track }) => {
-        // Translate per-question answer codes to 0-10 axis scores the
-        // index-engine expects. Defensive: if a question is unanswered,
-        // we omit it and the engine substitutes a neutral 5.
+        // Translate the REAL question ids/values to the 0-10 axis scores
+        // index-engine expects (pain high = worse; sleep/sex high = better).
+        // Unanswered questions are omitted; the engine substitutes neutral 5.
         const props: Record<string, unknown> = { answers, delta, newIndex };
-        const a1 = answers.q1?.[0]; // pain
-        const a2 = answers.q2?.[0]; // sleep
-        const a3 = answers.q3?.[0]; // sex (after dropping the floor question, sex shifts up)
-        const painMap: Record<string, number> = { quiet: 1, dull: 3, noisy: 5, sharp: 8 };
-        const sleepMap: Record<string, number> = { slept: 8, ok: 6, broken: 3, none: 1 };
-        const sexMap: Record<string, number> = { quiet: 8, present: 6, fearful: 3, gone: 1 };
-        if (a1 && painMap[a1] !== undefined) props.pain = painMap[a1];
-        if (a2 && sleepMap[a2] !== undefined) props.sleep = sleepMap[a2];
-        if (a3 && sexMap[a3] !== undefined) props.sex = sexMap[a3];
-        // Red flags become their own event so the index can react hard.
-        const flags = answers.q6 ?? [];
-        if (flags.length > 0 && !flags.includes("none")) {
-          track("flare.flagged", { flags });
+
+        // Pain: derived from the body-zone picks. Monotonic and conservative:
+        // more zones reads worse, sciatica weighted heaviest.
+        const zones = answers["back-zone"] ?? [];
+        if (zones.length > 0) {
+          if (zones.includes("none")) {
+            props.pain = 1;
+          } else {
+            const zoneWeight: Record<string, number> = {
+              sciatica: 3,
+              lumbar: 2,
+              si: 2,
+              thoracic: 1,
+              "hip-flexor": 1,
+              glute: 1,
+            };
+            props.pain = Math.min(
+              9,
+              2 + zones.reduce((a, z) => a + (zoneWeight[z] ?? 1), 0),
+            );
+          }
+        }
+
+        const sleepMap: Record<string, number> = {
+          "side-pillow": 8,
+          "back-knees": 7,
+          side: 5,
+          back: 4,
+          stomach: 2,
+        };
+        const sleepPick = answers.sleep?.[0];
+        if (sleepPick && sleepMap[sleepPick] !== undefined) props.sleep = sleepMap[sleepPick];
+
+        // "none" (did not happen) and "skip" carry no pain signal; omit them.
+        const sexMap: Record<string, number> = { good: 8, ok: 6, avoid: 3, stopped: 1 };
+        const sexPick = answers.sex?.[0];
+        if (sexPick && sexMap[sexPick] !== undefined) props.sex = sexMap[sexPick];
+
+        // Red flags become their own event so the Index can react hard and
+        // the rest of the app (session swap, flare letter) can follow.
+        if (flagged.length > 0) {
+          track("flare.flagged", { flags: flagged });
         }
         track("checkin.submitted", props);
       });
@@ -218,6 +268,7 @@ export function CheckIn({
   const newIndex = Math.max(0, Math.min(100, baselineIndex + delta));
   const answered = Object.values(answers).filter((a) => a.length > 0).length;
   const canSubmit = answered >= 3;
+  const flaggedNow = realFlags(answers);
 
   return (
     <article className="border border-border bg-background relative overflow-hidden" style={{ boxShadow: "var(--shadow-soft)" }}>
@@ -326,6 +377,46 @@ export function CheckIn({
               style={{ background: "var(--brand-amber)", boxShadow: canSubmit ? "var(--glow-teal)" : "none" }}
             >
               ◆ Submit · Index becomes {newIndex}
+            </button>
+          </>
+        ) : flaggedNow.length > 0 ? (
+          /* Red flag selected: no humor on this surface. Inform, route to a
+             clinician, offer the breath-only track. Never hard-block. */
+          <>
+            <div className="max-w-2xl">
+              <Eyebrow accent="blush">◆ Logged · clinician first</Eyebrow>
+              <p className="font-serif-display text-xl italic mt-2 leading-snug">
+                Stop. Today this belongs to a clinician, not an app.
+              </p>
+              <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
+                You flagged: {flagLabels(flaggedNow)}. That is the short list every
+                clinical guideline routes to a human with a license. Not because the
+                worst is likely; because it is the one check nobody should skip.
+                Call your clinician today.
+                {flaggedNow.includes("bladder") &&
+                  " New loss of bladder or bowel control is an emergency department visit, today, not a wait-and-see."}
+              </p>
+              <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
+                Meanwhile the session swaps to the breath-only decompression track.
+                It asks nothing of your back.{" "}
+                <Link
+                  to="/session"
+                  className="underline underline-offset-4 hover:opacity-80 transition"
+                  style={{ color: "var(--brand-amber)" }}
+                >
+                  open the quiet session →
+                </Link>
+              </p>
+              <p className="text-xs italic text-muted-foreground mt-3">
+                We are not diagnosing. We are declining to guess.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={edit}
+              className="font-mono-label text-[10px] tracking-[0.22em] uppercase border border-border px-5 py-3 rounded-full text-muted-foreground hover:text-foreground transition"
+            >
+              ◆ edit log
             </button>
           </>
         ) : (

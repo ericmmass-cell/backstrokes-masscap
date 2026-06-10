@@ -7,6 +7,7 @@ import {
   type Distraction,
 } from "@/lib/distractions";
 import { HumanFigure } from "@/components/HumanFigure";
+import { track } from "@/lib/events";
 
 type MoveKey = "curl-up" | "side-plank" | "bird-dog" | "breath" | "decomp";
 
@@ -289,7 +290,34 @@ function SessionPlayer() {
   const [done, setDone] = useState(false);
   const tickRef = useRef<number | null>(null);
 
+  // Event bookkeeping: sessions and moves only count if we tell the ledger.
+  const startedRef = useRef(false);
+  const lastIdxRef = useRef(0);
+  const skippedRef = useRef(false); // true when the next idx change came from skip/prev
+  const doneFiredRef = useRef(false);
+
   useEffect(() => setRemaining(moves[idx].secs), [idx, moves]);
+
+  // A forward idx step that wasn't a skip is a completed move.
+  useEffect(() => {
+    if (idx > lastIdxRef.current && !skippedRef.current) {
+      track("move.completed", { ref: moves[lastIdxRef.current].ref });
+    }
+    skippedRef.current = false;
+    lastIdxRef.current = idx;
+  }, [idx, moves]);
+
+  // Session completion is the Index's largest positive weight. Fire once.
+  useEffect(() => {
+    if (done && !doneFiredRef.current) {
+      doneFiredRef.current = true;
+      if (!skippedRef.current) {
+        track("move.completed", { ref: moves[lastIdxRef.current].ref });
+      }
+      track("session.completed", { elapsed, moves: moves.length });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [done]);
 
   useEffect(() => {
     if (paused || done) return;
@@ -368,7 +396,10 @@ function SessionPlayer() {
           ◆ SESSION · {mmss(elapsed)} / {mmss(total)}
         </p>
         <button
-          onClick={() => navigate({ to: "/dashboard" })}
+          onClick={() => {
+            if (startedRef.current && !done) track("stop.invoked", { at: elapsed });
+            navigate({ to: "/dashboard" });
+          }}
           className="font-mono-label text-[10px] tracking-[0.22em] uppercase text-muted-foreground hover:text-foreground transition"
         >
           quit · streak holds
@@ -461,7 +492,13 @@ function SessionPlayer() {
                 ← prev
               </button>
               <button
-                onClick={() => setPaused((p) => !p)}
+                onClick={() => {
+                  if (paused && !startedRef.current) {
+                    startedRef.current = true;
+                    track("session.started", { moves: moves.length });
+                  }
+                  setPaused((p) => !p);
+                }}
                 className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold text-[var(--brand-ink)] hover:opacity-90 transition"
                 style={{ background: "var(--brand-amber)", boxShadow: "var(--glow-teal)" }}
               >
@@ -469,6 +506,8 @@ function SessionPlayer() {
               </button>
               <button
                 onClick={() => {
+                  skippedRef.current = true;
+                  track("move.skipped", { ref: current.ref });
                   if (idx + 1 < moves.length) setIdx((i) => i + 1);
                   else setDone(true);
                 }}
