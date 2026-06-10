@@ -160,6 +160,10 @@ function annotateData(p: Position, role: Role) {
 function PositionRow({ p, role }: { p: Position; role: Role }) {
   const cat = p.category.toUpperCase();
   const yourLoad = roleLoad(p, role);
+  const partnerLoad = role === "either" ? yourLoad : roleLoad(p, role === "penetrator" ? "receiver" : "penetrator");
+  // "Acute-day safe" is a safety claim: never wear it on a high-load shape or
+  // one whose other side carries 4+, no matter how easy YOUR side reads.
+  const acuteSafe = yourLoad <= 2 && p.category !== "high-load" && partnerLoad < 4;
   const loadLabel = role === "either" ? "Lumbar load" : "Your lumbar load";
   const conds = conditionsFor(p);
   const condLabels = conds
@@ -177,7 +181,7 @@ function PositionRow({ p, role }: { p: Position; role: Role }) {
           <span className="font-mono-label text-[10px] tracking-[0.28em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
             {p.id.toUpperCase()} · {cat}
           </span>
-          {yourLoad <= 2 && (
+          {acuteSafe && (
             <span className="font-mono-label text-[9px] tracking-[0.18em] uppercase" style={{ color: "var(--brand-oxblood)", opacity: 0.6 }}>
               acute-day safe
             </span>
@@ -424,12 +428,12 @@ function PositionsPage() {
 
   const cap = maxLoadForIndex(index);
 
-  const rows = useMemo(() => {
+  const { rows, overCapRows } = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (q) {
       // Text lookup runs across the whole library and ignores the load cap, so a
       // search always finds the position even on a flared-back day.
-      return [...POSITIONS]
+      const found = [...POSITIONS]
         .filter(
           (p) =>
             p.name.toLowerCase().includes(q) ||
@@ -437,25 +441,42 @@ function PositionsPage() {
             (p.councilNote ?? "").toLowerCase().includes(q),
         )
         .sort((a, b) => roleLoad(a, role) - roleLoad(b, role));
+      return { rows: found, overCapRows: [] as Position[] };
     }
-    if (showMatch) return matchToTodaysBack(index, 3, role);
-    return [...POSITIONS]
+    if (showMatch) return { rows: matchToTodaysBack(index, 3, role), overCapRows: [] as Position[] };
+    const pool = [...POSITIONS]
       .filter((p) => (category === "all" ? true : p.category === category))
       .filter((p) => (condition === "all" ? true : conditionsFor(p).includes(condition)))
-      .filter((p) => roleLoad(p, role) <= cap)
       .sort((a, b) => {
         if (sort === "lumbarLoad") return roleLoad(a, role) - roleLoad(b, role);
         if (sort === "breathAccess") return b.breathAccess - a.breathAccess;
         if (sort === "hipFlexion") return a.hipFlexion - b.hipFlexion;
         return a.partnerMobility - b.partnerMobility;
       });
+    // The cap partitions; it never removes (inform, don't enforce). Over-cap
+    // positions drop below the line, dimmed and honest, still fully openable.
+    return {
+      rows: pool.filter((p) => roleLoad(p, role) <= cap),
+      overCapRows: pool.filter((p) => roleLoad(p, role) > cap),
+    };
   }, [index, category, sort, role, condition, showMatch, cap, query]);
 
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
       <SiteHeader active="positions" />
 
-      <PopAtlas />
+      <PopAtlas
+        role={role}
+        index={index}
+        onRoleChange={(r) => {
+          setShowMatch(false);
+          setRole(r);
+        }}
+        onIndexChange={(n) => {
+          setShowMatch(false);
+          setIndex(n);
+        }}
+      />
 
       <PositionShowcase />
 
@@ -468,7 +489,7 @@ function PositionsPage() {
             Bedroom geometry, <span className="italic" style={{ color: "var(--brand-amber)" }}>scored by spine.</span>
           </h1>
           <p className="mt-7 text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            Every position is scored for lumbar load, hip demand, breath access, and partner mobility. Filter by today's Index. If a position exceeds the cap, it drops out quietly. We do not make it a tragedy. We are not magazine editors.
+            Every position is scored for lumbar load, hip demand, breath access, and partner mobility. Filter by today's Index. If a position exceeds the cap, it drops below the line, dimmed and clearly marked. Nothing is hidden. We inform; your body decides.
           </p>
           <div
             className="mt-8 p-5 border-l-2 max-w-2xl flex flex-col sm:flex-row sm:items-center gap-5"
@@ -607,6 +628,10 @@ function PositionsPage() {
               className="w-full mt-3 accent-[var(--brand-amber)]"
               aria-label="Today's Index score"
             />
+            <div className="flex justify-between font-mono-label text-[8px] tracking-[0.16em] uppercase text-muted-foreground mt-1">
+              <span>← rough day</span>
+              <span>quiet day →</span>
+            </div>
             <p className="font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground mt-2">
               Max lumbar load tonight · {cap}/5
             </p>
@@ -698,18 +723,47 @@ function PositionsPage() {
             )}
           </div>
 
-          {rows.length === 0 ? (
+          {rows.length === 0 && overCapRows.length === 0 ? (
             <p className="font-serif-display text-xl italic text-muted-foreground max-w-md">
               {query.trim()
                 ? `Nothing matches "${query.trim()}". Try a plainer word: spoon, standing, seated, edge.`
-                : "Nothing in this slice clears today's load cap. Lower the filter, or come back on a quieter-back day."}
+                : "Nothing in this slice matches the filters."}
             </p>
           ) : (
-            <ul className="grid md:grid-cols-2 gap-px bg-border border border-border">
-              {rows.map((p) => (
-                <PositionRow key={p.id} p={p} role={role} />
-              ))}
-            </ul>
+            <>
+              {rows.length === 0 ? (
+                <p className="font-serif-display text-xl italic text-muted-foreground max-w-md mb-8">
+                  Nothing in this slice clears today's line. Everything below is over the cap, dimmed and honest.
+                </p>
+              ) : (
+                <ul className="grid md:grid-cols-2 gap-px bg-border border border-border">
+                  {rows.map((p) => (
+                    <PositionRow key={p.id} p={p} role={role} />
+                  ))}
+                </ul>
+              )}
+
+              {/* Over-cap: below the line, never hidden. Same policy as the Atlas. */}
+              {overCapRows.length > 0 && (
+                <>
+                  <div className="mt-12 mb-5 flex items-center gap-4">
+                    <span className="h-px flex-1" style={{ background: "color-mix(in oklch, var(--brand-oxblood) 30%, transparent)" }} />
+                    <span className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: "var(--brand-oxblood)" }}>
+                      Above today's line
+                    </span>
+                    <span className="h-px flex-1" style={{ background: "color-mix(in oklch, var(--brand-oxblood) 30%, transparent)" }} />
+                  </div>
+                  <p className="mb-5 text-sm italic text-muted-foreground max-w-2xl">
+                    These exceed tonight's load cap for the role you picked. Openable, and honest about it. We do not hide them.
+                  </p>
+                  <ul className="grid md:grid-cols-2 gap-px bg-border border border-border" style={{ opacity: 0.92 }}>
+                    {overCapRows.map((p) => (
+                      <PositionRow key={p.id} p={p} role={role} />
+                    ))}
+                  </ul>
+                </>
+              )}
+            </>
           )}
         </div>
       </section>
