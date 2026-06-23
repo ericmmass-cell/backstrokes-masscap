@@ -109,7 +109,7 @@ export function SiteHeader({ active }: { active?: string }) {
                 color: "var(--brand-paper)",
               }}
             >
-              Begin · $199 founding
+              Begin · from $79/yr
             </Link>
             {/* Mobile burger: hidden at md and up. */}
             <button
@@ -214,7 +214,7 @@ export function SiteHeader({ active }: { active?: string }) {
                 color: "var(--brand-paper)",
               }}
             >
-              Begin · $199 founding
+              Begin · from $79/yr
             </Link>
             <p
               className="mt-4 text-center font-mono-label text-[9px] tracking-[0.22em] uppercase"

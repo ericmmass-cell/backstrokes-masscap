@@ -19,6 +19,7 @@ import { Route as ManifestoRouteImport } from './routes/manifesto'
 import { Route as GuideRouteImport } from './routes/guide'
 import { Route as ForCliniciansRouteImport } from './routes/for-clinicians'
 import { Route as DiagramlabRouteImport } from './routes/diagramlab'
+import { Route as DiagnosisRouteImport } from './routes/diagnosis'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ConversationRouteImport } from './routes/conversation'
 import { Route as BuyRouteImport } from './routes/buy'
@@ -26,6 +27,7 @@ import { Route as BedroomRouteImport } from './routes/bedroom'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShareTokenRouteImport } from './routes/share.$token'
+import { Route as RxCodeRouteImport } from './routes/rx.$code'
 import { Route as GuideSlugRouteImport } from './routes/guide_.$slug'
 import { Route as BuySuccessRouteImport } from './routes/buy_.success'
 import { Route as BuyCancelRouteImport } from './routes/buy_.cancel'
@@ -80,6 +82,11 @@ const DiagramlabRoute = DiagramlabRouteImport.update({
   path: '/diagramlab',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DiagnosisRoute = DiagnosisRouteImport.update({
+  id: '/diagnosis',
+  path: '/diagnosis',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -115,6 +122,11 @@ const ShareTokenRoute = ShareTokenRouteImport.update({
   path: '/share/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RxCodeRoute = RxCodeRouteImport.update({
+  id: '/rx/$code',
+  path: '/rx/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GuideSlugRoute = GuideSlugRouteImport.update({
   id: '/guide_/$slug',
   path: '/guide/$slug',
@@ -138,6 +150,7 @@ export interface FileRoutesByFullPath {
   '/buy': typeof BuyRoute
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
+  '/diagnosis': typeof DiagnosisRoute
   '/diagramlab': typeof DiagramlabRoute
   '/for-clinicians': typeof ForCliniciansRoute
   '/guide': typeof GuideRoute
@@ -151,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/buy/cancel': typeof BuyCancelRoute
   '/buy/success': typeof BuySuccessRoute
   '/guide/$slug': typeof GuideSlugRoute
+  '/rx/$code': typeof RxCodeRoute
   '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRoutesByTo {
@@ -160,6 +174,7 @@ export interface FileRoutesByTo {
   '/buy': typeof BuyRoute
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
+  '/diagnosis': typeof DiagnosisRoute
   '/diagramlab': typeof DiagramlabRoute
   '/for-clinicians': typeof ForCliniciansRoute
   '/guide': typeof GuideRoute
@@ -173,6 +188,7 @@ export interface FileRoutesByTo {
   '/buy/cancel': typeof BuyCancelRoute
   '/buy/success': typeof BuySuccessRoute
   '/guide/$slug': typeof GuideSlugRoute
+  '/rx/$code': typeof RxCodeRoute
   '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRoutesById {
@@ -183,6 +199,7 @@ export interface FileRoutesById {
   '/buy': typeof BuyRoute
   '/conversation': typeof ConversationRoute
   '/dashboard': typeof DashboardRoute
+  '/diagnosis': typeof DiagnosisRoute
   '/diagramlab': typeof DiagramlabRoute
   '/for-clinicians': typeof ForCliniciansRoute
   '/guide': typeof GuideRoute
@@ -196,6 +213,7 @@ export interface FileRoutesById {
   '/buy_/cancel': typeof BuyCancelRoute
   '/buy_/success': typeof BuySuccessRoute
   '/guide_/$slug': typeof GuideSlugRoute
+  '/rx/$code': typeof RxCodeRoute
   '/share/$token': typeof ShareTokenRoute
 }
 export interface FileRouteTypes {
@@ -207,6 +225,7 @@ export interface FileRouteTypes {
     | '/buy'
     | '/conversation'
     | '/dashboard'
+    | '/diagnosis'
     | '/diagramlab'
     | '/for-clinicians'
     | '/guide'
@@ -220,6 +239,7 @@ export interface FileRouteTypes {
     | '/buy/cancel'
     | '/buy/success'
     | '/guide/$slug'
+    | '/rx/$code'
     | '/share/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -229,6 +249,7 @@ export interface FileRouteTypes {
     | '/buy'
     | '/conversation'
     | '/dashboard'
+    | '/diagnosis'
     | '/diagramlab'
     | '/for-clinicians'
     | '/guide'
@@ -242,6 +263,7 @@ export interface FileRouteTypes {
     | '/buy/cancel'
     | '/buy/success'
     | '/guide/$slug'
+    | '/rx/$code'
     | '/share/$token'
   id:
     | '__root__'
@@ -251,6 +273,7 @@ export interface FileRouteTypes {
     | '/buy'
     | '/conversation'
     | '/dashboard'
+    | '/diagnosis'
     | '/diagramlab'
     | '/for-clinicians'
     | '/guide'
@@ -264,6 +287,7 @@ export interface FileRouteTypes {
     | '/buy_/cancel'
     | '/buy_/success'
     | '/guide_/$slug'
+    | '/rx/$code'
     | '/share/$token'
   fileRoutesById: FileRoutesById
 }
@@ -274,6 +298,7 @@ export interface RootRouteChildren {
   BuyRoute: typeof BuyRoute
   ConversationRoute: typeof ConversationRoute
   DashboardRoute: typeof DashboardRoute
+  DiagnosisRoute: typeof DiagnosisRoute
   DiagramlabRoute: typeof DiagramlabRoute
   ForCliniciansRoute: typeof ForCliniciansRoute
   GuideRoute: typeof GuideRoute
@@ -287,6 +312,7 @@ export interface RootRouteChildren {
   BuyCancelRoute: typeof BuyCancelRoute
   BuySuccessRoute: typeof BuySuccessRoute
   GuideSlugRoute: typeof GuideSlugRoute
+  RxCodeRoute: typeof RxCodeRoute
   ShareTokenRoute: typeof ShareTokenRoute
 }
 
@@ -362,6 +388,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DiagramlabRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/diagnosis': {
+      id: '/diagnosis'
+      path: '/diagnosis'
+      fullPath: '/diagnosis'
+      preLoaderRoute: typeof DiagnosisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -411,6 +444,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShareTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rx/$code': {
+      id: '/rx/$code'
+      path: '/rx/$code'
+      fullPath: '/rx/$code'
+      preLoaderRoute: typeof RxCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guide_/$slug': {
       id: '/guide_/$slug'
       path: '/guide/$slug'
@@ -442,6 +482,7 @@ const rootRouteChildren: RootRouteChildren = {
   BuyRoute: BuyRoute,
   ConversationRoute: ConversationRoute,
   DashboardRoute: DashboardRoute,
+  DiagnosisRoute: DiagnosisRoute,
   DiagramlabRoute: DiagramlabRoute,
   ForCliniciansRoute: ForCliniciansRoute,
   GuideRoute: GuideRoute,
@@ -455,6 +496,7 @@ const rootRouteChildren: RootRouteChildren = {
   BuyCancelRoute: BuyCancelRoute,
   BuySuccessRoute: BuySuccessRoute,
   GuideSlugRoute: GuideSlugRoute,
+  RxCodeRoute: RxCodeRoute,
   ShareTokenRoute: ShareTokenRoute,
 }
 export const routeTree = rootRouteImport

@@ -57,7 +57,9 @@ export type EventName =
   | "checkout.started"
   | "checkout.completed"
   | "checkout.cancelled"
-  | "diagnosis.completed";
+  | "diagnosis.completed"
+  | "rx.generated"
+  | "rx.landed";
 
 export type EventProps = Record<string, unknown>;
 

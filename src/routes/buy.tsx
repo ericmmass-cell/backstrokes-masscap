@@ -7,10 +7,11 @@ import { createCheckout, type Sku } from "@/lib/stripe-checkout";
 /**
  * /buy · the only place money changes hands.
  *
- * Three SKUs:
- *   1. Founding member.  $199 one-time, lifetime. 200 spots.
- *   2. Annual.           $399/year (the steady-state price).
- *   3. Monthly.          $39/month (the try-it option).
+ * Tiers (charter pricing; the recurring three are the grid, founding is demoted):
+ *   1. Couples annual.   $129/yr, two linked seats (the hero).
+ *   2. Solo annual.      $79/yr (the default).
+ *   3. Solo monthly.     $14/mo (pay more to commit less).
+ *   4. Founding.         $249 once, capped at 200, counted as runway not MRR.
  *
  * Each button hits the `createCheckoutSession` server fn, which creates
  * a Stripe Checkout Session server-side and returns a redirect URL. The
@@ -22,10 +23,10 @@ import { createCheckout, type Sku } from "@/lib/stripe-checkout";
  */
 
 const createCheckoutSession = createServerFn({ method: "POST" })
-  .inputValidator((data: { sku: Sku }) => data)
+  .inputValidator((data: { sku: Sku; clinicId?: string }) => data)
   .handler(async (ctx) => {
-    const { sku } = ctx.data;
-    return createCheckout(sku);
+    const { sku, clinicId } = ctx.data;
+    return createCheckout(sku, clinicId);
   });
 
 export const Route = createFileRoute("/buy")({
@@ -36,7 +37,7 @@ export const Route = createFileRoute("/buy")({
       {
         name: "description",
         content:
-          "One price. No upsells. No supplements. No data sale. Either it's worth $199 to you or it isn't.",
+          "Plain pricing. No upsells, no supplements, no data sale. A couples plan, a solo plan, and a capped founding tier. Either it is worth it or it is not.",
       },
     ],
   }),
@@ -49,6 +50,11 @@ const PAPER_MUTED = "oklch(0.45 0.02 40)";
 const RULE = "oklch(0.86 0.025 70)";
 const OXBLOOD = "var(--brand-oxblood)";
 
+// The recurring tiers, in the order the charter wants them read: couples is the
+// hero (back pain is a two-person problem; bill it that way), solo-annual is the
+// sensible default, monthly is the small "pay more to commit less" option. The
+// lifetime SKU is demoted to a quiet capped line below the grid, on purpose:
+// every lifetime sale permanently removes an MRR customer.
 const SKUS: Array<{
   sku: Sku;
   eyebrow: string;
@@ -60,37 +66,46 @@ const SKUS: Array<{
   primary?: boolean;
 }> = [
   {
-    sku: "founding",
-    eyebrow: "Founding member · 200 spots",
-    name: "$199",
-    price: "$199",
-    cadence: "once. forever.",
+    sku: "couples",
+    eyebrow: "Two people · one spine problem · a shared interest in the outcome",
+    name: "$129",
+    price: "$129",
+    cadence: "per year, two seats",
     pitch:
-      "Locks in the lifetime price for the first 200 humans to read this page and decide. No renewal. No fee creep. Founder mark on your account.",
-    fine: "One-time payment. Full lifetime access including everything in the next two years.",
+      "Back pain in bed is a negotiation between two people, and the one who feels the relief is usually not the one who bought the app. Two linked accounts, two Indexes, one price. The partner gets their own login, which is also the single best reason either of you sticks with it.",
+    fine: "Billed annually, covers two linked accounts. Cancel any time. About $5.40 a month each.",
     primary: true,
   },
   {
     sku: "annual",
-    eyebrow: "Steady state",
-    name: "$399",
-    price: "$399",
+    eyebrow: "Solo · the sensible one",
+    name: "$79",
+    price: "$79",
     cadence: "per year",
     pitch:
-      "What this product costs after the founding window closes. Yearly renewal so we never have to count downloads as the metric.",
+      "One account, billed once a year, which is the honest cadence for a back: you do not renew your interest in not being in pain every thirty days. Works out to about $6.58 a month, paid before the flare-up-and-forget cycle can talk you out of it.",
     fine: "Billed annually. Cancel any time. Refund window 30 days.",
   },
   {
     sku: "monthly",
-    eyebrow: "Try it",
-    name: "$39",
-    price: "$39",
+    eyebrow: "Solo · for the commitment-averse",
+    name: "$14",
+    price: "$14",
     cadence: "per month",
     pitch:
-      "The smallest commitment we can offer without it being a free trial we have to gamify back. Cancel from one screen, no email, no chat.",
+      "For people who treat commitment the way they treat their lumbar spine: warily. It costs more over a year than the annual plan, which is the universe's gentle way of rewarding people who plan ahead. The cancel button is one screen deep, not a hostage negotiation.",
     fine: "Billed monthly. Cancel any time. The button is in your account, not a phone tree.",
   },
 ];
+
+// Demoted, capped, and counted as runway rather than MRR.
+const FOUNDING: { sku: Sku; price: string; pitch: string; fine: string } = {
+  sku: "founding",
+  price: "$249",
+  pitch:
+    "A one-time pre-sale to fund the build, for the first 200 people who decide on day one. Lifetime access, no renewal, founder mark on the account. We are not making this the loud option, because a lifetime sale is your best annuity sold for about six months of its own value. When the 200 are gone, it is gone.",
+  fine: "One-time payment, hard-capped at 200, then closed for good. Not a recurring price.",
+};
 
 function Buy() {
   const [loading, setLoading] = useState<Sku | null>(null);
@@ -103,7 +118,14 @@ function Buy() {
       // Best-effort instrumentation: fires before redirect leaves the page.
       const { track } = await import("@/lib/events");
       track("checkout.started", { sku });
-      const result = await createCheckoutSession({ data: { sku } });
+      // Carry the clinician-referral code (from an /rx/ link) into checkout so
+      // the charter's lowest-CAC line is attributable in Stripe.
+      let clinicId: string | undefined;
+      try {
+        const rx = JSON.parse(localStorage.getItem("bs.rx") ?? "null");
+        if (rx && typeof rx.code === "string") clinicId = rx.code;
+      } catch {}
+      const result = await createCheckoutSession({ data: { sku, clinicId } });
       if (!result.ok || !result.url) {
         setError(result.error ?? "Could not start checkout.");
         setLoading(null);
@@ -158,7 +180,7 @@ function Buy() {
           asking, or it is not, and you should not buy it.
         </p>
 
-        {/* pricing grid */}
+        {/* pricing grid · the recurring tiers */}
         <div className="grid md:grid-cols-3 gap-5 mt-14">
           {SKUS.map((s) => (
             <PriceCard
@@ -169,6 +191,31 @@ function Buy() {
               onBuy={() => go(s.sku)}
             />
           ))}
+        </div>
+
+        {/* Founding · demoted to a quiet line, not a hero card */}
+        <div
+          className="mt-5 border px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+          style={{ borderColor: RULE, background: "oklch(0.96 0.012 80)" }}
+        >
+          <div className="max-w-[640px]">
+            <p className="font-mono-label text-[10px] tracking-[0.22em] uppercase" style={{ color: OXBLOOD }}>
+              Founding · {FOUNDING.price} once · 200 spots, then closed for good
+            </p>
+            <p className="mt-2 text-sm leading-relaxed" style={{ color: PAPER_INK, opacity: 0.85 }}>
+              {FOUNDING.pitch}
+            </p>
+            <p className="mt-1.5 text-[12px] italic" style={{ color: PAPER_MUTED }}>{FOUNDING.fine}</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => go(FOUNDING.sku)}
+            disabled={loading !== null && loading !== FOUNDING.sku}
+            className="shrink-0 inline-flex items-center justify-center rounded-full font-semibold text-sm transition hover:opacity-90 disabled:opacity-40"
+            style={{ background: "transparent", color: OXBLOOD, border: `1.5px solid ${OXBLOOD}`, padding: "11px 22px" }}
+          >
+            {loading === FOUNDING.sku ? "Starting…" : `Claim a founding spot · ${FOUNDING.price}`}
+          </button>
         </div>
 
         {error && (
