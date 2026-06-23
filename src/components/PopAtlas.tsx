@@ -168,7 +168,8 @@ function PopCard({ p, role, overCap, index }: { p: Position; role: Role; overCap
           <Pips n={pips} />
         </div>
 
-        <h3 className="font-serif-display text-xl md:text-2xl italic mt-2.5 leading-tight">{p.name}</h3>
+        <h3 className="font-serif-display text-xl md:text-2xl italic mt-2.5 leading-tight">{p.nickname}</h3>
+        <p className="text-xs text-muted-foreground leading-snug mt-0.5">{p.name}</p>
 
         {/* role-framed load status: leads with whether this is easy/hard on YOUR back */}
         {(() => {

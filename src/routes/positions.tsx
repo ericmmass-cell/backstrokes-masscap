@@ -188,10 +188,11 @@ function PositionRow({ p, role }: { p: Position; role: Role }) {
           )}
         </div>
 
-        {/* Title · serif italic editorial */}
+        {/* Title · the nickname is the headline, the clinical name the subtitle */}
         <h3 className="font-serif-display text-2xl md:text-[26px] italic mt-3 leading-tight">
-          {p.name}
+          {p.nickname}
         </h3>
+        <p className="mt-1 text-sm text-muted-foreground leading-snug">{p.name}</p>
 
         {/* Council note as pull-quote */}
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground" style={{ borderLeft: "2px solid var(--brand-oxblood)", paddingLeft: 14 }}>
@@ -437,6 +438,7 @@ function PositionsPage() {
         .filter(
           (p) =>
             p.name.toLowerCase().includes(q) ||
+            p.nickname.toLowerCase().includes(q) ||
             p.category.replace(/-/g, " ").toLowerCase().includes(q) ||
             (p.councilNote ?? "").toLowerCase().includes(q),
         )
