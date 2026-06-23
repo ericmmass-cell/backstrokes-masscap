@@ -98,8 +98,8 @@ const VERDICT: Record<string, string> = {
   "cowgirl-upright": "You set depth, speed, and exit strategy. Control is the back-friendly part.",
   "seated-lap": "Cozy and close, but it stacks weight on the disc. Sit tall or pay later.",
   "missionary": "A gift for the one underneath, a surprise plank audit for the one on top.",
-  "standing": "Your legs can fund this. The second you bend at the waist to reach, the bill arrives.",
-  "doggy-kneeling": "On all fours the back already sags, then the drive sags it more. Extension's villain origin story.",
+  "standing": "Great for people with two healthy backs. You have brought one. The second you bend to reach, the bill arrives.",
+  "doggy-kneeling": "On all fours the back already sags; then the drive sags it more. Extension's villain origin story.",
 };
 
 const ORDER = Object.keys(DATA);
@@ -266,9 +266,12 @@ function RankTool() {
             {/* RED */}
             {red.length > 0 && (
               <>
-                <h2 className="font-mono-label text-[12px] tracking-[0.24em] uppercase mt-14 mb-5" style={{ color: OX }}>
-                  Ends the night early
+                <h2 className="font-mono-label text-[12px] tracking-[0.24em] uppercase mt-14 mb-1" style={{ color: OX }}>
+                  The Hall of Regret
                 </h2>
+                <p className="font-serif-display italic mb-5" style={{ fontSize: 15, color: "oklch(0.5 0.02 40)" }}>
+                  Positions your spine will bill you for tomorrow.
+                </p>
                 <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
                   {red.map((x) => (
                     <ResultCard key={x.key} x={x} t={trigger} showRole={role === "switch"} tone="red" />

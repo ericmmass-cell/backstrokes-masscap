@@ -140,7 +140,17 @@ function Buy() {
         </h1>
 
         <p
-          className="font-serif-display mt-6 leading-[1.5] max-w-[640px]"
+          className="font-serif-display italic mt-6 leading-[1.5] max-w-[640px]"
+          style={{ fontSize: "clamp(17px, 1.3vw, 20px)", color: OXBLOOD }}
+        >
+          The wellness industry has sold you a $66 jade egg, a $400 standing
+          desk you stand at twice, and a fascia gun that lives in a drawer. We
+          are asking for less than the jade egg, and unlike the jade egg, this
+          one has a mechanism of action.
+        </p>
+
+        <p
+          className="font-serif-display mt-5 leading-[1.5] max-w-[640px]"
           style={{ fontSize: "clamp(18px, 1.4vw, 21px)", color: PAPER_INK, opacity: 0.9 }}
         >
           No supplement at the end. No "premium" tier with the actually useful
@@ -231,6 +241,16 @@ function Buy() {
             money, including the amount that would otherwise save the
             company. If the company has to go away because we will not sell
             the data, the company has to go away.
+          </p>
+          <p
+            className="font-serif-display mt-4 leading-[1.55] max-w-[680px]"
+            style={{ fontSize: "18px", color: PAPER_INK, opacity: 0.92 }}
+          >
+            We will not invent a Pro tier whose only feature is the search bar.
+            We will not email you a re-engagement campaign written by a growth
+            intern who has never met your back. And we will not, under any
+            circumstances, sell you a $90 jade egg, a $300 posture-correcting
+            bra strap, or a subscription to breathing.
           </p>
           <p
             className="font-serif-display mt-4 italic"

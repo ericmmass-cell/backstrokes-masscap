@@ -26,6 +26,7 @@ type SessionState = {
   streak: number;
   signedIn: boolean;
   flareSwapped: boolean;
+  bandLabel: string;
 };
 
 const PREVIEW: SessionState = {
@@ -35,6 +36,7 @@ const PREVIEW: SessionState = {
   streak: 12,
   signedIn: false,
   flareSwapped: false,
+  bandLabel: "Functionally a person",
 };
 
 function loadState(): SessionState {
@@ -142,6 +144,14 @@ function HeroCard({ state, sample = false }: { state: SessionState; sample?: boo
             </p>
             <p className="font-mono-label text-[9px] tracking-[0.22em] uppercase text-muted-foreground mt-1">
               yest · {state.prevIndex}
+            </p>
+            {/* The withholding band label: the number's two-word performance review. */}
+            <p
+              className="font-serif-display italic text-sm mt-2 leading-none"
+              style={{ color: "var(--brand-oxblood)" }}
+              title="The Index, translated into the lumbar's native register: faint praise."
+            >
+              {state.bandLabel}
             </p>
           </div>
         </div>
@@ -422,6 +432,7 @@ function Dashboard() {
           streak,
           index: reading.value,
           prevIndex: Math.max(0, Math.min(100, reading.value - reading.delta)),
+          bandLabel: reading.bandLabel,
         });
       } else {
         setState({ ...loaded, streak });

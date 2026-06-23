@@ -29,8 +29,26 @@ export interface IndexReading {
   confidence: number;
   /** Why the number is what it is, in one short line. */
   rationale: string;
+  /** A withholding two-word band label shown next to the number. Never flatters. */
+  bandLabel: string;
   /** When the Index was last computed (now). */
   computed_at: string;
+}
+
+/**
+ * The score-band label. Sits next to the number and refuses to be impressed.
+ * The joke is in the framing; the number it labels stays clinically accurate.
+ */
+export function bandLabelFor(value: number): string {
+  if (value >= 90) return "Suspiciously fine";
+  if (value >= 70) return "Functionally a person";
+  if (value >= 40) return "The chair is winning";
+  return "Your back has notes";
+}
+
+/** Stable day-of-year index so a given day's copy is consistent but rotates. */
+function dayOfYear(ref: Date): number {
+  return Math.floor((ref.getTime() - new Date(ref.getFullYear(), 0, 0).getTime()) / 86_400_000);
 }
 
 /* Per-event signed contribution to the daily score. Calibrated against
@@ -88,7 +106,8 @@ export function computeIndex(ref: Date = new Date()): IndexReading {
       value: 50,
       delta: 0,
       confidence: 0,
-      rationale: "No data yet. The first check-in will move this number.",
+      rationale: "No data yet. The first check-in will move this number. It is the most accurate it will ever be: a perfect, content-free 50.",
+      bandLabel: "Awaiting evidence",
       computed_at: ref.toISOString(),
     };
   }
@@ -128,6 +147,7 @@ export function computeIndex(ref: Date = new Date()): IndexReading {
     delta,
     confidence,
     rationale: makeRationale(events, value, delta, ref),
+    bandLabel: bandLabelFor(value),
     computed_at: ref.toISOString(),
   };
 }
@@ -143,6 +163,13 @@ function computeYesterday(events: BSEvent[], ref: Date): number {
   return Math.round(50 + (normalized / 60) * 50);
 }
 
+/**
+ * The one-line read on the number. The number and the direction are always
+ * accurate; the humor lives only in the framing. Variants rotate by day so the
+ * heartbeat surface sounds like the brand every morning and never repeats two
+ * days running. Punches up at chairs and the wellness aisle, never at the user
+ * or their pain. The flare line stays supportive and dry, never a punchline.
+ */
 function makeRationale(
   events: BSEvent[],
   value: number,
@@ -155,12 +182,40 @@ function makeRationale(
   const completed = recent.filter(
     (e) => e.event_name === "move.completed" || e.event_name === "session.completed"
   ).length;
+  const pick = (bank: string[]) => bank[dayOfYear(ref) % bank.length];
 
-  if (flares > 0) return `${flares} flare flagged in last 48h.`;
-  if (stops > 0) return `${stops} session stopped early.`;
-  if (delta > 5) return `${completed} sessions this week. Trend up.`;
-  if (delta < -5) return `Quiet days last week. Trend down.`;
-  if (value >= 70) return `Holding steady in the green.`;
-  if (value <= 35) return `Below your baseline. Easy week recommended.`;
-  return `Within your normal range.`;
+  if (flares > 0)
+    return pick([
+      `Flare flagged. The plan already moved to decompression. Loud is not the same as in charge.`,
+      `Flare on the record. We are not pushing through it. Pushing through it is how people end up with a surgeon's business card.`,
+    ]);
+  if (stops > 0)
+    return pick([
+      `You stopped a session early. That is the system working, not the system failing. The number reflects it and holds no grudge.`,
+      `Session stopped short. Good. Stubbornness is a back injury's favorite collaborator, and you declined to collaborate.`,
+    ]);
+  if (delta > 5)
+    return pick([
+      `Index ${value}, up ${delta}. ${completed} sessions did that. The lumbar will not thank you; this is the closest it gets.`,
+      `Up ${delta} to ${value}. Endurance, not enthusiasm, moved this. Keep being boring. Boring is winning.`,
+    ]);
+  if (delta < -5)
+    return pick([
+      `Index ${value}, down ${delta}. Somewhere this week you sat in a chair designed by someone who has never met a spine. We logged the complaint.`,
+      `Down ${delta} to ${value}. Not a verdict, just a Tuesday. Same plan, slightly more patience.`,
+    ]);
+  if (value >= 70)
+    return pick([
+      `Index ${value}. Quiet. The lumbar has nothing to report, which from the lumbar is the highest possible praise.`,
+      `Index ${value}. Functionally a person. Do not let it go to your head; the chair is still out there, being a chair.`,
+    ]);
+  if (value <= 35)
+    return pick([
+      `Index ${value}, below your baseline. This is data, not a sentence. The body that produced it is the same one that will produce a better one, on a calendar, not a deadline.`,
+      `Index ${value}. An easy week is the intervention, not the consolation prize. Decompress, do not audition for anything.`,
+    ]);
+  return pick([
+    `Index ${value}. Within your normal range, which is a quietly excellent place for a back to be.`,
+    `Index ${value}. Unremarkable, in the way a back you forget about is unremarkable. That is the goal, stated plainly.`,
+  ]);
 }
