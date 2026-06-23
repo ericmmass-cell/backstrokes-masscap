@@ -1,0 +1,14 @@
+# BackStroke · crawl the funnel, leave the app alone.
+# Note: while the site sits behind Cloudflare Access this file is moot;
+# it is the precondition that goes live the moment the public funnel is un-gated.
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /session
+Disallow: /buy/success
+Disallow: /buy/cancel
+Disallow: /share/
+Disallow: /diagramlab
+Disallow: /style-test
+
+Sitemap: https://backstroke.mass-cap.com/sitemap.xml

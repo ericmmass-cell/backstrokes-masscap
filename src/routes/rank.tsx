@@ -216,6 +216,12 @@ function RankTool() {
             <p className="mt-5 text-xs italic" style={{ color: "oklch(0.55 0.02 40)" }}>
               Information, not a diagnosis. If a position hurts, that is a no, and no ranking overrides it.
             </p>
+            <p className="mt-4 text-sm" style={{ color: "oklch(0.42 0.02 40)" }}>
+              Want the deadpan version first?{" "}
+              <Link to="/diagnosis" className="font-semibold underline underline-offset-4 hover:opacity-80 transition" style={{ color: OX }}>
+                Diagnose your back, mock-clinically →
+              </Link>
+            </p>
           </section>
         )}
 
