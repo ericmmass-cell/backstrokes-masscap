@@ -4,6 +4,7 @@ import { Eyebrow, MonoTag } from "@/components/editorial";
 import { SiteHeader } from "@/components/SiteHeader";
 import { todaysDistraction, THEME_LABEL } from "@/lib/distractions";
 import { CheckIn, type CheckInResult } from "@/components/CheckIn";
+import type { Badge } from "@/lib/achievements";
 
 /**
  * Dashboard, lean version (no subject chooser).
@@ -398,12 +399,38 @@ function Shelf() {
   );
 }
 
+/* ───────── Badges · studiously unimpressed ───────── */
+
+function Badges({ badges }: { badges: Badge[] }) {
+  return (
+    <div className="border border-border bg-background px-6 py-5">
+      <MonoTag muted>BADGES · STUDIOUSLY UNIMPRESSED</MonoTag>
+      <div className="mt-3 flex flex-wrap gap-2.5">
+        {badges.map((b) => (
+          <span
+            key={b.key}
+            title={b.tip}
+            className="font-mono-label text-[10px] tracking-[0.16em] uppercase px-3 py-1.5 rounded-full border cursor-default"
+            style={{ borderColor: "var(--brand-oxblood)", color: "var(--brand-oxblood)" }}
+          >
+            {b.label}
+          </span>
+        ))}
+      </div>
+      <p className="mt-3 font-serif-display italic text-sm text-muted-foreground leading-snug">
+        No confetti. Confetti is for people who are surprised.
+      </p>
+    </div>
+  );
+}
+
 /* ───────── Page ───────── */
 
 function Dashboard() {
   const [state, setState] = useState<SessionState>(PREVIEW);
   const [hydrated, setHydrated] = useState(false);
   const [firstRun, setFirstRun] = useState(false);
+  const [badges, setBadges] = useState<Badge[]>([]);
 
   useEffect(() => {
     const loaded = loadState();
@@ -413,9 +440,11 @@ function Dashboard() {
     Promise.all([
       import("@/lib/events"),
       import("@/lib/index-engine"),
-    ]).then(([{ track, allEvents }, { computeIndex }]) => {
+      import("@/lib/achievements"),
+    ]).then(([{ track, allEvents }, { computeIndex }, { earnedBadges }]) => {
       track("app.opened", { route: "/dashboard" });
       const events = allEvents();
+      setBadges(earnedBadges(events));
       // Threshold: only flip to real Index after at least one check-in.
       const hasRealData = events.some((e) => e.event_name === "checkin.submitted");
       setFirstRun(!hasRealData && !loaded.signedIn);
@@ -476,6 +505,7 @@ function Dashboard() {
             }}
           />
           {firstRun && <HeroCard state={state} sample />}
+          {!firstRun && badges.length > 0 && <Badges badges={badges} />}
           <BelowStrip state={state} />
           <EngineCard state={state} />
           <DistractionTeaser />

@@ -7,19 +7,23 @@
  * `{ url }` and the browser is redirected.
  *
  * Env vars required (set in .env.local for dev, Cloudflare secrets for
- * production):
+ * production). The CHARTER amounts the Stripe Price objects must carry
+ * (the IDs are pointers; the dollar figures live in Stripe and must be
+ * created there to match the storefront copy in buy.tsx):
  *   STRIPE_SECRET_KEY              sk_test_... or sk_live_...
- *   STRIPE_PRICE_FOUNDING          one-time $199
- *   STRIPE_PRICE_MONTHLY           recurring $39/mo
- *   STRIPE_PRICE_ANNUAL            recurring $399/yr
- *   PUBLIC_SITE_URL                e.g. https://backstroke.app
+ *   STRIPE_PRICE_FOUNDING          one-time, $249 (lifetime, capped at 200)
+ *   STRIPE_PRICE_MONTHLY           recurring, $14/mo (the impatient option)
+ *   STRIPE_PRICE_ANNUAL            recurring, $79/yr (solo, the default)
+ *   STRIPE_PRICE_COUPLES           recurring, $129/yr (two linked seats, the hero)
+ *   PUBLIC_SITE_URL                e.g. https://backstroke.mass-cap.com
  *
  * When the keys are not present, the server fn returns a structured
  * error the UI can display ("Checkout is not configured yet") rather
- * than crashing.
+ * than crashing. So while Stripe is unconfigured there is no risk of a
+ * displayed price diverging from a charged price: nothing charges at all.
  */
 
-export type Sku = "founding" | "monthly" | "annual";
+export type Sku = "founding" | "monthly" | "annual" | "couples";
 
 export interface CheckoutResult {
   ok: boolean;
@@ -42,16 +46,17 @@ function readConfig(): StripeConfig | { error: string } {
   const founding = e.STRIPE_PRICE_FOUNDING;
   const monthly = e.STRIPE_PRICE_MONTHLY;
   const annual = e.STRIPE_PRICE_ANNUAL;
+  const couples = e.STRIPE_PRICE_COUPLES;
   const siteUrl = e.PUBLIC_SITE_URL ?? "http://localhost:8080";
   if (!secret) return { error: "STRIPE_SECRET_KEY is not set." };
-  if (!founding || !monthly || !annual)
+  if (!founding || !monthly || !annual || !couples)
     return {
       error:
-        "STRIPE_PRICE_FOUNDING, STRIPE_PRICE_MONTHLY, and STRIPE_PRICE_ANNUAL must all be set.",
+        "STRIPE_PRICE_FOUNDING, STRIPE_PRICE_MONTHLY, STRIPE_PRICE_ANNUAL, and STRIPE_PRICE_COUPLES must all be set.",
     };
   return {
     secret,
-    prices: { founding, monthly, annual },
+    prices: { founding, monthly, annual, couples },
     siteUrl,
   };
 }
@@ -82,8 +87,10 @@ function encodeForm(obj: Record<string, unknown>, prefix = ""): string {
   return parts.join("&");
 }
 
-/** Create a Stripe Checkout Session and return the redirect URL. */
-export async function createCheckout(sku: Sku): Promise<CheckoutResult> {
+/** Create a Stripe Checkout Session and return the redirect URL. `clinicId` is
+ * the clinician-referral code (from an /rx/ link) carried into Stripe metadata
+ * so the charter's lowest-CAC line can be attributed. */
+export async function createCheckout(sku: Sku, clinicId?: string): Promise<CheckoutResult> {
   const cfg = readConfig();
   if ("error" in cfg) return { ok: false, error: cfg.error };
 
@@ -96,7 +103,7 @@ export async function createCheckout(sku: Sku): Promise<CheckoutResult> {
     // Let people pay with anything Stripe supports in the account.
     automatic_tax: { enabled: true },
     allow_promotion_codes: true,
-    metadata: { sku },
+    metadata: { sku, clinic_id: clinicId && clinicId.length <= 120 ? clinicId : "" },
   });
 
   const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
