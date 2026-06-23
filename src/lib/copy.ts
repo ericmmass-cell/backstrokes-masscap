@@ -193,9 +193,41 @@ export const COPY: Record<string, CopyEntry> = {
   },
   subscriptionCancelled: {
     key: "subscriptionCancelled",
-    context: "User cancels subscription.",
-    write: "Cancelled. You keep access until {date}. We will not send twelve emails pretending to be concerned.",
+    context: "User cancels subscription. Be so likable on the way out that the door stays warm.",
+    write:
+      "Cancelled. You keep access until {date}. We will not send twelve emails pretending to be concerned, nor a survey, nor a 40%-off panic coupon at 11pm. The protocol is three moves; you know them now; that was always the actual product. If the back gets loud again, the door is unlocked and the jokes are still here.",
     doNotWrite: "We're sorry to see you go. Are you sure?",
+  },
+  emptyDashboardFirstRun: {
+    key: "emptyDashboardFirstRun",
+    context: "Brand-new user, dashboard before any check-in or session exists.",
+    write:
+      "Your Index is blank because you have done nothing yet. This is the most accurate it will ever be. Go make some weather, responsibly, in eight minutes.",
+    doNotWrite: "Welcome! Complete your first session to get started!",
+  },
+  achievementStreak7: {
+    key: "achievementStreak7",
+    context: "Seven-day streak. The anti-gamification IS the gamification.",
+    write: "Seven days. Adequate. The spine has noticed and declined to comment, which from the spine is applause.",
+    doNotWrite: "7-DAY STREAK! Keep the fire going!",
+  },
+  achievementFirstSideBridge: {
+    key: "achievementFirstSideBridge",
+    context: "User completes their first side-bridge.",
+    write: "First side-bridge. You held a plank sideways. The bar was on the floor and you cleared it. Genuinely, well done.",
+    doNotWrite: "Achievement unlocked: Side Bridge Master!",
+  },
+  achievementDay30: {
+    key: "achievementDay30",
+    context: "Thirty days in. No confetti, on purpose.",
+    write: "Thirty days. The spine adapts on a calendar, not a leaderboard. No confetti. Confetti is for people who are surprised.",
+    doNotWrite: "30 DAYS! You're a BackStroke legend!",
+  },
+  achievementHonestFlare: {
+    key: "achievementHonestFlare",
+    context: "User logs a flare honestly instead of skipping the check-in.",
+    write: "You logged a flare honestly. Most people lie to their fitness apps. You did not. Weird flex, respect.",
+    doNotWrite: "Oh no, a setback! Don't give up!",
   },
 };
 
