@@ -45,17 +45,18 @@ function Cancel() {
           className="font-serif-display italic tracking-[-0.025em] leading-[0.98] mt-6"
           style={{ fontSize: "clamp(40px, 6vw, 80px)" }}
         >
-          Take your time.
+          Classic lumbar avoidance.
         </h1>
 
         <p
           className="font-serif-display mt-6 leading-[1.55]"
           style={{ fontSize: "clamp(18px, 1.4vw, 21px)", color: PAPER_INK, opacity: 0.92 }}
         >
-          Nothing was charged. The founding window is still open. If you
-          want to think about it for a week, the page will be here. If you
-          want a question answered first, the email below is a real inbox
-          that gets read.
+          You backed out at the payment screen. Nothing was charged. The page
+          is still here, the back is still yours, and the supplement aisle is
+          still lying to you. No rush. The disc has waited this long. If you
+          want a question answered first, the email below is a real inbox that
+          gets read.
         </p>
 
         <p
