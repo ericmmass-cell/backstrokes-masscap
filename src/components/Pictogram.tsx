@@ -284,7 +284,7 @@ function IllustratedPosition({
   // Asset-backed: a real clothed photo (animated flipbook) when present,
   // otherwise a calm figure-free placeholder. No body is drawn in code.
   return (
-    <PictogramFrame caption={showCaption ? caption : undefined} attribution="Photograph · BackStroke">
+    <PictogramFrame caption={showCaption ? caption : undefined}>
       <PositionVisual positionKey={positionKey} assetId={assetId} />
       {annotate && (
         <PositionAnnotation
