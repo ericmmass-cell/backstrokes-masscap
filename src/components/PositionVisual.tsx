@@ -15,6 +15,7 @@
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import type { PictogramKey } from "./Pictogram";
 import { POSITION_ASSETS, POSITION_ASSETS_BY_ID } from "@/lib/position-assets";
+import { artForId, artForKey } from "@/lib/position-art";
 
 const PAPER_GRADIENT = "linear-gradient(135deg, #f7f2e7, #efe6d2)";
 
@@ -117,11 +118,35 @@ export function PositionVisual({
   paused?: boolean;
   style?: CSSProperties;
 }) {
-  // Real photo strips: the position's own (15) or its family's, with mirror +
-  // phase variety so shared strips read as distinct. (The code-drawn diagram
-  // experiment was reverted; it looked worse than the photography.)
+  // Restyled, openly-licensed line illustrations are the primary visual: they
+  // show exactly what each position is, stay consistent across all 37, and are
+  // accurate per position. They are baked ink-on-paper duotone (see
+  // /public/positions-art). Photo strips remain as a fallback for any id with
+  // no illustration mapped.
+  const art = artForId(assetId) ?? artForKey(positionKey);
   const asset = (assetId !== undefined ? POSITION_ASSETS_BY_ID[assetId] : undefined) ?? POSITION_ASSETS[positionKey];
   const variant = hashStr(assetId ?? positionKey);
+  // A horizontal mirror is anatomically valid for every one of these poses, so
+  // same-illustration neighbours don't read identically.
+  const mirror = (variant & 1) === 1;
+
+  if (art) {
+    // Subtle per-card zoom (3-12%) + mirror so same-plate neighbours (the
+    // supine and rear families) never read as pixel-identical copies.
+    const zoom = 1 + ((variant >> 2) % 4) * 0.035;
+    const tx = mirror ? -1 : 1;
+    return (
+      <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", background: PAPER_GRADIENT, ...style }}>
+        <img
+          src={art}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          style={{ width: "100%", height: "100%", objectFit: "contain", display: "block", transform: `scaleX(${tx}) scale(${zoom})`, transformOrigin: "center", mixBlendMode: "multiply" }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", ...style }}>
