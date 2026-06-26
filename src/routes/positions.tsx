@@ -12,6 +12,7 @@ import {
   type Role,
   type Condition,
 } from "@/lib/position-library";
+import { ART_CREDIT } from "@/lib/position-art";
 
 const ROLES: { key: Role; label: string; short: string }[] = [
   { key: "either", label: "Depends on the day", short: "Either role" },
@@ -88,10 +89,12 @@ const ILLUSTRATION_BY_ID: Record<string, PictogramKey> = {
   p28: "spoon",          // Side-by-side, facing same direction, spooning
   p36: "spoon",          // Side-lying, top leg straight back
 
-  // True missionary · receiver supine, partner above
-  p03: "missionary",      // Supine, knees over pillow, missionary
+  // True missionary · legs in stirrups, deep flexion (only the actual stirrups one)
   p13: "missionary",      // Modified missionary, legs in stirrups
-  p34: "missionary",      // Supine, partner kneeling, no lumbar load
+  // p03 (knees over pillow) and p34 (no lumbar load) are GENTLE supine, not
+  // stirrups: route them to the calm supine-support photo, not the deep-flexion one.
+  p03: "supine-knees-up", // Supine, knees over pillow, missionary
+  p34: "supine-knees-up", // Supine, partner kneeling, no lumbar load
 
   // Supine on the back (wedges, bolsters, knees-up · no partner shown above)
   p02: "supine-knees-up", // Supine with wedge under pelvis
@@ -767,6 +770,10 @@ function PositionsPage() {
               )}
             </>
           )}
+
+          <p className="mt-12 pt-6 border-t border-border font-mono-label text-[9px] tracking-[0.18em] uppercase text-muted-foreground leading-relaxed max-w-3xl">
+            {ART_CREDIT}
+          </p>
         </div>
       </section>
     </div>
